@@ -1,0 +1,50 @@
+{% extends 'base.html.twig'%}
+
+{% block body %}
+
+    <h1> Création d'un article ! </h1>
+
+    {{ form_start(formArticle) }}
+
+    <div class="form-group">
+        <label for="">Titre</label>
+        {{ form_widget(formArticle.title) }}
+    </div>
+
+    <div class="form-group">
+        <label for="">Catégorie</label>
+        {{ form_widget(formArticle.category) }}
+    </div>
+
+    <div class="form-group">
+        <label for="">Contenu</label>
+        {{ form_widget(formArticle.content) }}
+    </div>
+
+    <div class="form-group">
+        <label for="">Titre</label>
+        {{ form_widget(formArticle.image) }}
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        {%if editMode %}
+            Enregister modification(s)
+        {% else %}
+            Ajouter l'article
+        {% endif %}
+    </button>
+
+
+    {{ form_end(formArticle)}}
+
+<!--
+ancienne version avant sécurité dans le BlogController
+<form action="" method="post">
+    <input type="text" name="title" placeholder="Titre de l'article">
+    <textarea name="content" placeholder="Contenu de l'article"></textarea>
+    <input type="text" name="image" placeholder="Image de l'article">
+    <button type="submit">Enregistrer</button>
+</form>
+-->
+
+{% endblock %}
