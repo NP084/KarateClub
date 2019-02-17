@@ -2,7 +2,6 @@
 
 	1. Installation  
 1.1 Installer WAMP (=> Windows), MAMP (=> Macos ou Windows) ou LAMP (=> linux)
-(sur ma partition windows, j'ai mis MAMP car WAMP ne marchait pas)
 
 1.2 Installer composer: https://getcomposer.org 
 
