@@ -5,7 +5,6 @@
 /.env.*.local
 /public/bundles/
 /var/
-.DS_Store
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
