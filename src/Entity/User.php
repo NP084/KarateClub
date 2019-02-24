@@ -89,10 +89,6 @@ class User implements UserInterface
      */
     private $belt;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $createdMember;
 
     public function __construct()
     {
@@ -273,18 +269,6 @@ class User implements UserInterface
     public function setBelt(?string $belt): self
     {
         $this->belt = $belt;
-
-        return $this;
-    }
-
-    public function getCreatedMember(): ?\DateTimeInterface
-    {
-        return $this->createdMember;
-    }
-
-    public function setCreatedMember(\DateTimeInterface $createdMember): self
-    {
-        $this->createdMember = $createdMember;
 
         return $this;
     }
