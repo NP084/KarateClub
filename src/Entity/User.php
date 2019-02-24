@@ -79,15 +79,16 @@ class User implements UserInterface
      */
     private $createdUser;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $role;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $belt;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $receiptDate;
 
 
     public function __construct()
@@ -249,17 +250,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 
     public function getBelt(): ?string
     {
@@ -269,6 +259,18 @@ class User implements UserInterface
     public function setBelt(?string $belt): self
     {
         $this->belt = $belt;
+
+        return $this;
+    }
+
+    public function getReceiptDate(): ?\DateTimeInterface
+    {
+        return $this->receiptDate;
+    }
+
+    public function setReceiptDate(?\DateTimeInterface $receiptDate): self
+    {
+        $this->receiptDate = $receiptDate;
 
         return $this;
     }
