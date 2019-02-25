@@ -9,18 +9,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-use Mgilet\NotificationBundle\Annotation\Notifiable;
-use Mgilet\NotificationBundle\NotifiableInterface;
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(
  *  fields={"email"},
  *  message="L'email indiqué est déjà utilisé !"
  * )
- * @Notifiable(name="User")
  */
-class User implements UserInterface, NotifiableInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -64,12 +60,12 @@ class User implements UserInterface, NotifiableInterface
     private $adress;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $firstname;
 
@@ -79,7 +75,7 @@ class User implements UserInterface, NotifiableInterface
     private $birthday;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="date")
      */
     private $createdUser;
 
