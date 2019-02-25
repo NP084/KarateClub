@@ -2,3 +2,6 @@ framework:
     router:
         strict_requirements: ~
         utf8: true
+mgilet_notification:
+    resource: "@MgiletNotificationBundle/Controller/"
+    prefix: /notifications

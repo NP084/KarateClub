@@ -1676,6 +1676,54 @@
         ]
     },
     {
+        "name": "mgilet/notification-bundle",
+        "version": "3.1",
+        "version_normalized": "3.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/maximilienGilet/notification-bundle.git",
+            "reference": "6b44f0f618a8f4ac0d37232ce38eb9bea62cfba0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/maximilienGilet/notification-bundle/zipball/6b44f0f618a8f4ac0d37232ce38eb9bea62cfba0",
+            "reference": "6b44f0f618a8f4ac0d37232ce38eb9bea62cfba0",
+            "shasum": ""
+        },
+        "require": {
+            "doctrine/doctrine-bundle": "*",
+            "symfony/framework-bundle": "^2.7 || ^3.0 || ^4.0",
+            "twig/twig": "*"
+        },
+        "time": "2018-09-06T11:36:37+00:00",
+        "type": "symfony-bundle",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Mgilet\\NotificationBundle\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Maximilien Gilet",
+                "email": "maximilien248@gmail.com"
+            }
+        ],
+        "description": "A simple Symfony 3 bundle for user notifications",
+        "keywords": [
+            "symfony notification bundle simple"
+        ]
+    },
+    {
         "name": "monolog/monolog",
         "version": "1.24.0",
         "version_normalized": "1.24.0.0",
