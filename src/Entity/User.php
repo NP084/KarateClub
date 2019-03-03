@@ -95,12 +95,18 @@ class User implements UserInterface
      */
     private $rentals;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="member")
+     */
+    private $attachedFiles;
+
 
     public function __construct()
     {
         $this->phones = new ArrayCollection();
         $this->adress = new ArrayCollection();
         $this->rentals = new ArrayCollection();
+        $this->attachedFiles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -306,6 +312,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($rental->getMember() === $this) {
                 $rental->setMember(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AttachedFile[]
+     */
+    public function getAttachedFiles(): Collection
+    {
+        return $this->attachedFiles;
+    }
+
+    public function addAttachedFile(AttachedFile $attachedFile): self
+    {
+        if (!$this->attachedFiles->contains($attachedFile)) {
+            $this->attachedFiles[] = $attachedFile;
+            $attachedFile->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttachedFile(AttachedFile $attachedFile): self
+    {
+        if ($this->attachedFiles->contains($attachedFile)) {
+            $this->attachedFiles->removeElement($attachedFile);
+            // set the owning side to null (unless already changed)
+            if ($attachedFile->getMember() === $this) {
+                $attachedFile->setMember(null);
             }
         }
 

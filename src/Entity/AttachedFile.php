@@ -31,6 +31,17 @@ class AttachedFile
      */
     private $addDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="attachedFiles")
+     */
+    private $member;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="attachedFile")
+     */
+    private $status;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,4 +82,29 @@ class AttachedFile
 
         return $this;
     }
+
+    public function getMember(): ?User
+    {
+        return $this->member;
+    }
+
+    public function setMember(?User $member): self
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
 }

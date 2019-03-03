@@ -48,9 +48,15 @@ class Event
      */
     private $media;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="event")
+     */
+    private $registrations;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
+        $this->registrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,6 +147,37 @@ class Event
         if ($this->media->contains($medium)) {
             $this->media->removeElement($medium);
             $medium->removeEvent($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Registration[]
+     */
+    public function getRegistrations(): Collection
+    {
+        return $this->registrations;
+    }
+
+    public function addRegistration(Registration $registration): self
+    {
+        if (!$this->registrations->contains($registration)) {
+            $this->registrations[] = $registration;
+            $registration->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegistration(Registration $registration): self
+    {
+        if ($this->registrations->contains($registration)) {
+            $this->registrations->removeElement($registration);
+            // set the owning side to null (unless already changed)
+            if ($registration->getEvent() === $this) {
+                $registration->setEvent(null);
+            }
         }
 
         return $this;

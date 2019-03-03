@@ -57,6 +57,11 @@ class Article
      */
     private $media;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -172,6 +177,18 @@ class Article
             $this->media->removeElement($medium);
             $medium->removeArticle($this);
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

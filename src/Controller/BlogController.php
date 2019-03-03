@@ -52,29 +52,6 @@ class BlogController extends AbstractController
             $article=New Article();
             $article->setTitle("Titre de l'exemple");
         }
-/**
-        $form = $this-> createFormBuilder($article)
-                     -> add('title', TextType::class,[
-                         'attr'=>[
-                             'placeholder'=> "Titre de l'article",
-                             'class'=> 'form-control'
-                         ]
-                     ])
-                     -> add('content', TextareaType::class, [
-                         'attr'=> [
-                             'placeholder'=>"Contenu de l'article",
-                             'class'=> 'form-control'
-                         ]
-                     ])
-                     -> add ('image', TextType::class, [
-                         'attr'=> [
-                             'placeholder'=> "Image de l'article",
-                             'class'=> 'form-control'
-                         ]
-                     ])
-
-                     -> getForm();
-*/
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -98,21 +75,6 @@ class BlogController extends AbstractController
             'formArticle'=>$form->createView(),
             'editMode'=> $article->getId()!==null
         ]);
-        /**
-                if ($request->request->count()>0){
-                    $article = New Article();
-                    $article -> setTitle($request->request->get('title'))
-                             -> setContent($request->request->get('content'))
-                             -> setImage($request->request->get('image'))
-                             -> setCreatedAt(new \DateTime());
-
-                    $manager -> persist($article);
-                    $manager -> flush();
-                    return $this->redirectToRoute('blog_show',['id'=>$article->getId()]);
-                }
-
-            }
-        */
     }
 
     /**
@@ -141,29 +103,3 @@ class BlogController extends AbstractController
     }
 
 }
-
-/**
-public function show($id){
-    $repo = $this->getDoctrine()-> getRepository(Article::class);
-    $article = $repo->find($id);
-
-    return $this->render('blog/show.html.twig', [
-        'article'=>$article
-
-    ]);
-}
-
-@Route("/blog/12", name="blog_show")
-
-public function show(){
-
-    return $this->render('blog/show.html.twig');
-}
-
-public function show(Article $article){
-/
-    return $this->render('blog/show.html.twig', [
-        'article' => $article
-    ]);
-}
-*/

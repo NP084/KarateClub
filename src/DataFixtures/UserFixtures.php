@@ -64,8 +64,7 @@ class UserFixtures extends Fixture
                  ->setBirthday($faker->dateTimeBetween('-6 years'))
                  ->setCreatedUser($faker->dateTimeBetween('-6 months'))
                  ->setBelt("noir")
-                 ->setRole("Membre")
-                 ->setCreatedMember($faker->dateTimeBetween('-3 months'));
+                 ->setCreatedUser($faker->dateTimeBetween('-3 months'));
             $manager-> persist($user);
 
             // créer 3 catégories fakées
