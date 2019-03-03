@@ -100,6 +100,11 @@ class User implements UserInterface
      */
     private $attachedFiles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\PersonOfContact", inversedBy="users")
+     */
+    private $personOfContact;
+
 
     public function __construct()
     {
@@ -107,6 +112,7 @@ class User implements UserInterface
         $this->adress = new ArrayCollection();
         $this->rentals = new ArrayCollection();
         $this->attachedFiles = new ArrayCollection();
+        $this->personOfContact = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -344,6 +350,32 @@ class User implements UserInterface
             if ($attachedFile->getMember() === $this) {
                 $attachedFile->setMember(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PersonOfContact[]
+     */
+    public function getPersonOfContact(): Collection
+    {
+        return $this->personOfContact;
+    }
+
+    public function addPersonOfContact(PersonOfContact $personOfContact): self
+    {
+        if (!$this->personOfContact->contains($personOfContact)) {
+            $this->personOfContact[] = $personOfContact;
+        }
+
+        return $this;
+    }
+
+    public function removePersonOfContact(PersonOfContact $personOfContact): self
+    {
+        if ($this->personOfContact->contains($personOfContact)) {
+            $this->personOfContact->removeElement($personOfContact);
         }
 
         return $this;
