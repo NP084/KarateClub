@@ -31,6 +31,7 @@ class BlogController extends AbstractController
             'articles' => $articles,
         ]);
     }
+    
     /**
     * @Route("/", name="home")
     */
@@ -43,10 +44,6 @@ class BlogController extends AbstractController
     * @Route("/blog/{id}/edit", name="blog_edit")
     */
     public function form(Article $article=null, Request $request, ObjectManager $manager){
-
-
-        // $article=new Article();
-        // $article->setTitle("Titre de l'exemple");
 
         if (!$article){
             $article=New Article();
@@ -68,8 +65,6 @@ class BlogController extends AbstractController
 
 
         }
-
-
 
         return $this->render('blog/create.html.twig', [
             'formArticle'=>$form->createView(),
