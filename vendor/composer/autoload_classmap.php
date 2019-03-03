@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Controller\\BlogController' => $baseDir . '/src/Controller/BlogController.php',
+    'App\\Controller\\EquipmentController' => $baseDir . '/src/Controller/EquipmentController.php',
+    'App\\Controller\\EventController' => $baseDir . '/src/Controller/EventController.php',
     'App\\Controller\\SecurityController' => $baseDir . '/src/Controller/SecurityController.php',
     'App\\DataFixtures\\AppFixtures' => $baseDir . '/src/DataFixtures/AppFixtures.php',
     'App\\DataFixtures\\ArticlesFixtures' => $baseDir . '/src/DataFixtures/ArticlesFixtures.php',
@@ -23,6 +25,9 @@ return array(
     'App\\Entity\\Media' => $baseDir . '/src/Entity/Media.php',
     'App\\Entity\\PersonOfContact' => $baseDir . '/src/Entity/PersonOfContact.php',
     'App\\Entity\\Phone' => $baseDir . '/src/Entity/Phone.php',
+    'App\\Entity\\Registration' => $baseDir . '/src/Entity/Registration.php',
+    'App\\Entity\\Rental' => $baseDir . '/src/Entity/Rental.php',
+    'App\\Entity\\Status' => $baseDir . '/src/Entity/Status.php',
     'App\\Entity\\User' => $baseDir . '/src/Entity/User.php',
     'App\\Form\\ArticleType' => $baseDir . '/src/Form/ArticleType.php',
     'App\\Form\\CommentType' => $baseDir . '/src/Form/CommentType.php',
@@ -40,6 +45,9 @@ return array(
     'App\\Repository\\MediaRepository' => $baseDir . '/src/Repository/MediaRepository.php',
     'App\\Repository\\PersonOfContactRepository' => $baseDir . '/src/Repository/PersonOfContactRepository.php',
     'App\\Repository\\PhoneRepository' => $baseDir . '/src/Repository/PhoneRepository.php',
+    'App\\Repository\\RegistrationRepository' => $baseDir . '/src/Repository/RegistrationRepository.php',
+    'App\\Repository\\RentalRepository' => $baseDir . '/src/Repository/RentalRepository.php',
+    'App\\Repository\\StatusRepository' => $baseDir . '/src/Repository/StatusRepository.php',
     'App\\Repository\\UserRepository' => $baseDir . '/src/Repository/UserRepository.php',
     'Collator' => $vendorDir . '/symfony/intl/Resources/stubs/Collator.php',
     'Doctrine\\Bundle\\DoctrineBundle\\Command\\CreateDatabaseDoctrineCommand' => $vendorDir . '/doctrine/doctrine-bundle/Command/CreateDatabaseDoctrineCommand.php',

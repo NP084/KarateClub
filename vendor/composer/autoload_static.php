@@ -529,6 +529,8 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
 
     public static $classMap = array (
         'App\\Controller\\BlogController' => __DIR__ . '/../..' . '/src/Controller/BlogController.php',
+        'App\\Controller\\EquipmentController' => __DIR__ . '/../..' . '/src/Controller/EquipmentController.php',
+        'App\\Controller\\EventController' => __DIR__ . '/../..' . '/src/Controller/EventController.php',
         'App\\Controller\\SecurityController' => __DIR__ . '/../..' . '/src/Controller/SecurityController.php',
         'App\\DataFixtures\\AppFixtures' => __DIR__ . '/../..' . '/src/DataFixtures/AppFixtures.php',
         'App\\DataFixtures\\ArticlesFixtures' => __DIR__ . '/../..' . '/src/DataFixtures/ArticlesFixtures.php',
@@ -545,6 +547,9 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         'App\\Entity\\Media' => __DIR__ . '/../..' . '/src/Entity/Media.php',
         'App\\Entity\\PersonOfContact' => __DIR__ . '/../..' . '/src/Entity/PersonOfContact.php',
         'App\\Entity\\Phone' => __DIR__ . '/../..' . '/src/Entity/Phone.php',
+        'App\\Entity\\Registration' => __DIR__ . '/../..' . '/src/Entity/Registration.php',
+        'App\\Entity\\Rental' => __DIR__ . '/../..' . '/src/Entity/Rental.php',
+        'App\\Entity\\Status' => __DIR__ . '/../..' . '/src/Entity/Status.php',
         'App\\Entity\\User' => __DIR__ . '/../..' . '/src/Entity/User.php',
         'App\\Form\\ArticleType' => __DIR__ . '/../..' . '/src/Form/ArticleType.php',
         'App\\Form\\CommentType' => __DIR__ . '/../..' . '/src/Form/CommentType.php',
@@ -562,6 +567,9 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         'App\\Repository\\MediaRepository' => __DIR__ . '/../..' . '/src/Repository/MediaRepository.php',
         'App\\Repository\\PersonOfContactRepository' => __DIR__ . '/../..' . '/src/Repository/PersonOfContactRepository.php',
         'App\\Repository\\PhoneRepository' => __DIR__ . '/../..' . '/src/Repository/PhoneRepository.php',
+        'App\\Repository\\RegistrationRepository' => __DIR__ . '/../..' . '/src/Repository/RegistrationRepository.php',
+        'App\\Repository\\RentalRepository' => __DIR__ . '/../..' . '/src/Repository/RentalRepository.php',
+        'App\\Repository\\StatusRepository' => __DIR__ . '/../..' . '/src/Repository/StatusRepository.php',
         'App\\Repository\\UserRepository' => __DIR__ . '/../..' . '/src/Repository/UserRepository.php',
         'Collator' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/Collator.php',
         'Doctrine\\Bundle\\DoctrineBundle\\Command\\CreateDatabaseDoctrineCommand' => __DIR__ . '/..' . '/doctrine/doctrine-bundle/Command/CreateDatabaseDoctrineCommand.php',
