@@ -90,11 +90,17 @@ class User implements UserInterface
      */
     private $receiptDate;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Rental", mappedBy="member")
+     */
+    private $rentals;
+
 
     public function __construct()
     {
         $this->phones = new ArrayCollection();
         $this->adress = new ArrayCollection();
+        $this->rentals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -271,6 +277,37 @@ class User implements UserInterface
     public function setReceiptDate(?\DateTimeInterface $receiptDate): self
     {
         $this->receiptDate = $receiptDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rental[]
+     */
+    public function getRentals(): Collection
+    {
+        return $this->rentals;
+    }
+
+    public function addRental(Rental $rental): self
+    {
+        if (!$this->rentals->contains($rental)) {
+            $this->rentals[] = $rental;
+            $rental->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRental(Rental $rental): self
+    {
+        if ($this->rentals->contains($rental)) {
+            $this->rentals->removeElement($rental);
+            // set the owning side to null (unless already changed)
+            if ($rental->getMember() === $this) {
+                $rental->setMember(null);
+            }
+        }
 
         return $this;
     }

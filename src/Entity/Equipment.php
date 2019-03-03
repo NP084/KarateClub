@@ -43,9 +43,15 @@ class Equipment
      */
     private $media;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Rental", mappedBy="equipment")
+     */
+    private $rentals;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
+        $this->rentals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,6 +130,37 @@ class Equipment
         if ($this->media->contains($medium)) {
             $this->media->removeElement($medium);
             $medium->removeEquipment($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rental[]
+     */
+    public function getRentals(): Collection
+    {
+        return $this->rentals;
+    }
+
+    public function addRental(Rental $rental): self
+    {
+        if (!$this->rentals->contains($rental)) {
+            $this->rentals[] = $rental;
+            $rental->setEquipment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRental(Rental $rental): self
+    {
+        if ($this->rentals->contains($rental)) {
+            $this->rentals->removeElement($rental);
+            // set the owning side to null (unless already changed)
+            if ($rental->getEquipment() === $this) {
+                $rental->setEquipment(null);
+            }
         }
 
         return $this;

@@ -17,12 +17,12 @@ class PersonOfContact
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstName;
 
@@ -45,6 +45,11 @@ class PersonOfContact
      * @ORM\Column(type="string", length=255)
      */
     private $relation;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $idMember;
 
     public function getId(): ?int
     {
@@ -119,6 +124,18 @@ class PersonOfContact
     public function setRelation(string $relation): self
     {
         $this->relation = $relation;
+
+        return $this;
+    }
+
+    public function getIdMember(): ?int
+    {
+        return $this->idMember;
+    }
+
+    public function setIdMember(?int $idMember): self
+    {
+        $this->idMember = $idMember;
 
         return $this;
     }
