@@ -105,6 +105,11 @@ class User implements UserInterface
      */
     private $personOfContact;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="user")
+     */
+    private $registration;
+
 
     public function __construct()
     {
@@ -113,6 +118,7 @@ class User implements UserInterface
         $this->rentals = new ArrayCollection();
         $this->attachedFiles = new ArrayCollection();
         $this->personOfContact = new ArrayCollection();
+        $this->registration = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -376,6 +382,37 @@ class User implements UserInterface
     {
         if ($this->personOfContact->contains($personOfContact)) {
             $this->personOfContact->removeElement($personOfContact);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Registration[]
+     */
+    public function getRegistration(): Collection
+    {
+        return $this->registration;
+    }
+
+    public function addRegistration(Registration $registration): self
+    {
+        if (!$this->registration->contains($registration)) {
+            $this->registration[] = $registration;
+            $registration->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegistration(Registration $registration): self
+    {
+        if ($this->registration->contains($registration)) {
+            $this->registration->removeElement($registration);
+            // set the owning side to null (unless already changed)
+            if ($registration->getUser() === $this) {
+                $registration->setUser(null);
+            }
         }
 
         return $this;
