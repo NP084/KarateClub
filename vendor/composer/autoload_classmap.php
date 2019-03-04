@@ -9,6 +9,7 @@ return array(
     'App\\Controller\\BlogController' => $baseDir . '/src/Controller/BlogController.php',
     'App\\Controller\\EquipmentController' => $baseDir . '/src/Controller/EquipmentController.php',
     'App\\Controller\\EventController' => $baseDir . '/src/Controller/EventController.php',
+    'App\\Controller\\MemberController' => $baseDir . '/src/Controller/MemberController.php',
     'App\\Controller\\SecurityController' => $baseDir . '/src/Controller/SecurityController.php',
     'App\\DataFixtures\\AppFixtures' => $baseDir . '/src/DataFixtures/AppFixtures.php',
     'App\\DataFixtures\\ArticlesFixtures' => $baseDir . '/src/DataFixtures/ArticlesFixtures.php',

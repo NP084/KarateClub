@@ -531,6 +531,7 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         'App\\Controller\\BlogController' => __DIR__ . '/../..' . '/src/Controller/BlogController.php',
         'App\\Controller\\EquipmentController' => __DIR__ . '/../..' . '/src/Controller/EquipmentController.php',
         'App\\Controller\\EventController' => __DIR__ . '/../..' . '/src/Controller/EventController.php',
+        'App\\Controller\\MemberController' => __DIR__ . '/../..' . '/src/Controller/MemberController.php',
         'App\\Controller\\SecurityController' => __DIR__ . '/../..' . '/src/Controller/SecurityController.php',
         'App\\DataFixtures\\AppFixtures' => __DIR__ . '/../..' . '/src/DataFixtures/AppFixtures.php',
         'App\\DataFixtures\\ArticlesFixtures' => __DIR__ . '/../..' . '/src/DataFixtures/ArticlesFixtures.php',
