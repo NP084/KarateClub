@@ -8,12 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Doctrine\Common\Persistence\ObjectManager;
+
 use App\Repository\ArticleRepository;
 use App\Form\ArticleType;
 use App\Entity\Article;
 use App\Form\CommentType;
 use App\Entity\Comment;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class BlogController extends AbstractController
 {
@@ -31,7 +32,7 @@ class BlogController extends AbstractController
             'articles' => $articles,
         ]);
     }
-    
+
     /**
     * @Route("/", name="home")
     */
