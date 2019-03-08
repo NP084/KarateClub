@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {# vérifie si l'id du visiteur correspond à l'id du membre qu'il veut consulter #}
+    {% if  app.user.id == app.request.get("id") %}
+        {% if app.user  %}
+        <h2>Profile utilisateur </h2>
+          <h3>{{ user.name }} {{ user.firstName }} </h3>
+            <h4> </br> Informations générales :</h4>
+            <div class="content">
+              {# <img src="{{ article.image}}" alt=""> #}
+              <p> Nom d'utilisateur : {{ user.username}} </p>
+              <p> Email : {{ user.email }} </p>
+              <p> Date de naissance : {{ user.birthday |date('d/m/Y')}} </p>
+              {% if (user.belt) %}
+                  <p> Grade : {{ user.belt }} reçu le {{ user.receiptDate }}</p>
+              {% endif %}
+            </div>
+            <div class="metadata">Inscrit sur le site depuis  : {{ user.createdUser |date('d/m/Y')}}</div>
+
+            <a href="{{ path('security_login') }}" class="btn-btn-primary">
+                </br> Modifier profile </br>
+            </a>
+
+            <h4> </br> Coordonnées :</h4>
+            <h5> Téléphone </h5>
+            {{ user.getPhone() }}
+
+
+        {% else %}
+            <h2>Vous n'êtes pas connecté !</h2>
+            <a href="{{ path('security_login') }}" class="btn-btn-primary">
+                Connexion
+            </a>
+        {% endif %}
+    {% else %}
+        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
+        <a href="{{ path('security_logout') }}" class="btn-btn-primary">
+            Déconnexion ?
+        </a>
+    {% endif %}
+
+
+
+{% endblock %}
