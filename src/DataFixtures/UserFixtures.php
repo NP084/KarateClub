@@ -76,6 +76,7 @@ class UserFixtures extends Fixture
             $user->setEmail($faker->email)
                  ->setUsername($faker->userName)
                  ->setName($faker->lastName())
+                 ->setSex('Male')
                  ->setFirstname($faker->firstName())
                  ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))
                  ->setCreatedUser($faker->dateTimeBetween('-6 months'))

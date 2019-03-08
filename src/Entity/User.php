@@ -116,7 +116,7 @@ class User implements UserInterface
     private $histories;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $sex;
 
