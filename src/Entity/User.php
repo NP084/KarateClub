@@ -115,6 +115,11 @@ class User implements UserInterface
      */
     private $histories;
 
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $sex;
+
 
     public function __construct()
     {
@@ -451,6 +456,18 @@ class User implements UserInterface
                 $history->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSex(): ?string
+    {
+        return $this->sex;
+    }
+
+    public function setSex(string $sex): self
+    {
+        $this->sex = $sex;
 
         return $this;
     }
