@@ -34,8 +34,17 @@ class MemberController extends AbstractController
     public function profileEdit(User $user, Request $request){
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+
+        // récupère les téléphones de l'utilisateur
+        $phones = $user -> getPhones();
+        $phone = new Phone;
+        $formPhone = $this->createForm(PhoneType::class, $phone);
+        $formPhone->handleRequest($request);
+
         return $this->render('member/editProfile.html.twig', [
             'formUser'=>$form->createView(),
+            'phones' => $phones,
+            'phoneForm' => $formPhone->createView()
         ]);
     }
 

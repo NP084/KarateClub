@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Phone ;
 
 class UserType extends AbstractType
 {
@@ -26,6 +28,10 @@ class UserType extends AbstractType
             ->add('belt')
             ->add('receiptDate')
             ->add('sex')
+      //      ->add('phones', EntityType::class,[
+       //         'class' => Phone::class,
+          //      'choice_label' => 'num'
+        //    ])
        //     ->add('phones')
        //     ->add('adress')
        //     ->add('personOfContact')

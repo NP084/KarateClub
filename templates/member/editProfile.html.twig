@@ -1,15 +1,89 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% if  app.user.id == app.request.get("id") %}
+        {% if app.user  %}
 
-    <h1> Modification des données personnelles </h1>
+            <h2> Modification des données personnelles </h2>
 
-    {{ form_start(formUser) }}
+            <div class="form-group">
+                <label for="">Nom</label>
+                {{ form_widget(formUser.name) }}
+            </div>
 
-    {{ form_end(formUser)}}
+            <div class="form-group">
+                <label for="">Prénom</label>
+                {{ form_widget(formUser.firstname) }}
+            </div>
 
-    <button type="submit" class="btn btn-success">
-            Enregister modification(s)
-    </button>
+            <div class="form-group">
+                <label for="">Date de naissance</label>
+                {{ form_widget(formUser.birthday) }}
+            </div>
+
+            <div class="form-group">
+                <label for="">Grade</label>
+                {{ form_widget(formUser.belt) }}
+            </div>
+
+            <div class="form-group">
+                <label for="">Date d'obtention</label>
+                {{ form_widget(formUser.receiptDate) }}
+            </div>
+
+            <div class="form-group">
+                <label for="">Genre</label>
+                <select name="Genre">
+                    <option value="Male">Homme</option>
+                    <option value="Female">Femme</option>
+                </select>
+            </div>
+
+            <h3> <br>Téléphones</h3>
+
+            {% for phone in phones %}
+                <div class="phone">
+                    <div class="row">
+                        <div class="col-2">
+                            <br> {{ phone.type }}
+                        </div>
+                        <div class="col">
+                             <br> {{ phone.num}}
+                        </div>
+                        <div class="col">
+                            <br> <button type="submit" class="btn btn-success">
+                                <small>Supprimer numéro</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h4> <br>Nouveau numéro</h4>
+
+            <select name="Type">
+                <option value="Domicile">Domicile</option>
+                <option value="Portable">Portable</option>
+                <option value="Travaille">Travail</option>
+            </select>
+
+            <br> {{ form_widget(phoneForm.num) }}
+
+            <button type="submit" class="btn btn-success">
+                    Enregister modification(s)
+            </button>
+        {% else %}
+            <h2>Vous n'êtes pas connecté !</h2>
+            <a href="{{ path('security_login') }}" class="btn-btn-primary">
+                Connexion
+            </a>
+        {% endif %}
+    {% else %}
+        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
+        <a href="{{ path('security_logout') }}" class="btn-btn-primary">
+            Déconnexion ?
+        </a>
+    {% endif %}
+
 
 {% endblock %}
