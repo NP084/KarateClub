@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Adress;
 use App\Form\AdressType;
+use App\Form\UserType;
 use App\Repository\AdressRepository;
 use App\Repository\RegistrationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -27,12 +28,16 @@ class MemberController extends AbstractController
     }
 
 
-  //  /**
-  //   * @Route("/member/{id}/edit, name="profile_edit")
-  //   */
-  //  public function profileEdit(User $user, Request, ObjectManager $manager){
-
-  //  }
+    /**
+     * @Route("/member/id={id}/edit", name="profile_edit")
+     */
+    public function profileEdit(User $user, Request $request){
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        return $this->render('member/editProfile.html.twig', [
+            'formUser'=>$form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/member/id={id}", name="profile_show")
