@@ -24,8 +24,42 @@
 
             <h4> </br> Coordonnées :</h4>
             <h5> Téléphone </h5>
-            {{ user.getPhone() }}
 
+            {% for phone in user.phones %}
+                <div class="phone">
+                    <div class="row">
+                        <div class="col-2">
+                            {{ phone.type }}
+                        </div>
+                        <div class="col">
+                            {{ phone.num}}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h5> <br> Adresses </h5>
+            {% for adress in user.adress %}
+                <div class="adress">
+                    <div class="row">
+                        <div class="col-1">
+                            {{ adress.type}}
+                        </div>
+                        <div class="col">
+                            Rue : {{ adress.num }}
+                            BP  {{ adress.postBox }}
+                            {{ adress.streetName }}
+                        </div>
+                        <div class="col">
+                            Ville : {{ adress.city.cityName }}
+                            ({{ adress.city.zip }})
+                        </div>
+                        <div class="col">
+                            Pays : {{ adress.city.country.countryName }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
 
         {% else %}
             <h2>Vous n'êtes pas connecté !</h2>
