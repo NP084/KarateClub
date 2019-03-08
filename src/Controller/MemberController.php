@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Adress;
 use App\Form\AdressType;
 use App\Repository\AdressRepository;
+use App\Repository\RegistrationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
@@ -45,10 +46,13 @@ class MemberController extends AbstractController
         $formAdress = $this->createForm(AdressType::class, $adress);
         $formAdress ->handleRequest($request);
 
+        // récupère les inscriptions à des événements (cours, stage etc)
+        $registrations = $user -> getRegistration();
             return $this->render('member/showProfile.html.twig',[
                 'user' => $user,
                 'phoneForm' => $formPhone->createView(),
-                'AdressForm' => $formAdress->createView()
+                'AdressForm' => $formAdress->createView(),
+                'registrations' => $registrations
             ]);
     }
 }

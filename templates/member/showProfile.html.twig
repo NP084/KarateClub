@@ -46,19 +46,48 @@
                             {{ adress.type}}
                         </div>
                         <div class="col">
-                            Rue : {{ adress.num }}
+                            {{ adress.num }}
                             BP  {{ adress.postBox }}
                             {{ adress.streetName }}
                         </div>
                         <div class="col">
-                            Ville : {{ adress.city.cityName }}
+                            {{ adress.city.cityName }}
                             ({{ adress.city.zip }})
                         </div>
                         <div class="col">
-                            Pays : {{ adress.city.country.countryName }}
+                            {{ adress.city.country.countryName }}
                         </div>
                     </div>
                 </div>
+            {% endfor %}
+
+            <h5> <br> Liste des inscriptions </h5>
+
+            <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Date d'inscription</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Info</th>
+            </tr>
+            </thead>
+            {% for registration in user.registration %}
+
+                <div class="rental">
+
+                <body>
+                    <div class="row">
+                        <div class="col">
+                            {{ registration.registrationDate | date ('d/m/Y') }}
+                        </div>
+                        <div class="col">
+                            {{ registration.event.title }}
+                        </div>
+                        <div class="col">
+                            {{ registration.remark}}
+                        </div>
+                </div>
+                </body>
             {% endfor %}
 
         {% else %}
