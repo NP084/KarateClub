@@ -62,11 +62,18 @@ class MemberController extends AbstractController
 
         // récupère les inscriptions à des événements (cours, stage etc)
         $registrations = $user -> getRegistration();
+
+        // récupère historique du membre
+        $histories = $user -> getHistories();
+
             return $this->render('member/showProfile.html.twig',[
                 'user' => $user,
                 'phoneForm' => $formPhone->createView(),
                 'AdressForm' => $formAdress->createView(),
-                'registrations' => $registrations
+                'registrations' => $registrations,
+                'history' => $histories
             ]);
+
+
     }
 }

@@ -19,4 +19,4 @@
 ###< symfony/web-server-bundle ###
 .DS_Store
 .idea/workspace.xml
-*.xml
+.idea/encodings.xml
