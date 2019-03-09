@@ -75,7 +75,6 @@
             #}
             {% for registration in user.registration %}
                 <div class="rental">
-                <body>
                     <div class="row">
                         <div class="col">
                             {{ registration.registrationDate | date ('d/m/Y') }}
@@ -87,15 +86,12 @@
                             {{ registration.remark}}
                         </div>
                 </div>
-                </body>
             {% endfor %}
 
             {#Affichle l'historique du membre#}
             <h4> <br> Parcours </h4>
 
             {% for history in user.histories %}
-                <div class="history">
-                <body>
                 <div class="row">
                     <div class="col">
                         {{ history.refDate | date ('d/m/Y') }}
@@ -107,7 +103,6 @@
                         {{ history.comment}}
                     </div>
                 </div>
-                </body>
             {% endfor %}
 
         {% else %}

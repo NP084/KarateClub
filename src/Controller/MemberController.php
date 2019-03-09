@@ -37,14 +37,23 @@ class MemberController extends AbstractController
 
         // récupère les téléphones de l'utilisateur
         $phones = $user -> getPhones();
+        // création d'un Form pour éventuellement enregistrer  un nouveau numéro de téléphone
         $phone = new Phone;
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
 
+        // récupère les adresses
+        $adress = $user -> getAdress();
+        // création d'un Form pour éventuellement enregistrer  une nouvelle adresse
+        $emptyAdress = new Adress();
+        $formAdress = $this->createForm(AdressType::class, $emptyAdress);
+
         return $this->render('member/editProfile.html.twig', [
             'formUser'=>$form->createView(),
             'phones' => $phones,
-            'phoneForm' => $formPhone->createView()
+            'phoneForm' => $formPhone->createView(),
+            'adress' => $adress,
+            'adressForm' => $formAdress->createView()
         ]);
     }
 

@@ -22,15 +22,7 @@ class AdressType extends AbstractType
             ->add('streetName')
             ->add('city', EntityType::class,[
                 'class'=> City::class,
-                'choice_label'=>'cityName'
-            ])
-            ->add('city', EntityType::class,[
-                'class'=> City::class,
-                'choice_label'=>'zip'
-            ])
-            ->add('city', EntityType::class,[
-                'class'=> Country::class,
-                'choice_label'=>'countryName'
+                'choice_label'=>'cityName',
             ])
         ;
     }

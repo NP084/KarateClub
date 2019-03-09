@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if  app.user.id == app.request.get("id") %}
-        {% if app.user  %}
-
+    {% if app.user  %}
+        {% if  app.user.id == app.request.get("id") %}
             <h2> Modification des données personnelles </h2>
 
             <div class="form-group">
@@ -60,28 +59,76 @@
             {% endfor %}
 
             <h4> <br>Nouveau numéro</h4>
-
+{#
             <select name="Type">
                 <option value="Domicile">Domicile</option>
                 <option value="Portable">Portable</option>
                 <option value="Travaille">Travail</option>
             </select>
+#}          <div>
+            <br> Type :
+            {{ form_widget(phoneForm.type) }}
+            Numéro :
+            {{ form_widget(phoneForm.num) }}
+            </div>
 
-            <br> {{ form_widget(phoneForm.num) }}
+            {#Affiche adresses#}
+            <h3> <br>Adresses</h3>
 
-            <button type="submit" class="btn btn-success">
-                    Enregister modification(s)
+            {% for adress in adress %}
+                <div class="adress">
+                    <div class="row">
+                        <div class="col-2">
+                            <br> {{ adress.type }}
+                        </div>
+                        <div class="col">
+                            <br> {{ adress.num}}
+                        </div>
+                        <div class="col">
+                            <br> {{ adress.streetName}}
+                        </div>
+                        <div class="col">
+                            <br> {{ adress.city.cityName}}
+                            ({{ adress.city.zip}})
+                        </div>
+                        <div class="col">
+                            <br> {{ adress.city.country.countryName}}
+                        </div>
+                        <div class="col">
+                            <br> <button type="submit" class="btn btn-success">
+                                <small>Supprimer adresse</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h4> <br>Nouvelle adresse</h4>
+
+            <select name="Type">
+                <option value="Default">Domicile principal</option>
+                <option value="Other">Autre</option>
+            </select>
+            <div>
+            <br> Type :{{ form_widget(adressForm.type) }}
+            N°:{{ form_widget(adressForm.num) }}
+            Rue : {{ form_widget(adressForm.streetName) }}
+            Ville : {{ form_widget(adressForm.city)}}
+
+            <br><button type="submit" class="btn btn-success">
+                  Enregister modification(s)
             </button>
+            </div>
         {% else %}
-            <h2>Vous n'êtes pas connecté !</h2>
-            <a href="{{ path('security_login') }}" class="btn-btn-primary">
-                Connexion
+            <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
+            <a href="{{ path('security_logout') }}" class="btn-btn-primary">
+                Déconnexion ?
             </a>
         {% endif %}
     {% else %}
-        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
-        <a href="{{ path('security_logout') }}" class="btn-btn-primary">
-            Déconnexion ?
+        <h2>Vous n'êtes pas connecté !</h2>
+        <a href="{{ path('security_login') }}" class="btn-btn-primary">
+            Connexion
         </a>
     {% endif %}
 
