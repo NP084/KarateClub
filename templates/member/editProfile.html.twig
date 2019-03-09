@@ -114,10 +114,18 @@
             {% endfor %}
 
             <h4> <br>Nouvelle adresse</h4>
-            <div>
-            <br> Type :{{ form_widget(adressForm.type) }}
-            N°:{{ form_widget(adressForm.num) }}
-            Rue : {{ form_widget(adressForm.streetName) }}
+            <div class="row">
+                <div class="col-2">
+                    Type :{{ form_widget(adressForm.type) }}
+                </div>
+                <div class="col-2">
+                    N°:{{ form_widget(adressForm.num) }}
+                </div>
+                <div class="col">
+                    Rue : {{ form_widget(adressForm.streetName) }}
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-2">
                     Code Postal: {{ (form_widget(cityForm.zip) ) }}
