@@ -112,6 +112,8 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="user")
+     * Affiche l'historique trié selon refDate
+     * @ORM\OrderBy({"refDate" = "ASC"})
      */
     private $histories;
 
