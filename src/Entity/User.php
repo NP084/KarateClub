@@ -38,11 +38,11 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
-     *      min=8,
+     *      min=6,
      *      max=24,
      *      minMessage = "Votre mot de passe doit faire minimum {{ limit }} caractères !",
      *      maxMessage = "Votre mot de passe doit faire maximum {{ limit }} caractères !")
-     * @Assert\EqualTo(propertyPath="confirm_password", message="Ne correspond pas à la confirmation !")
+     * @Assert\EqualTo(propertyPath="confirm_password", message="Les mots de passe ne correspondent pas!")
      */
     private $password;
 
