@@ -65,11 +65,21 @@
                 <option value="Portable">Portable</option>
                 <option value="Travaille">Travail</option>
             </select>
-#}          <div>
-            <br> Type :
-            {{ form_widget(phoneForm.type) }}
-            Numéro :
-            {{ form_widget(phoneForm.num) }}
+#}          <div class = "phone">
+                <div class="row">
+                    <div class="col-2">
+                         Type :
+                        {{ form_widget(phoneForm.type,  {'attr':{
+                            'placeholder':"Domicile, travail..."
+                        }}) }}
+                    </div>
+                    <div class="col">
+                        Numéro :
+                        {{ form_widget(phoneForm.num,  {'attr':{
+                            'placeholder':"Votre nouveau numéro..."
+                        }}) }}
+                    </div>
+                </div>
             </div>
 
             {#Affiche adresses#}
@@ -104,18 +114,12 @@
             {% endfor %}
 
             <h4> <br>Nouvelle adresse</h4>
-
-            <select name="Type">
-                <option value="Default">Domicile principal</option>
-                <option value="Other">Autre</option>
-            </select>
             <div>
             <br> Type :{{ form_widget(adressForm.type) }}
             N°:{{ form_widget(adressForm.num) }}
             Rue : {{ form_widget(adressForm.streetName) }}
-            Ville : {{ form_widget(adressForm.city)}}
-
-            <br><button type="submit" class="btn btn-success">
+            Ville : {{ form_widget(adressForm.city, {'attr':{'class':'TextType'}}) }}
+                <br><button type="submit" class="btn btn-success">
                   Enregister modification(s)
             </button>
             </div>
