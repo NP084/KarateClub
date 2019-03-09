@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Adress;
+use App\Entity\City;
 use App\Form\AdressType;
+use App\Form\CityType;
 use App\Form\UserType;
 use App\Repository\AdressRepository;
 use App\Repository\RegistrationRepository;
@@ -38,7 +40,7 @@ class MemberController extends AbstractController
         // récupère les téléphones de l'utilisateur
         $phones = $user -> getPhones();
         // création d'un Form pour éventuellement enregistrer  un nouveau numéro de téléphone
-        $phone = new Phone;
+        $phone = new Phone();
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
 
@@ -48,12 +50,16 @@ class MemberController extends AbstractController
         $emptyAdress = new Adress();
         $formAdress = $this->createForm(AdressType::class, $emptyAdress);
 
+        $emptyCity = new City();
+        $formCity = $this->createForm(CityType::class, $emptyCity);
+
         return $this->render('member/editProfile.html.twig', [
             'formUser'=>$form->createView(),
             'phones' => $phones,
             'phoneForm' => $formPhone->createView(),
             'adress' => $adress,
-            'adressForm' => $formAdress->createView()
+            'adressForm' => $formAdress->createView(),
+            'cityForm' => $formCity->createView()
         ]);
     }
 

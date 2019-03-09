@@ -118,7 +118,19 @@
             <br> Type :{{ form_widget(adressForm.type) }}
             N°:{{ form_widget(adressForm.num) }}
             Rue : {{ form_widget(adressForm.streetName) }}
-            Ville : {{ form_widget(adressForm.city, {'attr':{'class':'TextType'}}) }}
+            <div class="row">
+                <div class="col-2">
+                    Code Postal: {{ (form_widget(cityForm.zip) ) }}
+                </div>
+                <div class="col">
+                    Ville : {{ form_widget(cityForm.cityName)}}
+                </div>
+                <div class="col">
+                    Pays : {{ form_widget(cityForm.country)}}
+                </div>
+            </div>
+
+
                 <br><button type="submit" class="btn btn-success">
                   Enregister modification(s)
             </button>

@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Adress;
 use App\Entity\City;
-use App\Entity\Country;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,10 +26,12 @@ class AdressType extends AbstractType
             ->add('num')
             ->add('postBox')
             ->add('streetName')
+            /*
             ->add('city', EntityType::class,[
                 'class'=> City::class,
                 'choice_label'=>'cityName',
             ])
+            */
         ;
     }
 
