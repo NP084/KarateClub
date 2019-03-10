@@ -66,7 +66,7 @@
                 <option value="Portable">Portable</option>
                 <option value="Travaille">Travail</option>
             </select>
-#}  <form action="{{path('add_phone',{'id':user.id}) }}" method="post">
+#}  <form action="{{path('profile_edit',{'id':user.id}) }}" method="post">
             <div class = "phone">
                 <div class="row">
                     <div class="col-2">
@@ -120,34 +120,31 @@
             {% endfor %}
 
             <h4> <br>Nouvelle adresse</h4>
-            <div class="row">
-                <div class="col-2">
-                    Type {{ form_widget(adressForm.type) }}
+            <form action="{{path('profile_edit',{'id':user.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-2">
+                        Type {{ form_widget(adressForm.type) }}
+                    </div>
+                    <div class="col-2">
+                        Numero {{ form_widget(adressForm.num) }}
+                    </div>
+                    <div class="col-7">
+                        Rue  {{ form_widget(adressForm.streetName) }}
+                    </div>
+                    <div class="col-2">
+                        CP {{ (form_widget(cityForm.zip) ) }}
+                    </div>
+                    <div class="col-4">
+                        Ville  {{ form_widget(cityForm.cityName)}}
+                    </div>
+                    <div class="col-4">
+                        Pays  {{ form_widget(cityForm.country)}}
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-link"><br>Ajouter adresse</button>
+                    </div>
                 </div>
-                <div class="col-2">
-                    Numero {{ form_widget(adressForm.num) }}
-                </div>
-                <div class="col-6">
-                    Rue  {{ form_widget(adressForm.streetName) }}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-2">
-                    CP {{ (form_widget(cityForm.zip) ) }}
-                </div>
-                <div class="col-4">
-                    Ville  {{ form_widget(cityForm.cityName)}}
-                </div>
-                <div class="col-4">
-                    Pays  {{ form_widget(cityForm.country)}}
-                </div>
-                <div class="col">
-                    <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
-                        <br>Ajouter adresse
-                    </a>
-                </div>
-            </div>
+            </form>
 
         {% else %}
             <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
