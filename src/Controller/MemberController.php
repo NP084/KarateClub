@@ -7,8 +7,6 @@ use App\Entity\City;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\UserType;
-use App\Repository\AdressRepository;
-use App\Repository\RegistrationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
@@ -17,7 +15,9 @@ use App\Form\PhoneType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class MemberController extends AbstractController
+
 {
     /**
      * @Route("/member", name="member")
@@ -29,66 +29,60 @@ class MemberController extends AbstractController
         ]);
     }
 
-
     /**
-     * @Route("/member/id={id}/edit", name="profile_edit")
+     * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
      */
     public function profileEdit(User $user, Request $request){
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        // récupère les téléphones de l'utilisateur
-        $phones = $user -> getPhones();
-        // création d'un Form pour éventuellement enregistrer  un nouveau numéro de téléphone
+        // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
         $phone = new Phone();
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
 
-        // récupère les adresses
-        $adress = $user -> getAdress();
-        // création d'un Form pour éventuellement enregistrer  une nouvelle adresse
-        $emptyAdress = new Adress();
-        $formAdress = $this->createForm(AdressType::class, $emptyAdress);
+        // création d'un Form pour éventuellement enregistrer une nouvelle adresse
+        $Adress = new Adress();
+        $formAdress = $this->createForm(AdressType::class, $Adress);
 
-        $emptyCity = new City();
-        $formCity = $this->createForm(CityType::class, $emptyCity);
+        $City = new City();
+        $formCity = $this->createForm(CityType::class, $City);
 
         return $this->render('member/editProfile.html.twig', [
+            'user' => $user,
             'formUser'=>$form->createView(),
-            'phones' => $phones,
             'phoneForm' => $formPhone->createView(),
-            'adress' => $adress,
             'adressForm' => $formAdress->createView(),
             'cityForm' => $formCity->createView()
         ]);
     }
 
+
     /**
-     * @Route("/member/id={id}", name="profile_show")
+     * @Route("/member/id={id}", name="profile_show",  requirements={"id"="\d+"})
      */
     public function profileShow(User $user, Request $request){
-        $phone = new Phone();
-        $formPhone = $this->createForm(PhoneType::class, $phone);
-        $formPhone->handleRequest($request);
-
-        $adress = new Adress();
-        $formAdress = $this->createForm(AdressType::class, $adress);
-        $formAdress ->handleRequest($request);
-
-        // récupère les inscriptions à des événements (cours, stage etc)
-        $registrations = $user -> getRegistration();
-
-        // récupère historique du membre
-        $histories = $user -> getHistories();
 
             return $this->render('member/showProfile.html.twig',[
-                'user' => $user,
-                'phoneForm' => $formPhone->createView(),
-                'AdressForm' => $formAdress->createView(),
-                'registrations' => $registrations,
-                'history' => $histories
+                'user' => $user
             ]);
 
 
     }
+
+    /**
+     * Supprime un numéro de téléphone d'un user. (le numéro reste dans la DB)
+     * @Route("/member/removePhone/idPhone={idPhone}/idUser={idUser}", name="remove_phone", requirements={"id"="\d+"})
+     */
+    public function removeUserPhone($idPhone, $idUser){
+        $entityManager=$this->getDoctrine()->getManager();
+        $phone = $entityManager->getRepository(Phone::class)->find($idPhone);
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $phone->removeUser($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+    }
+
 }

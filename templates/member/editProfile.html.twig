@@ -21,42 +21,43 @@
             </div>
 
             <div class="form-group">
-                <label for="">Grade</label>
-                {{ form_widget(formUser.belt) }}
-            </div>
-
-            <div class="form-group">
-                <label for="">Date d'obtention</label>
-                {{ form_widget(formUser.receiptDate) }}
-            </div>
-
-            <div class="form-group">
                 <label for="">Genre</label>
-                <select name="Genre">
-                    <option value="Male">Homme</option>
-                    <option value="Female">Femme</option>
-                </select>
+                {{ form_widget(formUser.sex) }}
             </div>
+            <div class="row">
+                <div class="col-4">
+                    <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
+                        Enregister modification(s)
+                    </a>
+                </div>
+                <div class="col-4">
+                        <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
+                            Modifier mot de passe
+                        </a>
+                </div>
+            </div>
+
 
             <h3> <br>Téléphones</h3>
 
-            {% for phone in phones %}
+            {% for phone in user.phones %}
                 <div class="phone">
                     <div class="row">
                         <div class="col-2">
-                            <br> {{ phone.type }}
+                            {{ phone.type }}
                         </div>
                         <div class="col">
-                             <br> {{ phone.num}}
+                             {{ phone.num}}
                         </div>
                         <div class="col">
-                            <br> <button type="submit" class="btn btn-success">
-                                <small>Supprimer numéro</small>
-                            </button>
+                            <a href="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':user.id}) }}" class="btn-btn-primary">
+                                Supprimer numéro
+                            </a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
+
 
             <h4> <br>Nouveau numéro</h4>
 {#
@@ -68,46 +69,52 @@
 #}          <div class = "phone">
                 <div class="row">
                     <div class="col-2">
-                         Type :
+                         Type
                         {{ form_widget(phoneForm.type,  {'attr':{
                             'placeholder':"Domicile, travail..."
                         }}) }}
                     </div>
                     <div class="col">
-                        Numéro :
+                        Numéro
                         {{ form_widget(phoneForm.num,  {'attr':{
                             'placeholder':"Votre nouveau numéro..."
                         }}) }}
                     </div>
+                    <div class="col">
+                        <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
+                            <br>Ajouter numéro
+                        </a>
+                    </div>
+
                 </div>
             </div>
 
             {#Affiche adresses#}
             <h3> <br>Adresses</h3>
 
-            {% for adress in adress %}
+            {% for adress in user.adress %}
                 <div class="adress">
                     <div class="row">
                         <div class="col-2">
-                            <br> {{ adress.type }}
+                             {{ adress.type }}
                         </div>
                         <div class="col">
-                            <br> {{ adress.num}}
+                            {{ adress.num}}
                         </div>
                         <div class="col">
-                            <br> {{ adress.streetName}}
+                            {{ adress.streetName}}
                         </div>
                         <div class="col">
-                            <br> {{ adress.city.cityName}}
+                             {{ adress.city.cityName}}
                             ({{ adress.city.zip}})
                         </div>
                         <div class="col">
-                            <br> {{ adress.city.country.countryName}}
+                             {{ adress.city.country.countryName}}
                         </div>
                         <div class="col">
-                            <br> <button type="submit" class="btn btn-success">
-                                <small>Supprimer adresse</small>
-                            </button>
+                            <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
+                                Supprimer adresse
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -116,33 +123,33 @@
             <h4> <br>Nouvelle adresse</h4>
             <div class="row">
                 <div class="col-2">
-                    Type :{{ form_widget(adressForm.type) }}
+                    Type {{ form_widget(adressForm.type) }}
                 </div>
                 <div class="col-2">
-                    N°:{{ form_widget(adressForm.num) }}
+                    Numero {{ form_widget(adressForm.num) }}
                 </div>
-                <div class="col">
-                    Rue : {{ form_widget(adressForm.streetName) }}
+                <div class="col-6">
+                    Rue  {{ form_widget(adressForm.streetName) }}
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-2">
-                    Code Postal: {{ (form_widget(cityForm.zip) ) }}
+                    CP {{ (form_widget(cityForm.zip) ) }}
+                </div>
+                <div class="col-4">
+                    Ville  {{ form_widget(cityForm.cityName)}}
+                </div>
+                <div class="col-4">
+                    Pays  {{ form_widget(cityForm.country)}}
                 </div>
                 <div class="col">
-                    Ville : {{ form_widget(cityForm.cityName)}}
-                </div>
-                <div class="col">
-                    Pays : {{ form_widget(cityForm.country)}}
+                    <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
+                        <br>Ajouter adresse
+                    </a>
                 </div>
             </div>
 
-
-                <br><button type="submit" class="btn btn-success">
-                  Enregister modification(s)
-            </button>
-            </div>
         {% else %}
             <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
             <a href="{{ path('security_logout') }}" class="btn-btn-primary">
