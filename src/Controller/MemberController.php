@@ -30,9 +30,10 @@ class MemberController extends AbstractController
     }
 
     /**
+     * @Route("/member/addPhone/id={id}", name="add_phone", requirements={"id"="\d+"})
      * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
      */
-    public function profileEdit(User $user, Request $request){
+    public function profileEdit(User $user, Request $request, ObjectManager $manager){
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -41,6 +42,15 @@ class MemberController extends AbstractController
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
 
+        if($formPhone->isSubmitted()){
+            $manager->persist($phone);
+            $manager->flush();
+
+            $phone -> addUser($user);
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        }
         // création d'un Form pour éventuellement enregistrer une nouvelle adresse
         $Adress = new Adress();
         $formAdress = $this->createForm(AdressType::class, $Adress);
@@ -68,20 +78,6 @@ class MemberController extends AbstractController
             ]);
 
 
-    }
-
-    /**
-     * Ajoute un numéro de téléphone à un user (id = idUser)
-     * @Route("/member/addPhone/id={id}", name="add_phone", requirements={"id"="\d+"})
-     */
-    public function addUserPhone($id){
-        $entityManager=$this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($idUser);
-
-        $phone->removeUser($user);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
     }
 
     /**

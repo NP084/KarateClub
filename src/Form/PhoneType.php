@@ -21,7 +21,7 @@ class PhoneType extends AbstractType
                     'Travail' => 'Travail',
                 ],
             ])
-            ->add('num', TelType::class)
+            ->add('num')
         ;
     }
 
