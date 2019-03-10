@@ -71,6 +71,20 @@ class MemberController extends AbstractController
     }
 
     /**
+     * Ajoute un numéro de téléphone à un user (id = idUser)
+     * @Route("/member/addPhone/id={id}", name="add_phone", requirements={"id"="\d+"})
+     */
+    public function addUserPhone($id){
+        $entityManager=$this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $phone->removeUser($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+    }
+
+    /**
      * Supprime un numéro de téléphone d'un user. (le numéro reste dans la DB)
      * @Route("/member/removePhone/idPhone={idPhone}/idUser={idUser}", name="remove_phone", requirements={"id"="\d+"})
      */

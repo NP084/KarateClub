@@ -41,6 +41,7 @@
             <h3> <br>Téléphones</h3>
 
             {% for phone in user.phones %}
+                <form action="{{path('remove_phone',{'idPhone':phone.id, 'idUser':user.id}) }}" method="post">
                 <div class="phone">
                     <div class="row">
                         <div class="col-2">
@@ -50,12 +51,11 @@
                              {{ phone.num}}
                         </div>
                         <div class="col">
-                            <a href="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':user.id}) }}" class="btn-btn-primary">
-                                Supprimer numéro
-                            </a>
+                            <button type="submit" class="btn btn-link">Supprimer numéro</button>
                         </div>
                     </div>
                 </div>
+                </form>
             {% endfor %}
 
 
@@ -66,7 +66,8 @@
                 <option value="Portable">Portable</option>
                 <option value="Travaille">Travail</option>
             </select>
-#}          <div class = "phone">
+#}
+            <div class = "phone">
                 <div class="row">
                     <div class="col-2">
                          Type
