@@ -30,7 +30,6 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/member/addPhone/id={id}", name="add_phone", requirements={"id"="\d+"})
      * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
      */
     public function profileEdit(User $user, Request $request, ObjectManager $manager){
@@ -42,27 +41,72 @@ class MemberController extends AbstractController
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
 
+        // Formulaire d'ajout d'un n° de téléphone a été envoyé :
         if($formPhone->isSubmitted()){
             // si numéro de téléphone n'existe pas, on le crée dans la DB
             $repo = $this->getDoctrine()
                 ->getRepository(Phone::class);
-            $phoneTest = $repo->findOneByNum($phone->getNum());
-            if (!$phoneTest){ // le n° n'existe pas
-                $manager->persist($phone);
+            // si le n° existe déjà => phonetest sera une instance de Phone associée à ce numéro
+            $phoneTest = $repo->findOneBy([
+                'num'=>$phone->getNum()
+            ]);
+            // instance test n'existe pas (le n° n'existe pas dans la DB)
+            if (!$phoneTest) {
+                $manager->persist($phone); // enregistre le nouveau numéro
+                $user->addPhone($phone);
+                $manager->flush();
+            }else{
+                $user->addPhone($phoneTest);
+                $manager->persist($user);
                 $manager->flush();
             }
-            // ajoute le numéro au user (ORM => pas de doublon dans association user-phone)
-            $phone -> addUser($user);
+
+            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        }
+        // création d'un Form pour éventuellement enregistrer une nouvelle adresse
+        $adress = new Adress();
+        $formAdress = $this->createForm(AdressType::class, $adress);
+        $formAdress->handleRequest($request);
+        $city = new City();
+        $formCity = $this->createForm(CityType::class, $city);
+        $formCity->handleRequest($request);
+
+        // Formulaire d'ajout d'une nouvelle adress
+        if($formAdress->isSubmitted()){
+            $repoCity = $this->getDoctrine()
+                ->getRepository(City::class);
+            $cityTest = $repoCity->findBy([
+                'cityName' =>$city->getCityName(),
+                'zip'      =>$city->getZip()
+            ]);
+            // instance citytest n'existe pas (la ville n'existe pas dans la DB)
+            if (!$cityTest){
+                $manager->persist($city);
+                $manager->flush();
+            }
+
+            // si adress n'existe pas, on la crée dans la DB
+            $repo = $this->getDoctrine()
+                ->getRepository(Adress::class);
+            // test si l'adress existe déjà :
+            $adressTest = $repo->findBy([
+                'streetName'=>$adress->getStreetName(),
+                'num'       =>$adress->getNum(),
+                'postBox'   =>$adress->getPostBox(),
+            ]);
+            // instance adressTest n'existe pas (l'adress n'existe pas dans la DB)
+            if (!$adressTest) {
+                $adress->setCity($city);
+                $manager->persist($adress);
+                $manager->flush();
+            }
+            // ajoute l'adresse au user
+
+            $adress -> addUser($user);
             $manager->persist($user);
             $manager->flush();
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         }
-        // création d'un Form pour éventuellement enregistrer une nouvelle adresse
-        $Adress = new Adress();
-        $formAdress = $this->createForm(AdressType::class, $Adress);
-
-        $City = new City();
-        $formCity = $this->createForm(CityType::class, $City);
 
         return $this->render('member/editProfile.html.twig', [
             'user' => $user,
@@ -82,8 +126,6 @@ class MemberController extends AbstractController
             return $this->render('member/showProfile.html.twig',[
                 'user' => $user
             ]);
-
-
     }
 
     /**
