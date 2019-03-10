@@ -43,9 +43,15 @@ class MemberController extends AbstractController
         $formPhone->handleRequest($request);
 
         if($formPhone->isSubmitted()){
-            $manager->persist($phone);
-            $manager->flush();
-
+            // si numéro de téléphone n'existe pas, on le crée dans la DB
+            $repo = $this->getDoctrine()
+                ->getRepository(Phone::class);
+            $phoneTest = $repo->findOneByNum($phone->getNum());
+            if (!$phoneTest){ // le n° n'existe pas
+                $manager->persist($phone);
+                $manager->flush();
+            }
+            // ajoute le numéro au user (ORM => pas de doublon dans association user-phone)
             $phone -> addUser($user);
             $manager->persist($user);
             $manager->flush();

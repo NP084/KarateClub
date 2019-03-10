@@ -19,6 +19,8 @@ class PhoneRepository extends ServiceEntityRepository
         parent::__construct($registry, Phone::class);
     }
 
+}
+
     // /**
     //  * @return Phone[] Returns an array of Phone objects
     //  */
@@ -34,17 +36,14 @@ class PhoneRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Phone
+
+    public function findOneByNum($value): ?Phone
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }
