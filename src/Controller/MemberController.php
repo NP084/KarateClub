@@ -37,24 +37,26 @@ class MemberController extends AbstractController
     /**
      * MODIFICATION D'UNE PERSONNE DE CONTACT.
      * @Route("/member/editPoC/id={id}/idCL={idCL}/idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
+     * @ParamConverter("contactList", options={"id"="idCL"})
      */
-    public function editPoC($id, $idCL, $idPoC, Request $request){
+    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager){
         $entityManager=$this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->find($id);
-        $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
 
         $formCL = $this->createForm(ContactListType::class, $contactList);
         $formCL->handleRequest($request);
 
-        $formPoC = $this->createForm(PersonOfContactType::class, $personOfContact);
-        $formPoC->handleRequest($request);
+        if($formCL->isSubmitted()){
+            $manager->persist($contactList);
+            $manager->flush();
+            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        }
 
         return $this->render('member/editPersonOfContact.html.twig', [
             'contactList'    =>$contactList,
             'ContactListForm'=>$formCL->createView(),
             'personOfContact'=>$personOfContact,
-            'PoCForm'        =>$formPoC->createView()
         ]);
     }
 

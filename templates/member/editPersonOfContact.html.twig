@@ -10,21 +10,21 @@
             {#Affiche personnes de contact#}
             <h2> <br>Modification d'un personne de contact</h2>
 
-            <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
+            <form action="{{path('edit_PoC',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}" method="post">
                 <div class="row">
-                    <div class="col-3">
-                        Nom {{ form_widget(PoCForm.name) }}
+                    <div class="col-4">
+                        Nom: {{ contactList.personOfContact.name }}
                     </div>
-                    <div class="col-3">
-                        Prénom {{ form_widget(PoCForm.firstName) }}
+                    <div class="col-4">
+                        Prénom : {{ contactList.personOfContact.firstName }}
                     </div>
-                    <div class="col-3">
-                        Numéro {{ form_widget(PoCForm.num1) }}
-                    </div>
-                    <div class="col-2">
-                        Info {{ (form_widget(ContactListForm.relation) ) }}
+                    <div class="col-4">
+                        Numéro : {{ contactList.personOfContact.num1 }}
                     </div>
                     <div class="col-5">
+                        Relation {{ (form_widget(ContactListForm.relation) ) }}
+                    </div>
+                    <div class="col-7">
                         Info {{ (form_widget(ContactListForm.info) ) }}
                     </div>
                     <div class="col">
