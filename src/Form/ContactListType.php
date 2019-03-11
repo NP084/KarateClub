@@ -2,27 +2,28 @@
 
 namespace App\Form;
 
+use App\Entity\ContactList;
 use App\Entity\PersonOfContact;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PersonOfContactType extends AbstractType
+class ContactListType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('firstName')
-            ->add('num1')
-            ->add('num2')
+            ->add('relation')
+            ->add('info')
+
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PersonOfContact::class,
+            'data_class' => ContactList::class,
         ]);
     }
 }

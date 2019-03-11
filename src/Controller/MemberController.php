@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Adress;
 use App\Entity\City;
+use App\Entity\ContactList;
 use App\Entity\PersonOfContact;
 use App\Form\AdressType;
 use App\Form\CityType;
+use App\Form\ContactListType;
 use App\Form\PersonOfContactType;
 use App\Form\UserType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -75,21 +77,26 @@ class MemberController extends AbstractController
         $PoC = new PersonOfContact();
         $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
         $formPoC->handleRequest($request);
+        $contactList = new ContactList();
+        $formContactList = $this->createForm(ContactListType::class, $contactList);
+        $formContactList->handleRequest($request);
+
         // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
         if($formPoC->isSubmitted()){
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
             $this->addUserPoC($user, $PoC, $request, $manager);
-         //   return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         }
 
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'user' => $user,
-            'formUser'   =>$form->createView(),
-            'phoneForm'  => $formPhone->createView(),
-            'adressForm' => $formAdress->createView(),
-            'cityForm'   => $formCity->createView(),
-            'PoCForm'    => $formPoC->createView()
+            'formUser'       =>$form->createView(),
+            'phoneForm'      => $formPhone->createView(),
+            'adressForm'     => $formAdress->createView(),
+            'cityForm'       => $formCity->createView(),
+            'PoCForm'        => $formPoC->createView(),
+            'ContactListForm'=>$formContactList->createView()
         ]);
     }
 
@@ -105,14 +112,14 @@ class MemberController extends AbstractController
 
     /**
      * Supprime une personne de contact.
-     * @Route("/member/removePoC/idPoC={idPoC}/idUser={idUser}", name="remove_PoC", requirements={"id"="\d+"})
+     * @Route("/member/removePoC/idCL={idCL}/idUser={idUser}", name="remove_PoC", requirements={"idCL"="\d+"})
      */
-    public function removePoC($idPoC, $idUser){
+    public function removePoC($idCL, $idUser){
         $entityManager=$this->getDoctrine()->getManager();
-        $PoC = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
+        $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
         $user = $entityManager->getRepository(User::class)->find($idUser);
 
-        $PoC->removeUser($user);
+        $user->removeContactList($contactList);
         $entityManager->flush();
 
         return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
