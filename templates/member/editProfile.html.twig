@@ -100,7 +100,7 @@
                              {{ adress.type }}
                         </div>
                         <div class="col">
-                            {{ adress.num}}
+                            {{ adress.num }} (BP:{{ adress.postBox }})
                         </div>
                         <div class="col">
                             {{ adress.streetName}}
@@ -129,7 +129,10 @@
                     <div class="col-2">
                         Numero {{ form_widget(adressForm.num) }}
                     </div>
-                    <div class="col-7">
+                    <div class="col-2">
+                        BP {{ form_widget(adressForm.postBox) }}
+                    </div>
+                    <div class="col-11">
                         Rue  {{ form_widget(adressForm.streetName) }}
                     </div>
                     <div class="col-2">
