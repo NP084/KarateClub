@@ -25,11 +25,6 @@ class PersonOfContactType extends AbstractType
                     'placeholder'=>"Informations complémentaires sur la personne de contact"
                 ]
             ])
-            ->add('relation', TextType::class, [
-                'attr'=>[
-                    'placeholder'=>"Relation avec la personne de contact"
-                    ]
-            ])
         ;
     }
 

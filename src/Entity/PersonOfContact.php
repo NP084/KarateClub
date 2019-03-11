@@ -44,11 +44,6 @@ class PersonOfContact
     private $info;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $relation;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="personOfContact")
      */
     private $users;
@@ -119,30 +114,6 @@ class PersonOfContact
     public function setInfo(?string $info): self
     {
         $this->info = $info;
-
-        return $this;
-    }
-
-    public function getRelation(): ?string
-    {
-        return $this->relation;
-    }
-
-    public function setRelation(string $relation): self
-    {
-        $this->relation = $relation;
-
-        return $this;
-    }
-
-    public function getIdMember(): ?int
-    {
-        return $this->idMember;
-    }
-
-    public function setIdMember(?int $idMember): self
-    {
-        $this->idMember = $idMember;
 
         return $this;
     }

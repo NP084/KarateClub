@@ -130,7 +130,6 @@ class MemberController extends AbstractController
             'num1' =>$PoC->getNum1(),
             'num2' =>$PoC->getNum2(),
             'info' =>$PoC->getInfo(),
-            'relation'=>$PoC->getRelation()
         ]);
         if (!$PoCTest) {
             // enregistre le nouveau numéro dans la DB
