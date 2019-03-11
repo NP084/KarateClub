@@ -30,10 +30,6 @@ class PersonOfContactType extends AbstractType
                     'placeholder'=>"Relation avec la personne de contact"
                     ]
             ])
-            ->add('users',EntityType::class,[
-                'class'       => User::class,
-                'choice_label'=>'name',
-    ])
         ;
     }
 

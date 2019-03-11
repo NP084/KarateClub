@@ -119,6 +119,33 @@ class MemberController extends AbstractController
     }
 
     /**
+     * AJOUTE NOUVELLE PERSONNE DE CONTACT à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
+    public function addUserPoC(User $user, PersonOfContact $PoC, Request $request, ObjectManager $manager){
+        $repo = $this->getDoctrine()
+            ->getRepository(PersonOfContact::class);
+        $PoCTest = $repo->findOneBy([
+            'name'=>$PoC->getName(),
+            'firstName'=>$PoC->getFirstName(),
+            'num1' =>$PoC->getNum1(),
+            'num2' =>$PoC->getNum2(),
+            'info' =>$PoC->getInfo(),
+            'relation'=>$PoC->getRelation()
+        ]);
+        if (!$PoCTest) {
+            // enregistre le nouveau numéro dans la DB
+            $manager->persist($PoC);
+
+            $user->addPersonOfContact($PoC);
+            $manager->flush();
+        }else{
+            // associe le n° existant à cet user
+            $user->addPersonOfContact($PoCTest);
+            $manager->flush();
+        }
+    }
+
+    /**
      * AJOUTE NOUVEAU PHONE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
     public function addUserPhone(User $user, Phone $phone, Request $request, ObjectManager $manager){
@@ -139,6 +166,7 @@ class MemberController extends AbstractController
             $manager->flush();
         }
     }
+
 
     /**
      * Supprime un numéro de téléphone d'un user. (le numéro reste dans la DB)
