@@ -35,7 +35,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * Modifie une personne de contact.
+     * MODIFICATION D'UNE PERSONNE DE CONTACT.
      * @Route("/member/editPoC/id={id}/idCL={idCL}/idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      */
     public function editPoC($id, $idCL, $idPoC, Request $request){
@@ -57,7 +57,6 @@ class MemberController extends AbstractController
             'PoCForm'        =>$formPoC->createView()
         ]);
     }
-
 
     /**
      * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
@@ -135,7 +134,6 @@ class MemberController extends AbstractController
                 'user' => $user
             ]);
     }
-
 
     /**
      * Supprime une personne de contact.
