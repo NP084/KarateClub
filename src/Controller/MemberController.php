@@ -36,6 +36,12 @@ class MemberController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
+        if($form->isSubmitted()){
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        }
+
         // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
         $phone = new Phone();
         $formPhone = $this->createForm(PhoneType::class, $phone);
