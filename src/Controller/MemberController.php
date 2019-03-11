@@ -19,6 +19,7 @@ use App\Form\PhoneType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class MemberController extends AbstractController
@@ -32,6 +33,31 @@ class MemberController extends AbstractController
             'controller_name' => 'MemberController',
         ]);
     }
+
+    /**
+     * Modifie une personne de contact.
+     * @Route("/member/editPoC/id={id}/idCL={idCL}/idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
+     */
+    public function editPoC($id, $idCL, $idPoC, Request $request){
+        $entityManager=$this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($id);
+        $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
+        $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
+
+        $formCL = $this->createForm(ContactListType::class, $contactList);
+        $formCL->handleRequest($request);
+
+        $formPoC = $this->createForm(PersonOfContactType::class, $personOfContact);
+        $formPoC->handleRequest($request);
+
+        return $this->render('member/editPersonOfContact.html.twig', [
+            'contactList'    =>$contactList,
+            'ContactListForm'=>$formCL->createView(),
+            'personOfContact'=>$personOfContact,
+            'PoCForm'        =>$formPoC->createView()
+        ]);
+    }
+
 
     /**
      * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
@@ -90,7 +116,7 @@ class MemberController extends AbstractController
 
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
-            'user' => $user,
+            'user'           => $user,
             'formUser'       =>$form->createView(),
             'phoneForm'      => $formPhone->createView(),
             'adressForm'     => $formAdress->createView(),
@@ -109,6 +135,7 @@ class MemberController extends AbstractController
                 'user' => $user
             ]);
     }
+
 
     /**
      * Supprime une personne de contact.

@@ -154,30 +154,38 @@
             <h3> <br>Personnes de contact</h3>
 
             {% for contactList in user.contactLists %}
-                <form action="{{path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}" method="post">
+               {# <form action="{{path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}" method="post">#}
                     <div class="personOfContact">
                         <div class="row">
                             <div class="col-2">
-                                {{ contactList.personOfContact.name }}
+                               Nom: {{ contactList.personOfContact.name }}
                             </div>
                             <div class="col">
-                                {{ contactList.personOfContact.firstName }}
+                                Prénom : {{ contactList.personOfContact.firstName }}
                             </div>
                             <div class="col">
-                                {{ contactList.personOfContact.num1 }}
+                                Numéro : {{ contactList.personOfContact.num1 }}
                             </div>
                             <div class="col">
-                                {{ contactList.relation }}
+                                Relation : {{ contactList.relation }}
                             </div>
                             <div class="col">
-                                {{ contactList.info }}
+                                Info : {{ contactList.info }}
                             </div>
+                        </div>
+                        <div>
+                            <div class="row">
                             <div class="col">
-                                <button type="submit" class="btn btn-link">Supprimer personne de contact</button>
+                                {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
+                                <a href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':app.user.id}) }}">Supprimer personne de contact</a>
+                           </div>
                             </div>
                         </div>
                     </div>
-                </form>
+               {# </form> #}
+                <div class="col">
+                    <a href="{{ path('edit_PoC',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">Modifier personne de contact</a>
+                </div>
             {% endfor %}
 
             <h4> <br>Nouvelle personne de contact</h4>
