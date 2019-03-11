@@ -100,7 +100,7 @@
                              {{ adress.type }}
                         </div>
                         <div class="col">
-                            {{ adress.num}}
+                            {{ adress.num }} (BP:{{ adress.postBox }})
                         </div>
                         <div class="col">
                             {{ adress.streetName}}
@@ -129,7 +129,10 @@
                     <div class="col-2">
                         Numero {{ form_widget(adressForm.num) }}
                     </div>
-                    <div class="col-7">
+                    <div class="col-2">
+                        BP {{ form_widget(adressForm.postBox) }}
+                    </div>
+                    <div class="col-11">
                         Rue  {{ form_widget(adressForm.streetName) }}
                     </div>
                     <div class="col-2">
@@ -143,6 +146,60 @@
                     </div>
                     <div class="col">
                         <button type="submit" class="btn btn-link"><br>Ajouter adresse</button>
+                    </div>
+                </div>
+            </form>
+
+            {#Affiche personnes de contact#}
+            <h3> <br>Personnes de contact</h3>
+
+            {% for contactList in user.contactLists %}
+                <form action="{{path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}" method="post">
+                    <div class="personOfContact">
+                        <div class="row">
+                            <div class="col-2">
+                                {{ contactList.personOfContact.name }}
+                            </div>
+                            <div class="col">
+                                {{ contactList.personOfContact.firstName }}
+                            </div>
+                            <div class="col">
+                                {{ contactList.personOfContact.num1 }}
+                            </div>
+                            <div class="col">
+                                {{ contactList.relation }}
+                            </div>
+                            <div class="col">
+                                {{ contactList.info }}
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-link">Supprimer personne de contact</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+
+            <h4> <br>Nouvelle personne de contact</h4>
+            <form action="{{path('profile_edit',{'id':user.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-3">
+                        Nom {{ form_widget(PoCForm.name) }}
+                    </div>
+                    <div class="col-3">
+                        Prénom {{ form_widget(PoCForm.firstName) }}
+                    </div>
+                    <div class="col-3">
+                        Numéro 1 {{ form_widget(PoCForm.num1) }}
+                    </div>
+                    <div class="col-2">
+                        Info {{ (form_widget(ContactListForm.relation) ) }}
+                    </div>
+                    <div class="col-5">
+                        Info {{ (form_widget(ContactListForm.info) ) }}
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-link"><br>Ajouter une nouvelle personne de contact</button>
                     </div>
                 </div>
             </form>
