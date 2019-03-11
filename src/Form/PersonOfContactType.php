@@ -20,11 +20,11 @@ class PersonOfContactType extends AbstractType
             ->add('firstName')
             ->add('num1')
             ->add('num2')
-            ->add('info', TextareaType::class, [
-                'attr'=>[
-                    'placeholder'=>"Informations complémentaires sur la personne de contact"
-                ]
-            ])
+        //    ->add('info', TextareaType::class, [
+        //        'attr'=>[
+        //            'placeholder'=>"Informations complémentaires sur la personne de contact"
+        //        ]
+        //    ])
         ;
     }
 
