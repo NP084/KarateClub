@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Adress;
 use App\Entity\City;
+use App\Entity\PersonOfContact;
 use App\Form\AdressType;
 use App\Form\CityType;
+use App\Form\PersonOfContactType;
 use App\Form\UserType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,13 +71,25 @@ class MemberController extends AbstractController
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         }
 
+        // Formulaire Personne de contact
+        $PoC = new PersonOfContact();
+        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
+        $formPoC->handleRequest($request);
+        // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
+        if($formPoC->isSubmitted()){
+            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+            $this->addUserPoC($user, $PoC, $request, $manager);
+         //   return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        }
+
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'user' => $user,
-            'formUser'=>$form->createView(),
-            'phoneForm' => $formPhone->createView(),
+            'formUser'   =>$form->createView(),
+            'phoneForm'  => $formPhone->createView(),
             'adressForm' => $formAdress->createView(),
-            'cityForm' => $formCity->createView()
+            'cityForm'   => $formCity->createView(),
+            'PoCForm'    => $formPoC->createView()
         ]);
     }
 
@@ -87,6 +101,43 @@ class MemberController extends AbstractController
             return $this->render('member/showProfile.html.twig',[
                 'user' => $user
             ]);
+    }
+
+    /**
+     * Supprime une personne de contact.
+     * @Route("/member/removePoC/idPoC={idPoC}/idUser={idUser}", name="remove_PoC", requirements={"id"="\d+"})
+     */
+    public function removePoC($idPoC, $idUser){
+        $entityManager=$this->getDoctrine()->getManager();
+        $PoC = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $PoC->removeUser($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+    }
+
+    /**
+     * AJOUTE NOUVEAU PHONE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
+    public function addUserPhone(User $user, Phone $phone, Request $request, ObjectManager $manager){
+        $repo = $this->getDoctrine()
+            ->getRepository(Phone::class);
+        $phoneTest = $repo->findOneBy([
+            'type'=>$phone->getType(),
+            'num' =>$phone->getNum()
+        ]);
+        if (!$phoneTest) {
+            // enregistre le nouveau numéro dans la DB
+            $manager->persist($phone);
+            $user->addPhone($phone);
+            $manager->flush();
+        }else{
+            // associe le n° existant à cet user
+            $user->addPhone($phoneTest);
+            $manager->flush();
+        }
     }
 
     /**
@@ -119,27 +170,6 @@ class MemberController extends AbstractController
         return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
     }
 
-    /**
-     * AJOUTE NOUVEAU PHONE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
-     */
-    public function addUserPhone(User $user, Phone $phone, Request $request, ObjectManager $manager){
-        $repo = $this->getDoctrine()
-            ->getRepository(Phone::class);
-        $phoneTest = $repo->findOneBy([
-            'type'=>$phone->getType(),
-            'num' =>$phone->getNum()
-        ]);
-        if (!$phoneTest) {
-            // enregistre le nouveau numéro dans la DB
-            $manager->persist($phone);
-            $user->addPhone($phone);
-            $manager->flush();
-        }else{
-            // associe le n° existant à cet user
-            $user->addPhone($phoneTest);
-            $manager->flush();
-        }
-    }
 
     /**
      * AJOUTE NOUVELLE ADRESSE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER

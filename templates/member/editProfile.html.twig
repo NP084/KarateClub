@@ -150,6 +150,63 @@
                 </div>
             </form>
 
+            {#Affiche personnes de contact#}
+            <h3> <br>Personnes de contact</h3>
+
+            {% for personOfContact in user.personOfContact %}
+                <form action="{{path('remove_PoC',{'idPoC':personOfContact.id, 'idUser':user.id}) }}" method="post">
+                    <div class="personOfContact">
+                        <div class="row">
+                            <div class="col-2">
+                                {{ personOfContact.name }}
+                            </div>
+                            <div class="col">
+                                {{ personOfContact.firstName }}
+                            </div>
+                            <div class="col">
+                                {{ personOfContact.num1 }}
+                            </div>
+                            <div class="col">
+                                {{ personOfContact.num2 }}
+                            </div>
+                            <div class="col">
+                                {{ personOfContact.relation }}
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-link">Supprimer personne de contact</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+
+            <h4> <br>Nouvelle personne de contact</h4>
+            <form action="{{path('profile_edit',{'id':user.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-3">
+                        Nom {{ form_widget(PoCForm.name) }}
+                    </div>
+                    <div class="col-3">
+                        Prénom {{ form_widget(PoCForm.firstName) }}
+                    </div>
+                    <div class="col-3">
+                        Numéro 1 {{ form_widget(PoCForm.num1) }}
+                    </div>
+                    <div class="col-3">
+                        Numéro 2  {{ form_widget(PoCForm.num2) }}
+                    </div>
+                    <div class="col-4">
+                        Relation  {{ form_widget(PoCForm.relation)}}
+                    </div>
+                    <div class="col-5">
+                        Info {{ (form_widget(PoCForm.info) ) }}
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-link"><br>Ajouter une nouvelle personne de contact</button>
+                    </div>
+                </div>
+            </form>
+
         {% else %}
             <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
             <a href="{{ path('security_logout') }}" class="btn-btn-primary">
