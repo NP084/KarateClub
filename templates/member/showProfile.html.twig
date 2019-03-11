@@ -68,9 +68,36 @@
                                 </div>
                             </div>
                         {% endfor %}
-                <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
-                    </br> Modifier profile </br>
-                </a>
+
+            <h4> </br> Personnes de contact :</h4>
+            {% for personOfContact in user.personOfContact %}
+                <div class="POC">
+                    <div class="row">
+                        <div class="col-1">
+                            {{ personOfContact.name }}
+                        </div>
+                        <div class="col-1">
+                            {{ personOfContact.firstName}}
+                        </div>
+                        <div class="col-2">
+                            {{ personOfContact.num1}}
+                        </div>
+                        <div class="col-2">
+                            {{ personOfContact.num2}}
+                        </div>
+                        <div class="col-4">
+                            {{ personOfContact.info}}
+                        </div>
+                        <div class="col">
+                            {{ personOfContact.relation}}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
+                </br> Modifier profile </br>
+            </a>
 
                 {#Affichle les inscriptions du membre#}
                 <h4> <br> Liste des inscriptions </h4>
