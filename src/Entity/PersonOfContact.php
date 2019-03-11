@@ -49,11 +49,6 @@ class PersonOfContact
     private $relation;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $idMember;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="personOfContact")
      */
     private $users;
