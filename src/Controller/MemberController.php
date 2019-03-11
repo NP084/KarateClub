@@ -12,12 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
 use App\Entity\Phone;
 use App\Form\PhoneType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
 class MemberController extends AbstractController
-
 {
     /**
      * @Route("/member", name="member")
@@ -44,23 +44,7 @@ class MemberController extends AbstractController
         // Formulaire d'ajout d'un n° de téléphone a été envoyé :
         if($formPhone->isSubmitted()){
             // si numéro de téléphone n'existe pas, on le crée dans la DB
-            $repo = $this->getDoctrine()
-                ->getRepository(Phone::class);
-            // si le n° existe déjà => phonetest sera une instance de Phone associée à ce numéro
-            $phoneTest = $repo->findOneBy([
-                'num'=>$phone->getNum()
-            ]);
-            // instance test n'existe pas (le n° n'existe pas dans la DB)
-            if (!$phoneTest) {
-                $manager->persist($phone); // enregistre le nouveau numéro
-                $user->addPhone($phone);
-                $manager->flush();
-            }else{
-                $user->addPhone($phoneTest);
-                $manager->persist($user);
-                $manager->flush();
-            }
-
+            $this->addUserPhone($user, $phone, $request, $manager);
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         }
         // création d'un Form pour éventuellement enregistrer une nouvelle adresse
@@ -117,7 +101,6 @@ class MemberController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/member/id={id}", name="profile_show",  requirements={"id"="\d+"})
      */
@@ -143,4 +126,23 @@ class MemberController extends AbstractController
         return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
     }
 
+    public function addUserPhone(User $user, Phone $phone, Request $request, ObjectManager $manager){
+        $repo = $this->getDoctrine()
+            ->getRepository(Phone::class);
+        // si le n° existe déjà => phonetest sera une instance de Phone associée à ce numéro
+        $phoneTest = $repo->findOneBy([
+            'num'=>$phone->getNum()
+        ]);
+        if (!$phoneTest) {
+            // enregistre le nouveau numéro dans la DB
+            $manager->persist($phone);
+            $user->addPhone($phone);
+            $manager->flush();
+        }else{
+            // associe le n° existant à cet user
+            $user->addPhone($phoneTest);
+            $manager->persist($user);
+            $manager->flush();
+        }
+    }
 }
