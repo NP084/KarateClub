@@ -15,7 +15,6 @@ class PersonOfContactType extends AbstractType
             ->add('name')
             ->add('firstName')
             ->add('num1')
-            ->add('num2')
         ;
     }
 

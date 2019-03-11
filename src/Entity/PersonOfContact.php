@@ -34,11 +34,6 @@ class PersonOfContact
     private $num1;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $num2;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\ContactList", mappedBy="personOfContact", orphanRemoval=true)
      */
     private $contactLists;
@@ -87,18 +82,6 @@ class PersonOfContact
     public function setNum1(string $num1): self
     {
         $this->num1 = $num1;
-
-        return $this;
-    }
-
-    public function getNum2(): ?string
-    {
-        return $this->num2;
-    }
-
-    public function setNum2(?string $num2): self
-    {
-        $this->num2 = $num2;
 
         return $this;
     }

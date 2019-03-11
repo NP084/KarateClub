@@ -84,7 +84,7 @@ class MemberController extends AbstractController
         // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
         if($formPoC->isSubmitted()){
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->addUserPoC($user, $PoC, $request, $manager);
+            $this->addUserPoC($user, $contactList, $PoC, $request, $manager);
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         }
 
@@ -128,25 +128,42 @@ class MemberController extends AbstractController
     /**
      * AJOUTE NOUVELLE PERSONNE DE CONTACT à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public function addUserPoC(User $user, PersonOfContact $PoC, Request $request, ObjectManager $manager){
+    public function addUserPoC(User $user, ContactList $contactList, PersonOfContact $PoC, Request $request, ObjectManager $manager){
         $repo = $this->getDoctrine()
             ->getRepository(PersonOfContact::class);
         $PoCTest = $repo->findOneBy([
             'name'=>$PoC->getName(),
             'firstName'=>$PoC->getFirstName(),
             'num1' =>$PoC->getNum1(),
-            'num2' =>$PoC->getNum2(),
-            'info' =>$PoC->getInfo(),
         ]);
+        // si personne de contact n'existe pas : on crée une nouvelle personne dans la DB
         if (!$PoCTest) {
             // enregistre le nouveau numéro dans la DB
             $manager->persist($PoC);
+            $manager->flush();
+        }
 
-            $user->addPersonOfContact($PoC);
+        $repoCL = $this->getDoctrine()
+            ->getRepository(ContactList::class);
+        $contactListTest = $repoCL->findOneBy([
+            'relation'   =>$contactList->getRelation(),
+            'info'       =>$contactList->getInfo(),
+        ]);
+        // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
+        if (!$contactListTest) {
+            $manager->persist($contactList);
+            if(!$PoCTest){
+                // si personne de contact n'existait pas => associe la personne qui vient d'être créée ($PoC)
+                $contactList->setPersonOfContact($PoC);
+            }else{
+                // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
+                $contactList->setPersonOfContact($PoCTest);
+            }
+            $user   ->addContactList($contactList);
             $manager->flush();
         }else{
-            // associe le n° existant à cet user
-            $user->addPersonOfContact($PoCTest);
+            // associe l'adresse existante à cet user
+            $user   ->addContactList($contactListTest);
             $manager->flush();
         }
     }
