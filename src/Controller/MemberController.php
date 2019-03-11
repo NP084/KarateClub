@@ -43,11 +43,12 @@ class MemberController extends AbstractController
 
         // Formulaire d'ajout d'un n° de téléphone a été envoyé :
         if($formPhone->isSubmitted()){
-            // si numéro de téléphone n'existe pas, on le crée dans la DB
+            // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
             $this->addUserPhone($user, $phone, $request, $manager);
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         }
-        // création d'un Form pour éventuellement enregistrer une nouvelle adresse
+
+        // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
         $adress = new Adress();
         $formAdress = $this->createForm(AdressType::class, $adress);
         $formAdress->handleRequest($request);
@@ -55,43 +56,14 @@ class MemberController extends AbstractController
         $formCity = $this->createForm(CityType::class, $city);
         $formCity->handleRequest($request);
 
-        // Formulaire d'ajout d'une nouvelle adress
+        // Formulaire d'ajout d'une nouvelle adress a été envoyé :
         if($formAdress->isSubmitted()){
-            $repoCity = $this->getDoctrine()
-                ->getRepository(City::class);
-            $cityTest = $repoCity->findBy([
-                'cityName' =>$city->getCityName(),
-                'zip'      =>$city->getZip()
-            ]);
-            // instance citytest n'existe pas (la ville n'existe pas dans la DB)
-            if (!$cityTest){
-                $manager->persist($city);
-                $manager->flush();
-            }
-
-            // si adress n'existe pas, on la crée dans la DB
-            $repo = $this->getDoctrine()
-                ->getRepository(Adress::class);
-            // test si l'adress existe déjà :
-            $adressTest = $repo->findBy([
-                'streetName'=>$adress->getStreetName(),
-                'num'       =>$adress->getNum(),
-                'postBox'   =>$adress->getPostBox(),
-            ]);
-            // instance adressTest n'existe pas (l'adress n'existe pas dans la DB)
-            if (!$adressTest) {
-                $adress->setCity($city);
-                $manager->persist($adress);
-                $manager->flush();
-            }
-            // ajoute l'adresse au user
-
-            $adress -> addUser($user);
-            $manager->persist($user);
-            $manager->flush();
+            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+            $this->addUserAdress($user, $adress, $city, $request, $manager);
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         }
 
+        // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'user' => $user,
             'formUser'=>$form->createView(),
@@ -126,12 +98,30 @@ class MemberController extends AbstractController
         return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
     }
 
+    /**
+     * Supprime une adresse d'un user. (l'adresse reste dans la DB)
+     * @Route("/member/removeAdress/idAdress={idAdress}/idUser={idUser}", name="remove_adress", requirements={"id"="\d+"})
+     */
+    public function removeUserAdress($idAdress, $idUser){
+        $entityManager=$this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+        $adress = $entityManager->getRepository(Adress::class)->find($idAdress);
+
+        $user->removeAdress($adress);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+    }
+
+    /**
+     * AJOUTE NOUVEAU PHONE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
     public function addUserPhone(User $user, Phone $phone, Request $request, ObjectManager $manager){
         $repo = $this->getDoctrine()
             ->getRepository(Phone::class);
-        // si le n° existe déjà => phonetest sera une instance de Phone associée à ce numéro
         $phoneTest = $repo->findOneBy([
-            'num'=>$phone->getNum()
+            'type'=>$phone->getType(),
+            'num' =>$phone->getNum()
         ]);
         if (!$phoneTest) {
             // enregistre le nouveau numéro dans la DB
@@ -141,7 +131,51 @@ class MemberController extends AbstractController
         }else{
             // associe le n° existant à cet user
             $user->addPhone($phoneTest);
-            $manager->persist($user);
+            $manager->flush();
+        }
+    }
+
+    /**
+     * AJOUTE NOUVELLE ADRESSE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
+    public function addUserAdress(User $user, Adress $adress, City $city, Request $request, ObjectManager $manager){
+        $repoCity = $this->getDoctrine()
+            ->getRepository(City::class);
+        $cityTest = $repoCity->findOneBy([
+            'cityName' =>$city->getCityName(),
+            'zip'      =>$city->getZip(),
+            'country'  =>$city->getCountry()
+        ]);
+        // si citytest existe pas : on crée une nouvelle ville dans la DB
+        if (!$cityTest){
+            $manager->persist($city); // le pays est automatiquement associé
+            $manager->flush();
+        }
+
+        $repo = $this->getDoctrine()
+            ->getRepository(Adress::class);
+        $adressTest = $repo->findOneBy([
+            'type'      =>$adress->getType(),
+            'streetName'=>$adress->getStreetName(),
+            'num'       =>$adress->getNum(),
+            'postBox'   =>$adress->getPostBox()
+           // 'city'      =>$adress->getCity() // commenté car sinon bug
+        ]);
+        // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
+        if (!$adressTest) {
+            $manager->persist($adress);
+            if(!$cityTest){
+                // si la ville n'existait pas => associe la ville qui vient d'être créée ($city)
+                $adress->setCity($city);
+            }else{
+                // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
+                $adress->setCity($cityTest);
+            }
+            $user   ->addAdress($adress);
+            $manager->flush();
+        }else{
+            // associe l'adresse existante à cet user
+            $user   ->addAdress($adressTest);
             $manager->flush();
         }
     }
