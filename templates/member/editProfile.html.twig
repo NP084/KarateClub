@@ -92,6 +92,7 @@
             <h3> <br>Adresses</h3>
 
             {% for adress in user.adress %}
+                <form action="{{path('remove_adress',{'idAdress':adress.id, 'idUser':user.id}) }}" method="post">
                 <div class="adress">
                     <div class="row">
                         <div class="col-2">
@@ -111,12 +112,11 @@
                              {{ adress.city.country.countryName}}
                         </div>
                         <div class="col">
-                            <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
-                                Supprimer adresse
-                            </a>
+                            <button type="submit" class="btn btn-link">Supprimer adresse</button>
                         </div>
                     </div>
                 </div>
+                </form>
             {% endfor %}
 
             <h4> <br>Nouvelle adresse</h4>
