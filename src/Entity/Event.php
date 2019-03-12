@@ -58,6 +58,11 @@ class Event
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TimePeriod", inversedBy="event")
+     */
+    private $timePeriod;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
@@ -196,6 +201,18 @@ class Event
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getTimePeriod(): ?TimePeriod
+    {
+        return $this->timePeriod;
+    }
+
+    public function setTimePeriod(?TimePeriod $timePeriod): self
+    {
+        $this->timePeriod = $timePeriod;
 
         return $this;
     }
