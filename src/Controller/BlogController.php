@@ -19,7 +19,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/blog", name="blog")
+     * @Route("/blog", name="blogg")
      */
 
     public function index(ArticleRepository $repo)
@@ -27,7 +27,7 @@ class BlogController extends AbstractController
         $articles = $repo -> findAll();
 
 
-        return $this->render('blog/index.html.twig', [
+        return $this->render('blog/indexx.html.twig', [
             'controller_name' => 'BlogController',
             'articles' => $articles,
         ]);
