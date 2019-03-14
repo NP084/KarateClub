@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd18623b-1e9a-4914-b72a-2f5fe19694b1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MemberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MemberController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Phone.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Phone.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/AdressType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/AdressType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PhoneType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PhoneType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/member/editProfile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/member/editProfile.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="dd18623b-1e9a-4914-b72a-2f5fe19694b1" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,22 +14,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/BlogController.php">
+        <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="534">
-              <caret line="57" column="35" selection-start-line="57" selection-start-column="12" selection-end-line="57" selection-end-column="35" />
+            <state relative-caret-position="10252">
+              <caret line="471" column="5" selection-start-line="471" selection-start-column="5" selection-end-line="471" selection-end-column="5" />
               <folding>
-                <element signature="e#34#99#0#PHP" expanded="true" />
+                <element signature="e#30#78#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/MemberController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="667">
-              <caret line="60" column="34" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
+            <state relative-caret-position="1012">
+              <caret line="63" column="34" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="34" />
               <folding>
                 <element signature="e#34#56#0#PHP" expanded="true" />
               </folding>
@@ -45,57 +38,30 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
+        <entry file="file://$PROJECT_DIR$/templates/member/editProfile.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="191" column="26" selection-start-line="191" selection-start-column="20" selection-end-line="191" selection-end-column="26" />
-              <folding>
-                <element signature="e#30#78#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="198">
+              <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Phone.php">
+        <entry file="file://$PROJECT_DIR$/src/DataFixtures/UserFixtures.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="533">
-              <caret line="81" column="34" selection-start-line="81" selection-start-column="34" selection-end-line="81" selection-end-column="34" />
-              <folding>
-                <element signature="e#30#78#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="240">
+              <caret line="57" column="43" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Repository/PhoneRepository.php">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Controller/BlogController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="990">
-              <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/PhoneType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="467">
-              <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
+            <state relative-caret-position="1254">
+              <caret line="57" column="35" selection-start-line="57" selection-start-column="12" selection-end-line="57" selection-end-column="35" />
               <folding>
-                <element signature="e#28#49#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/ArticleType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="20" selection-end-column="14" />
-              <folding>
-                <element signature="e#28#51#0#PHP" expanded="true" />
+                <element signature="e#34#99#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -430,10 +396,10 @@
     <option name="totallyTimeSpent" value="83289000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1060" y="86" width="1439" height="980" extended-state="0" />
+    <frame x="175" y="23" width="1439" height="980" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25268432" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27057981" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
