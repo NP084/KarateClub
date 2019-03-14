@@ -104,7 +104,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="user")
      */
-    private $registration;
+    private $registrationoo;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="user")
