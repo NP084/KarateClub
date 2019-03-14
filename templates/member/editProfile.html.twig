@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if  app.user.id == app.request.get("id") %}
-        {% if app.user  %}
+    {% if app.user  %}
+        {% if  app.user.id == app.request.get("id") %}
+            <a href="{{ path('profile_show',{'id':app.user.id})}}" class="btn-btn-primary">
+                Retour
+            </a>
 
             <h2> Modification des données personnelles </h2>
-
+            <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
             <div class="form-group">
                 <label for="">Nom</label>
                 {{ form_widget(formUser.name) }}
@@ -22,66 +25,203 @@
             </div>
 
             <div class="form-group">
-                <label for="">Grade</label>
-                {{ form_widget(formUser.belt) }}
-            </div>
-
-            <div class="form-group">
-                <label for="">Date d'obtention</label>
-                {{ form_widget(formUser.receiptDate) }}
-            </div>
-
-            <div class="form-group">
                 <label for="">Genre</label>
-                <select name="Genre">
-                    <option value="Male">Homme</option>
-                    <option value="Female">Femme</option>
-                </select>
+                {{ form_widget(formUser.sex) }}
             </div>
+            <div class="row">
+                <div class="col-4">
+                    <button type="submit" class="btn btn-link">Enregister modification(s)</button>
+                </div>
+                <div class="col-4">
+                    <button type="submit" class="btn btn-link">Modifier mot de passe</button>
+                </div>
+            </div>
+            </form>
+
 
             <h3> <br>Téléphones</h3>
 
-            {% for phone in phones %}
+            {% for phone in user.phones %}
+                <form action="{{path('remove_phone',{'idPhone':phone.id, 'idUser':user.id}) }}" method="post">
                 <div class="phone">
                     <div class="row">
                         <div class="col-2">
-                            <br> {{ phone.type }}
+                            {{ phone.type }}
                         </div>
                         <div class="col">
-                             <br> {{ phone.num}}
+                             {{ phone.num}}
                         </div>
                         <div class="col">
-                            <br> <button type="submit" class="btn btn-success">
-                                <small>Supprimer numéro</small>
-                            </button>
+                            <button type="submit" class="btn btn-link">Supprimer numéro</button>
                         </div>
                     </div>
                 </div>
+                </form>
             {% endfor %}
 
-            <h4> <br>Nouveau numéro</h4>
 
+            <h4> <br>Nouveau numéro</h4>
+{#
             <select name="Type">
                 <option value="Domicile">Domicile</option>
                 <option value="Portable">Portable</option>
                 <option value="Travaille">Travail</option>
             </select>
+#}  <form action="{{path('profile_edit',{'id':user.id}) }}" method="post">
+            <div class = "phone">
+                <div class="row">
+                    <div class="col-2">
+                         Type
+                        {{ form_widget(phoneForm.type,  {'attr':{
+                            'placeholder':"Domicile, travail..."
+                        }}) }}
+                    </div>
+                    <div class="col">
+                        Numéro
+                        {{ form_widget(phoneForm.num,  {'attr':{
+                            'placeholder':"Votre nouveau numéro..."
+                        }}) }}
+                    </div>
+                    <div class="col">
+                            <button type="submit" class="btn btn-link"><br>Ajouter numéro</button>
+                    </div>
+                </div>
+            </div>
+    </form>
 
-            <br> {{ form_widget(phoneForm.num) }}
+            {#Affiche adresses#}
+            <h3> <br>Adresses</h3>
 
-            <button type="submit" class="btn btn-success">
-                    Enregister modification(s)
-            </button>
+            {% for adress in user.adress %}
+                <form action="{{path('remove_adress',{'idAdress':adress.id, 'idUser':user.id}) }}" method="post">
+                <div class="adress">
+                    <div class="row">
+                        <div class="col-2">
+                             {{ adress.type }}
+                        </div>
+                        <div class="col">
+                            {{ adress.num }} (BP:{{ adress.postBox }})
+                        </div>
+                        <div class="col">
+                            {{ adress.streetName}}
+                        </div>
+                        <div class="col">
+                             {{ adress.city.cityName}}
+                            ({{ adress.city.zip}})
+                        </div>
+                        <div class="col">
+                             {{ adress.city.country.countryName}}
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-link">Supprimer adresse</button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            {% endfor %}
+
+            <h4> <br>Nouvelle adresse</h4>
+            <form action="{{path('profile_edit',{'id':user.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-2">
+                        Type {{ form_widget(adressForm.type) }}
+                    </div>
+                    <div class="col-2">
+                        Numero {{ form_widget(adressForm.num) }}
+                    </div>
+                    <div class="col-2">
+                        BP {{ form_widget(adressForm.postBox) }}
+                    </div>
+                    <div class="col-11">
+                        Rue  {{ form_widget(adressForm.streetName) }}
+                    </div>
+                    <div class="col-2">
+                        CP {{ (form_widget(cityForm.zip) ) }}
+                    </div>
+                    <div class="col-4">
+                        Ville  {{ form_widget(cityForm.cityName)}}
+                    </div>
+                    <div class="col-4">
+                        Pays  {{ form_widget(cityForm.country)}}
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-link"><br>Ajouter adresse</button>
+                    </div>
+                </div>
+            </form>
+
+            {#Affiche personnes de contact#}
+            <h3> <br>Personnes de contact</h3>
+
+            {% for contactList in user.contactLists %}
+               {# <form action="{{path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}" method="post">#}
+                    <div class="personOfContact">
+                        <div class="row">
+                            <div class="col-2">
+                               Nom: {{ contactList.personOfContact.name }}
+                            </div>
+                            <div class="col">
+                                Prénom : {{ contactList.personOfContact.firstName }}
+                            </div>
+                            <div class="col">
+                                Numéro : {{ contactList.personOfContact.num1 }}
+                            </div>
+                            <div class="col">
+                                Relation : {{ contactList.relation }}
+                            </div>
+                            <div class="col">
+                                Info : {{ contactList.info }}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row">
+                            <div class="col">
+                                {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
+                                <a href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':app.user.id}) }}">Supprimer personne de contact</a>
+                           </div>
+                            </div>
+                        </div>
+                    </div>
+               {# </form> #}
+                <div class="col">
+                    <a href="{{ path('edit_PoC',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">Modifier personne de contact</a>
+                </div>
+            {% endfor %}
+
+            <h4> <br>Nouvelle personne de contact</h4>
+            <form action="{{path('profile_edit',{'id':user.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-3">
+                        Nom {{ form_widget(PoCForm.name) }}
+                    </div>
+                    <div class="col-3">
+                        Prénom {{ form_widget(PoCForm.firstName) }}
+                    </div>
+                    <div class="col-3">
+                        Numéro 1 {{ form_widget(PoCForm.num1) }}
+                    </div>
+                    <div class="col-2">
+                        Info {{ (form_widget(ContactListForm.relation) ) }}
+                    </div>
+                    <div class="col-5">
+                        Info {{ (form_widget(ContactListForm.info) ) }}
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-link"><br>Ajouter une nouvelle personne de contact</button>
+                    </div>
+                </div>
+            </form>
+
         {% else %}
-            <h2>Vous n'êtes pas connecté !</h2>
-            <a href="{{ path('security_login') }}" class="btn-btn-primary">
-                Connexion
+            <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
+            <a href="{{ path('security_logout') }}" class="btn-btn-primary">
+                Déconnexion ?
             </a>
         {% endif %}
     {% else %}
-        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
-        <a href="{{ path('security_logout') }}" class="btn-btn-primary">
-            Déconnexion ?
+        <h2>Vous n'êtes pas connecté !</h2>
+        <a href="{{ path('security_login') }}" class="btn-btn-primary">
+            Connexion
         </a>
     {% endif %}
 
