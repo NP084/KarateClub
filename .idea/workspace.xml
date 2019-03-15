@@ -1,37 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd18623b-1e9a-4914-b72a-2f5fe19694b1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MemberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MemberController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/City.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/City.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/ContactList.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/PersonOfContact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/PersonOfContact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Phone.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Phone.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/AdressType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/AdressType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/CityType.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ContactListType.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PersonOfContactType.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PhoneType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PhoneType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RegistrationType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegistrationType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/UserType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20190311093707.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20190311114647.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20190311130837.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20190311131237.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20190311141147.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ContactListRepository.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PhoneRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PhoneRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/member/editPersonOfContact.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/member/editProfile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/member/editProfile.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/member/showProfile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/member/showProfile.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/registration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/registration.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/ocramius/package-versions/src/PackageVersions/Versions.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/ocramius/package-versions/src/PackageVersions/Versions.php" afterDir="false" />
-    </list>
+    <list default="true" id="dd18623b-1e9a-4914-b72a-2f5fe19694b1" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +17,7 @@
         <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="10252">
-              <caret line="470" selection-start-line="470" selection-end-line="470" />
+              <caret line="471" column="5" selection-start-line="471" selection-start-column="5" selection-end-line="471" selection-end-column="5" />
               <folding>
                 <element signature="e#30#78#0#PHP" expanded="true" />
               </folding>
@@ -58,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/MemberController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="31" column="34" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
+            <state relative-caret-position="1012">
+              <caret line="63" column="34" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="34" />
               <folding>
                 <element signature="e#34#56#0#PHP" expanded="true" />
               </folding>
@@ -70,8 +40,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/member/editProfile.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+            <state relative-caret-position="198">
+              <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -79,7 +49,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DataFixtures/UserFixtures.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="946">
+            <state relative-caret-position="240">
               <caret line="57" column="43" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
             </state>
           </provider>
@@ -88,8 +58,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/BlogController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="30" column="50" lean-forward="true" selection-start-line="30" selection-start-column="50" selection-end-line="30" selection-end-column="50" />
+            <state relative-caret-position="1254">
+              <caret line="57" column="35" selection-start-line="57" selection-start-column="12" selection-end-line="57" selection-end-column="35" />
               <folding>
                 <element signature="e#34#99#0#PHP" expanded="true" />
               </folding>
@@ -268,8 +238,8 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="806" />
-    <option name="y" value="275" />
+    <option name="x" value="1060" />
+    <option name="y" value="86" />
     <option name="width" value="1439" />
     <option name="height" value="980" />
   </component>
@@ -288,6 +258,11 @@
             <path>
               <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
               <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -300,6 +275,12 @@
               <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
               <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="DataFixtures" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Entity" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -307,6 +288,47 @@
               <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Form" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="blog" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="member" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="security" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
+              <item name="var" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
+              <item name="var" type="462c0819:PsiDirectoryNode" />
+              <item name="cache" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
+              <item name="var" type="462c0819:PsiDirectoryNode" />
+              <item name="cache" type="462c0819:PsiDirectoryNode" />
+              <item name="dev" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -345,7 +367,6 @@
       <updated>1552040048419</updated>
       <workItem from="1552040049518" duration="26111000" />
       <workItem from="1552213529118" duration="29972000" />
-      <workItem from="1552641319314" duration="174000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout attribut sex dans User">
       <created>1552040695561</created>
@@ -372,13 +393,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83947000" />
+    <option name="totallyTimeSpent" value="83289000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="806" y="275" width="1439" height="980" extended-state="0" />
+    <frame x="175" y="23" width="1439" height="980" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27415892" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27057981" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -478,6 +499,13 @@
     <entry file="file://$PROJECT_DIR$/templates/blog/home.html.twig">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/blog/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
@@ -561,10 +589,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/member/editProfile.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="26" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/blog/create.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="37">
           <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DataFixtures/UserFixtures.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="762">
+          <caret line="69" column="38" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/BlogController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="57" column="35" selection-start-line="57" selection-start-column="12" selection-end-line="57" selection-end-column="35" />
+          <folding>
+            <element signature="e#34#99#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -634,17 +686,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/blog/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10252">
-          <caret line="470" selection-start-line="470" selection-end-line="470" />
+        <state relative-caret-position="277">
+          <caret line="191" column="26" selection-start-line="191" selection-start-column="20" selection-end-line="191" selection-end-column="26" />
           <folding>
             <element signature="e#30#78#0#PHP" expanded="true" />
           </folding>
@@ -653,34 +698,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/MemberController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="31" column="34" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
+        <state relative-caret-position="667">
+          <caret line="60" column="34" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
           <folding>
             <element signature="e#34#56#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/member/editProfile.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataFixtures/UserFixtures.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="946">
-          <caret line="57" column="43" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/BlogController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="30" column="50" lean-forward="true" selection-start-line="30" selection-start-column="50" selection-end-line="30" selection-end-column="50" />
-          <folding>
-            <element signature="e#34#99#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
