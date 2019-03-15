@@ -1,5 +1,6 @@
 
 ###> symfony/framework-bundle ###
+/.env
 /.env.local
 /.env.local.php
 /.env.*.local
@@ -21,4 +22,3 @@
 .idea/workspace.xml
 .idea/encodings.xml
 
-.env
