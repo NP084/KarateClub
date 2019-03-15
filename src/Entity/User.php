@@ -27,7 +27,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email()
      */
     private $email;
 
@@ -102,14 +101,17 @@ class User implements UserInterface
     private $attachedFiles;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\PersonOfContact", inversedBy="users")
+     */
+    private $personOfContact;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="user")
      */
-    private $registrationoo;
+    private $registration;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="user")
-     * Affiche l'historique trié selon refDate
-     * @ORM\OrderBy({"refDate" = "ASC"})
      */
     private $histories;
 
@@ -117,11 +119,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $sex;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ContactList", mappedBy="user", orphanRemoval=true)
-     */
-    private $contactLists;
 
 
     public function __construct()
@@ -133,7 +130,6 @@ class User implements UserInterface
         $this->personOfContact = new ArrayCollection();
         $this->registration = new ArrayCollection();
         $this->histories = new ArrayCollection();
-        $this->contactLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -377,6 +373,32 @@ class User implements UserInterface
     }
 
     /**
+     * @return Collection|PersonOfContact[]
+     */
+    public function getPersonOfContact(): Collection
+    {
+        return $this->personOfContact;
+    }
+
+    public function addPersonOfContact(PersonOfContact $personOfContact): self
+    {
+        if (!$this->personOfContact->contains($personOfContact)) {
+            $this->personOfContact[] = $personOfContact;
+        }
+
+        return $this;
+    }
+
+    public function removePersonOfContact(PersonOfContact $personOfContact): self
+    {
+        if ($this->personOfContact->contains($personOfContact)) {
+            $this->personOfContact->removeElement($personOfContact);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection|Registration[]
      */
     public function getRegistration(): Collection
@@ -446,37 +468,6 @@ class User implements UserInterface
     public function setSex(string $sex): self
     {
         $this->sex = $sex;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ContactList[]
-     */
-    public function getContactLists(): Collection
-    {
-        return $this->contactLists;
-    }
-
-    public function addContactList(ContactList $contactList): self
-    {
-        if (!$this->contactLists->contains($contactList)) {
-            $this->contactLists[] = $contactList;
-            $contactList->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContactList(ContactList $contactList): self
-    {
-        if ($this->contactLists->contains($contactList)) {
-            $this->contactLists->removeElement($contactList);
-            // set the owning side to null (unless already changed)
-            if ($contactList->getUser() === $this) {
-                $contactList->setUser(null);
-            }
-        }
 
         return $this;
     }

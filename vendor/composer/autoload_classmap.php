@@ -36,7 +36,6 @@ return array(
     'App\\Entity\\User' => $baseDir . '/src/Entity/User.php',
     'App\\Form\\AdressType' => $baseDir . '/src/Form/AdressType.php',
     'App\\Form\\ArticleType' => $baseDir . '/src/Form/ArticleType.php',
-    'App\\Form\\CityType' => $baseDir . '/src/Form/CityType.php',
     'App\\Form\\CommentType' => $baseDir . '/src/Form/CommentType.php',
     'App\\Form\\PhoneType' => $baseDir . '/src/Form/PhoneType.php',
     'App\\Form\\RegistrationType' => $baseDir . '/src/Form/RegistrationType.php',

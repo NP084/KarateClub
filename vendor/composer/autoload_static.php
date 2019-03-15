@@ -558,7 +558,6 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         'App\\Entity\\User' => __DIR__ . '/../..' . '/src/Entity/User.php',
         'App\\Form\\AdressType' => __DIR__ . '/../..' . '/src/Form/AdressType.php',
         'App\\Form\\ArticleType' => __DIR__ . '/../..' . '/src/Form/ArticleType.php',
-        'App\\Form\\CityType' => __DIR__ . '/../..' . '/src/Form/CityType.php',
         'App\\Form\\CommentType' => __DIR__ . '/../..' . '/src/Form/CommentType.php',
         'App\\Form\\PhoneType' => __DIR__ . '/../..' . '/src/Form/PhoneType.php',
         'App\\Form\\RegistrationType' => __DIR__ . '/../..' . '/src/Form/RegistrationType.php',
