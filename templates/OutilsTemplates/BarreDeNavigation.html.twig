@@ -1,29 +1,55 @@
 <html>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="{{ path('home') }}">VIKA</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!-- Just an image -->
+        <div class="navbar navbar-light bg-dark">
+            <a class="navbar-brand" href="{{ path('home') }}">
+            <img src="Logo_Vika.png" width="60" height="40" alt="">
+            </a>
+        </div>
+
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
+                <!-- Menu VIKA -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    VIKA
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">La philisophie</a>
+                        <a class="dropdown-item" href="#">Membres du bureau</a>
+                        <a class="dropdown-item" href="#">Encadrement</a>
+                    </div>
+                </li>
+
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ path('blog')}}">Articles <span class="sr-only">(current)</span> </a>
+                    <a class="nav-link" href="{{ path('blog')}}">Blog<span class="sr-only">(current)</span> </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('blog_create') }}">Créer un article</a>
                 </li>
-
-                {% if not app.user%}
-                    <li class="nav-item">
-                    <a class="nav-link" href="{{ path('security_login') }}">Connexion</a>
-                </li>
-                {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('security_logout') }}">Deconnexion</a>
+                        <a class="nav-link" href="#">Sponsors</a>
                 </li>
-                {% endif %}
             </ul>
         </div>
+
+        <!-- Bouton Se connecter -->
+        {% if not app.user%}
+            <a href="{{ path('security_login') }}" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">Connexion</a>
+        {% else %}
+            <a href="{{ path('security_logout') }}" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">Déconnexion</a>
+        {% endif %}
+
+        <!-- Logo Social -->
+        <div class="social">
+            <ul>
+                <li><a href="https://www.facebook.com"><i class="fa fa-lg fa-facebook"></i></a></li>
+            </ul>
+        </div>
+
     </nav>
 </html>
