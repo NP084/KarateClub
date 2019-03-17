@@ -2,41 +2,46 @@
 
 {% block body %}
     {% if app.user  %}
-        {% if  app.user.id == app.request.get("id") %}
+        {#{% if  app.user.id == app.request.get("id") %} #}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <a href="{{ path('profile_show',{'id':app.user.id})}}" class="btn-btn-primary">
                 Retour
             </a>
-
             <h2> Modification des données personnelles </h2>
             <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
-            <div class="form-group">
+
+                    {{ form_start(formUser) }}
+
+                {# <div class="form-group">
                 <label for="">Nom</label>
-                {{ form_widget(formUser.name) }}
+                {{ form_row(formUser.name) }}
             </div>
 
             <div class="form-group">
                 <label for="">Prénom</label>
-                {{ form_widget(formUser.firstname) }}
+                {{ form_row(formUser.firstname) }}
             </div>
 
             <div class="form-group">
                 <label for="">Date de naissance</label>
-                {{ form_widget(formUser.birthday) }}
+                {{ form_row(formUser.birthday) }}
             </div>
 
             <div class="form-group">
                 <label for="">Genre</label>
-                {{ form_widget(formUser.sex) }}
+                {{ form_row(formUser.sex) }}
             </div>
-            <div class="row">
-                <div class="col-4">
+#}
                     <button type="submit" class="btn btn-link">Enregister modification(s)</button>
-                </div>
+                    {{ form_end(formUser) }}
+
                 <div class="col-4">
                     <button type="submit" class="btn btn-link">Modifier mot de passe</button>
                 </div>
             </div>
+
             </form>
+
 
 
             <h3> <br>Téléphones</h3>

@@ -7,10 +7,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Phone ;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserType extends AbstractType
 {
@@ -30,7 +33,7 @@ class UserType extends AbstractType
             ->add('receiptDate',DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'years' => range(1900, date('Y')-4),
+                'years' => range(1900, date('Y')),
             ])
             ->add('sex', ChoiceType::class,[
                 'choices' => [
@@ -38,6 +41,7 @@ class UserType extends AbstractType
                     'Femme' => 'Femme',
                 ],
             ])
+            ->add('imageFile', VichImageType::class)
       //      ->add('phones', EntityType::class,[
        //         'class' => Phone::class,
           //      'choice_label' => 'num'

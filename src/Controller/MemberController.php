@@ -17,6 +17,7 @@ use App\Entity\User;
 use App\Entity\Phone;
 use App\Form\PhoneType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -64,10 +65,11 @@ class MemberController extends AbstractController
      * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
      */
     public function profileEdit(User $user, Request $request, ObjectManager $manager){
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        $formUser = $this->createForm(UserType::class, $user);
+        $formUser->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if($formUser->isSubmitted() && $formUser->isValid()){
+            $user=$this->security->getUser();
             $manager->persist($user);
             $manager->flush();
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
@@ -118,7 +120,7 @@ class MemberController extends AbstractController
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'user'           => $user,
-            'formUser'       =>$form->createView(),
+            'formUser'       => $formUser->createView(),
             'phoneForm'      => $formPhone->createView(),
             'adressForm'     => $formAdress->createView(),
             'cityForm'       => $formCity->createView(),
