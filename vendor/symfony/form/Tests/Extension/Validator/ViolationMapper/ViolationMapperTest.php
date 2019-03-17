@@ -12,11 +12,8 @@
 namespace Symfony\Component\Form\Tests\Extension\Validator\ViolationMapper;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper;
 use Symfony\Component\Form\Extension\Validator\ViolationMapper\ViolationMapper;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormConfigBuilder;
@@ -37,7 +34,7 @@ class ViolationMapperTest extends TestCase
     const LEVEL_2 = 3;
 
     /**
-     * @var EventDispatcherInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $dispatcher;
 
@@ -63,7 +60,7 @@ class ViolationMapperTest extends TestCase
 
     protected function setUp()
     {
-        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
         $this->mapper = new ViolationMapper();
         $this->message = 'Message';
         $this->messageTemplate = 'Message template';
@@ -79,7 +76,7 @@ class ViolationMapperTest extends TestCase
         $config->setInheritData($inheritData);
         $config->setPropertyPath($propertyPath);
         $config->setCompound(true);
-        $config->setDataMapper(new PropertyPathMapper());
+        $config->setDataMapper($this->getDataMapper());
 
         if (!$synchronized) {
             $config->addViewTransformer(new CallbackTransformer(
@@ -89,6 +86,14 @@ class ViolationMapperTest extends TestCase
         }
 
         return new Form($config);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getDataMapper()
+    {
+        return $this->getMockBuilder('Symfony\Component\Form\DataMapperInterface')->getMock();
     }
 
     /**
@@ -205,7 +210,7 @@ class ViolationMapperTest extends TestCase
         $this->assertCount(0, $grandChild->getErrors(), $grandChild->getName().' should not have an error, but has one');
     }
 
-    public function testMappingIfNotSubmitted()
+    public function testAbortMappingIfNotSubmitted()
     {
         $violation = $this->getConstraintViolation('children[address].data.street');
         $parent = $this->getForm('parent');
@@ -225,10 +230,10 @@ class ViolationMapperTest extends TestCase
 
         $this->assertCount(0, $parent->getErrors(), $parent->getName().' should not have an error, but has one');
         $this->assertCount(0, $child->getErrors(), $child->getName().' should not have an error, but has one');
-        $this->assertCount(1, $grandChild->getErrors(), $grandChild->getName().' should have one error');
+        $this->assertCount(0, $grandChild->getErrors(), $grandChild->getName().' should not have an error, but has one');
     }
 
-    public function testDotRuleMappingIfNotSubmitted()
+    public function testAbortDotRuleMappingIfNotSubmitted()
     {
         $violation = $this->getConstraintViolation('data.address');
         $parent = $this->getForm('parent');
@@ -250,7 +255,7 @@ class ViolationMapperTest extends TestCase
 
         $this->assertCount(0, $parent->getErrors(), $parent->getName().' should not have an error, but has one');
         $this->assertCount(0, $child->getErrors(), $child->getName().' should not have an error, but has one');
-        $this->assertCount(1, $grandChild->getErrors(), $grandChild->getName().' should have one error');
+        $this->assertCount(0, $grandChild->getErrors(), $grandChild->getName().' should not have an error, but has one');
     }
 
     public function provideDefaultTests()

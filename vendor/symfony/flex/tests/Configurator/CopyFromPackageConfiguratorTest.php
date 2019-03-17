@@ -11,6 +11,8 @@
 
 namespace Symfony\Flex\Tests\Configurator;
 
+require_once __DIR__.'/TmpDirMock.php';
+
 use Composer\Composer;
 use Composer\Installer\InstallationManager;
 use Composer\IO\IOInterface;
@@ -18,7 +20,6 @@ use Composer\Package\PackageInterface;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Flex\Configurator\CopyFromPackageConfigurator;
-use Symfony\Flex\Lock;
 use Symfony\Flex\Options;
 use Symfony\Flex\Recipe;
 
@@ -40,35 +41,7 @@ class CopyFromPackageConfiguratorTest extends TestCase
         }
         file_put_contents($this->targetFile, '');
         $this->io->expects($this->exactly(1))->method('writeError')->with(['    Setting configuration and copying files']);
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-        $this->createConfigurator()->configure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath], $lock);
-    }
-
-    public function testConfigureAndOverwriteFiles()
-    {
-        if (!file_exists($this->targetDirectory)) {
-            mkdir($this->targetDirectory);
-        }
-        if (!file_exists($this->sourceDirectory)) {
-            mkdir($this->sourceDirectory);
-        }
-        file_put_contents($this->sourceFile, 'somecontent');
-        file_put_contents($this->targetFile, '-');
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-
-        $this->io->expects($this->at(0))->method('writeError')->with(['    Setting configuration and copying files']);
-        $this->io->expects($this->at(2))->method('writeError')->with(['    Created <fg=green>"./public/file"</>']);
-        $this->io->method('askConfirmation')->with('File "build/public/file" has uncommitted changes, overwrite? [y/N] ')->willReturn(true);
-
-        $this->assertFileExists($this->targetFile);
-        $this->createConfigurator()->configure(
-            $this->recipe,
-            [$this->sourceFileRelativePath => $this->targetFileRelativePath],
-            $lock,
-            ['force' => true]
-        );
-        $this->assertFileExists($this->targetFile);
-        $this->assertFileEquals($this->sourceFile, $this->targetFile);
+        $this->createConfigurator()->configure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath]);
     }
 
     public function testSourceFileNotExist()
@@ -77,8 +50,7 @@ class CopyFromPackageConfiguratorTest extends TestCase
         $this->io->expects($this->at(1))->method('writeError')->with(['    Created <fg=green>"./public/"</>']);
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage(sprintf('File "%s" does not exist!', $this->sourceFile));
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-        $this->createConfigurator()->configure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath], $lock);
+        $this->createConfigurator()->configure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath]);
     }
 
     public function testConfigure()
@@ -95,8 +67,7 @@ class CopyFromPackageConfiguratorTest extends TestCase
         $this->io->expects($this->at(2))->method('writeError')->with(['    Created <fg=green>"./public/file"</>']);
 
         $this->assertFileNotExists($this->targetFile);
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-        $this->createConfigurator()->configure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath], $lock);
+        $this->createConfigurator()->configure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath]);
         $this->assertFileExists($this->targetFile);
     }
 
@@ -110,8 +81,7 @@ class CopyFromPackageConfiguratorTest extends TestCase
         }
         file_put_contents($this->targetFile, '');
         $this->assertFileExists($this->targetFile);
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-        $this->createConfigurator()->unconfigure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath], $lock);
+        $this->createConfigurator()->unconfigure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath]);
         $this->assertFileNotExists($this->targetFile);
     }
 
@@ -119,19 +89,18 @@ class CopyFromPackageConfiguratorTest extends TestCase
     {
         $this->assertFileNotExists($this->targetFile);
         $this->io->expects($this->exactly(1))->method('writeError')->with(['    Removing configuration and files']);
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-        $this->createConfigurator()->unconfigure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath], $lock);
+        $this->createConfigurator()->unconfigure($this->recipe, [$this->sourceFileRelativePath => $this->targetFileRelativePath]);
     }
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->sourceDirectory = FLEX_TEST_DIR.'/package';
+        $this->sourceDirectory = sys_get_temp_dir().'/package';
         $this->sourceFileRelativePath = 'package/file';
         $this->sourceFile = $this->sourceDirectory.'/file';
 
-        $this->targetDirectory = FLEX_TEST_DIR.'/public';
+        $this->targetDirectory = sys_get_temp_dir().'/public';
         $this->targetFileRelativePath = 'public/file';
         $this->targetFile = $this->targetDirectory.'/file';
 
@@ -145,7 +114,7 @@ class CopyFromPackageConfiguratorTest extends TestCase
         $installationManager->expects($this->exactly(1))
             ->method('getInstallPath')
             ->with($package)
-            ->willReturn(FLEX_TEST_DIR)
+            ->willReturn(sys_get_temp_dir())
         ;
         $this->composer = $this->getMockBuilder(Composer::class)->getMock();
         $this->composer->expects($this->exactly(1))
@@ -166,13 +135,13 @@ class CopyFromPackageConfiguratorTest extends TestCase
 
     private function createConfigurator(): CopyFromPackageConfigurator
     {
-        return new CopyFromPackageConfigurator($this->composer, $this->io, new Options(['root-dir' => FLEX_TEST_DIR], $this->io));
+        return new CopyFromPackageConfigurator($this->composer, $this->io, new Options());
     }
 
     private function cleanUpTargetFiles()
     {
         @unlink($this->targetFile);
-        @rmdir(FLEX_TEST_DIR.'/package');
-        @rmdir(FLEX_TEST_DIR.'/public');
+        @rmdir(sys_get_temp_dir().'/package');
+        @rmdir(sys_get_temp_dir().'/public');
     }
 }

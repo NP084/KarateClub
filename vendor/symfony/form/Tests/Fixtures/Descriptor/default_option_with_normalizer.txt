@@ -15,9 +15,10 @@ Symfony\Component\Form\Extension\Core\Type\ChoiceType (choice_translation_domain
  ---------------- --------------------%s 
   Allowed values   -                  %s 
  ---------------- --------------------%s 
-  Normalizer       Closure%s{%A
+  Normalizer       Closure%s{%w
+                     parameters: 2    %s 
                      file: "%s%eExtension%eCore%eType%eChoiceType.php"%w
-                     line: %s 
+                     line: "%s to %s" %s 
                    }                  %s 
  ---------------- --------------------%s 
 

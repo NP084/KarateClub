@@ -80,7 +80,7 @@ class PackageResolver
         return array_unique($requires);
     }
 
-    public function parseVersion(string $package, string $version, bool $isRequire): string
+    private function parseVersion(string $package, string $version, bool $isRequire): string
     {
         if (0 !== strpos($package, 'symfony/')) {
             return $version ? ':'.$version : '';
@@ -94,7 +94,7 @@ class PackageResolver
             return $version ? ':'.$version : '';
         }
 
-        if (!$version || '*' === $version) {
+        if (!$version) {
             try {
                 $config = @json_decode(file_get_contents(Factory::getComposerFile()), true);
             } finally {

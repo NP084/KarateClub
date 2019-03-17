@@ -47,7 +47,7 @@ class RequireCommand extends BaseRequireCommand
                 $op->addPackage($package['name'], $package['version'] ?? '', $input->getOption('dev'));
             }
 
-            $unpacker = new Unpacker($this->getComposer(), $this->resolver);
+            $unpacker = new Unpacker($this->getComposer());
             $result = $unpacker->unpack($op);
             $io = $this->getIO();
             foreach ($result->getUnpacked() as $pkg) {

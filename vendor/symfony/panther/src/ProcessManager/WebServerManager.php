@@ -34,7 +34,7 @@ final class WebServerManager
     /**
      * @throws \RuntimeException
      */
-    public function __construct(string $documentRoot, string $hostname, int $port, string $router = '')
+    public function __construct(string $documentRoot, string $hostname, int $port)
     {
         $this->hostname = $hostname;
         $this->port = $port;
@@ -45,7 +45,7 @@ final class WebServerManager
         }
 
         $this->process = new Process(
-            array_filter(array_merge(
+            array_merge(
                 [$binary],
                 $finder->findArguments(),
                 [
@@ -54,9 +54,8 @@ final class WebServerManager
                     sprintf('%s:%d', $this->hostname, $this->port),
                     '-t',
                     $documentRoot,
-                    $router,
                 ]
-            )),
+            ),
             $documentRoot,
             null,
             null,
@@ -78,10 +77,5 @@ final class WebServerManager
     public function quit(): void
     {
         $this->process->stop();
-    }
-
-    public function isStarted()
-    {
-        return $this->process->isStarted();
     }
 }

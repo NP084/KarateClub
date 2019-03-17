@@ -11,7 +11,6 @@
 
 namespace Symfony\Flex\Configurator;
 
-use Symfony\Flex\Lock;
 use Symfony\Flex\Recipe;
 
 /**
@@ -19,12 +18,12 @@ use Symfony\Flex\Recipe;
  */
 class GitignoreConfigurator extends AbstractConfigurator
 {
-    public function configure(Recipe $recipe, $vars, Lock $lock, array $options = [])
+    public function configure(Recipe $recipe, $vars)
     {
         $this->write('Added entries to .gitignore');
 
-        $gitignore = $this->options->get('root-dir').'/.gitignore';
-        if (empty($options['force']) && $this->isFileMarked($recipe, $gitignore)) {
+        $gitignore = getcwd().'/.gitignore';
+        if ($this->isFileMarked($recipe, $gitignore)) {
             return;
         }
 
@@ -33,16 +32,12 @@ class GitignoreConfigurator extends AbstractConfigurator
             $value = $this->options->expandTargetDir($value);
             $data .= "$value\n";
         }
-        $data = "\n".ltrim($this->markData($recipe, $data), "\r\n");
-
-        if (!$this->updateData($gitignore, $data)) {
-            file_put_contents($gitignore, $data, FILE_APPEND);
-        }
+        file_put_contents($gitignore, "\n".ltrim($this->markData($recipe, $data), "\r\n"), FILE_APPEND);
     }
 
-    public function unconfigure(Recipe $recipe, $vars, Lock $lock)
+    public function unconfigure(Recipe $recipe, $vars)
     {
-        $file = $this->options->get('root-dir').'/.gitignore';
+        $file = getcwd().'/.gitignore';
         if (!file_exists($file)) {
             return;
         }

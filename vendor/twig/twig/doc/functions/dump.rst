@@ -12,14 +12,14 @@ introspecting its variables:
 .. note::
 
     The ``dump`` function is not available by default. You must add the
-    ``\Twig\Extension\DebugExtension`` extension explicitly when creating your Twig
+    ``Twig_Extension_Debug`` extension explicitly when creating your Twig
     environment::
 
-        $twig = new \Twig\Environment($loader, [
+        $twig = new Twig_Environment($loader, [
             'debug' => true,
             // ...
         ]);
-        $twig->addExtension(new \Twig\Extension\DebugExtension());
+        $twig->addExtension(new Twig_Extension_Debug());
 
     Even when enabled, the ``dump`` function won't display anything if the
     ``debug`` option on the environment is not enabled (to avoid leaking debug

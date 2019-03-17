@@ -56,20 +56,9 @@ trait PantherTestCaseTrait
      */
     protected static $pantherClient;
 
-    /**
-     * @var array
-     */
-    protected static $defaultOptions = [
-        'webServerDir' => __DIR__.'/../../../../public', // the Flex directory structure
-        'hostname' => '127.0.0.1',
-        'port' => 9080,
-        'router' => '',
-        'external_base_uri' => null,
-    ];
-
-    public static function tearDownAfterClass(): void
+    public static function tearDownAfterClass()
     {
-        if (self::$stopServerOnTeardown) {
+        if (true === self::$stopServerOnTeardown) {
             static::stopWebServer();
         }
     }
@@ -93,46 +82,28 @@ trait PantherTestCaseTrait
         self::$baseUri = null;
     }
 
-    /**
-     * @param array $options see {@see $defaultOptions}
-     */
-    public static function startWebServer(array $options = []): void
+    public static function startWebServer(?string $webServerDir = null, string $hostname = '127.0.0.1', int $port = 9000): void
     {
         if (null !== static::$webServerManager) {
             return;
         }
 
-        if ($externalBaseUri = $options['external_base_uri'] ?? $_SERVER['PANTHER_EXTERNAL_BASE_URI'] ?? self::$defaultOptions['external_base_uri']) {
-            self::$baseUri = $externalBaseUri;
-
-            return;
+        if (null === $webServerDir) {
+            // Try the local $webServerDir property, or the PANTHER_WEB_SERVER_DIR env var or default to the Flex directory structure
+            $webServerDir = static::$webServerDir ?? $_SERVER['PANTHER_WEB_SERVER_DIR'] ?? __DIR__.'/../../../../public';
         }
 
-        $options = [
-            'webServerDir' => $options['webServerDir'] ?? static::$webServerDir ?? $_SERVER['PANTHER_WEB_SERVER_DIR'] ?? self::$defaultOptions['webServerDir'],
-            'hostname' => $options['hostname'] ?? self::$defaultOptions['hostname'],
-            'port' => (int) ($options['port'] ?? $_SERVER['PANTHER_WEB_SERVER_PORT'] ?? self::$defaultOptions['port']),
-            'router' => $options['router'] ?? $_SERVER['PANTHER_WEB_SERVER_ROUTER'] ?? self::$defaultOptions['router'],
-        ];
-
-        self::$webServerManager = new WebServerManager(...array_values($options));
+        self::$webServerManager = new WebServerManager($webServerDir, $hostname, $port);
         self::$webServerManager->start();
 
-        self::$baseUri = sprintf('http://%s:%s', $options['hostname'], $options['port']);
+        self::$baseUri = "http://$hostname:$port";
     }
 
-    public static function isWebServerStarted()
+    protected static function createPantherClient(string $hostname = '127.0.0.1', ?int $port = null, array $kernelOptions = []): PantherClient
     {
-        return self::$webServerManager && self::$webServerManager->isStarted();
-    }
+        $port = (int) ($port ?? $_SERVER['PANTHER_WEB_SERVER_PORT'] ?? 9000);
 
-    /**
-     * @param array $options       see {@see $defaultOptions}
-     * @param array $kernelOptions
-     */
-    protected static function createPantherClient(array $options = [], array $kernelOptions = []): PantherClient
-    {
-        self::startWebServer($options);
+        self::startWebServer(null, $hostname, $port);
         if (null === self::$pantherClient) {
             self::$pantherClient = Client::createChromeClient(null, null, [], self::$baseUri);
         }
@@ -144,17 +115,15 @@ trait PantherTestCaseTrait
         return self::$pantherClient;
     }
 
-    /**
-     * @param array $options       see {@see $defaultOptions}
-     * @param array $kernelOptions
-     */
-    protected static function createGoutteClient(array $options = [], array $kernelOptions = []): GoutteClient
+    protected static function createGoutteClient(string $hostname = '127.0.0.1', ?int $port = null, array $kernelOptions = []): GoutteClient
     {
         if (!\class_exists(GoutteClient::class)) {
             throw new \RuntimeException('Goutte is not installed. Run "composer req fabpot/goutte".');
         }
 
-        self::startWebServer($options);
+        $port = (int) ($port ?? $_SERVER['PANTHER_WEB_SERVER_PORT'] ?? 9000);
+
+        self::startWebServer(null, $hostname, $port);
         if (null === self::$goutteClient) {
             $goutteClient = new GoutteClient();
             $goutteClient->setClient(new GuzzleClient(['base_uri' => self::$baseUri]));

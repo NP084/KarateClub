@@ -30,8 +30,6 @@ class EntityTypePerformanceTest extends FormPerformanceTestCase
      */
     private $em;
 
-    protected static $supportedFeatureSetVersion = 304;
-
     protected function getExtensions()
     {
         $manager = $this->getMockBuilder('Doctrine\Common\Persistence\ManagerRegistry')->getMock();

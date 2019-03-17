@@ -9,21 +9,18 @@
  * file that was distributed with this source code.
  */
 
-use Twig\Node\Expression\AssignNameExpression;
-use Twig\Test\NodeTestCase;
-
-class Twig_Tests_Node_Expression_AssignNameTest extends NodeTestCase
+class Twig_Tests_Node_Expression_AssignNameTest extends Twig_Test_NodeTestCase
 {
     public function testConstructor()
     {
-        $node = new AssignNameExpression('foo', 1);
+        $node = new Twig_Node_Expression_AssignName('foo', 1);
 
         $this->assertEquals('foo', $node->getAttribute('name'));
     }
 
     public function getTests()
     {
-        $node = new AssignNameExpression('foo', 1);
+        $node = new Twig_Node_Expression_AssignName('foo', 1);
 
         return [
             [$node, '$context["foo"]'],

@@ -1,16 +1,9 @@
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
         App\Entity\User:
             algorithm: bcrypt
-
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
-
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        id: fos_user.user_provider.username
         in_memory: { memory: ~ }
         in_database:
             entity:
@@ -22,16 +15,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            pattern: ^/
             anonymous: true
 
             provider: in_database
 
             form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
+                login_path: security_login
+                check_path: security_login
 
-            logout: true
+            logout:
+                path: security_logout
+                target: blog
 
             # activate different ways to authenticate
 

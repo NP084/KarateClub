@@ -11,8 +11,6 @@
 
 namespace Symfony\Component\Form\Test;
 
-use Symfony\Component\Form\Tests\VersionAwareTest;
-
 /**
  * Base class for performance tests.
  *
@@ -23,8 +21,6 @@ use Symfony\Component\Form\Tests\VersionAwareTest;
  */
 abstract class FormPerformanceTestCase extends FormIntegrationTestCase
 {
-    use VersionAwareTest;
-
     /**
      * @var int
      */

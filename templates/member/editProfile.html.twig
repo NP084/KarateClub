@@ -2,8 +2,8 @@
 
 {% block body %}
     {% if app.user  %}
-        {% if  app.user.id == app.request.get("id") %}
-        {#{% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
+        {#{% if  app.user.id == app.request.get("id") %} #}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <a href="{{ path('profile_show',{'id':app.user.id})}}" class="btn-btn-primary">
                 Retour
             </a>

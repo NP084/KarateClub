@@ -23,8 +23,6 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface;
-use Symfony\Component\Validator\Tests\Fixtures\FakeMetadataFactory;
 
 /**
  * @author franek <franek@chicour.net>
@@ -47,15 +45,18 @@ class ValidatorTypeGuesserTest extends TestCase
     private $metadata;
 
     /**
-     * @var MetadataFactoryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $metadataFactory;
 
     protected function setUp()
     {
         $this->metadata = new ClassMetadata(self::TEST_CLASS);
-        $this->metadataFactory = new FakeMetadataFactory();
-        $this->metadataFactory->addMetadata($this->metadata);
+        $this->metadataFactory = $this->getMockBuilder('Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface')->getMock();
+        $this->metadataFactory->expects($this->any())
+            ->method('getMetadataFor')
+            ->with(self::TEST_CLASS)
+            ->will($this->returnValue($this->metadata));
         $this->guesser = new ValidatorTypeGuesser($this->metadataFactory);
     }
 

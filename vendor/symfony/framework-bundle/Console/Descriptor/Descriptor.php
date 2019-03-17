@@ -11,7 +11,6 @@
 
 namespace Symfony\Bundle\FrameworkBundle\Console\Descriptor;
 
-use Symfony\Component\Config\Resource\ClassExistenceResource;
 use Symfony\Component\Console\Descriptor\DescriptorInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Alias;
@@ -227,7 +226,7 @@ abstract class Descriptor implements DescriptorInterface
             return $builder->getDefinition($serviceId);
         }
 
-        // Some service IDs don't have a Definition, they're aliases
+        // Some service IDs don't have a Definition, they're simply an Alias
         if ($builder->hasAlias($serviceId)) {
             return $builder->getAlias($serviceId);
         }
@@ -293,11 +292,6 @@ abstract class Descriptor implements DescriptorInterface
     {
         $resolvedClass = $class;
         try {
-            $resource = new ClassExistenceResource($class, false);
-
-            // isFresh() will explode ONLY if a parent class/trait does not exist
-            $resource->isFresh(0);
-
             $r = new \ReflectionClass($class);
             $resolvedClass = $r->name;
 

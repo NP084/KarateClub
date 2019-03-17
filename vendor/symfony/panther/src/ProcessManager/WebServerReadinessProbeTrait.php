@@ -42,7 +42,7 @@ trait WebServerReadinessProbeTrait
             'ignore_errors' => $ignoreErrors,
             'protocol_version' => '1.1',
             'header' => ['Connection: close'],
-            'timeout' => 5,
+            'timeout' => 1,
         ]]);
 
         while (Process::STATUS_STARTED !== ($status = $process->getStatus()) || false === @file_get_contents($url, false, $context)) {

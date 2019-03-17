@@ -79,7 +79,7 @@ class UnpackCommand extends BaseCommand
             $op->addPackage($pkg->getName(), $pkg->getVersion(), $dev);
         }
 
-        $unpacker = new Unpacker($composer, $this->resolver);
+        $unpacker = new Unpacker($composer);
         $result = $unpacker->unpack($op);
 
         // remove the packages themselves

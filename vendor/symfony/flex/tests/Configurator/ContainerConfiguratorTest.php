@@ -11,11 +11,12 @@
 
 namespace Symfony\Flex\Tests\Configurator;
 
+require_once __DIR__.'/TmpDirMock.php';
+
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Flex\Configurator\ContainerConfigurator;
-use Symfony\Flex\Lock;
 use Symfony\Flex\Options;
 use Symfony\Flex\Recipe;
 
@@ -24,8 +25,7 @@ class ContainerConfiguratorTest extends TestCase
     public function testConfigure()
     {
         $recipe = $this->getMockBuilder(Recipe::class)->disableOriginalConstructor()->getMock();
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-        $config = FLEX_TEST_DIR.'/config/services.yaml';
+        $config = sys_get_temp_dir().'/config/services.yaml';
         file_put_contents(
             $config,
             <<<EOF
@@ -39,9 +39,9 @@ EOF
         $configurator = new ContainerConfigurator(
             $this->getMockBuilder(Composer::class)->getMock(),
             $this->getMockBuilder(IOInterface::class)->getMock(),
-            new Options(['config-dir' => 'config', 'root-dir' => FLEX_TEST_DIR])
+            new Options(['config-dir' => dirname($config)])
         );
-        $configurator->configure($recipe, ['locale' => 'en'], $lock);
+        $configurator->configure($recipe, ['locale' => 'en']);
         $this->assertEquals(<<<EOF
 # comment
 parameters:
@@ -52,7 +52,7 @@ services:
 EOF
         , file_get_contents($config));
 
-        $configurator->unconfigure($recipe, ['locale' => 'en'], $lock);
+        $configurator->unconfigure($recipe, ['locale' => 'en']);
         $this->assertEquals(<<<EOF
 # comment
 parameters:
@@ -66,8 +66,7 @@ EOF
     public function testConfigureWithoutParametersKey()
     {
         $recipe = $this->getMockBuilder(Recipe::class)->disableOriginalConstructor()->getMock();
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-        $config = FLEX_TEST_DIR.'/config/services.yaml';
+        $config = sys_get_temp_dir().'/config/services.yaml';
         file_put_contents(
             $config,
             <<<EOF
@@ -78,9 +77,9 @@ EOF
         $configurator = new ContainerConfigurator(
             $this->getMockBuilder(Composer::class)->getMock(),
             $this->getMockBuilder(IOInterface::class)->getMock(),
-            new Options(['config-dir' => 'config', 'root-dir' => FLEX_TEST_DIR])
+            new Options(['config-dir' => dirname($config)])
         );
-        $configurator->configure($recipe, ['locale' => 'en'], $lock);
+        $configurator->configure($recipe, ['locale' => 'en']);
         $this->assertEquals(<<<EOF
 parameters:
     locale: 'en'
@@ -90,7 +89,7 @@ services:
 EOF
         , file_get_contents($config));
 
-        $configurator->unconfigure($recipe, ['locale' => 'en'], $lock);
+        $configurator->unconfigure($recipe, ['locale' => 'en']);
         $this->assertEquals(<<<EOF
 parameters:
 
@@ -103,8 +102,7 @@ EOF
     public function testConfigureWithoutDuplicated()
     {
         $recipe = $this->getMockBuilder(Recipe::class)->disableOriginalConstructor()->getMock();
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-        $config = FLEX_TEST_DIR.'/config/services.yaml';
+        $config = sys_get_temp_dir().'/config/services.yaml';
         file_put_contents(
             $config,
             <<<EOF
@@ -118,9 +116,9 @@ EOF
         $configurator = new ContainerConfigurator(
             $this->getMockBuilder(Composer::class)->getMock(),
             $this->getMockBuilder(IOInterface::class)->getMock(),
-            new Options(['config-dir' => 'config', 'root-dir' => FLEX_TEST_DIR])
+            new Options(['config-dir' => dirname($config)])
         );
-        $configurator->configure($recipe, ['locale' => 'en'], $lock);
+        $configurator->configure($recipe, ['locale' => 'en']);
         $this->assertEquals(<<<EOF
 parameters:
     locale: es
@@ -130,7 +128,7 @@ services:
 EOF
         , file_get_contents($config));
 
-        $configurator->unconfigure($recipe, ['locale' => 'en'], $lock);
+        $configurator->unconfigure($recipe, ['locale' => 'en']);
         $this->assertEquals(<<<EOF
 parameters:
 
@@ -143,8 +141,7 @@ EOF
     public function testConfigureWithComplexContent()
     {
         $recipe = $this->getMockBuilder(Recipe::class)->disableOriginalConstructor()->getMock();
-        $lock = $this->getMockBuilder(Lock::class)->disableOriginalConstructor()->getMock();
-        $config = FLEX_TEST_DIR.'/config/services.yaml';
+        $config = sys_get_temp_dir().'/config/services.yaml';
         file_put_contents(
             $config,
             <<<EOF
@@ -162,9 +159,9 @@ EOF
         $configurator = new ContainerConfigurator(
             $this->getMockBuilder(Composer::class)->getMock(),
             $this->getMockBuilder(IOInterface::class)->getMock(),
-            new Options(['config-dir' => 'config', 'root-dir' => FLEX_TEST_DIR])
+            new Options(['config-dir' => dirname($config)])
         );
-        $configurator->configure($recipe, ['locale' => 'en', 'foobar' => 'baz'], $lock);
+        $configurator->configure($recipe, ['locale' => 'en', 'foobar' => 'baz']);
         $this->assertEquals(<<<EOF
 parameters:
     # comment 1
@@ -179,7 +176,7 @@ services:
 EOF
         , file_get_contents($config));
 
-        $configurator->unconfigure($recipe, ['locale' => 'en', 'foobar' => 'baz'], $lock);
+        $configurator->unconfigure($recipe, ['locale' => 'en', 'foobar' => 'baz']);
         $this->assertEquals(<<<EOF
 parameters:
     # comment 1

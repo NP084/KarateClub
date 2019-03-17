@@ -107,7 +107,9 @@ class IntegerToLocalizedStringTransformerTest extends TestCase
         $transformer = new IntegerToLocalizedStringTransformer();
 
         $this->assertEquals(1, $transformer->reverseTransform('1'));
-        $this->assertEquals(12345, $transformer->reverseTransform('12345'));
+        $this->assertEquals(1, $transformer->reverseTransform('1,5'));
+        $this->assertEquals(1234, $transformer->reverseTransform('1234,5'));
+        $this->assertEquals(12345, $transformer->reverseTransform('12345,912'));
     }
 
     public function testReverseTransformEmpty()
@@ -126,10 +128,10 @@ class IntegerToLocalizedStringTransformerTest extends TestCase
 
         $transformer = new IntegerToLocalizedStringTransformer(true);
 
-        $this->assertEquals(1234, $transformer->reverseTransform('1.234'));
-        $this->assertEquals(12345, $transformer->reverseTransform('12.345'));
-        $this->assertEquals(1234, $transformer->reverseTransform('1234'));
-        $this->assertEquals(12345, $transformer->reverseTransform('12345'));
+        $this->assertEquals(1234, $transformer->reverseTransform('1.234,5'));
+        $this->assertEquals(12345, $transformer->reverseTransform('12.345,912'));
+        $this->assertEquals(1234, $transformer->reverseTransform('1234,5'));
+        $this->assertEquals(12345, $transformer->reverseTransform('12345,912'));
     }
 
     /**
@@ -145,10 +147,10 @@ class IntegerToLocalizedStringTransformerTest extends TestCase
 
         $transformer = new IntegerToLocalizedStringTransformer(null, true);
 
-        $this->assertEquals(1234, $transformer->reverseTransform('1.234'));
-        $this->assertEquals(12345, $transformer->reverseTransform('12.345'));
-        $this->assertEquals(1234, $transformer->reverseTransform('1234'));
-        $this->assertEquals(12345, $transformer->reverseTransform('12345'));
+        $this->assertEquals(1234, $transformer->reverseTransform('1.234,5'));
+        $this->assertEquals(12345, $transformer->reverseTransform('12.345,912'));
+        $this->assertEquals(1234, $transformer->reverseTransform('1234,5'));
+        $this->assertEquals(12345, $transformer->reverseTransform('12345,912'));
     }
 
     public function reverseTransformWithRoundingProvider()
@@ -242,29 +244,6 @@ class IntegerToLocalizedStringTransformerTest extends TestCase
         $transformer = new IntegerToLocalizedStringTransformer();
 
         $transformer->reverseTransform('foo');
-    }
-
-    /**
-     * @dataProvider floatNumberProvider
-     * @expectedException \Symfony\Component\Form\Exception\TransformationFailedException
-     */
-    public function testReverseTransformExpectsInteger($number, $locale)
-    {
-        IntlTestHelper::requireFullIntl($this, false);
-
-        \Locale::setDefault($locale);
-
-        $transformer = new IntegerToLocalizedStringTransformer();
-
-        $transformer->reverseTransform($number);
-    }
-
-    public function floatNumberProvider()
-    {
-        return [
-            ['12345.912', 'en'],
-            ['1.234,5', 'de_DE'],
-        ];
     }
 
     /**

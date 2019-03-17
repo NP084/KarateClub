@@ -9,20 +9,18 @@
  * file that was distributed with this source code.
  */
 
-use Twig\RuntimeLoader\FactoryRuntimeLoader;
-
 class Twig_Tests_FactoryRuntimeLoaderTest extends \PHPUnit\Framework\TestCase
 {
     public function testLoad()
     {
-        $loader = new FactoryRuntimeLoader(['stdClass' => 'getRuntime']);
+        $loader = new Twig_FactoryRuntimeLoader(['stdClass' => 'getRuntime']);
 
         $this->assertInstanceOf('stdClass', $loader->load('stdClass'));
     }
 
     public function testLoadReturnsNullForUnmappedRuntime()
     {
-        $loader = new FactoryRuntimeLoader();
+        $loader = new Twig_FactoryRuntimeLoader();
 
         $this->assertNull($loader->load('stdClass'));
     }
@@ -30,5 +28,5 @@ class Twig_Tests_FactoryRuntimeLoaderTest extends \PHPUnit\Framework\TestCase
 
 function getRuntime()
 {
-    return new \stdClass();
+    return new stdClass();
 }

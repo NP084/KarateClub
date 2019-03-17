@@ -21,12 +21,10 @@ use Symfony\Flex\Unpack\Result;
 class Unpacker
 {
     private $composer;
-    private $resolver;
 
-    public function __construct(Composer $composer, PackageResolver $resolver)
+    public function __construct(Composer $composer)
     {
         $this->composer = $composer;
-        $this->resolver = $resolver;
     }
 
     public function unpack(Operation $op): Result
@@ -55,10 +53,7 @@ class Unpacker
                     continue;
                 }
 
-                $constraint = $link->getPrettyConstraint();
-                $constraint = substr($this->resolver->parseVersion($link->getTarget(), $constraint, !$package['dev']), 1) ?: $constraint;
-
-                if (!$manipulator->addLink($package['dev'] ? 'require-dev' : 'require', $link->getTarget(), $constraint, $op->shouldSort())) {
+                if (!$manipulator->addLink($package['dev'] ? 'require-dev' : 'require', $link->getTarget(), $link->getPrettyConstraint(), $op->shouldSort())) {
                     throw new \RuntimeException(sprintf('Unable to unpack package "%s".', $link->getTarget()));
                 }
             }

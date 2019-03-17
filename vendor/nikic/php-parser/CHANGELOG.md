@@ -1,14 +1,7 @@
-Version 4.2.2-dev
+Version 4.2.1-dev
 -----------------
 
 Nothing yet.
-
-Version 4.2.1 (2019-02-16)
---------------------------
-
-### Added
-
-* [PHP 7.4] Add support for `??=` operator through a new `AssignOp\Coalesce` node. (#575)
 
 Version 4.2.0 (2019-01-12)
 --------------------------

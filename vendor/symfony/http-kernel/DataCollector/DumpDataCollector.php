@@ -133,6 +133,9 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         $this->clonesIndex = 0;
     }
 
+    /**
+     * @internal
+     */
     public function serialize()
     {
         if ($this->clonesCount !== $this->clonesIndex) {
@@ -149,6 +152,9 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         return $ser;
     }
 
+    /**
+     * @internal
+     */
     public function unserialize($data)
     {
         $this->data = unserialize($data);

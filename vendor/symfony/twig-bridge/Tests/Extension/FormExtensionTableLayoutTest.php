@@ -30,8 +30,6 @@ class FormExtensionTableLayoutTest extends AbstractTableLayoutTest
      */
     private $renderer;
 
-    protected static $supportedFeatureSetVersion = 304;
-
     protected function setUp()
     {
         parent::setUp();

@@ -9,30 +9,28 @@
  * file that was distributed with this source code.
  */
 
-use Twig\Loader\ArrayLoader;
-
 class Twig_Tests_Loader_ArrayTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @expectedException \Twig\Error\LoaderError
+     * @expectedException Twig_Error_Loader
      */
     public function testGetSourceContextWhenTemplateDoesNotExist()
     {
-        $loader = new ArrayLoader([]);
+        $loader = new Twig_Loader_Array([]);
 
         $loader->getSourceContext('foo');
     }
 
     public function testGetCacheKey()
     {
-        $loader = new ArrayLoader(['foo' => 'bar']);
+        $loader = new Twig_Loader_Array(['foo' => 'bar']);
 
         $this->assertEquals('foo:bar', $loader->getCacheKey('foo'));
     }
 
     public function testGetCacheKeyWhenTemplateHasDuplicateContent()
     {
-        $loader = new ArrayLoader([
+        $loader = new Twig_Loader_Array([
             'foo' => 'bar',
             'baz' => 'bar',
         ]);
@@ -43,7 +41,7 @@ class Twig_Tests_Loader_ArrayTest extends \PHPUnit\Framework\TestCase
 
     public function testGetCacheKeyIsProtectedFromEdgeCollisions()
     {
-        $loader = new ArrayLoader([
+        $loader = new Twig_Loader_Array([
             'foo__' => 'bar',
             'foo' => '__bar',
         ]);
@@ -53,18 +51,18 @@ class Twig_Tests_Loader_ArrayTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException \Twig\Error\LoaderError
+     * @expectedException Twig_Error_Loader
      */
     public function testGetCacheKeyWhenTemplateDoesNotExist()
     {
-        $loader = new ArrayLoader([]);
+        $loader = new Twig_Loader_Array([]);
 
         $loader->getCacheKey('foo');
     }
 
     public function testSetTemplate()
     {
-        $loader = new ArrayLoader([]);
+        $loader = new Twig_Loader_Array([]);
         $loader->setTemplate('foo', 'bar');
 
         $this->assertEquals('bar', $loader->getSourceContext('foo')->getCode());
@@ -72,16 +70,16 @@ class Twig_Tests_Loader_ArrayTest extends \PHPUnit\Framework\TestCase
 
     public function testIsFresh()
     {
-        $loader = new ArrayLoader(['foo' => 'bar']);
+        $loader = new Twig_Loader_Array(['foo' => 'bar']);
         $this->assertTrue($loader->isFresh('foo', time()));
     }
 
     /**
-     * @expectedException \Twig\Error\LoaderError
+     * @expectedException Twig_Error_Loader
      */
     public function testIsFreshWhenTemplateDoesNotExist()
     {
-        $loader = new ArrayLoader([]);
+        $loader = new Twig_Loader_Array([]);
 
         $loader->isFresh('foo', time());
     }

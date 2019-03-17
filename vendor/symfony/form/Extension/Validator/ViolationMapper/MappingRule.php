@@ -50,7 +50,7 @@ class MappingRule
      */
     public function match($propertyPath)
     {
-        if ($propertyPath === $this->propertyPath) {
+        if ($propertyPath === (string) $this->propertyPath) {
             return $this->getTarget();
         }
     }

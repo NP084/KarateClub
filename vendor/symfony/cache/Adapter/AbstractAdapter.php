@@ -94,7 +94,7 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
     }
 
     /**
-     * Returns the best possible adapter that your runtime supports.
+     * Returns an ApcuAdapter if supported, a PhpFilesAdapter otherwise.
      *
      * Using ApcuAdapter makes system caches compatible with read-only filesystems.
      *
@@ -108,12 +108,16 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
      */
     public static function createSystemCache($namespace, $defaultLifetime, $version, $directory, LoggerInterface $logger = null)
     {
-        $opcache = new PhpFilesAdapter($namespace, $defaultLifetime, $directory, true);
-        if (null !== $logger) {
-            $opcache->setLogger($logger);
+        if (null === self::$apcuSupported) {
+            self::$apcuSupported = ApcuAdapter::isSupported();
         }
 
-        if (!self::$apcuSupported = self::$apcuSupported ?? ApcuAdapter::isSupported()) {
+        if (!self::$apcuSupported) {
+            $opcache = new PhpFilesAdapter($namespace, $defaultLifetime, $directory, true);
+            if (null !== $logger) {
+                $opcache->setLogger($logger);
+            }
+
             return $opcache;
         }
 
@@ -124,7 +128,7 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
             $apcu->setLogger($logger);
         }
 
-        return new ChainAdapter([$apcu, $opcache]);
+        return $apcu;
     }
 
     public static function createConnection($dsn, array $options = [])

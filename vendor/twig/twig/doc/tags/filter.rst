@@ -10,11 +10,11 @@ data. Just wrap the code in the special ``filter`` section:
         This text becomes uppercase
     {% endfilter %}
 
-You can also chain filters and pass arguments to them:
+You can also chain filters:
 
 .. code-block:: jinja
 
-    {% filter lower|escape('html') %}
+    {% filter lower|escape %}
         <strong>SOME TEXT</strong>
     {% endfilter %}
 

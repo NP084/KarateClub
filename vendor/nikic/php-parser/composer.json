@@ -29,11 +29,6 @@
             "PhpParser\\": "lib/PhpParser"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "PhpParser\\": "test/PhpParser/"
-        }
-    },
     "bin": [
         "bin/php-parse"
     ]

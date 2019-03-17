@@ -181,7 +181,9 @@ class NumberToLocalizedStringTransformer implements DataTransformerInterface
             throw new TransformationFailedException('I don\'t have a clear idea what infinity looks like');
         }
 
-        $result = $this->castParsedValue($result);
+        if (\is_int($result) && $result === (int) $float = (float) $result) {
+            $result = $float;
+        }
 
         if (false !== $encoding = mb_detect_encoding($value, null, true)) {
             $length = mb_strlen($value, $encoding);
@@ -224,18 +226,6 @@ class NumberToLocalizedStringTransformer implements DataTransformerInterface
         $formatter->setAttribute(\NumberFormatter::GROUPING_USED, $this->grouping);
 
         return $formatter;
-    }
-
-    /**
-     * @internal
-     */
-    protected function castParsedValue($value)
-    {
-        if (\is_int($value) && $value === (int) $float = (float) $value) {
-            return $float;
-        }
-
-        return $value;
     }
 
     /**

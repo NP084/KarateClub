@@ -9,34 +9,27 @@
  * file that was distributed with this source code.
  */
 
-use Twig\Environment;
-use Twig\Error\Error;
-use Twig\Error\RuntimeError;
-use Twig\Loader\ArrayLoader;
-use Twig\Loader\FilesystemLoader;
-use Twig\Source;
-
 class Twig_Tests_ErrorTest extends \PHPUnit\Framework\TestCase
 {
     public function testErrorWithObjectFilename()
     {
-        $error = new Error('foo');
-        $error->setSourceContext(new Source('', new \SplFileInfo(__FILE__)));
+        $error = new Twig_Error('foo');
+        $error->setSourceContext(new Twig_Source('', new SplFileInfo(__FILE__)));
 
         $this->assertContains('test'.DIRECTORY_SEPARATOR.'Twig'.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR.'ErrorTest.php', $error->getMessage());
     }
 
     public function testErrorWithArrayFilename()
     {
-        $error = new Error('foo');
-        $error->setSourceContext(new Source('', ['foo' => 'bar']));
+        $error = new Twig_Error('foo');
+        $error->setSourceContext(new Twig_Source('', ['foo' => 'bar']));
 
         $this->assertEquals('foo in {"foo":"bar"}', $error->getMessage());
     }
 
     public function testTwigExceptionGuessWithMissingVarAndArrayLoader()
     {
-        $loader = new ArrayLoader([
+        $loader = new Twig_Loader_Array([
             'base.html' => '{% block content %}{% endblock %}',
             'index.html' => <<<EOHTML
 {% extends 'base.html' %}
@@ -49,14 +42,14 @@ class Twig_Tests_ErrorTest extends \PHPUnit\Framework\TestCase
 EOHTML
         ]);
 
-        $twig = new Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
+        $twig = new Twig_Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
 
-        $template = $twig->load('index.html');
+        $template = $twig->loadTemplate('index.html');
         try {
             $template->render([]);
 
             $this->fail();
-        } catch (RuntimeError $e) {
+        } catch (Twig_Error_Runtime $e) {
             $this->assertEquals('Variable "foo" does not exist in "index.html" at line 3.', $e->getMessage());
             $this->assertEquals(3, $e->getTemplateLine());
             $this->assertEquals('index.html', $e->getSourceContext()->getName());
@@ -65,7 +58,7 @@ EOHTML
 
     public function testTwigExceptionGuessWithExceptionAndArrayLoader()
     {
-        $loader = new ArrayLoader([
+        $loader = new Twig_Loader_Array([
             'base.html' => '{% block content %}{% endblock %}',
             'index.html' => <<<EOHTML
 {% extends 'base.html' %}
@@ -77,14 +70,14 @@ EOHTML
 {% endblock %}
 EOHTML
         ]);
-        $twig = new Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
+        $twig = new Twig_Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
 
-        $template = $twig->load('index.html');
+        $template = $twig->loadTemplate('index.html');
         try {
             $template->render(['foo' => new Twig_Tests_ErrorTest_Foo()]);
 
             $this->fail();
-        } catch (RuntimeError $e) {
+        } catch (Twig_Error_Runtime $e) {
             $this->assertEquals('An exception has been thrown during the rendering of a template ("Runtime error...") in "index.html" at line 3.', $e->getMessage());
             $this->assertEquals(3, $e->getTemplateLine());
             $this->assertEquals('index.html', $e->getSourceContext()->getName());
@@ -93,15 +86,15 @@ EOHTML
 
     public function testTwigExceptionGuessWithMissingVarAndFilesystemLoader()
     {
-        $loader = new FilesystemLoader(__DIR__.'/Fixtures/errors');
-        $twig = new Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
+        $loader = new Twig_Loader_Filesystem(__DIR__.'/Fixtures/errors');
+        $twig = new Twig_Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
 
-        $template = $twig->load('index.html');
+        $template = $twig->loadTemplate('index.html');
         try {
             $template->render([]);
 
             $this->fail();
-        } catch (RuntimeError $e) {
+        } catch (Twig_Error_Runtime $e) {
             $this->assertEquals('Variable "foo" does not exist.', $e->getMessage());
             $this->assertEquals(3, $e->getTemplateLine());
             $this->assertEquals('index.html', $e->getSourceContext()->getName());
@@ -112,15 +105,15 @@ EOHTML
 
     public function testTwigExceptionGuessWithExceptionAndFilesystemLoader()
     {
-        $loader = new FilesystemLoader(__DIR__.'/Fixtures/errors');
-        $twig = new Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
+        $loader = new Twig_Loader_Filesystem(__DIR__.'/Fixtures/errors');
+        $twig = new Twig_Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
 
-        $template = $twig->load('index.html');
+        $template = $twig->loadTemplate('index.html');
         try {
             $template->render(['foo' => new Twig_Tests_ErrorTest_Foo()]);
 
             $this->fail();
-        } catch (RuntimeError $e) {
+        } catch (Twig_Error_Runtime $e) {
             $this->assertEquals('An exception has been thrown during the rendering of a template ("Runtime error...").', $e->getMessage());
             $this->assertEquals(3, $e->getTemplateLine());
             $this->assertEquals('index.html', $e->getSourceContext()->getName());
@@ -134,16 +127,16 @@ EOHTML
      */
     public function testTwigExceptionAddsFileAndLine($templates, $name, $line)
     {
-        $loader = new ArrayLoader($templates);
-        $twig = new Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
+        $loader = new Twig_Loader_Array($templates);
+        $twig = new Twig_Environment($loader, ['strict_variables' => true, 'debug' => true, 'cache' => false]);
 
-        $template = $twig->load('index');
+        $template = $twig->loadTemplate('index');
 
         try {
             $template->render([]);
 
             $this->fail();
-        } catch (RuntimeError $e) {
+        } catch (Twig_Error_Runtime $e) {
             $this->assertEquals(sprintf('Variable "foo" does not exist in "%s" at line %d.', $name, $line), $e->getMessage());
             $this->assertEquals($line, $e->getTemplateLine());
             $this->assertEquals($name, $e->getSourceContext()->getName());
@@ -153,7 +146,7 @@ EOHTML
             $template->render(['foo' => new Twig_Tests_ErrorTest_Foo()]);
 
             $this->fail();
-        } catch (RuntimeError $e) {
+        } catch (Twig_Error_Runtime $e) {
             $this->assertEquals(sprintf('An exception has been thrown during the rendering of a template ("Runtime error...") in "%s" at line %d.', $name, $line), $e->getMessage());
             $this->assertEquals($line, $e->getTemplateLine());
             $this->assertEquals($name, $e->getSourceContext()->getName());
@@ -214,6 +207,6 @@ class Twig_Tests_ErrorTest_Foo
 {
     public function bar()
     {
-        throw new \Exception('Runtime error...');
+        throw new Exception('Runtime error...');
     }
 }

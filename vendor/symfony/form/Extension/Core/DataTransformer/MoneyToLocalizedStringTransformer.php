@@ -58,7 +58,7 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
             if (!is_numeric($value)) {
                 throw new TransformationFailedException('Expected a numeric.');
             }
-            $value /= $this->divisor;
+            $value = (string) ($value / $this->divisor);
         }
 
         return parent::transform($value);

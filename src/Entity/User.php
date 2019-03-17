@@ -10,18 +10,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="fos_user")
  * @Vich\Uploadable
  * @UniqueEntity(
  *  fields={"email"},
  *  message="L'email indiqué est déjà utilisé !"
  * )
  */
-class User extends BaseUser
+class User implements UserInterface
 {
     /**
      * @ORM\Id()

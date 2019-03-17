@@ -11,7 +11,6 @@
 
 namespace Symfony\Flex\Configurator;
 
-use Symfony\Flex\Lock;
 use Symfony\Flex\Recipe;
 
 /**
@@ -19,22 +18,20 @@ use Symfony\Flex\Recipe;
  */
 class MakefileConfigurator extends AbstractConfigurator
 {
-    public function configure(Recipe $recipe, $definitions, Lock $lock, array $options = [])
+    public function configure(Recipe $recipe, $definitions)
     {
         $this->write('Added Makefile entries');
 
-        $makefile = $this->options->get('root-dir').'/Makefile';
-        if (empty($options['force']) && $this->isFileMarked($recipe, $makefile)) {
+        $makefile = getcwd().'/Makefile';
+        if ($this->isFileMarked($recipe, $makefile)) {
             return;
         }
 
-        $data = $this->options->expandTargetDir(implode("\n", $definitions));
-        $data = $this->markData($recipe, $data);
-        $data = "\n".ltrim($data, "\r\n");
+        $data = $this->markData($recipe, implode("\n", $definitions));
 
         if (!file_exists($makefile)) {
             file_put_contents(
-                $this->options->get('root-dir').'/Makefile',
+                getcwd().'/Makefile',
                 <<<EOF
 ifndef APP_ENV
 	include .env
@@ -48,15 +45,12 @@ help:
 EOF
             );
         }
-
-        if (!$this->updateData($makefile, $data)) {
-            file_put_contents($makefile, $data, FILE_APPEND);
-        }
+        file_put_contents(getcwd().'/Makefile', "\n".ltrim($data, "\r\n"), FILE_APPEND);
     }
 
-    public function unconfigure(Recipe $recipe, $vars, Lock $lock)
+    public function unconfigure(Recipe $recipe, $vars)
     {
-        if (!file_exists($makefile = $this->options->get('root-dir').'/Makefile')) {
+        if (!file_exists($makefile = getcwd().'/Makefile')) {
             return;
         }
 

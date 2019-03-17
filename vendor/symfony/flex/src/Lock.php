@@ -36,17 +36,6 @@ class Lock
 
     public function add($name, $data)
     {
-        $current = $this->lock[$name] ?? [];
-        $this->lock[$name] = array_merge($current, $data);
-    }
-
-    public function get($name)
-    {
-        return $this->lock[$name] ?? null;
-    }
-
-    public function set($name, $data)
-    {
         $this->lock[$name] = $data;
     }
 
@@ -63,10 +52,5 @@ class Lock
         } elseif ($this->json->exists()) {
             @unlink($this->json->getPath());
         }
-    }
-
-    public function all(): array
-    {
-        return $this->lock;
     }
 }

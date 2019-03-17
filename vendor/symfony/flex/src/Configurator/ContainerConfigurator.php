@@ -11,7 +11,6 @@
 
 namespace Symfony\Flex\Configurator;
 
-use Symfony\Flex\Lock;
 use Symfony\Flex\Recipe;
 
 /**
@@ -19,16 +18,16 @@ use Symfony\Flex\Recipe;
  */
 class ContainerConfigurator extends AbstractConfigurator
 {
-    public function configure(Recipe $recipe, $parameters, Lock $lock, array $options = [])
+    public function configure(Recipe $recipe, $parameters)
     {
         $this->write('Setting parameters');
         $this->addParameters($parameters);
     }
 
-    public function unconfigure(Recipe $recipe, $parameters, Lock $lock)
+    public function unconfigure(Recipe $recipe, $parameters)
     {
         $this->write('Unsetting parameters');
-        $target = $this->options->get('root-dir').'/'.$this->options->expandTargetDir('%CONFIG_DIR%/services.yaml');
+        $target = $this->options->expandTargetDir('%CONFIG_DIR%/services.yaml');
         $lines = [];
         foreach (file($target) as $line) {
             foreach (array_keys($parameters) as $key) {
@@ -43,7 +42,7 @@ class ContainerConfigurator extends AbstractConfigurator
 
     private function addParameters(array $parameters)
     {
-        $target = $this->options->get('root-dir').'/'.$this->options->expandTargetDir('%CONFIG_DIR%/services.yaml');
+        $target = $this->options->expandTargetDir('%CONFIG_DIR%/services.yaml');
         $endAt = 0;
         $isParameters = false;
         $lines = [];

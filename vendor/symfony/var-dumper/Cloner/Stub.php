@@ -39,29 +39,22 @@ class Stub
     public $position = 0;
     public $attr = [];
 
-    private static $defaultProperties = [];
-
     /**
      * @internal
      */
     public function __sleep()
     {
-        $properties = [];
+        $this->serialized = [$this->class, $this->position, $this->cut, $this->type, $this->value, $this->handle, $this->refCount, $this->attr];
 
-        if (!isset(self::$defaultProperties[$c = \get_class($this)])) {
-            self::$defaultProperties[$c] = get_class_vars($c);
+        return ['serialized'];
+    }
 
-            foreach ((new \ReflectionClass($c))->getStaticProperties() as $k => $v) {
-                unset(self::$defaultProperties[$c][$k]);
-            }
-        }
-
-        foreach (self::$defaultProperties[$c] as $k => $v) {
-            if ($this->$k !== $v) {
-                $properties[] = $k;
-            }
-        }
-
-        return $properties;
+    /**
+     * @internal
+     */
+    public function __wakeup()
+    {
+        list($this->class, $this->position, $this->cut, $this->type, $this->value, $this->handle, $this->refCount, $this->attr) = $this->serialized;
+        unset($this->serialized);
     }
 }

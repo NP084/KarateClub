@@ -9,18 +9,13 @@
  * file that was distributed with this source code.
  */
 
-use Twig\Node\Expression\AssignNameExpression;
-use Twig\Node\Expression\ConstantExpression;
-use Twig\Node\ImportNode;
-use Twig\Test\NodeTestCase;
-
-class Twig_Tests_Node_ImportTest extends NodeTestCase
+class Twig_Tests_Node_ImportTest extends Twig_Test_NodeTestCase
 {
     public function testConstructor()
     {
-        $macro = new ConstantExpression('foo.twig', 1);
-        $var = new AssignNameExpression('macro', 1);
-        $node = new ImportNode($macro, $var, 1);
+        $macro = new Twig_Node_Expression_Constant('foo.twig', 1);
+        $var = new Twig_Node_Expression_AssignName('macro', 1);
+        $node = new Twig_Node_Import($macro, $var, 1);
 
         $this->assertEquals($macro, $node->getNode('expr'));
         $this->assertEquals($var, $node->getNode('var'));
@@ -30,9 +25,9 @@ class Twig_Tests_Node_ImportTest extends NodeTestCase
     {
         $tests = [];
 
-        $macro = new ConstantExpression('foo.twig', 1);
-        $var = new AssignNameExpression('macro', 1);
-        $node = new ImportNode($macro, $var, 1);
+        $macro = new Twig_Node_Expression_Constant('foo.twig', 1);
+        $var = new Twig_Node_Expression_AssignName('macro', 1);
+        $node = new Twig_Node_Import($macro, $var, 1);
 
         $tests[] = [$node, <<<EOF
 // line 1
