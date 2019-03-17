@@ -10,7 +10,10 @@
             <h2> Modification des données personnelles </h2>
             <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
 
-                    {{ form_start(formUser) }}
+                {{ form_start(formUser) }}
+                {{ form_row(formUser.email) }}
+                {{ form_row(formUser.password) }}
+
 
                 {# <div class="form-group">
                 <label for="">Nom</label>
