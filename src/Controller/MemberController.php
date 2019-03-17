@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 
 class MemberController extends AbstractController
@@ -70,11 +69,9 @@ class MemberController extends AbstractController
         $formUser->handleRequest($request);
 
         if($formUser->isSubmitted() && $formUser->isValid()){
-            if($user instanceof AdvancedUserInterface){
-                $user=$this->security->getUser();
-                $manager->persist($user);
-                $manager->flush();
-            }
+            $user=$this->security->getUser();
+            $manager->persist($user);
+            $manager->flush();
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         }
 
