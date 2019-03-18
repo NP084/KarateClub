@@ -1,54 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if app.user  %}
-        {% if  app.user.id == app.request.get("id") %}
-            <a href="{{ path('profile_show',{'id':app.user.id})}}" class="btn-btn-primary">
-                Retour
-            </a>
-
-            {#Affiche personnes de contact#}
-            <h2> <br>Modification d'un personne de contact</h2>
-
-            <form action="{{path('edit_PoC',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}" method="post">
-                <div class="row">
-                    <div class="col-4">
-                        Nom: {{ contactList.personOfContact.name }}
-                    </div>
-                    <div class="col-4">
-                        Prénom : {{ contactList.personOfContact.firstName }}
-                    </div>
-                    <div class="col-4">
-                        Numéro : {{ contactList.personOfContact.num1 }}
-                    </div>
-                    <div class="col-5">
-                        {{ form_start(ContactListForm) }}
-
-                        Relation {{ (form_widget(ContactListForm.relation) ) }}
-                    </div>
-                    <div class="col-7">
-                        Info {{ (form_widget(ContactListForm.info) ) }}
-                    </div>
-                    <div class="col">
-                        <button type="submit" class="btn btn-link"><br>Modifier</button>
-                        {{ form_end(ContactListForm) }}
-                    </div>
-                </div>
-            </form>
-
-        {% else %}
-            <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
-            <a href="{{ path('security_logout') }}" class="btn-btn-primary">
-                Déconnexion ?
-            </a>
-        {% endif %}
-
-    {% else %}
-        <h2>Vous n'êtes pas connecté !</h2>
-        <a href="{{ path('security_login') }}" class="btn-btn-primary">
-            Connexion
+    {% if app.user and app.user.id == app.request.get("id") %}
+        {#  {% if  app.user.id == app.request.get("id") %} #}
+        <a href="{{ path('profile_show',{'id':app.user.id})}}" class="btn-btn-primary">
+            Retour
         </a>
-    {% endif %}
+        {#Affiche personnes de contact#}
+        <h2> <br>Modification d'un personne de contact</h2>
 
+        <form action="{{path('edit_PoC',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}" method="post">
+            <div class="row">
+                <div class="col-4">
+                    Nom: {{ contactList.personOfContact.name }}
+                </div>
+                <div class="col-4">
+                    Prénom : {{ contactList.personOfContact.firstName }}
+                </div>
+                <div class="col-4">
+                    Numéro : {{ contactList.personOfContact.num1 }}
+                </div>
+                <div class="col-5">
+                    {{ form_start(ContactListForm) }}
+
+                    Relation {{ (form_widget(ContactListForm.relation) ) }}
+                </div>
+                <div class="col-7">
+                    Info {{ (form_widget(ContactListForm.info) ) }}
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-link"><br>Modifier</button>
+                    {{ form_end(ContactListForm) }}
+                </div>
+            </div>
+        </form>
+    {% else %}
+        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
+    {% endif %}
 
 {% endblock %}
