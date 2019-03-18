@@ -21,6 +21,10 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 
 class MemberController extends AbstractController
@@ -39,8 +43,10 @@ class MemberController extends AbstractController
      * MODIFICATION D'UNE PERSONNE DE CONTACT.
      * @Route("/member/editPoC/id={id}/idCL={idCL}/idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
+     * @IsGranted("ROLE_USER")
      */
-    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager){
+    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker){
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         $entityManager=$this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->find($id);
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
@@ -48,9 +54,11 @@ class MemberController extends AbstractController
         $formCL = $this->createForm(ContactListType::class, $contactList);
         $formCL->handleRequest($request);
 
-        if($formCL->isSubmitted()){
-            $manager->persist($contactList);
-            $manager->flush();
+        if($formCL->isSubmitted() && $formCL->isValid()){
+           // if (true === $authChecker->isGranted('ROLE_USER')){
+                $manager->persist($contactList);
+                $manager->flush();
+          //  }
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         }
 
@@ -67,13 +75,15 @@ class MemberController extends AbstractController
     public function profileEdit(User $user, Request $request, ObjectManager $manager){
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
-
         if($formUser->isSubmitted() && $formUser->isValid()){
+            $this->denyAccessUnlessGranted('edit', $user);
+
             $user=$this->security->getUser();
-            $manager->persist($user);
-            $manager->flush();
-            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
-        }
+
+                $manager->persist($user);
+                $manager->flush();
+                return $this->redirectToRoute('home');
+            };
 
         // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
         $phone = new Phone();

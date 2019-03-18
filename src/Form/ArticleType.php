@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ArticleType extends AbstractType
 {
@@ -20,7 +21,7 @@ class ArticleType extends AbstractType
                 'choice_label'=>'title'
             ])
             ->add('content')
-            ->add('image')
+            ->add('imageFile', VichImageType::class)
         ;
     }
 
