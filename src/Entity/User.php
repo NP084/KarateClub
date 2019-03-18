@@ -13,6 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="app_user")
  * @Vich\Uploadable
  * @UniqueEntity(
  *  fields={"email"},
@@ -127,7 +128,7 @@ class User implements UserInterface
     private $contactLists;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
      */
     private $imageName;
