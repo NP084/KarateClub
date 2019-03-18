@@ -24,7 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class MemberController extends AbstractController
@@ -43,10 +43,12 @@ class MemberController extends AbstractController
      * MODIFICATION D'UNE PERSONNE DE CONTACT.
      * @Route("/member/editPoC/id={id}/idCL={idCL}/idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
-     * @IsGranted("ROLE_USER")
+     * @Security("user.getId() == contactList.getUser().getId()")
      */
-    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker){
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
+//    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker){
+
+        public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager){
+//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         $entityManager=$this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->find($id);
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
@@ -71,18 +73,17 @@ class MemberController extends AbstractController
 
     /**
      * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_USER")
      */
-    public function profileEdit(User $user, Request $request, ObjectManager $manager){
+    public function profileEdit(User $user, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker){
+    //    $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
-        if($formUser->isSubmitted() && $formUser->isValid()){
-            $this->denyAccessUnlessGranted('edit', $user);
-
-            $user=$this->security->getUser();
-
-                $manager->persist($user);
-                $manager->flush();
-                return $this->redirectToRoute('home');
+        if($formUser->isSubmitted()){
+            $user=$this->getUser();
+            $manager->persist($user);
+            $manager->flush();
+                return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
             };
 
         // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
@@ -91,10 +92,13 @@ class MemberController extends AbstractController
         $formPhone->handleRequest($request);
 
         // Formulaire d'ajout d'un n° de téléphone a été envoyé :
-        if($formPhone->isSubmitted()){
-            // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
-            $this->addUserPhone($user, $phone, $request, $manager);
-            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        if($formPhone->isSubmitted() && $formPhone->isValid()){
+            if (true === $authChecker->isGranted('ROLE_USER')) {
+           // if ($this->getUser()->getId()==$user->getId()){
+                // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
+                $this->addUserPhone($user, $phone, $request, $manager);
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+            }
         }
 
         // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
@@ -143,10 +147,12 @@ class MemberController extends AbstractController
      * @Route("/member/id={id}", name="profile_show",  requirements={"id"="\d+"})
      */
     public function profileShow(User $user, Request $request){
-
+       // $usr = $this->getuser();
+       // if ($usr->getId() !== $user->getId()){
             return $this->render('member/showProfile.html.twig',[
-                'user' => $user
+                    'user' => $user
             ]);
+    //    }
     }
 
     /**

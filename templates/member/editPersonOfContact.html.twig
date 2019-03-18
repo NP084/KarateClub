@@ -22,6 +22,8 @@
                         Numéro : {{ contactList.personOfContact.num1 }}
                     </div>
                     <div class="col-5">
+                        {{ form_start(ContactListForm) }}
+
                         Relation {{ (form_widget(ContactListForm.relation) ) }}
                     </div>
                     <div class="col-7">
@@ -29,6 +31,7 @@
                     </div>
                     <div class="col">
                         <button type="submit" class="btn btn-link"><br>Modifier</button>
+                        {{ form_end(ContactListForm) }}
                     </div>
                 </div>
             </form>
@@ -39,6 +42,7 @@
                 Déconnexion ?
             </a>
         {% endif %}
+
     {% else %}
         <h2>Vous n'êtes pas connecté !</h2>
         <a href="{{ path('security_login') }}" class="btn-btn-primary">

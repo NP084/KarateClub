@@ -30,9 +30,10 @@ class UserType extends AbstractType
           //  ->add('createdUser')
             ->add('belt')
             ->add('receiptDate',DateType::class, [
-                'widget' => 'single_text',
-                'format' => 'dd-MM-yyyy',
-                'years' => range(1900, date('Y')),
+                'required'=> false,
+                'widget'  => 'single_text',
+                'format'  => 'dd-MM-yyyy',
+                'years'   => range(1900, date('Y')),
             ])
             ->add('sex', ChoiceType::class,[
                 'choices' => [
@@ -40,7 +41,9 @@ class UserType extends AbstractType
                     'Femme' => 'Femme',
                 ],
             ])
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class, [
+                'required'=> false
+            ])
       //      ->add('phones', EntityType::class,[
        //         'class' => Phone::class,
           //      'choice_label' => 'num'

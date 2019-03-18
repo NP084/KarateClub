@@ -20,7 +20,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *  message="L'email indiqué est déjà utilisé !"
  * )
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -146,6 +146,10 @@ class User implements UserInterface
      */
     private $updatedImage;
 
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
 
     public function __construct()
     {
@@ -158,6 +162,29 @@ class User implements UserInterface
         $this->histories = new ArrayCollection();
         $this->contactLists = new ArrayCollection();
         $this->updatedImage = new \DateTime();
+        $this->isActive = true;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // $this->salt
+            ) = unserialize($serialized, array('allowed_classes' => false));
     }
 
     public function setImageName(?string $imageName): void
