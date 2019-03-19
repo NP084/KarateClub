@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd18623b-1e9a-4914-b72a-2f5fe19694b1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MemberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MemberController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/UserType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/blog/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blog/create.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/blog/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blog/index.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="dd18623b-1e9a-4914-b72a-2f5fe19694b1" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,7 +260,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="308" />
     <option name="y" value="37" />
     <option name="width" value="1372" />
@@ -390,7 +384,7 @@
       <workItem from="1552922643612" duration="12266000" />
       <workItem from="1552951771615" duration="51000" />
       <workItem from="1552952006517" duration="156000" />
-      <workItem from="1552983992035" duration="1980000" />
+      <workItem from="1552983992035" duration="2010000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout attribut sex dans User">
       <created>1552040695561</created>
@@ -417,11 +411,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122372000" />
+    <option name="totallyTimeSpent" value="122402000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="308" y="37" width="1372" height="980" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23909774" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
