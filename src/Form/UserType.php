@@ -33,7 +33,7 @@ class UserType extends AbstractType
                 'required'=> false,
 //                'widget'  => 'single_text',
                 'format'  => 'dd-MM-yyyy',
-                'years'   => range(1900, date('Y')),
+                'years'   => range(1980, date('Y')),
             ])
             ->add('sex', ChoiceType::class,[
                 'choices' => [

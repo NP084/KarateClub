@@ -64,7 +64,7 @@ class Article
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="user_picture", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="article_picture", fileNameProperty="imageName")
      *
      * @var File
      */
