@@ -31,7 +31,7 @@ class UserType extends AbstractType
             ->add('belt')
             ->add('receiptDate',DateType::class, [
                 'required'=> false,
-                'widget'  => 'single_text',
+//                'widget'  => 'single_text',
                 'format'  => 'dd-MM-yyyy',
                 'years'   => range(1900, date('Y')),
             ])

@@ -70,12 +70,12 @@ class MemberController extends AbstractController
      * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
      */
     public function profileEdit(User $user, Request $request, ObjectManager $manager){
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page nom di dju');
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
         if($formUser->isSubmitted()){
-            $user=$this->getUser();
-            $manager->persist($user);
+          //  $user=$this->getUser();
+          //  $manager->persist($user);
             $manager->flush();
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
         };
