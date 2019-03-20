@@ -1,0 +1,80 @@
+---
+layout: default
+title: Activity
+active: components.activity
+footer: false
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Components
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Activity</h1>
+      <p class="text-muted">Displays each of the user’s upcoming, current, and past activities/events.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      {% include snippets/components/timeline.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/conversations.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/feeds.html %}
+    </div>
+    <!-- /.page-section -->
+
+    <!-- .app-footer -->
+    <footer class="app-footer">
+      <ul class="list-inline">
+        <li class="list-inline-item"><a class="text-muted" href="#">Support</a></li>
+        <li class="list-inline-item"><a class="text-muted" href="#">Help Center</a></li>
+        <li class="list-inline-item"><a class="text-muted" href="#">Privacy</a></li>
+        <li class="list-inline-item"><a class="text-muted" href="#">Terms of Service</a></li>
+      </ul>
+      <div class="copyright">Copyright &copy; 2018. All right reserved.</div>
+    </footer>
+    <!-- /.app-footer -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar page-sidebar-fixed">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-sm-none">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" onclick="Looper.toggleSidebar()">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.sidebar-header -->
+
+    <!-- .sidebar-section -->
+    <div class="sidebar-section">
+      {% include ui/timeline-02.html %}
+    </div>
+    <!-- /.sidebar-section -->
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

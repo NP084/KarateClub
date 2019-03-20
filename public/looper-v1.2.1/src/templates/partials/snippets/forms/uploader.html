@@ -1,0 +1,81 @@
+<!-- grid row -->
+<div class="row">
+  <!-- grid column -->
+  <div class="col-lg-4">
+    <!-- .section-block -->
+    <div class="section-block mt-0">
+      <h2 class="section-title pt-0">Uploader</h2>
+      <p class="text-muted">File Upload widget with multiple file selection, drag & drop support, progress bar, validation and preview images, audio and video. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.</p>
+    </div>
+    <!-- /.section-block -->
+  </div>
+  <!-- /grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-8">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- The avatar upload progress bar -->
+      <div id="progress-avatar" class="progress progress-xs rounded-0 fade">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <!-- .card-body -->
+      <div class="card-body">
+        <!-- .media -->
+        <div class="media">
+          <div class="user-avatar user-avatar-xl fileinput-button">
+            <div class="fileinput-button-label">Change photo</div>
+            <img src="assets/images/avatars/profile.jpg" alt="">
+            <input id="fileupload-avatar" type="file" name="avatar">
+          </div>
+          <div class="media-body pl-3">
+            <h3 class="card-title">jQuery File Upload</h3>
+            <p class="card-text">Click the current avatar to change your photo.</p>
+            <p class="card-text text-muted">The maximum file size allowed is 2MB.</p>
+          </div>
+        </div>
+        <!-- /.media -->
+      </div>
+      <!-- /.card-body -->
+      <div id="avatar-warning-container" class="alert alert-danger fade mb-0"></div>
+    </div>
+    <!-- /.card -->
+
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <!-- The fileinput-button span is used to style the file input field as button -->
+        <label>Using custom input</label>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="fileupload-customInput" multiple>
+          <label class="custom-file-label" for="fileupload-customInput">Choose files</label>
+        </div>
+        <hr>
+        <label class="mr-2">Using button</label>
+        <div class="btn btn-secondary fileinput-button">
+          <i class="fa fa-plus fa-fw"></i> <span>Add files...</span>
+          <!-- The file input field used as target for the file upload widget -->
+          <input id="fileupload-btn" type="file" name="files[]" multiple>
+        </div>
+        <hr>
+        <label>Using dropzone</label>
+        <div id="dropzone" class="fileinput-dropzone">
+          <span>Drop files or click to upload.</span>
+          <!-- The file input field used as target for the file upload widget -->
+          <input id="fileupload-dropzone" type="file" name="files[]" multiple>
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <!-- The progress bar -->
+      <div id="progress" class="progress progress-xs rounded-0 fade">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <!-- The container for the uploaded files -->
+      <div id="uploadList" class="list-group list-group-flush list-group-divider"></div>
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /grid column -->
+</div>
+<!-- /grid row -->

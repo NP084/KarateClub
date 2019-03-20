@@ -1,0 +1,18 @@
+[
+  {
+    "date": "04/11/2018",
+    "amount": "$360.00",
+    "vendor": "Facebook, Inc.",
+    "hasAttachment": true,
+    "category": "Campaign",
+    "state": "purple"
+  },
+  {
+    "date": "09/15/2018",
+    "amount": "$49.00",
+    "vendor": "Adobe Systems",
+    "hasAttachment": true,
+    "category": "Other",
+    "state": "orange"
+  }
+]

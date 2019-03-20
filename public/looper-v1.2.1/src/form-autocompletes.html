@@ -1,0 +1,71 @@
+---
+layout: default
+title: Input Autocompletes
+active: forms.autocompletes
+pluginsCss:
+  - select2/css/select2.min.css
+  - tributejs/tribute.css
+  - at.js/css/jquery.atwho.min.css
+pluginsJs:
+  - handlebars/handlebars.min.js
+  - typeahead.js/typeahead.bundle.min.js
+  - select2/js/select2.min.js
+  - tributejs/tribute.min.js
+  - jquery.caret/jquery.caret.min.js
+  - at.js/js/jquery.atwho.min.js
+  - text-mask/vanillaTextMask.js
+  - text-mask/addons/textMaskAddons.js
+pageJs:
+  - pages/select2-demo.js
+  - pages/typeahead-demo.js
+  - pages/atwho-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Forms
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Autocompletes</h1>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-deck -->
+      <div class="section-deck">
+        {% include snippets/forms/select2.html %}
+
+        {% include snippets/forms/typeahead.html %}
+      </div>
+      <!-- /.section-deck -->
+
+      <!-- .section-deck -->
+      <div class="section-deck">
+        {% include snippets/forms/tribute.html %}
+
+        {% include snippets/forms/atjs.html %}
+      </div>
+      <!-- /.section-deck -->
+
+      <!-- .section-deck -->
+      <div class="section-deck">
+        {% include snippets/forms/textmask.html %}
+      </div>
+      <!-- /.section-deck -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

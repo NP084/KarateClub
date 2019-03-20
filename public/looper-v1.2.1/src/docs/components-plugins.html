@@ -1,0 +1,147 @@
+---
+layout: docs
+title: Plugins
+active: plugins
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <h1 class="page-title text-center">Plugins</h1>
+      <p class="text-muted text-center">Lists of third party components that included in Looper package.</p>
+      <div class="input-group has-clearable">
+        <button type="button" class="close" aria-label="Close">
+          <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+        </button>
+        <label class="input-group-prepend" for="searchClients">
+          <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+        </label>
+        <input type="text" id="searchClients" class="form-control form-control-lg" data-filter=".card" placeholder="Filter plugins">
+      </div>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div id="required" class="section-block">
+        <h2 class="section-title">Required</h2>
+      </div>
+      <!-- .section-block -->
+
+      {% for plugin in site.data.plugins %}
+      {% if plugin.status == 'required' %}
+      <!-- .card -->
+      <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <p><span class="tile tile-sm bg-{{plugin.color}} mr-2">{{plugin.alias}}</span> {{plugin.name}}</p>
+            <button type="button" class="btn btn-reset text-muted" data-toggle="collapse" data-target="#code{{forloop.index}}" aria-expanded="false" aria-controls="code{{forloop.index}}"><i class="fa fa-code"></i></button>
+          </div>
+          <div class="collapse" id="code{{forloop.index}}">
+            <pre><code class="bash" onclick="highlightText(this)">npm install {{plugin.npm}}</code></pre>
+          </div>
+          <div>{{plugin.desc}}</div>
+        </div>
+        <!-- /.card-body -->
+        <!-- .card-footer -->
+        <div class="card-footer">
+          <a class="card-footer-item card-footer-item-bordered" href="{{plugin.repo}}" target="_blank">Repo</a>
+          <a class="card-footer-item card-footer-item-bordered" href="{{plugin.docs}}" target="_blank">Docs</a>
+        </div>
+        <!-- /.card-footer -->
+      </div>
+      <!-- /.card -->
+      {% endif %}
+      {% endfor %}
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div id="recommended" class="section-block">
+        <h2 class="section-title">Recommended</h2>
+      </div>
+      <!-- .section-block -->
+
+      {% for plugin in site.data.plugins %}
+      {% if plugin.status == 'recommended' %}
+      <!-- .card -->
+      <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <p><span class="tile tile-sm bg-{{plugin.color}} mr-2">{{plugin.alias}}</span> {{plugin.name}}</p>
+            <button type="button" class="btn btn-reset text-muted" data-toggle="collapse" data-target="#code{{forloop.index}}" aria-expanded="false" aria-controls="code{{forloop.index}}"><i class="fa fa-code"></i></button>
+          </div>
+          <div class="collapse" id="code{{forloop.index}}">
+            <pre><code class="bash" onclick="highlightText(this)">npm install {{plugin.npm}}</code></pre>
+          </div>
+          <div>{{plugin.desc}}</div>
+        </div>
+        <!-- /.card-body -->
+        <!-- .card-footer -->
+        <div class="card-footer">
+          <a class="card-footer-item card-footer-item-bordered" href="{{plugin.repo}}" target="_blank">Repo</a>
+          <a class="card-footer-item card-footer-item-bordered" href="{{plugin.docs}}" target="_blank">Docs</a>
+        </div>
+        <!-- /.card-footer -->
+      </div>
+      <!-- /.card -->
+      {% endif %}
+      {% endfor %}
+
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div id="optionals" class="section-block">
+        <h2 class="section-title">Optional</h2>
+      </div>
+      <!-- .section-block -->
+
+      {% for plugin in site.data.plugins %}
+      {% if plugin.status == 'optional' %}
+      <!-- .card -->
+      <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <p><span class="tile tile-sm bg-{{plugin.color}} mr-2">{{plugin.alias}}</span> {{plugin.name}}</p>
+            <button type="button" class="btn btn-reset text-muted" data-toggle="collapse" data-target="#code{{forloop.index}}" aria-expanded="false" aria-controls="code{{forloop.index}}"><i class="fa fa-code"></i></button>
+          </div>
+          <div class="collapse" id="code{{forloop.index}}">
+            <pre><code class="bash" onclick="highlightText(this)">npm install {{plugin.npm}}</code></pre>
+          </div>
+          <div>{{plugin.desc}}</div>
+        </div>
+        <!-- /.card-body -->
+        <!-- .card-footer -->
+        <div class="card-footer">
+          <a class="card-footer-item card-footer-item-bordered" href="{{plugin.repo}}" target="_blank">Repo</a>
+          <a class="card-footer-item card-footer-item-bordered" href="{{plugin.docs}}" target="_blank">Docs</a>
+        </div>
+        <!-- /.card-footer -->
+      </div>
+      <!-- /.card -->
+      {% endif %}
+      {% endfor %}
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar page-sidebar-fixed">
+    <nav id="nav-content" class="nav flex-column mt-4">
+      <a href="#required" class="nav-link smooth-scroll">Required</a>
+      <a href="#recommended" class="nav-link smooth-scroll">Recommended</a>
+      <a href="#optionals" class="nav-link smooth-scroll">Optionals</a>
+    </nav>
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

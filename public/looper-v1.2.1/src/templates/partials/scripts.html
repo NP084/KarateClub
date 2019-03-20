@@ -1,0 +1,28 @@
+<!-- BEGIN BASE JS -->
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/vendor/bootstrap/js/popper.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!-- END BASE JS -->
+
+<!-- BEGIN PLUGINS JS -->
+<script src="assets/vendor/pace/pace.min.js"></script>
+<script src="assets/vendor/stacked-menu/stacked-menu.min.js"></script>
+<script src="assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+{% if page.pluginsJs %}
+{% for js in page.pluginsJs %}
+<script src="assets/vendor/{{js}}"></script>
+{% endfor %}
+{% endif %}
+<!-- END PLUGINS JS -->
+
+<!-- BEGIN THEME JS -->
+<script src="assets/javascript/theme.min.js"></script>
+<!-- END THEME JS -->
+
+{% if page.pageJs %}
+<!-- BEGIN PAGE LEVEL JS -->
+{% for js in page.pageJs %}
+<script src="assets/javascript/{{js}}"></script>
+{% endfor %}
+<!-- END PAGE LEVEL JS -->
+{% endif %}

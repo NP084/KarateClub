@@ -1,0 +1,171 @@
+---
+layout: default
+title: Chart.js Lines
+active: collections.chartjs.line
+pluginsJs:
+  - chart.js/Chart.min.js
+pageJs:
+  - pages/chartjs-line-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Collections
+            </a>
+          </li>
+          <li class="breadcrumb-item active">
+            <a href="#">Chart.js</a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title mr-sm-auto">Line</h1>
+      <p class="text-muted">A line chart is a way of plotting data points on a line. Often, it is used to show trend data, and the comparison of two data sets.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-line" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+            <!-- .card-footer -->
+            <div class="card-footer">
+              <a href="#" id="randomizeData" class="card-footer-item card-footer-item-bordered text-muted">Randomize <span class="d-none d-sm-inline">Data</span></a>
+              <a href="#" id="addData" class="card-footer-item card-footer-item-bordered text-muted">Add <span class="d-none d-sm-inline">Data</span></a>
+              <a href="#" id="removeData" class="card-footer-item card-footer-item-bordered text-muted">Remove <span class="d-none d-sm-inline">Data</span></a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-stacked-area" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+            <!-- .card-footer -->
+            <div class="card-footer">
+              <a href="#" id="randomizeDataStackedArea" class="card-footer-item card-footer-item-bordered text-muted">Randomize <span class="d-none d-sm-inline">Data</span></a>
+              <a href="#" id="addDatasetStackedArea" class="card-footer-item card-footer-item-bordered text-muted">Add <span class="d-none d-sm-inline">Dataset</span></a>
+              <a href="#" id="removeDatasetStackedArea" class="card-footer-item card-footer-item-bordered text-muted">Remove <span class="d-none d-sm-inline">Dataset</span></a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-styles" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-stepped" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-skip-points" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-different-point-sizes" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-multi-axis" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-interpolation-modes" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

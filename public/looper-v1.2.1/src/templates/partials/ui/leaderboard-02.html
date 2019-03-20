@@ -1,0 +1,38 @@
+<!-- .list-group -->
+<div class="list-group list-group-flush">
+  {% for source in site.data.leaderboard2 %}
+  <!-- .list-group-item -->
+  <div class="list-group-item">
+    <!-- .list-group-item-figure -->
+    <div class="list-group-item-figure">
+      <a href="user-profile.html" class="user-avatar" data-toggle="tooltip" title="{{source.name}}">
+        <img src="assets/images/avatars/{{source.avatar}}" alt="">
+      </a>
+    </div>
+    <!-- /.list-group-item-figure -->
+
+    <!-- .list-group-item-body -->
+    <div class="list-group-item-body">
+      <!-- .progress -->
+      <div class="progress progress-animated rounded-0" data-toggle="tooltip" data-html="true" title='<div class="text-left small"><i class="fa fa-fw fa-square text-teal"></i> {{source.mailchimp}}<br><i class="fa fa-fw fa-square text-indigo"></i> {{source.facebook}}<br><i class="fa fa-fw fa-square text-pink"></i> {{source.google}}<br><i class="fa fa-fw fa-square text-purple"></i> {{source.linkedin}}</div>'>
+        <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="{{source.mailchimp | times: 100 | divided_by: source.leads}}" aria-valuemin="0" aria-valuemax="100" style="width: {{source.mailchimp | times: 100 | divided_by: source.leads}}%">
+          <span class="sr-only">{{source.mailchimp | times: 100 | divided_by: source.leads}}% Complete</span>
+        </div>
+        <div class="progress-bar bg-indigo" role="progressbar" aria-valuenow="{{source.facebook | times: 100 | divided_by: source.leads}}" aria-valuemin="0" aria-valuemax="100" style="width: {{source.facebook | times: 100 | divided_by: source.leads}}%">
+          <span class="sr-only">{{source.facebook | times: 100 | divided_by: source.leads}}% Complete</span>
+        </div>
+        <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="{{source.google | times: 100 | divided_by: source.leads}}" aria-valuemin="0" aria-valuemax="100" style="width: {{source.google | times: 100 | divided_by: source.leads}}%">
+          <span class="sr-only">{{source.google | times: 100 | divided_by: source.leads}}% Complete</span>
+        </div>
+        <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="{{source.linkedin | times: 100 | divided_by: source.leads}}" aria-valuemin="0" aria-valuemax="100" style="width: {{source.linkedin | times: 100 | divided_by: source.leads}}%">
+          <span class="sr-only">{{source.linkedin | times: 100 | divided_by: source.leads}}% Complete</span>
+        </div>
+      </div>
+      <!-- /.progress -->
+    </div>
+    <!-- /.list-group-item-body -->
+  </div>
+  <!-- /.list-group-item -->
+  {% endfor %}
+</div>
+<!-- /.list-group -->

@@ -1,0 +1,110 @@
+---
+layout: docs
+title: Build Tools
+active: build-tools
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <h1 class="page-title">Build Tools</h1>
+      <p class="text-muted">Learn how to customize Looper Theme. You will be able to quickly scaffold your theme and start developing.</p>
+      <button class="btn btn-dark btn-floated d-none d-sm-block d-xl-none" type="button" data-toggle="sidebar">
+        <i class="fa fa-th-list"></i>
+      </button>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 id="tooling-setup" class="section-title">Tooling setup</h2>
+
+        <p>Looper used <code>gulp</code> for its build system. To use the build system and run both Demo and Documentation locally, make sure your system has the following:</p>
+
+        <ul>
+          <li><a href="https://nodejs.org/en/" target="_blank">Node</a> version > 8.x and < 10.x</li>
+          <li><a href="https://gulpjs.com/" target="_blank">Gulp CLI</a>: <code>npm install -g gulp-cli</code></li>
+        </ul>
+
+        <p>Assuming that your system have the above requirements. Then open your command line and navigate to Looper directory, now you need to run:</p>
+
+        <pre><code class="bash">npm install</code></pre>
+
+        <p>Finally, once everything is done, you’ll be able to run the various tasks provided from the command line.</p>
+
+
+        <h2 id="gulp-tasks" class="section-title">Gulp tasks</h2>
+
+        <p>While customizing Looper everything you change will automatically be updated and injected into your browser. Changing SCSS or JavaScript files will automatically updated them, create sourcemaps and inject them. Writing or editing demo pages nor your own pages will do the same. All is done with single <code>gulp</code> task. simple and effective!</p>
+
+        <p>If you are not familiar with Gulp, please take a look at this <a href="https://css-tricks.com/gulp-for-beginners/" target="_blank">beginners guide</a>.</p>
+
+        <p>Our <code>gulpfile.js</code> includes all of the tasks and subtasks that named after what they do. You can edit or look at any of them to see how they actually work. They're all commented. Below are some of the tasks you will use often:</p>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 150px">Task</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>gulp build</code></td>
+                <td>Creates HTML files, builds assets, copied dependencies into <code>.tmp</code> directory.</td>
+              </tr>
+              <tr>
+                <td><code>gulp serve</code></td>
+                <td>Open up Looper demo pages in your browser and watch for changes.</td>
+              </tr>
+              <tr>
+                <td><code>gulp</code></td>
+                <td>This is the default command, and probably the one you'll use the most. This command will build all assets and pages then serves it. As you are changing your pages and assets they will automatically update and inject into your browser via <a href="https://github.com/shakyShane/browser-sync" target="_blank">BrowserSync</a>.</td>
+              </tr>
+              <tr>
+                <td><code>gulp docs</code></td>
+                <td>Build the documentation and open up in your browser.</td>
+              </tr>
+              <tr>
+                <td><code>gulp dist</code></td>
+                <td>When you are done customizing you can have your assets optimized and injected correctly into your HTML. Your assets will be prettified, minified, compressed with gzip, cache busted and otherwise optimized. All of pages, assets, and documentation will stored in <code>dist</code> directory.</td>
+              </tr>
+              <tr>
+                <td><code>gulp clean</code></td>
+                <td>Deletes your assets and all of build files from their <code>.tmp</code> directory as well as in <code>dist</code> and deletes any gzipped files.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="alert alert-secondary has-icon mb-4">
+          <div class="alert-icon">
+            <span class="fa fa-bullhorn"></span>
+          </div>
+          <p><strong>Heads up!</strong> We used Liquid Markup to generate html templates with simple logic and load dynamic content in build process. So we can separate our templates into small parts, making it easier to maintenance. Please see the <a class="alert-link" href="https://shopify.github.io/liquid/" target="_blank">Liquid Markup site</a> to see what you can do with it.</p>
+          <p>We also used <a class="alert-link" href="https://www.npmjs.com/package/front-matter" target="_blank">FrontMatter</a> in build process to handle our meta-data from html document and our dummy data from <code>.json</code> file.</p>
+          <p>This work like a static site generator. If you've heard about Jekyll, then you will know that we adopt a similar technology.</p>
+        </div>
+      </div>
+      <!-- /.section-block -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar page-sidebar-fixed">
+    <nav id="nav-content" class="nav flex-column mt-4">
+      <a href="#tooling-setup" class="nav-link smooth-scroll">Tooling setup</a>
+      <a href="#gulp-tasks" class="nav-link smooth-scroll">Gulp tasks</a>
+    </nav>
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

@@ -1,0 +1,62 @@
+<h1 class="page-title"><i class="far fa-building text-muted mr-2"></i> Zathunicon, Inc.</h1>
+<p class="text-muted">San Francisco, United States</p>
+
+<!-- .nav-scroller -->
+<div class="nav-scroller border-bottom">
+  <!-- .nav-tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active show" data-toggle="tab" href="#client-billing-contact">Billing & Contact</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#client-tasks">To Do</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#client-projects">Projects</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#client-invoices">Invoices</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#client-expenses">Expenses</a>
+    </li>
+  </ul>
+  <!-- /.nav-tabs -->
+</div>
+<!-- /.nav-scroller -->
+
+<!-- .tab-content -->
+<div class="tab-content pt-4" id="clientDetailsTabs">
+  <!-- .tab-pane -->
+  <div class="tab-pane fade show active" id="client-billing-contact" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+    {% include ui/client-billing.html %}
+
+    {% include ui/client-contact.html %}
+  </div>
+  <!-- /.tab-pane -->
+
+  <!-- .tab-pane -->
+  <div class="tab-pane fade" id="client-tasks" role="tabpanel" aria-labelledby="client-tasks-tab">
+    {% include ui/client-todos.html %}
+  </div>
+  <!-- /.tab-pane -->
+
+  <!-- .tab-pane -->
+  <div class="tab-pane fade" id="client-projects" role="tabpanel" aria-labelledby="client-projects-tab">
+    {% include ui/client-projects.html %}
+  </div>
+  <!-- /.tab-pane -->
+
+  <!-- .tab-pane -->
+  <div class="tab-pane fade" id="client-invoices" role="tabpanel" aria-labelledby="client-invoices-tab">
+    {% include ui/client-invoices.html %}
+  </div>
+  <!-- /.tab-pane -->
+
+  <!-- .tab-pane -->
+  <div class="tab-pane fade" id="client-expenses" role="tabpanel" aria-labelledby="client-expenses-tab">
+    {% include ui/client-expenses.html %}
+  </div>
+  <!-- /.tab-pane -->
+</div>
+<!-- /.tab-content -->

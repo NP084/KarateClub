@@ -1,0 +1,64 @@
+<!-- .table-responsive -->
+<div class="table-responsive">
+  <!-- .table -->
+  <table class="table">
+    <!-- thead -->
+    <thead>
+      <tr>
+        <th style="min-width:256px">Project</th>
+        <th></th>
+        <th>Due</th>
+        <th>Amount</th>
+        <th>Received</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <!-- /thead -->
+    <!-- tbody -->
+    <tbody>
+      {% for invoice in site.data.invoices %}
+      <!-- tr -->
+      <tr>
+        <td class="align-middle text-truncate">
+          <div class="media align-items-center">
+            <a href="#" class="tile bg-{{invoice.color}} text-white mr-2">{{invoice.initial}}</a>
+            <div class="media-body">
+              <a href="#">{{invoice.project}}</a>
+              <small class="d-block text-muted">Invoice {{invoice.no}}</small>
+            </div>
+          </div>
+        </td>
+        <td class="align-middle">
+          {% if invoice.hasAttachment %}
+            <i class="fa fa-paperclip text-muted"></i>
+          {% endif %}
+        </td>
+        <td class="align-middle">{{invoice.due}}</td>
+        <td class="align-middle">{{invoice.amount}}</td>
+        <td class="align-middle">{{invoice.received}}</td>
+        <td class="align-middle">
+          <span class="badge badge-{{invoice.state}}">{{invoice.status}}</span>
+        </td>
+        <td class="align-middle text-right">
+          <div class="dropdown">
+            <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+              <i class="fa fa-ellipsis-h"></i>
+              <span class="sr-only">Actions</span>
+            </button>
+            <div class="dropdown-arrow"></div>
+            <div class="dropdown-menu dropdown-menu-right">
+              <button class="dropdown-item" type="button">Edit</button>
+              <button class="dropdown-item" type="button">Delete</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <!-- /tr -->
+      {% endfor %}
+    </tbody>
+    <!-- /tbody -->
+  </table>
+  <!-- /.table -->
+</div>
+<!-- /.table-responsive -->

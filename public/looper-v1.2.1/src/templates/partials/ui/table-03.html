@@ -1,0 +1,25 @@
+<!-- thead -->
+<thead>
+  <tr>
+    <th style="min-width:260px">Project</th>
+    <th class="text-center">Progress</th>
+    <th class="text-right" style="min-width:142px">Hours Spent</th>
+  </tr>
+</thead>
+<!-- /thead -->
+<!-- tbody -->
+<tbody>
+  {% for project in site.data.projects limit:5 offset:3 %}
+  <!-- tr -->
+  <tr>
+    <td class="align-middle text-truncate">
+      <a href="#" class="tile bg-{{project.color}} text-white mr-2">{{project.initial}}</a>
+      <a href="#">{{project.name}}</a>
+    </td>
+    <td class="align-middle text-center"><span class="badge bg-{{project.color}} text-white">{{project.completed | times: 100 | divided_by: project.tasks | round}}%</span></td>
+    <td class="align-middle text-center">{{project.hoursSpent}}</td>
+  </tr>
+  <!-- /tr -->
+  {% endfor %}
+</tbody>
+<!-- /tbody -->

@@ -1,0 +1,123 @@
+---
+layout: default
+title: Conversations
+active: pages.conversations
+footer: false
+pluginsCss:
+  - tributejs/tribute.css
+  - photoswipe/photoswipe.css
+  - photoswipe/photoswipe-skin/default-skin.css
+pluginsJs:
+  - tributejs/tribute.min.js
+  - photoswipe/photoswipe.min.js
+  - photoswipe/photoswipe-ui-default.min.js
+pageJs:
+  - pages/photoswipe-demo.js
+  - pages/conversations-demo.js
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner page-inner-fill">
+    <!-- .message -->
+    <div class="message">
+      <!-- message header -->
+      <div class="message-header">
+        <div class="d-flex">
+          <a class="btn btn-light btn-icon" href="page-messages.html">
+            <i class="fa fa-flip-horizontal fa-share"></i>
+          </a>
+        </div>
+        <h4 class="message-title">Invitation: Joe's Dinner @ Fri Aug 22</h4>
+        <div class="message-header-actions">
+          <!-- invite members -->
+          <div class="dropdown d-inline-block">
+            <button type="button" class="btn btn-light btn-icon" title="Invite members" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-user-plus"></i>
+            </button>
+            <div class="dropdown-arrow"></div>
+            {% include ui/dropdown-invite-members.html %}
+          </div>
+          <!-- /invite members -->
+          <button type="button" class="btn btn-light btn-icon d-xl-none" data-toggle="sidebar">
+            <i class="fa fa-angle-double-left"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /message header -->
+
+      <!-- message body -->
+      <div class="message-body">
+        <!-- .card -->
+        <div class="card card-fluid mb-0">
+          {% include ui/conversations.html %}
+
+          {% include ui/photoswipe-element.html %}
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /message body -->
+
+      <!-- message publisher -->
+      <div class="message-publisher">
+        {% include ui/publisher-message.html %}
+      </div>
+      <!-- /message publisher -->
+    </div>
+    <!-- /.message -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-sm-none">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+          <a class="prevent-default" href="#" onclick="Looper.toggleSidebar()">
+            <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back
+          </a>
+        </li>
+      </ol>
+    </header>
+    <!-- /.sidebar-header -->
+
+    <!-- .nav-tabs -->
+    <ul class="nav nav-tabs nav-fill" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#team-profile" role="tab" aria-controls="team-profile" aria-selected="true">Team Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#message-files" role="tab" aria-controls="message-files" aria-selected="false">Files</a>
+      </li>
+    </ul>
+    <!-- /.nav-tabs -->
+
+    <!-- .sidebar-section-fill -->
+    <div class="sidebar-section-fill">
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!-- #team-profile -->
+        <div id="team-profile" class="tab-pane fade show active" role="tabpanel" aria-labelledby="team-profile">
+          {% include ui/sidebar-team-profile.html %}
+
+          {% assign limit = 8 %}
+          {% assign offset = 10 %}
+          {% assign max = limit | plus:offset | minus:1 %}
+          {% include ui/member-list-02.html %}
+        </div>
+        <!-- /#team-profile -->
+        <!-- #message-files -->
+        <div id="message-files" class="tab-pane fade" role="tabpanel" aria-labelledby="message-files">
+          {% include ui/sidebar-files-02.html %}
+        </div>
+        <!-- /#message-files -->
+      </div>
+      <!-- /Tab panes -->
+    </div>
+    <!-- /.sidebar-section-fill -->
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

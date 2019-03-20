@@ -1,0 +1,90 @@
+[
+  {
+    "name": "Creative Division",
+    "description": "We make stunning and cool responsive web and app design which suitable for any project purpose for your business.",
+    "avatar": "team4.jpg",
+    "clients": 3,
+    "members": 8,
+    "projects": 4,
+    "public": false,
+    "owner": false,
+    "updated": "1 hour ago"
+  },
+  {
+    "name": "Bootstrap",
+    "description": "Free and open-source front-end framework for designing websites and web applications.",
+    "avatar": "bootstrap.svg",
+    "clients": 28,
+    "members": 15,
+    "projects": 40,
+    "public": true,
+    "owner": true,
+    "updated": "25 minutes ago"
+  },
+  {
+    "name": "Instagram",
+    "description": "Photo and video-sharing social networking service owned by Facebook, Inc.",
+    "avatar": "instagram.svg",
+    "clients": 10,
+    "members": 6,
+    "projects": 18,
+    "public": true,
+    "owner": false,
+    "updated": "13 hours ago"
+  },
+  {
+    "name": "Stilearning",
+    "description": "American online social media and social networking service company based in California.",
+    "avatar": "team1.jpg",
+    "clients": 19,
+    "members": 24,
+    "projects": 31,
+    "public": false,
+    "owner": false,
+    "updated": "6 days ago"
+  },
+  {
+    "name": "Sketch",
+    "description": "Proprietary vector graphics editor for Apple's macOS, developed by the Dutch company Bohemian Coding.",
+    "avatar": "sketch.svg",
+    "clients": 12,
+    "members": 2,
+    "projects": 13,
+    "public": false,
+    "owner": true,
+    "updated": "1 week ago"
+  },
+  {
+    "name": "Gitlab",
+    "description": "Web-based Git-repository manager with wiki, issue-tracking and CI/CD pipeline features, using an open-source license, developed by GitLab Inc.",
+    "avatar": "gitlab.svg",
+    "clients": 16,
+    "members": 4,
+    "projects": 21,
+    "public": false,
+    "owner": false,
+    "updated": "2 hours ago"
+  },
+  {
+    "name": "Slack",
+    "description": "Cloud-based set of proprietary team collaboration tools and services, founded by Stewart Butterfield.",
+    "avatar": "slack.svg",
+    "clients": 5,
+    "members": 14,
+    "projects": 8,
+    "public": true,
+    "owner": false,
+    "updated": "58 minutes ago"
+  },
+  {
+    "name": "Openlane",
+    "description": "A privately held company registered in London, United Kingdom, founded by the Indonesia entrepreneur Beni Arisandi.",
+    "avatar": "team2.png",
+    "clients": 2,
+    "members": 5,
+    "projects": 3,
+    "public": true,
+    "owner": false,
+    "updated": "16 hours ago"
+  }
+]

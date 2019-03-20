@@ -1,0 +1,70 @@
+<!-- .section-block -->
+<div class="section-block">
+  <h2 class="section-title">Navbars</h2>
+  <p class="text-muted">Navbars are responsive meta components that serve as navigation headers for your application or site. They begin collapsed (and are toggleable) and become horizontal as the available viewport width increases.</p>
+</div>
+<!-- /.section-block -->
+
+<!-- .card -->
+<div class="card card-fluid">
+  <!-- .card-body -->
+  <div class="card-body">
+    {% for navbar in site.data.navbars %}
+    <!-- .navbar -->
+    <nav class="navbar navbar-expand-lg {{navbar.context}} {{navbar.bg}} mb-3">
+      <a class="navbar-brand" href="#">Looper</a>
+      <!-- toggle menu -->
+      <button class="hamburger {{navbar.hamburger}} hamburger-squeeze hamburger-toggle d-lg-none" type="button" data-toggle="collapse" data-target="#navbarColor{{forloop.index}}" aria-controls="navbarColor{{forloop.index}}" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+      <!-- /toggle menu -->
+
+      <!-- .navbar-collapse -->
+      <div class="collapse navbar-collapse" id="navbarColor{{forloop.index}}">
+        <!-- .navbar-nav -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+        <!-- /.navbar-nav -->
+        <!-- .navbar-form -->
+        <form class="form-inline my-2 my-lg-0">
+          <!-- .top-bar-search -->
+          <div class="top-bar-search d-flex">
+            <!-- .input-group -->
+            <div class="input-group has-clearable">
+              <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+              </button>
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <span class="oi oi-magnifying-glass"></span>
+                </span>
+              </div>
+              <input type="text" class="form-control" aria-label="Search" placeholder="Type something...">
+            </div>
+            <!-- /.input-group -->
+            <!-- /.top-bar-search -->
+          </div>
+          <!-- /.top-bar-search -->
+        </form>
+        <!-- /.navbar-form -->
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <!-- /.navbar -->
+    {% endfor %}
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->
+

@@ -1,0 +1,40 @@
+<!-- .card -->
+<div class="card">
+  <!-- .card-header -->
+  <div class="card-header d-flex">
+    <!-- .dropdown -->
+    <div class="dropdown">
+      <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-filter mr-1"></i> All (5) <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-arrow"></div>
+      <!-- .dropdown-menu -->
+      <div class="dropdown-menu stop-propagation">
+        <h6 id="client-invoices-tab" class="dropdown-header">Invoices</h6>
+        <label class="custom-control custom-radio">
+          <input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked>
+          <span class="custom-control-label">All (5)</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1">
+          <span class="custom-control-label">Draft (1)</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2">
+          <span class="custom-control-label">Send (2)</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3">
+          <span class="custom-control-label">Paid (0)</span>
+        </label>
+      </div>
+      <!-- /.dropdown-menu -->
+    </div>
+    <!-- /.dropdown -->
+    <button type="button" class="btn btn-primary ml-auto">Add invoice</button>
+  </div>
+  <!-- /.card-header -->
+
+  {% include ui/invoices-list-01.html %}
+</div>
+<!-- /.card -->

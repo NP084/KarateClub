@@ -1,0 +1,55 @@
+<!-- .table-responsive -->
+<div class="table-responsive">
+  <!-- .table -->
+  <table class="table">
+    <!-- thead -->
+    <thead>
+      <tr>
+        <th style="min-width:260px">Project</th>
+        <th>Start</th>
+        <th>Due</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <!-- /thead -->
+    <!-- tbody -->
+    <tbody>
+      {% for project in site.data.projects limit:3 offset:5 %}
+      <!-- tr -->
+      <tr>
+        <td class="align-middle text-truncate">
+          <a href="#" class="tile bg-{{project.color}} text-white mr-2">{{project.initial}}</a>
+          <a href="#">{{project.name}}</a>
+        </td>
+        <td class="align-middle">{{project.start}}</td>
+        <td class="align-middle">{{project.due}}</td>
+        <td class="align-middle">
+          {% if project.finished %}
+          <span class="badge badge-success">Completed</span>
+          {% else %}
+          <span class="badge badge-warning">On Going</span>
+          {% endif %}
+        </td>
+        <td class="align-middle text-right">
+          <div class="dropdown">
+            <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+              <i class="fa fa-ellipsis-h"></i>
+              <span class="sr-only">Actions</span>
+            </button>
+            <div class="dropdown-arrow"></div>
+            <div class="dropdown-menu dropdown-menu-right">
+              <button class="dropdown-item" type="button">Edit</button>
+              <button class="dropdown-item" type="button">Delete</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <!-- /tr -->
+      {% endfor %}
+    </tbody>
+    <!-- /tbody -->
+  </table>
+  <!-- /.table -->
+</div>
+<!-- /.table-responsive -->

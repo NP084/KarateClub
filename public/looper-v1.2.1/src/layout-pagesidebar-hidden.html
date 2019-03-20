@@ -1,0 +1,67 @@
+---
+layout: default
+title: Page With Hidden Sidebar
+active: layouts.page-sidebar-hidden
+footer: false
+---
+
+<!-- .page -->
+<div class="page has-sidebar">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Layouts
+            </a>
+          </li>
+        </ol>
+      </nav>
+
+      <h1 class="page-title">Page with hidden sidebar</h1>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <div class="section-block">
+        <div class="alert alert-info"><strong>Yay!</strong> Now you can show the sidebar only when you need it. Please click button below to show the sidebar!</div>
+
+        <button class="btn btn-secondary" type="button" data-toggle="sidebar">Toggle sidebar</button>
+      </div>
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-sm-none">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" onclick="Looper.toggleSidebar()">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.sidebar-header -->
+
+    <!-- .sidebar-section -->
+    <div class="sidebar-section">
+      <button type="button" class="close mt-n1 d-none d-sm-block" onclick="Looper.toggleSidebar()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h6>I'm a sidebar</h6>
+    </div>
+    <!-- /.sidebar-section -->
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

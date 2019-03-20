@@ -1,0 +1,131 @@
+---
+layout: default
+title: Basic Form
+active: forms.basicForms
+hasScrollSpy: true
+footer: false
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Forms
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Basic Elements</h1>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <div class="d-xl-none">
+        <button class="btn btn-danger btn-floated" type="button" data-toggle="sidebar"><i class="fa fa-th-list"></i></button>
+      </div>
+
+      {% include snippets/forms/base-style.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/labels.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/floating-label.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/selects.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/checkboxes.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/radios.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/switcher.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/rating.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/visual-picker.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/publisher.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/inputs-prepended.html %}
+      {% include snippets/forms/inputs-appended.html %}
+      {% include snippets/forms/inputs-both.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/validations.html %}
+    </div>
+    <!-- /.page-section -->
+
+    <!-- .app-footer -->
+    <footer class="app-footer">
+      <ul class="list-inline">
+        <li class="list-inline-item"><a class="text-muted" href="#">Support</a></li>
+        <li class="list-inline-item"><a class="text-muted" href="#">Help Center</a></li>
+        <li class="list-inline-item"><a class="text-muted" href="#">Privacy</a></li>
+        <li class="list-inline-item"><a class="text-muted" href="#">Terms of Service</a></li>
+      </ul>
+      <div class="copyright">Copyright &copy; 2018. All right reserved.</div>
+    </footer>
+    <!-- /.app-footer -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar page-sidebar-fixed">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-xl-none">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+          <a class="prevent-default" href="#" onclick="Looper.toggleSidebar()">
+            <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back
+          </a>
+        </li>
+      </ol>
+    </header>
+    <!-- /.sidebar-header -->
+
+    <!-- .nav -->
+    <nav id="nav-content" class="nav flex-column mt-4">
+      <a href="#base-style" class="nav-link smooth-scroll">Base style</a>
+      <a href="#labels" class="nav-link smooth-scroll">Labels</a>
+      <a href="#floating-label" class="nav-link smooth-scroll">Floating label</a>
+      <a href="#selects" class="nav-link smooth-scroll">Selects</a>
+      <a href="#checkboxes" class="nav-link smooth-scroll">Checkboxes</a>
+      <a href="#radios" class="nav-link smooth-scroll">Radios</a>
+      <a href="#switcher" class="nav-link smooth-scroll">Switcher</a>
+      <a href="#rating" class="nav-link smooth-scroll">Rating</a>
+      <a href="#visual-picker" class="nav-link smooth-scroll">Visual picker</a>
+      <a href="#publisher" class="nav-link smooth-scroll">Publisher</a>
+      <a href="#input-group" class="nav-link smooth-scroll">Input group</a>
+      <a href="#validation-states" class="nav-link smooth-scroll">Validation states</a>
+    </nav>
+    <!-- /.nav -->
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

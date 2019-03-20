@@ -1,0 +1,68 @@
+---
+layout: default
+title: List Views
+active: components.list-views
+pluginsCss:
+  - jstree/themes/default/style.min.css
+  - toastr/toastr.min.css
+pluginsJs:
+  - jstree/jstree.min.js
+  - toastr/toastr.min.js
+pageJs:
+  - pages/jstree-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Components
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">List Views</h1>
+      <p class="text-muted">Lists present multiple line items vertically as a single continuous element.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      {% include snippets/lists/basic.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/lists/single-line.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/lists/two-line.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/lists/three-line.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/lists/media-list.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/lists/form-element.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/lists/jstree.html %}
+
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

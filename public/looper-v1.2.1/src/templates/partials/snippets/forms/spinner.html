@@ -1,0 +1,83 @@
+<!-- grid row -->
+<div class="row">
+  <!-- grid column -->
+  <div class="col-lg-4">
+    <!-- .section-block -->
+    <div class="section-block mt-0">
+      <h2 class="section-title pt-0">Spinner</h2>
+      <p class="text-muted">A mobile and touch friendly input spinner component. It supports the mousewheel and the up/down keys.</p>
+    </div>
+    <!-- /.section-block -->
+  </div>
+  <!-- /grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-8">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <!-- form -->
+        <form>
+          <!-- .form-group -->
+          <div class="form-group">
+            <label class="control-label" for="spinner1">Basic spinner</label>
+            <input type="text" id="spinner1" data-toggle="touchspin">
+          </div>
+          <!-- /.form-group -->
+
+          <!-- .form-group -->
+          <div class="form-group">
+            <label class="control-label" for="spinner2">With postfix</label>
+            <input type="text" value="55" id="spinner2"
+              data-toggle="touchspin"
+              data-min="0"
+              data-max="100"
+              data-step="0.1"
+              data-decimals="2"
+              data-boostat="5"
+              data-maxboostedstep="10"
+              data-postfix="%">
+          </div>
+          <!-- /.form-group -->
+
+          <!-- .form-group -->
+          <div class="form-group">
+            <label class="control-label" for="spinner3">With prefix</label>
+            <input type="text" value="33" id="spinner3"
+              data-toggle="touchspin"
+              data-min="-1000000000"
+              data-max="1000000000"
+              data-stepinterval="50"
+              data-maxboostedstep="10000000"
+              data-prefix="$">
+          </div>
+          <!-- /.form-group -->
+
+          <!-- .form-group -->
+          <div class="form-group">
+            <label class="control-label" for="spinner4">Vertical button alignment</label>
+            <input type="text" value="55" id="spinner4" data-toggle="touchspin" data-verticalbuttons="true">
+          </div>
+          <!-- /.form-group -->
+
+          <!-- .form-group -->
+          <div class="form-group">
+            <label class="control-label" for="spinner5">Vertical buttons with custom icons</label>
+            <input type="text" value="55" id="spinner5"
+              data-toggle="touchspin"
+              data-verticalbuttons="true"
+              data-verticalup="<i class='fa fa-angle-up'></i>"
+              data-verticaldown="<i class='fa fa-angle-down'></i>">
+          </div>
+          <!-- /.form-group -->
+        </form>
+        <!-- /form -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /grid column -->
+</div>
+<!-- /grid row -->

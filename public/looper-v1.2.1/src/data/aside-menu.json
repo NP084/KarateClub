@@ -1,0 +1,526 @@
+[
+  {
+    "id": "dashboard",
+    "type": "link",
+    "text": "Dashboard",
+    "icon": "fas fa-home",
+    "link": "index.html"
+  },
+
+  {
+    "id": "pages",
+    "type": "link",
+    "text": "App Pages",
+    "icon": "far fa-file",
+    "link": "#",
+    "indicator": "New",
+    "indicatorClasses": "badge badge-warning",
+    "childs": [{
+      "id": "clients",
+      "type": "link",
+      "text": "Clients",
+      "link": "page-clients.html"
+    }, {
+      "id": "teams",
+      "type": "link",
+      "text": "Teams",
+      "link": "page-teams.html"
+    }, {
+      "id": "team",
+      "type": "link",
+      "text": "Team",
+      "link": "#",
+      "childs": [{
+        "id": "team-overview",
+        "type": "link",
+        "text": "Overview",
+        "link": "page-team.html"
+      }, {
+        "id": "team-feeds",
+        "type": "link",
+        "text": "Feeds",
+        "link": "page-team-feeds.html"
+      }, {
+        "id": "team-projects",
+        "type": "link",
+        "text": "Projects",
+        "link": "page-team-projects.html"
+      }, {
+        "id": "team-members",
+        "type": "link",
+        "text": "Members",
+        "link": "page-team-members.html"
+      }]
+    }, {
+      "id": "project",
+      "type": "link",
+      "text": "Project",
+      "link": "#",
+      "childs": [{
+        "id": "project-overview",
+        "type": "link",
+        "text": "Overview",
+        "link": "page-project.html"
+      }, {
+        "id": "board",
+        "type": "link",
+        "text": "Board",
+        "link": "page-project-board.html"
+      }, {
+        "id": "gantt",
+        "type": "link",
+        "text": "Gantt View",
+        "link": "page-project-gantt.html"
+      }]
+    }, {
+      "id": "calendar",
+      "type": "link",
+      "text": "Calendar",
+      "link": "page-calendar.html"
+    }, {
+      "id": "invoices",
+      "type": "link",
+      "text": "Invoices",
+      "link": "#",
+      "childs": [{
+        "id": "invoices-list",
+        "type": "link",
+        "text": "List",
+        "link": "page-invoices.html"
+      }, {
+        "id": "invoice",
+        "type": "link",
+        "text": "Details",
+        "link": "page-invoice.html"
+      }]
+    }, {
+      "id": "messages",
+      "type": "link",
+      "text": "Messages",
+      "link": "page-messages.html"
+    }, {
+      "id": "conversations",
+      "type": "link",
+      "text": "Conversations",
+      "link": "page-conversations.html"
+    }]
+  },
+
+  {
+    "id": "page-auths",
+    "type": "link",
+    "text" : "Auth",
+    "icon": "oi oi-wrench",
+    "link": "#",
+    "childs": [{
+      "id": "comingsoon",
+      "type": "link",
+      "text": "Coming Soon v1",
+      "link": "auth-comingsoon-v1.html"
+    }, {
+      "id": "comingsoon",
+      "type": "link",
+      "text": "Coming Soon v2",
+      "link": "auth-comingsoon-v2.html"
+    }, {
+      "id": "cookie-consent",
+      "type": "link",
+      "text": "Cookie Consent",
+      "link": "auth-cookie-consent.html"
+    }, {
+      "id": "empty-state",
+      "type": "link",
+      "text": "Empty State",
+      "link": "auth-empty-state.html"
+    }, {
+      "id": "error-v1",
+      "type": "link",
+      "text": "Error Page v1",
+      "link": "auth-error-v1.html"
+    }, {
+      "id": "error-v2",
+      "type": "link",
+      "text": "Error Page v2",
+      "link": "auth-error-v2.html"
+    }, {
+      "id": "error-v3",
+      "type": "link",
+      "text": "Error Page v3",
+      "link": "auth-error-v3.html"
+    }, {
+      "id": "maintenance",
+      "type": "link",
+      "text": "Maintenance",
+      "link": "auth-maintenance.html"
+    }, {
+      "id": "page-message",
+      "type": "link",
+      "text": "Page Message",
+      "link": "auth-page-message.html"
+    }, {
+      "id": "session-timeout",
+      "type": "link",
+      "text": "Session Timeout",
+      "link": "auth-session-timeout.html"
+    }, {
+      "id": "signin-v1",
+      "type": "link",
+      "text": "Sign In v1",
+      "link": "auth-signin-v1.html"
+    }, {
+      "id": "signin-v2",
+      "type": "link",
+      "text": "Sign In v2",
+      "link": "auth-signin-v2.html"
+    }, {
+      "id": "signup",
+      "type": "link",
+      "text": "Sign Up",
+      "link": "auth-signup.html"
+    }, {
+      "id": "recovery-username",
+      "type": "link",
+      "text": "Recovery Username",
+      "link": "auth-recovery-username.html"
+    }, {
+      "id": "recovery-password",
+      "type": "link",
+      "text": "Recovery Password",
+      "link": "auth-recovery-password.html"
+    }, {
+      "id": "lockscreen",
+      "type": "link",
+      "text": "Screen Locked",
+      "link": "auth-lockscreen.html"
+    }]
+  },
+
+  {
+    "id": "page-user",
+    "type": "link",
+    "text" : "User",
+    "icon": "oi oi-person",
+    "link": "#",
+    "childs": [{
+      "id": "profile",
+      "type": "link",
+      "text": "Profile",
+      "link": "user-profile.html"
+    }, {
+      "id": "activities",
+      "type": "link",
+      "text": "Activities",
+      "link": "user-activities.html"
+    }, {
+      "id": "user-teams",
+      "type": "link",
+      "text": "Teams",
+      "link": "user-teams.html"
+    }, {
+      "id": "user-projects",
+      "type": "link",
+      "text": "Projects",
+      "link": "user-projects.html"
+    }, {
+      "id": "tasks",
+      "type": "link",
+      "text": "Tasks",
+      "link": "user-tasks.html"
+    }, {
+      "id": "profile-settings",
+      "type": "link",
+      "text": "Profile Settings",
+      "link": "user-profile-settings.html"
+    }, {
+      "id": "account-settings",
+      "type": "link",
+      "text": "Account Settings",
+      "link": "user-account-settings.html"
+    }, {
+      "id": "billing-settings",
+      "type": "link",
+      "text": "Billing Settings",
+      "link": "user-billing-settings.html"
+    }, {
+      "id": "notification-settings",
+      "type": "link",
+      "text": "Notification Settings",
+      "link": "user-notification-settings.html"
+    }]
+  },
+
+  {
+    "id": "layouts",
+    "type": "link",
+    "text" : "Layouts",
+    "icon": "oi oi-browser",
+    "link": "#",
+    "indicator": "+4",
+    "indicatorClasses": "badge badge-subtle badge-success",
+    "childs": [{
+      "id": "blank",
+      "type": "link",
+      "text": "Blank Page",
+      "link": "layout-blank.html"
+    }, {
+      "id": "nosearch",
+      "type": "link",
+      "text": "Header no Search",
+      "link": "layout-nosearch.html"
+    }, {
+      "id": "fullwidth",
+      "text": "Full Width",
+      "link": "layout-fullwidth.html"
+    }, {
+      "id": "page-navs",
+      "text": "Page Navs",
+      "link": "layout-pagenavs.html"
+    }, {
+      "id": "page-cover",
+      "text": "Page Cover",
+      "link": "layout-pagecover.html"
+    }, {
+      "id": "page-cover-img",
+      "text": "Cover Image",
+      "link": "layout-pagecover-img.html"
+    }, {
+      "id": "page-sidebar",
+      "text": "Page Sidebar",
+      "link": "layout-pagesidebar.html"
+    }, {
+      "id": "page-sidebar-fluid",
+      "text": "Sidebar Fluid",
+      "link": "layout-pagesidebar-fluid.html"
+    }, {
+      "id": "page-sidebar-hidden",
+      "text": "Sidebar Hidden",
+      "link": "layout-pagesidebar-hidden.html"
+    }, {
+      "id": "custom",
+      "text": "Custom",
+      "link": "layout-custom.html"
+    }]
+  },
+
+  {
+    "type": "header",
+    "text": "Interfaces"
+  },
+
+  {
+    "id": "components",
+    "type": "link",
+    "text": "Components",
+    "icon": "oi oi-puzzle-piece",
+    "link": "#",
+    "childs": [{
+      "id": "general",
+      "type": "link",
+      "text": "General",
+      "link": "component-general.html"
+    }, {
+      "id": "icons",
+      "type": "link",
+      "text": "Icons",
+      "link": "component-icons.html"
+    }, {
+      "id": "rich-media",
+      "type": "link",
+      "text": "Rich Media",
+      "link": "component-rich-media.html"
+    }, {
+      "id": "list-views",
+      "type": "link",
+      "text": "List Views",
+      "link": "component-list-views.html"
+    }, {
+      "id": "sortable-nestable",
+      "type": "link",
+      "text": "Sortable & Nestable",
+      "link": "component-sortable-nestable.html"
+    }, {
+      "id": "activity",
+      "type": "link",
+      "text": "Activity",
+      "link": "component-activity.html"
+    }, {
+      "id": "steps",
+      "type": "link",
+      "text": "Steps",
+      "link": "component-steps.html"
+    }, {
+      "id": "ctasks",
+      "type": "link",
+      "text": "Tasks",
+      "link": "component-tasks.html"
+    }, {
+      "id": "metrics",
+      "type": "link",
+      "text": "Metrics",
+      "link": "component-metrics.html"
+    }]
+  },
+
+  {
+    "id": "forms",
+    "type": "link",
+    "text": "Forms",
+    "icon": "oi oi-pencil",
+    "link": "#",
+    "childs": [{
+      "id": "basicForms",
+      "type": "link",
+      "text": "Basic Elements",
+      "link": "form-basic.html"
+    }, {
+      "id": "autocompletes",
+      "type": "link",
+      "text": "Autocompletes",
+      "link": "form-autocompletes.html"
+    }, {
+      "id": "pickers",
+      "type": "link",
+      "text": "Pickers",
+      "link": "form-pickers.html"
+    }, {
+      "id": "editors",
+      "type": "link",
+      "text": "Editors",
+      "link": "form-editors.html"
+    }]
+  },
+
+  {
+    "id": "tables",
+    "type": "link",
+    "text": "Tables",
+    "icon": "fas fa-table",
+    "link": "#",
+    "childs": [{
+      "id": "basic",
+      "type": "link",
+      "text": "Basic Table",
+      "link": "table-basic.html"
+    }, {
+      "id": "datatables",
+      "type": "link",
+      "text": "Datatables",
+      "link": "table-datatables.html"
+    }, {
+      "id": "responsive-datatables",
+      "type": "link",
+      "text": "Responsive Datatables",
+      "link": "table-responsive-datatables.html"
+    }, {
+      "id": "filters-datatables",
+      "type": "link",
+      "text": "Filter Columns",
+      "link": "table-filters-datatables.html"
+    }]
+  },
+
+  {
+    "id": "collections",
+    "type": "link",
+    "text": "Collections",
+    "icon": "oi oi-bar-chart",
+    "link": "#",
+    "childs": [{
+      "id": "chartjs",
+      "type": "link",
+      "text": "Chart.js",
+      "link": "#",
+      "childs": [{
+        "id": "line",
+        "type": "link",
+        "text": "Line",
+        "link": "collection-chartjs-line.html"
+      }, {
+        "id": "bar",
+        "type": "link",
+        "text": "Bar",
+        "link": "collection-chartjs-bar.html"
+      }, {
+        "id": "radar-scatter",
+        "type": "link",
+        "text": "Radar & Scatter",
+        "link": "collection-chartjs-radar-scatter.html"
+      }, {
+        "id": "others",
+        "type": "link",
+        "text": "Others",
+        "link": "collection-chartjs-others.html"
+      }]
+    }, {
+      "id": "flot-charts",
+      "type": "link",
+      "text": "Flot",
+      "link": "collection-flot-charts.html"
+    }, {
+      "id": "inline-charts",
+      "type": "link",
+      "text": "Inline charts",
+      "link": "collection-inline-charts.html"
+    }, {
+      "id": "jqvmap",
+      "type": "link",
+      "text": "Vector Map",
+      "link": "collection-jqvmap.html"
+    }]
+  },
+
+  {
+    "id": "level-menu",
+    "type": "link",
+    "text": "Level Menu",
+    "icon": "oi oi-list-rich",
+    "link": "#",
+    "childs": [{
+      "id": "menu-item1",
+      "text": "Menu item",
+      "link": "#"
+    }, {
+      "id": "menu-item2",
+      "text": "Menu item",
+      "link": "#",
+      "childs": [{
+        "id": "child-item1",
+        "text": "Child item",
+        "link": "#"
+      }, {
+        "id": "child-item2",
+        "text": "Child item",
+        "link": "#"
+      }, {
+        "id": "child-item3",
+        "text": "Child item",
+        "link": "#",
+        "childs": [{
+          "id": "grand-child-item1",
+          "text": "Grand Child item",
+          "link": "#"
+        }, {
+          "id": "grand-child-item2",
+          "text": "Grand Child item",
+          "link": "#"
+        }, {
+          "id": "grand-child-item3",
+          "text": "Grand Child item",
+          "link": "#"
+        }, {
+          "id": "grand-child-item4",
+          "text": "Grand Child item",
+          "link": "#"
+        }]
+      }, {
+        "id": "child-item4",
+        "text": "Child item",
+        "link": "#"
+      }]
+    }, {
+      "id": "menu-item3",
+      "text": "Menu item",
+      "link": "#"
+    }]
+  }
+]

@@ -1,0 +1,139 @@
+<!-- .card -->
+<div class="card card-fluid">
+  <!-- .card-body -->
+  <div class="card-body">
+    <h4 class="card-title">Flatpickr</h4>
+    <h6 class="card-subtitle mb-4">Lightweight and powerful datetimepicker with no dependencies</h6>
+
+    <!-- form -->
+    <form>
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr01">Basic</label>
+        <input id="flatpickr01" type="text" class="form-control" data-toggle="flatpickr">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr02">DateTime</label>
+        <input id="flatpickr02" type="text" class="form-control"
+          data-toggle="flatpickr"
+          data-enable-time="true"
+          data-date-format="Y-m-d H:i">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr03">Human-friendly Dates</label>
+        <input id="flatpickr03" type="text" class="form-control"
+          data-toggle="flatpickr"
+          data-alt-input="true",
+          data-alt-format="F j, Y",
+          data-date-format="Y-m-d">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr04">minDate and maxDate</label>
+        <input id="flatpickr04" type="text" class="form-control"
+          data-toggle="flatpickr"
+          data-default-date="2018-11-01"
+          data-min-date="2018-11-03"
+          data-max-date="2018-11-25">
+        <small class="form-text text-muted">14 days from now</small>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr05">Disabling dates</label>
+        <input id="flatpickr05" type="text" class="form-control"
+          data-toggle="flatpickr"
+          data-default-date="2018-11-01"
+          data-disables='[
+            {
+              "from": "2018-11-03",
+              "to": "2018-11-03"
+            },
+            {
+              "from": "2018-11-20",
+              "to": "2018-11-25"
+            }
+          ]'
+          data-date-format="Y-m-d">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr06">Selecting multiple dates</label>
+        <input id="flatpickr06" type="text" class="form-control"
+          data-toggle="flatpickr"
+          data-mode="multiple"
+          data-default-date='["2018-03-03", "2018-03-20"]'
+          data-date-format="Y-m-d">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr07">Range Calendar</label>
+        <input id="flatpickr07" type="text" class="form-control"
+          data-toggle="flatpickr"
+          data-mode="range"
+          data-date-format="Y-m-d"
+          data-default-date='["2018-03-03", "2018-03-20"]'>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr08">Time Picker</label>
+        <input id="flatpickr08" type="text" class="form-control"
+          data-toggle="flatpickr"
+          data-enable-time="true",
+          data-no-calendar="true",
+          data-date-format="H:i",
+          data-default-date="13:45">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr-wrap">Wrap element</label>
+        <div class="input-group input-group-alt flatpickr" id="flatpickr9"
+          data-toggle="flatpickr"
+          data-wrap="true">
+          <input id="flatpickr-wrap" type="text" class="form-control" data-input>
+          <div class="input-group-append">
+            <button type="button" class="btn btn-secondary" data-toggle><i class="far fa-calendar"></i></button>
+            <button type="button" class="btn btn-secondary" data-clear><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label">Inline Calendar</label>
+        <input id="flatpickr10" type="hidden" class="form-control d-none"
+          data-toggle="flatpickr"
+          data-inline="true">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="flatpickr11">Month Select</label>
+        <input id="flatpickr11" type="text" class="form-control" data-toggle="flatpickr" data-monthselect="true">
+      </div>
+      <!-- /.form-group -->
+    </form>
+    <!-- /form -->
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->

@@ -1,0 +1,134 @@
+<!-- thead -->
+<thead>
+  <tr>
+    <th colspan="3" style="min-width: 240px">
+      <div class="thead-dd dropdown">
+        <span class="custom-control custom-control-nolabel custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="check-handle2">
+          <label class="custom-control-label" for="check-handle2"></label>
+        </span>
+        <div class="thead-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="fa fa-caret-down"></span>
+        </div>
+        <div class="dropdown-arrow"></div>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Select all</a>
+          <a class="dropdown-item" href="#">Unselect all</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Bulk remove</a>
+          <a class="dropdown-item" href="#">Bulk edit</a>
+          <a class="dropdown-item" href="#">Separate actions</a>
+        </div>
+      </div>
+    </th>
+    <th>Bill</th>
+    <th>Status</th>
+    <th style="width:100px; min-width:100px;">&nbsp;</th>
+  </tr>
+</thead>
+<!-- /thead -->
+<!-- tbody -->
+<tbody>
+  {% for client in site.data.clients %}
+  {% if forloop.index >= offset %}
+  {% if forloop.index <= max %}
+  <!-- tr -->
+  <tr>
+    <td class="align-middle col-checker">
+      <div class="custom-control custom-control-nolabel custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="cid{{client.id}}">
+        <label class="custom-control-label" for="cid{{client.id}}"></label>
+      </div>
+    </td>
+    <td class="align-middle px-0" style="width: 1.5rem">
+      <button type="button" class="btn btn-sm btn-icon btn-light" data-toggle="collapse" data-target="#details-cid{{client.id}}">
+        <span class="collapse-indicator">
+          <i class="fa fa-angle-right"></i>
+        </span>
+      </button>
+    </td>
+    <td class="align-middle">
+      <a href="#">{{client.name}}</a>
+    </td>
+    <td class="align-middle">{{client.bill}}</td>
+    <td class="align-middle">
+      {% if client.status == "Completed" %}
+      <span class="badge badge-subtle badge-success">{{client.status}}</span>
+      {% else %}
+      <span class="badge badge-subtle badge-warning">{{client.status}}</span>
+      {% endif %}
+    </td>
+    <td class="align-middle text-right">
+      <a href="#" class="btn btn-sm btn-icon btn-secondary">
+        <i class="fa fa-pencil-alt"></i>
+        <span class="sr-only">Edit</span>
+      </a>
+      <a href="#" class="btn btn-sm btn-icon btn-secondary">
+        <i class="far fa-trash-alt"></i>
+        <span class="sr-only">Remove</span>
+      </a>
+    </td>
+  </tr>
+  <!-- /tr -->
+  <!-- tr -->
+  <tr class="row-details bg-light collapse" id="details-cid{{client.id}}">
+    <td colspan="6">
+      <!-- .row -->
+      <div class="row">
+        <!-- .col -->
+        <div class="col-md-auto text-center">
+          <div class="tile tile-xl tile-circle bg-{{client.color}} mb-2">{{ client.name | split: '' | first }}</div>
+          <h3 class="card-title mb-4">{{client.name}}</h3>
+        </div>
+        <!-- /.col -->
+        <!-- .col -->
+        <div class="col-md-7">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td>Contact</td>
+                <td>{{client.contact}}</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>{{client.email}}</td>
+              </tr>
+              <tr>
+                <td>Phone</td>
+                <td>{{client.phone}}</td>
+              </tr>
+              <tr>
+                <td>Address</td>
+                <td>983 Kunde Glens, Pourosmouth, AK 68019-8335</td>
+              </tr>
+              <tr>
+                <td>Location</td>
+                <td>{{client.city}}, {{client.country}}</td>
+              </tr>
+              <tr>
+                <td>Joined</td>
+                <td>2018/05/23</td>
+              </tr>
+              <tr>
+                <td>Last active</td>
+                <td>2 hours ago</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.col -->
+        <!-- .col -->
+        <div class="col">
+          {% include ui/publisher-08.html %}
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </td>
+  </tr>
+  <!-- /tr -->
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+</tbody>
+<!-- /tbody -->

@@ -1,0 +1,43 @@
+---
+layout: default
+title: Sortable & Nestable List
+active: components.sortable-nestable
+pluginsJs:
+  - sortablejs/Sortable.min.js
+  - nestable2/jquery.nestable.min.js
+pageJs:
+  - pages/nestable-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Components
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Sortable & Nestable List</h1>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      {% include snippets/components/sortable.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/nestable.html %}
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

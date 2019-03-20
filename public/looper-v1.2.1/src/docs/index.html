@@ -1,0 +1,235 @@
+---
+layout: docs
+title: Getting Started
+active: getting-started
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <h1 id="overview" class="page-title">Overview</h1>
+      <p class="text-muted">Everthing you need to know to get up and running with Looper.</p>
+      <button class="btn btn-dark btn-floated d-none d-sm-block d-xl-none" type="button" data-toggle="sidebar">
+        <i class="fa fa-th-list"></i>
+      </button>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 class="section-title">Intro</h2>
+
+        <p>Hi there! Thank you for using Looper Theme! This theme build on top of latest Bootstrap 4 to help you speed up your project. Rather than focusing on pixels, you can focus on application logic. This theme has been lovingly and carefully crafted by Me&mdash;<a href="https://twitter.com/StilearningTwit" target="_blank">Beni Arisandi</a> with focus on simplicity, user experience, interactions and flows. Since this theme is based on Bootstrap, you can does everything that Bootstrap itself does. There are also a lot of custom and new components with usage example on <a href="{{site.homepage}}" target="_blank">Demo Pages</a>, and easy to use build tools.</p>
+
+        <p>To get better result, please familiarize your self with following:</p>
+
+        <ul>
+          <li>If you are not familiar with Bootstrap. Please get an overview of <a href="http://getbootstrap.com/docs" target="_blank">Official Bootstrap Documentations</a> including markup, styles, components, features and everthing that bootstrap does.</li>
+          <li>Explore the <a href="{{site.homepage}}/component-general.html" target="_blank">Looper Demo</a> page (especially on Interfaces section) to familiarize your self with existing components and plugins which you can incorporate into your designs.</li>
+          <li>Review the <a href="{{site.homepage}}/component-general.html" target="_blank">Looper Pages</a> section, each pages provides reusable class and components. You can minimalize your custom styles by understanding the flows.</li>
+          <li>Considering about limitation; Since this theme based on Bootstrap please see <a href="http://getbootstrap.com/docs/4.2/getting-started/browsers-devices/" target="_blank">Browsers and Devices</a> that are supported by Bootstrap.</li>
+        </ul>
+
+        <p>For more explanation about using Looper, theming and custom build, read through the docs. Please let me know about your pain-point with Looper and how we can make it better for you.</p>
+
+        <div class="alert alert-info">
+          For me, writing in english is 10x more harder than writing in code. I apologize for any typo and grammar, both on Demo Pages and this Documentation.
+        </div>
+      </div>
+      <!-- /.section-block -->
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <h1 id="content" class="page-title">Contents</h1>
+
+        <p>Once downloaded, unzip the compressed folder. On top level directory structure of Looper Theme, you'll see something like this:</p>
+
+        <pre><code class="markdown">{{site.name}}-v{{site.version}}/
+├── dist/
+├── src/
+├── .babelrc
+├── .editorconfig
+├── .gitattributes
+├── .gitignore
+├── CHANGELOG.md
+├── gulpfile.js
+├── package-lock.json
+├── package.json
+└── README.md</code></pre>
+
+        <h2 class="section-title">Dist</h2>
+        <p>The <code>dist</code> directory is where all compiled files goes. <strong>The easiest</strong> way to using this theme is copying the <code>assets</code> folder in this directory to your existing project. This directory also contains the <code>docs</code> folder. See our <a href="build-tools.html">Gulp tasks</a> for more information about how this directory was created.</p>
+
+        <h2 class="section-title">Src</h2>
+        <p>The <code>src</code> directory is where all <strong>Source Files</strong> are located, including demo files, data generator, snippets, assets, and docs.</p>
+      </div>
+      <!-- /.section-block -->
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <h1 id="quick-start" class="page-title">Quick Start</h1>
+
+        <p>Be sure you have minimal requirement with the latest version of Looper template. After copying the <code>assets</code> folder in <code>dist</code> directory to your existing project, then following steps below:</p>
+
+
+        <h2 class="section-title">HTML5 doctype</h2>
+        <p>Looper utilizing certain HTML and CSS elements that requires a applications. So make sure that you use it at your project documents.</p>
+        <pre><code class="html">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  ...
+&lt;/html&gt;</code></pre>
+
+
+        <h2 class="section-title">Responsive meta tag</h2>
+
+        <p>Looper is mobile first design, so you should include the <strong>responsive viewport meta tag</strong> to your <code>&lt;head&gt;</code></p>
+        <pre><code class="html">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;</code></pre>
+
+
+        <h2 class="section-title">Stylesheets</h2>
+
+        <p>All css files that you get are the result of compilation of SCSS files. We have divided it into small pieces which are easy to customized.</p>
+
+        <p>Below is required css that you need to include into your project:</p>
+
+        <pre><code class="html">&lt;!-- BEGIN PLUGINS STYLES --&gt;
+&lt;!-- plugins styles goes here --&gt;
+&lt;!-- END PLUGINS STYLES --&gt;
+
+&lt;!-- BEGIN THEME STYLES --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;assets/stylesheets/theme.min.css&quot; data-skin=&quot;default&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;assets/stylesheets/theme-dark.min.css&quot; data-skin=&quot;dark&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;assets/stylesheets/custom.css&quot;&gt;
+&lt;!-- Disable unused skin immediately --&gt;
+&lt;script&gt;
+  var skin = localStorage.getItem(&apos;skin&apos;) || &apos;default&apos;;
+  var unusedLink = document.querySelector(&apos;link[data-skin]:not([data-skin=&quot;&apos;+ skin +&apos;&quot;])&apos;);
+
+  unusedLink.setAttribute(&apos;rel&apos;, &apos;&apos;);
+  unusedLink.setAttribute(&apos;disabled&apos;, true);
+&lt;/script&gt;
+&lt;!-- END THEME STYLES --&gt;
+
+&lt;!-- BEGIN PAGE LEVEL STYLES --&gt;
+&lt;!-- styles for specific page goes here --&gt;
+&lt;!-- END PAGE LEVEL STYLES --&gt;</code></pre>
+
+        <p>You should put the css files in the order above. <strong>You don't need</strong> to include <code>bootstrap.min.css</code> as we already have it in <code>theme{-*}.min.css</code> file. If you consider to write your own styles, then <code>custom.scss</code> file is a great place to go. Feel free to remove <code>custom.css</code> from your markup if you don't need it.</p>
+
+
+        <h2 class="section-title">Javascript</h2>
+
+        <p>Below is required JS files that you need to add to your markup when using Looper.</p>
+
+        <pre><code class="html">&lt;!-- BEGIN BASE JS --&gt;
+&lt;script src=&quot;assets/vendor/jquery/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;assets/vendor/bootstrap/js/popper.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;assets/vendor/bootstrap/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+&lt;!-- END BASE JS --&gt;
+
+&lt;!-- BEGIN PLUGINS JS --&gt;
+&lt;script src=&quot;assets/vendor/stacked-menu/stacked-menu.min.js&quot;&gt;&lt;/script&gt;
+&lt;!-- END PLUGINS JS --&gt;
+
+&lt;!-- BEGIN THEME JS --&gt;
+&lt;script src=&quot;assets/javascript/theme.min.js&quot;&gt;&lt;/script&gt;
+&lt;!-- END THEME JS --&gt;
+
+&lt;!-- BEGIN PAGE LEVEL JS --&gt;
+&lt;!-- your js for specific page goes here --&gt;
+&lt;!-- END PAGE LEVEL JS --&gt;</code></pre>
+
+        <p>Our <code>theme.js</code> is writed in ES2015 class. Looper also provide blank template that you can use to write your own scripts (just duplicate and rename it) or you can use your own style.</p>
+        <p><strong>Keep in mind</strong> that (sometimes) your scripts may not always be executed after the theme is completely ready, you might need to observe the `theme:load` event to make sure your scripts are executed after the theme is ready.</p>
+        <pre><code class="javascript">$(document).on('theme:init', () => {
+  // write your script here
+})</code></pre>
+
+
+        <h2 class="section-title">Starter template</h2>
+
+        <p>Put it all together and your pages should look like this:</p>
+
+        <pre><code class="html">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+
+    &lt;!-- BEGIN PLUGINS STYLES --&gt;
+    &lt;!-- plugins styles goes here --&gt;
+    &lt;!-- END PLUGINS STYLES --&gt;
+
+    &lt;!-- BEGIN THEME STYLES --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;assets/stylesheets/theme.min.css&quot; data-skin=&quot;default&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;assets/stylesheets/theme-dark.min.css&quot; data-skin=&quot;dark&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;assets/stylesheets/custom.css&quot;&gt;
+    &lt;!-- Disable unused skin immediately --&gt;
+    &lt;script&gt;
+      var skin = localStorage.getItem(&apos;skin&apos;) || &apos;default&apos;;
+      var unusedLink = document.querySelector(&apos;link[data-skin]:not([data-skin=&quot;&apos;+ skin +&apos;&quot;])&apos;);
+
+      unusedLink.setAttribute(&apos;rel&apos;, &apos;&apos;);
+      unusedLink.setAttribute(&apos;disabled&apos;, true);
+    &lt;/script&gt;
+    &lt;!-- END THEME STYLES --&gt;
+
+    &lt;!-- BEGIN PAGE LEVEL STYLES --&gt;
+    &lt;!-- styles for specific page goes here --&gt;
+    &lt;!-- END PAGE LEVEL STYLES --&gt;
+
+    &lt;title&gt;Hello, world!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class=&quot;app&quot;&gt;
+      Hello, world!
+    &lt;/div&gt;
+
+    &lt;!-- jQuery first, then Popper.js, then Bootstrap JS --&gt;
+    &lt;!-- BEGIN BASE JS --&gt;
+    &lt;script src=&quot;assets/vendor/jquery/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;assets/vendor/bootstrap/js/popper.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;assets/vendor/bootstrap/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+    &lt;!-- END BASE JS --&gt;
+
+    &lt;!-- BEGIN PLUGINS JS --&gt;
+    &lt;script src=&quot;assets/vendor/stacked-menu/stacked-menu.min.js&quot;&gt;&lt;/script&gt;
+    &lt;!-- END PLUGINS JS --&gt;
+
+    &lt;!-- BEGIN THEME JS --&gt;
+    &lt;script src=&quot;assets/javascript/theme.min.js&quot;&gt;&lt;/script&gt;
+    &lt;!-- END THEME JS --&gt;
+
+    &lt;!-- BEGIN PAGE LEVEL JS --&gt;
+    &lt;!-- your js for specific page goes here --&gt;
+    &lt;!-- END PAGE LEVEL JS --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+      <!-- /.section-block -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar page-sidebar-fixed">
+    <nav id="nav-content" class="nav flex-column mt-4">
+      <a href="#overview" class="nav-link smooth-scroll">Overview</a>
+      <a href="#content" class="nav-link smooth-scroll">Content</a>
+      <a href="#quick-start" class="nav-link smooth-scroll">Quick start</a>
+    </nav>
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

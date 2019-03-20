@@ -1,0 +1,79 @@
+---
+layout: default
+title: Input Pickers
+active: forms.pickers
+pluginsCss:
+  - flatpickr/flatpickr.min.css
+  - bootstrap-colorpicker/css/bootstrap-colorpicker.min.css
+  - bootstrap-touchspin/jquery.bootstrap-touchspin.min.css
+  - nouislider/nouislider.min.css
+pluginsJs:
+  - masonry-layout/masonry.pkgd.min.js
+  - flatpickr/flatpickr.min.js
+  - flatpickr/plugins/monthSelect/monthSelect.js
+  - bootstrap-colorpicker/js/bootstrap-colorpicker.min.js
+  - nouislider/wNumb.js
+  - nouislider/nouislider.min.js
+  - blueimp-file-upload/js/vendor/jquery.ui.widget.min.js
+  - blueimp-load-image/load-image.all.min.js
+  - blueimp-canvas-to-blob/canvas-to-blob.min.js
+  - blueimp-file-upload/js/jquery.iframe-transport.min.js
+  - blueimp-file-upload/js/jquery.fileupload.min.js
+  - blueimp-file-upload/js/jquery.fileupload-process.min.js
+  - blueimp-file-upload/js/jquery.fileupload-image.min.js
+  - blueimp-file-upload/js/jquery.fileupload-audio.min.js
+  - blueimp-file-upload/js/jquery.fileupload-video.min.js
+  - blueimp-file-upload/js/jquery.fileupload-validate.min.js
+  - bootstrap-touchspin/jquery.bootstrap-touchspin.min.js
+pageJs:
+  - pages/colorpicker-demo.js
+  - pages/uploader-demo.js
+  - pages/slider-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Forms
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Pickers</h1>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-deck -->
+      <div class="section-deck">
+        {% include snippets/forms/flatpickr.html %}
+
+        {% include snippets/forms/colorpicker.html %}
+      </div>
+      <!-- /.section-deck -->
+
+      <hr class="my-5">
+
+      {% include snippets/forms/uploader.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/spinner.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/slider.html %}
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

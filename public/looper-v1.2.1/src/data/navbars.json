@@ -1,0 +1,20 @@
+[
+  {
+    "bg": "bg-black",
+    "context": "navbar-dark",
+    "hamburger": "hamburger",
+    "btn": "secondary"
+  },
+  {
+    "bg": "bg-primary",
+    "context": "navbar-dark",
+    "hamburger": "hamburger",
+    "btn": "danger"
+  },
+  {
+    "bg": "bg-white",
+    "context": "navbar-light",
+    "hamburger": "hamburger-light",
+    "btn": "primary"
+  }
+]

@@ -1,0 +1,108 @@
+---
+layout: default
+title: Profile
+active: page-user.user-teams
+pluginsJs:
+  - masonry-layout/masonry.pkgd.js
+---
+
+<!-- .page -->
+<div class="page">
+  {% include ui/profile-cover.html %}
+
+  <!-- .page-navs -->
+  <nav class="page-navs">
+    <!-- .nav-scroller -->
+    <div class="nav-scroller">
+      <!-- .nav -->
+      <div class="nav nav-center nav-tabs">
+        <a class="nav-link" href="user-profile.html">Overview</a>
+        <a class="nav-link" href="user-activities.html">Activities <span class="badge">16</span></a>
+        <a class="nav-link active" href="user-teams.html">Teams</a>
+        <a class="nav-link" href="user-projects.html">Projects</a>
+        <a class="nav-link" href="user-tasks.html">Tasks</a>
+        <a class="nav-link" href="user-profile-settings.html">Settings</a>
+      </div>
+      <!-- /.nav -->
+    </div>
+    <!-- /.nav-scroller -->
+  </nav>
+  <!-- /.page-navs -->
+
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="user-profile.html">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Overview
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title mr-sm-auto">Teams <small class="badge">23 Totals</small></h1>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .masonry-layout -->
+      <div class="masonry-layout">
+        <!-- .masonry-item -->
+        <div class="masonry-item col-lg-6">
+          {% assign team="Creative Division" %}
+          {% assign type="Event Planner" %}
+          {% assign avatar="team4.jpg" %}
+          {% include ui/team-card-01.html %}
+        </div>
+        <!-- /.masonry-item -->
+
+        <!-- .masonry-item -->
+        <div class="masonry-item col-lg-6">
+          {% assign team="Bootstrap" %}
+          {% assign type="Design Team" %}
+          {% assign avatar="bootstrap.svg" %}
+          {% include ui/team-card-01.html %}
+        </div>
+        <!-- /.masonry-item -->
+
+        <!-- .masonry-item -->
+        <div class="masonry-item col-lg-6">
+          {% assign team="Sketch" %}
+          {% assign type="Creative Agency" %}
+          {% assign avatar="sketch.svg" %}
+          {% include ui/team-card-01.html %}
+        </div>
+        <!-- /.masonry-item -->
+
+        <!-- .masonry-item -->
+        <div class="masonry-item col-lg-6">
+          {% assign team="Good Deck" %}
+          {% assign type="Software Developer" %}
+          {% assign initial="GD" %}
+          {% include ui/team-card-02.html %}
+        </div>
+        <!-- /.masonry-item -->
+      </div>
+      <!-- /.masonry-layout -->
+
+
+      <!-- Modal Members List -->
+      {% include ui/modal-member-list.html %}
+      <!-- /Modal Members List -->
+
+      <!-- spinner -->
+      <div class="p-3 text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <!-- /spinner -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

@@ -1,0 +1,42 @@
+[
+  {
+    "color": "blue",
+    "text": "Assets"
+  },
+  {
+    "color": "indigo",
+    "text": "Build Tools"
+  },
+  {
+    "color": "purple",
+    "text": "Components"
+  },
+  {
+    "color": "pink",
+    "text": "Dependencies"
+  },
+  {
+    "color": "red",
+    "text": "Design"
+  },
+  {
+    "color": "orange",
+    "text": "Documentation"
+  },
+  {
+    "color": "yellow",
+    "text": "Doing"
+  },
+  {
+    "color": "green",
+    "text": "JS"
+  },
+  {
+    "color": "teal",
+    "text": "SCSS"
+  },
+  {
+    "color": "cyan",
+    "text": "To Do"
+  }
+]

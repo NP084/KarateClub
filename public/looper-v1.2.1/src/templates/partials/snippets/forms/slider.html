@@ -1,0 +1,382 @@
+<!-- .section-block -->
+<div class="section-block">
+  <h2 class="section-title">Slider</h2>
+  <p class="text-muted">Lightweight JavaScript range slider library. It offers a wide selection of options and settings, and is compatible with a ton of (touch) devices, including those running iOS, Android, Windows 8/8.1/10, Windows Phone 8.1 and Windows Mobile 10.</p>
+</div>
+<!-- /.section-block -->
+
+<!-- .masonry-layout -->
+<div class="masonry-layout">
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">noUiSlider</h3>
+        <!-- .media -->
+        <div class="media">
+          <!-- .media-left -->
+          <div class="media-left">
+            <div class="text-truncate p-3" id="nouislider-colorpicker">
+              <div class="noUi-danger mr-4 d-inline-block" id="red" style="height:220px"
+                data-toggle="nouislider"
+                data-start="128",
+                data-connect='[true, false]',
+                data-orientation="vertical",
+                data-range='{
+                  "min": 0,
+                  "max": 255
+                }',
+                data-format-wnumb='{ "decimals": 0 }'></div>
+              <div class="noUi-success mr-4 d-inline-block" id="green" style="height:220px"
+                data-toggle="nouislider"
+                data-start="128",
+                data-connect='[true, false]',
+                data-orientation="vertical",
+                data-range='{
+                  "min": 0,
+                  "max": 255
+                }',
+                data-format-wnumb='{ "decimals": 0 }'></div>
+              <div class="noUi-info mr-4 d-inline-block" id="blue" style="height:220px"
+                data-toggle="nouislider"
+                data-start="128",
+                data-connect='[true, false]',
+                data-orientation="vertical",
+                data-range='{
+                  "min": 0,
+                  "max": 255
+                }',
+                data-format-wnumb='{ "decimals": 0 }'></div>
+            </div>
+          </div>
+          <!-- /.media-left -->
+          <!-- .media-body -->
+          <div class="media-body align-middle p-3">
+            <div class="bordered" id="ncp-result" style="width:100px;height:100px;background-color: rgb(128,128,128)"></div>
+          </div>
+          <!-- /.media-body -->
+        </div>
+        <!-- /.media -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Using HTML5 input elements</h3>
+        <div class="nouislider-wrapper">
+          <div id="html5"
+            data-toggle="nouislider"
+            data-start="[ 10, 30 ]"
+            data-connect="true"
+            data-range='{
+              "min": -20,
+              "max": 40
+            }'></div>
+        </div>
+        <!-- grid row -->
+        <div class="form-row">
+          <!-- grid column -->
+          <div class="col">
+            <select id="input-select" class="custom-select"></select>
+          </div>
+          <!-- /grid column -->
+          <!-- grid column -->
+          <div class="col">
+            <input id="input-number" class="form-control" type="number" min="-20" max="40" step="1">
+          </div>
+          <!-- /grid column -->
+        </div>
+        <!-- /grid row -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Non linear slider</h3>
+        <div class="nouislider-wrapper">
+          <div id="nonlinear" class="noUi-danger"
+            data-toggle="nouislider"
+            data-connect="true",
+            data-behaviour="tap",
+            data-start='[ 500, 4000 ]',
+            data-range='{
+              "min": [ 0 ],
+              "10%": [ 500, 500 ],
+              "50%": [ 4000, 1000 ],
+              "max": [ 10000 ]
+            }'></div>
+        </div>
+        <span class="badge badge-info" id="lower-value"></span>
+        <span class="badge badge-info" id="upper-value"></span>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Colored Connect Elements</h3>
+        <p>
+          <button id="lockbutton" class="btn btn-secondary">Lock</button>
+        </p>
+        <p><span class="badge badge-info" id="slider1-span"></span></p>
+        <div class="nouislider-wrapper">
+          <div class="noUi-success" id="slider1"
+            data-toggle="nouislider"
+            data-start="60"
+            data-connect='[true, false]'
+            data-animate="false"
+            data-range='{
+              "min": 50,
+              "max": 100
+            }'></div>
+        </div>
+
+        <p><span class="badge badge-info" id="slider2-span"></span></p>
+        <div class="nouislider-wrapper">
+          <div class="noUi-warning" id="slider2"
+            data-toggle="nouislider"
+            data-start="80"
+            data-connect='[true, false]'
+            data-animate="false"
+            data-range='{
+              "min": 50,
+              "max": 100
+            }'></div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Locking sliders together</h3>
+        <p>noUiSlider's connect elements can be individually colored or otherwise styled.</p>
+        <div class="nouislider-wrapper">
+          <div id="slider-color"
+            data-toggle="nouislider"
+            data-start='[4000, 8000, 12000, 16000]'
+            data-connect='[false, true, true, true, true]'
+            data-range='{
+              "min": [2000],
+              "max": [20000]
+            }'></div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Changing the slider by keypress in input</h3>
+        <div class="nouislider-wrapper">
+          <div id="keypress"
+            data-toggle="nouislider"
+            data-start="[20, 80]"
+            data-connect="true"
+            data-direction="rtl"
+            data-tooltips="true"
+            data-range='{
+              "min": [0],
+              "10%": [10, 10],
+              "50%": [80, 50],
+              "80%": 150,
+              "max": 200
+            }'></div>
+        </div>
+        <!-- grid row -->
+        <div class="form-row">
+          <!-- grid column -->
+          <div class="col">
+            <input type="text" id="input-with-keypress-1" class="form-control">
+          </div>
+          <!-- /grid column -->
+          <!-- grid column -->
+          <div class="col">
+            <input type="text" id="input-with-keypress-0" class="form-control">
+          </div>
+          <!-- /grid column -->
+        </div>
+        <!-- /grid row -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Skipping steps</h3>
+        <p>Notice how <code>40</code> and <code>80</code> can't be selected on the slider.</p>
+        <div class="nouislider-wrapper">
+          <div id="skipstep"
+            data-toggle="nouislider"
+            data-range='{ "min": 0, "10%": 10, "20%": 20, "30%": 30, "50%": 50, "60%": 60, "70%": 70, "90%": 90, "max": 100 }',
+            data-snap="true",
+            data-start='[20, 90]'></div>
+        </div>
+        <span id="skip-value-lower" class="badge badge-secondary"></span>
+        <span id="skip-value-upper" class="badge badge-secondary"></span>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Huge numbers</h3>
+        <p>If you are working with arbitrarily large numbers, you should <strong>not use these directly in noUiSlider</strong>, as you'll run into some JavaScript limitations. Instead, you should <strong>map</strong> your values to an <code>array</code>.</p>
+        <div class="nouislider-wrapper">
+          <div id="slider-huge"
+            data-toggle="nouislider"
+            data-start="4",
+            data-step="1",
+            data-connect='[true, false]'
+            data-format-wnumb='{ "decimals": 0 }'
+            data-range='{
+              "min": 0,
+              "max": 13
+            }'></div>
+        </div>
+        <div id="huge-value" class="help-block"></div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Adding keyboard support</h3>
+        <p>Much like the keypress example, handles can be made keyboard-focusable.</p>
+        <div class="form-group">
+          <input class="form-control" placeholder="Hit tab to focus on the handle.">
+        </div>
+        <div class="nouislider-wrapper">
+          <div id="keyboard"
+            data-toggle="nouislider"
+            data-start="10"
+            data-step="10"
+            data-range='{
+              "min": 0,
+              "max": 100
+            }'></div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Working with dates</h3>
+        <div class="nouislider-wrapper">
+          <!-- we use getTime() fn to get range and start values -->
+          <div id="slider-date"
+            data-toggle="nouislider"
+            data-range='{
+              "min": 1262304000000,
+              "max": 1451606400000
+            }'
+            data-step="{{ 7 | times:24 | times:60 | times:60 | times:1000 }}"
+            data-start='[1293840000000, 1420070400000]'
+            data-format-wnumb='{ "decimals": 0 }'></div>
+        </div>
+        <span class="badge badge-info" id="event-start"></span>
+        <span class="badge badge-info" id="event-end"></span>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+
+  <!-- .masonry-item -->
+  <div class="masonry-item col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h3 class="card-title">Soft limits</h3>
+        <div class="nouislider-wrapper mb-5">
+          <div id="slider-soft"
+            data-toggle="nouislider"
+            data-start="50"
+            data-range='{
+              "min": 0,
+              "max": 100
+            }'
+            data-pips='{
+              "mode": "values",
+              "values": [20, 80],
+              "density": 4
+            }'></div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.masonry-item -->
+</div>
+<!-- /.masonry-layout -->

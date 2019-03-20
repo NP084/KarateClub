@@ -1,0 +1,132 @@
+<!-- .card -->
+<div id="selects" class="card">
+  <!-- .card-body -->
+  <div class="card-body">
+    <!-- .form -->
+    <form>
+      <!-- .fieldset -->
+      <fieldset>
+        <legend>Selects</legend>
+
+        <!-- grid row -->
+        <div class="row">
+          <!-- grid column -->
+          <div class="col-md-6">
+            <!-- .form-group -->
+            <div class="form-group">
+              <label for="sel1">Country</label>
+              <select class="custom-select" id="sel1" required>
+                <option value="">Choose...</option>
+                <option>United States</option>
+              </select>
+            </div>
+            <!-- /.form-group -->
+          </div>
+          <!-- /grid column -->
+          <!-- grid column -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="sel2">State</label>
+              <select class="custom-select" id="sel2" required>
+                <option value="">Choose...</option>
+                <option>California</option>
+              </select>
+            </div>
+          </div>
+          <!-- /grid column -->
+        </div>
+        <!-- /grid row -->
+      </fieldset>
+      <!-- /.fieldset -->
+    </form>
+    <!-- /.form -->
+  </div>
+  <!-- /.card-body -->
+
+  <!-- .card-body -->
+  <div class="card-body border-top">
+    <!-- .form -->
+    <form>
+      <!-- .fieldset -->
+      <fieldset>
+        <legend>States</legend>
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label for="sel3">Country</label>
+          <select class="custom-select" id="sel3" required disabled>
+            <option value="">Choose...</option>
+            <option selected>United States</option>
+          </select>
+        </div>
+        <!-- /.form-group -->
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label for="sel4">Country</label>
+          <select class="custom-select is-valid" id="sel4" required>
+            <option value="">Choose...</option>
+            <option selected>United States</option>
+          </select>
+        </div>
+        <!-- /.form-group -->
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label for="sel5">State</label>
+          <select class="custom-select is-invalid" id="sel5" required>
+            <option value="">Choose...</option>
+            <option>California</option>
+          </select>
+          <div class="invalid-feedback"><i class="fa fa-exclamation-circle fa-fw"></i> Please select your state.</div>
+        </div>
+        <!-- /.form-group -->
+      </fieldset>
+      <!-- /.fieldset -->
+    </form>
+    <!-- /.form -->
+  </div>
+  <!-- /.card-body -->
+
+  <!-- .card-body -->
+  <div class="card-body border-top">
+    <!-- .form -->
+    <form>
+      <!-- .fieldset -->
+      <fieldset>
+        <legend>Sizes</legend>
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label class="col-form-label col-form-label-sm" for="selSmall">Small select</label>
+          <select class="custom-select custom-select-sm" id="selSmall">
+            <option>Small select</option>
+          </select>
+        </div>
+        <!-- /.form-group -->
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label class="col-form-label" for="selDefault">Default select</label>
+          <select class="custom-select" id="selDefault">
+            <option>Default select</option>
+          </select>
+        </div>
+        <!-- /.form-group -->
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label class="col-form-label col-form-label-lg" for="selLarge">Large select</label>
+          <select class="custom-select custom-select-lg" id="selLarge">
+            <option>Large select</option>
+          </select>
+        </div>
+        <!-- /.form-group -->
+      </fieldset>
+      <!-- /.fieldset -->
+    </form>
+    <!-- /.form -->
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->

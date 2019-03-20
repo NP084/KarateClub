@@ -1,0 +1,146 @@
+<!-- .card -->
+<div class="card card-fluid">
+  <!-- .card-body -->
+  <div class="card-body">
+    <h4 class="card-title">Select2</h4>
+    <h6 class="card-subtitle mb-4">A jQuery based replacement for select boxes.</h6>
+
+    <!-- form -->
+    <form>
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="select2-single">Single select boxes</label>
+        <select id="select2-single" class="form-control" data-toggle="select2" data-placeholder="Select a state" data-allow-clear="true"></select>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="select2-multiple">Multiple select boxes</label>
+        <select id="select2-multiple" class="form-control" data-toggle="select2" data-placeholder="Select a state" data-maximum-selection-length="4" multiple></select>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="select2-data-array">Loading array data</label>
+        <select id="select2-data-array" class="form-control" data-toggle="select2" data-data='[
+          {"id": 0, "text": "Visa"},
+          {"id": 1, "text": "Discover Card"},
+          {"id": 2, "text": "American Express"},
+          {"id": 3, "text": "MasterCard"},
+          {"id": 4, "text": "American Express"}
+        ]' data-minimum-results-for-search="Infinity"></select>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label" for="select2-data-remote">Loading remote data</label>
+        <select id="select2-data-remote" class="form-control"></select>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .control-label -->
+        <label class="control-label" for="select2-tagging">Tagging support</label>
+        <!-- you can put options directly in data attribute -->
+        <select id="select2-tagging" class="form-control" data-toggle="select2"
+          data-options='{
+            "tags": ["SandyBrown", "GhostWhite", "LightSalmon", "Bisque", "LightSlateGray", "PaleTurquoise", "MediumVioletRed", "LightSteelBlue", "MidnightBlue", "Peru", "CornflowerBlue", "DimGray", "LightPink", "Lime", "Cornsilk", "Cyan", "DeepPink", "BurlyWood", "LightBlue", "Fuchsia", "LightGoldenRodYellow", "PaleGoldenRod", "DarkSalmon", "Darkorange", "Orange", "FloralWhite", "Ivory", "Pink", "Teal", "Tan", "LightCoral", "ForestGreen", "LimeGreen", "Chocolate", "Linen", "RosyBrown", "DarkTurquoise", "DarkOrchid", "DarkBlue", "Magenta", "SeaGreen", "DarkRed", "DarkSlateGray", "SaddleBrown", "DarkMagenta", "Gray", "Azure", "Black", "DarkKhaki", "Lavender", "Maroon", "Orchid", "DarkSeaGreen", "Gainsboro", "Brown", "Khaki", "MediumSeaGreen", "LightYellow", "Salmon", "MediumTurquoise", "IndianRed", "AntiqueWhite", "SpringGreen", "MistyRose", "DarkOliveGreen", "Thistle", "Violet", "Olive", "Crimson", "BlanchedAlmond", "PowderBlue", "SlateGray", "LawnGreen", "MintCream", "LightGreen", "LightSkyBlue", "Yellow", "Indigo", "HotPink", "WhiteSmoke", "Gold", "BlueViolet", "LavenderBlush", "OliveDrab", "PeachPuff", "OldLace", "GreenYellow", "Navy", "Aquamarine", "DarkSlateBlue", "Purple", "PaleGreen", "SteelBlue", "Blue", "Coral", "PaleVioletRed", "RoyalBlue", "Turquoise", "MediumOrchid", "Green", "Sienna", "DarkGray", "DodgerBlue", "SlateBlue", "LightGray", "DarkGoldenRod", "SkyBlue", "LightSeaGreen", "GoldenRod", "Snow", "YellowGreen", "CadetBlue", "PapayaWhip", "DeepSkyBlue", "LemonChiffon", "DimGrey", "MediumSpringGreen", "HoneyDew", "Plum", "Silver", "MediumBlue", "Aqua", "Chartreuse", "FireBrick", "Beige", "SeaShell", "Wheat", "AliceBlue", "MediumPurple", "OrangeRed", "DarkGreen", "Moccasin", "NavajoWhite", "DarkCyan", "MediumAquaMarine", "Red", "DarkViolet", "LightCyan", "MediumSlateBlue"],
+            "tokenSeparators": [",", " "]
+          }' multiple>
+          <option>White</option>
+          <option selected="selected">Tomato</option>
+        </select>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label">Single select disable</label>
+        <select class="form-control" data-toggle="select2" data-placeholder="Select a state" disabled></select>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label">Multiple select disable</label>
+        <select class="form-control" data-toggle="select2" data-placeholder="Select a state" multiple disabled>
+          <option selected="selected">White</option>
+          <option selected="selected">Tomato</option>
+        </select>
+      </div>
+      <!-- /.form-group -->
+    </form>
+    <!-- /form -->
+
+    <!-- default demo source -->
+    <select id="select2-source-states" style="display: none">
+      <optgroup label="Alaskan/Hawaiian Time Zone">
+        <option value="AK">Alaska</option>
+        <option value="HI">Hawaii</option>
+      </optgroup>
+      <optgroup label="Pacific Time Zone">
+        <option value="CA">California</option>
+        <option value="NV">Nevada</option>
+        <option value="OR">Oregon</option>
+        <option value="WA">Washington</option>
+      </optgroup>
+      <optgroup label="Mountain Time Zone">
+        <option value="AZ">Arizona</option>
+        <option value="CO">Colorado</option>
+        <option value="ID">Idaho</option>
+        <option value="MT">Montana</option>
+        <option value="NE">Nebraska</option>
+        <option value="NM">New Mexico</option>
+        <option value="ND">North Dakota</option>
+        <option value="UT">Utah</option>
+        <option value="WY">Wyoming</option>
+      </optgroup>
+      <optgroup label="Central Time Zone">
+        <option value="AL">Alabama</option>
+        <option value="AR">Arkansas</option>
+        <option value="IL">Illinois</option>
+        <option value="IA">Iowa</option>
+        <option value="KS">Kansas</option>
+        <option value="KY">Kentucky</option>
+        <option value="LA">Louisiana</option>
+        <option value="MN">Minnesota</option>
+        <option value="MS">Mississippi</option>
+        <option value="MO">Missouri</option>
+        <option value="OK">Oklahoma</option>
+        <option value="SD">South Dakota</option>
+        <option value="TX" disabled="disabled">Texas</option>
+        <option value="TN">Tennessee</option>
+        <option value="WI">Wisconsin</option>
+      </optgroup>
+      <optgroup label="Eastern Time Zone">
+        <option value="CT">Connecticut</option>
+        <option value="DE">Delaware</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="IN">Indiana</option>
+        <option value="ME">Maine</option>
+        <option value="MD">Maryland</option>
+        <option value="MA">Massachusetts</option>
+        <option value="MI">Michigan</option>
+        <option value="NH">New Hampshire</option>
+        <option value="NJ">New Jersey</option>
+        <option value="NY">New York</option>
+        <option value="NC" disabled="disabled">North Carolina</option>
+        <option value="OH">Ohio</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        <option value="VT">Vermont</option>
+        <option value="VA">Virginia</option>
+        <option value="WV">West Virginia</option>
+      </optgroup>
+    </select>
+    <!-- /default demo source -->
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->

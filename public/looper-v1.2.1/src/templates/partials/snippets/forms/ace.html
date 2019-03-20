@@ -1,0 +1,32 @@
+<!-- .section-block -->
+<div class="section-block">
+  <h3 class="section-title">Ace Editor</h3>
+  <p class="text-muted">Standalone code editor written in JavaScript.</p>
+</div>
+<!-- /.section-block -->
+
+<!-- .card -->
+<div class="card card-fluid">
+  <!-- .card-header -->
+  <div class="card-header">Simple editor</div>
+  <!-- /.card-header -->
+  <pre id="aceEditor" style="height:500px;">/**
+ * In fact, you're looking at ACE right now. Go ahead and play with it!
+ *
+ * We are currently showing off the JavaScript mode. ACE has support for 45
+ * language modes and 24 color themes!
+ */
+
+function add(x, y) {
+  var resultString = "Hello, ACE! The result of your math is: ";
+  var result = x + y;
+  return resultString + result;
+}
+
+var addResult = add(3, 2);
+console.log(addResult);</pre>
+  <div id="statusBar" class="card-footer">
+    <div class="ace_statusbar">Ace on Looper</div>
+  </div>
+</div>
+<!-- /.card -->
