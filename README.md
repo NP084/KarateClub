@@ -1,3 +1,4 @@
+#Bonjour à tous!
 # KarateClub
 
 	1. Installation  

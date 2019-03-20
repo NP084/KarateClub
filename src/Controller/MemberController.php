@@ -17,9 +17,14 @@ use App\Entity\User;
 use App\Entity\Phone;
 use App\Form\PhoneType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class MemberController extends AbstractController
@@ -38,6 +43,7 @@ class MemberController extends AbstractController
      * MODIFICATION D'UNE PERSONNE DE CONTACT.
      * @Route("/member/editPoC/id={id}/idCL={idCL}/idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
+     * @Security("user.getId() == contactList.getUser().getId()")
      */
     public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager){
         $entityManager=$this->getDoctrine()->getManager();
@@ -47,7 +53,7 @@ class MemberController extends AbstractController
         $formCL = $this->createForm(ContactListType::class, $contactList);
         $formCL->handleRequest($request);
 
-        if($formCL->isSubmitted()){
+        if($formCL->isSubmitted() && $formCL->isValid()){
             $manager->persist($contactList);
             $manager->flush();
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
@@ -64,14 +70,15 @@ class MemberController extends AbstractController
      * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
      */
     public function profileEdit(User $user, Request $request, ObjectManager $manager){
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted()){
-            $manager->persist($user);
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
+        $formUser = $this->createForm(UserType::class, $user);
+        $formUser->handleRequest($request);
+        if($formUser->isSubmitted()){
+          //  $user=$this->getUser();
+          //  $manager->persist($user);
             $manager->flush();
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
-        }
+        };
 
         // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
         $phone = new Phone();
@@ -79,10 +86,10 @@ class MemberController extends AbstractController
         $formPhone->handleRequest($request);
 
         // Formulaire d'ajout d'un n° de téléphone a été envoyé :
-        if($formPhone->isSubmitted()){
+        if($formPhone->isSubmitted() && $formPhone->isValid()){
             // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
             $this->addUserPhone($user, $phone, $request, $manager);
-            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+            return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
         }
 
         // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
@@ -94,7 +101,7 @@ class MemberController extends AbstractController
         $formCity->handleRequest($request);
 
         // Formulaire d'ajout d'une nouvelle adress a été envoyé :
-        if($formAdress->isSubmitted()){
+        if($formAdress->isSubmitted() && $formAdress->isValid()){
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
             $this->addUserAdress($user, $adress, $city, $request, $manager);
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
@@ -109,7 +116,7 @@ class MemberController extends AbstractController
         $formContactList->handleRequest($request);
 
         // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
-        if($formPoC->isSubmitted()){
+        if($formPoC->isSubmitted() && $formPoC->isValid()){
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
             $this->addUserPoC($user, $contactList, $PoC, $request, $manager);
             return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
@@ -118,7 +125,7 @@ class MemberController extends AbstractController
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'user'           => $user,
-            'formUser'       =>$form->createView(),
+            'formUser'       => $formUser->createView(),
             'phoneForm'      => $formPhone->createView(),
             'adressForm'     => $formAdress->createView(),
             'cityForm'       => $formCity->createView(),
@@ -131,10 +138,12 @@ class MemberController extends AbstractController
      * @Route("/member/id={id}", name="profile_show",  requirements={"id"="\d+"})
      */
     public function profileShow(User $user, Request $request){
-
-            return $this->render('member/showProfile.html.twig',[
-                'user' => $user
-            ]);
+        // $usr = $this->getuser();
+        // if ($usr->getId() !== $user->getId()){
+        return $this->render('member/showProfile.html.twig',[
+            'user' => $user
+        ]);
+        //    }
     }
 
     /**
@@ -273,7 +282,7 @@ class MemberController extends AbstractController
             'streetName'=>$adress->getStreetName(),
             'num'       =>$adress->getNum(),
             'postBox'   =>$adress->getPostBox()
-           // 'city'      =>$adress->getCity() // commenté car sinon bug
+            // 'city'      =>$adress->getCity() // commenté car sinon bug
         ]);
         // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
         if (!$adressTest) {
