@@ -1,14 +1,78 @@
 <html>
-    <div class="app has-fullwidth">
-        <header class="app-header app-header-dark">
-            <!-- .top-bar -->
-            <div class="top-bar">
-                <!-- .top-bar-brand -->
-                <div class="top-bar-brand bg-transparent">
-                    <!-- toggle menu -->
-                    <a href="looper/dist/index.html"><img src="Logo_Vika.png" alt="" style="height: 32px;width: auto;"></a>
-                </div><!-- /.top-bar-list -->
-            </div><!-- /.top-bar -->
-        </header><!-- /.app-header -->
-    </div>
+    <header class="app-header app-header-dark">
+        <!-- .top-bar -->
+        <div class="top-bar">
+            <!-- .top-bar-brand -->
+            <div class="top-bar-brand bg-transparent">
+                <!-- toggle menu -->
+                <a href="looper/dist/index.html"><img src="Logo_Vika.png" alt="" style="height: 52px;width: auto;"></a>
+            </div><!-- /.top-bar-list -->
+            
+            <!-- .navbar -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <a class="navbar-brand" href="#">VIKA</a> <!-- toggle menu -->
+                <!-- .navbar-collapse -->
+                <div class="collapse navbar-collapse" id="navbarColor2">
+                    <!-- .navbar-nav -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link" data-toggle="dropdown" href="#" role="button">Dropdown <span class="caret"></span></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Action</a> 
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Dropdown
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                        </li>
+
+
+
+                    </ul><!-- /.navbar-nav -->
+                </div><!-- /.navbar-collapse -->
+            </nav><!-- /.navbar -->
+
+            <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
+
+
+                    <!-- Ajouter condition sinon bouton connexion -->
+
+                    <!-- .btn-account -->
+                    <div class="dropdown">
+                      <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="looper/dist/assets/images/avatars/profile.jpg" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Beni Arisandi </font></font></span> <span class="account-description"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Directeur Marketing</font></font></span></span></button>
+                      <div class="dropdown-arrow dropdown-arrow-left"></div><!-- .dropdown-menu -->
+                      <div class="dropdown-menu">
+                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> Beni Arisandi </h6><a class="dropdown-item" href="looper/dist/user-profile.html"><span class="dropdown-icon oi oi-person"></span> Profile</a> <a class="dropdown-item" href="looper/dist/auth-signin-v1.html"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
+                      </div><!-- /.dropdown-menu -->
+                    </div><!-- /.btn-account -->
+                    
+                    <!-- Logo Social -->
+                    <div class="social">
+                        <ul>
+                            <li><a href="https://www.facebook.com"><i class="fa fa-lg fa-facebook"></i></a></li>
+                        </ul>
+                    </div>
+            </div>
+        </div><!-- /.top-bar -->
+    </header><!-- /.app-header -->
 </html>
