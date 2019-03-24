@@ -9,12 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class VikaController extends AbstractController
 {
     /**
-     * @Route("/vika-{id}", name="VikaContent", requirements={"id"="\d+"})
+     * @Route("/vika-{name}", name="VikaContent", requirements={"id"="\d+"})
      */
-    public function vikashow(ContentPage $philosophy){
+    public function vikashow(ContentPage $contentPage){
 
         return $this->render('vika/showContent.html.twig', [
-            'contentPage' => $philosophy,
+            'contentPage' => $contentPage,
         ]);
     }
 }
