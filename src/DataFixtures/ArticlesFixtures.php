@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use App\Entity\Article;
@@ -14,7 +15,7 @@ use App\Entity\Phone;
 
 
 
-class ArticlesFixtures extends Fixture
+class ArticlesFixtures extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -35,15 +36,18 @@ class ArticlesFixtures extends Fixture
 
                 $article->setTitle($faker->sentence())
                         -> setContent($content)
-                        -> setImage($faker->imageUrl())
+                        -> setImageName($faker->imageUrl())
                         -> setCreatedAt($faker->dateTimeBetween('-6 months'))
                         -> setCategory($category);
-
                 $manager-> persist($article);
             }
         }
         $manager->flush();
     }
+     public static function getGroups(): array
+     {
+         return ['group1', 'group2'];
+     }
 }
 
 
