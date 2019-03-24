@@ -1,0 +1,86 @@
+---
+layout: default
+title: Profile
+active: page-user.tasks
+---
+
+<!-- .page -->
+<div class="page">
+  {% include ui/profile-cover.html %}
+
+  <!-- .page-navs -->
+  <nav class="page-navs">
+    <!-- .nav-scroller -->
+    <div class="nav-scroller">
+      <!-- .nav -->
+      <div class="nav nav-center nav-tabs">
+        <a class="nav-link" href="user-profile.html">Overview</a>
+        <a class="nav-link" href="user-activities.html">Activities <span class="badge">16</span></a>
+        <a class="nav-link" href="user-teams.html">Teams</a>
+        <a class="nav-link" href="user-projects.html">Projects</a>
+        <a class="nav-link active" href="user-tasks.html">Tasks</a>
+        <a class="nav-link" href="user-profile-settings.html">Settings</a>
+      </div>
+      <!-- /.nav -->
+    </div>
+    <!-- /.nav-scroller -->
+  </nav>
+  <!-- /.page-navs -->
+
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="user-profile.html">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Overview
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        <!-- .board -->
+        <div class="board board-list">
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .task-header -->
+            <div class="task-header">
+              <h1 class="task-title mr-auto">On Going Tasks<small class="badge">(6)</small></h1>
+              <select class="custom-select" style="width:160px">
+                <option value="">Filter project</option>
+                <option value="1">Looper Admin Theme</option>
+                <option value="2">Smart Paper</option>
+                <option value="3">Booking Up</option>
+                <option value="4">Online Store</option>
+              </select>
+            </div>
+            <!-- /.task-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 6 %}
+              {% assign offset = 1 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-03.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+        </div>
+        <!-- /.board -->
+      </div>
+      <!-- /.section-block -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

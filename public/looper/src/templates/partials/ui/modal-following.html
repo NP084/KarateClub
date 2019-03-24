@@ -1,0 +1,38 @@
+<!-- .modal -->
+<div class="modal fade" id="followingModal" tabindex="-1" role="dialog" aria-labelledby="followingModalLabel" aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h6 id="followingModalLabel" class="modal-title">Following</h6>
+      </div>
+      <!-- /.modal-header -->
+
+      <!-- .modal-body -->
+      <div class="modal-body px-0">
+        {% include ui/following-list.html %}
+        <!-- .loading -->
+        <div class="text-center p-3">
+          <!-- .spinner -->
+          <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <!-- /.spinner -->
+        </div>
+        <!-- /.loading -->
+      </div>
+      <!-- /.modal-body -->
+
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+      </div>
+      <!-- /.modal-footer -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

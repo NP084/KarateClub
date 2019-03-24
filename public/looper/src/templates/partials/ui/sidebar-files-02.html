@@ -1,0 +1,43 @@
+{% assign uploaded = site.data.files | group_by:"date" %}
+<!-- .list-group -->
+<div class="list-group list-group-reflow list-group-flush list-group-divider">
+  {% for upload in uploaded %}
+  <!-- .list-group-header -->
+  <div class="list-group-header">{{upload[0]}}</div>
+  <!-- /.list-group-header -->
+
+  {% for file in upload[1] %}
+  <!-- .list-group-item -->
+  <div class="list-group-item align-items-start">
+    <div class="list-group-item-figure">
+      <a href="#" class="tile tile-circle bg-{{file.color}}"><span class="fa fa-file-{{file.type}}"></span></a>
+    </div>
+    <div class="list-group-item-body">
+      <h4 class="list-group-item-title text-truncate"><a href="#">{{file.name}}</a></h4>
+      <p class="list-group-item-text">{{file.size}} by {{file.uploadedBy}}</p>
+      <p class="list-group-item-text small">{{file.time}}</p>
+    </div>
+    <div class="list-group-item-figure">
+      <!-- .dropdown -->
+      <div class="dropdown">
+        <button class="btn btn-sm btn-icon btn-light" data-toggle="dropdown">
+          <i class="fa fa-fw fa-ellipsis-v"></i>
+        </button>
+        <div class="dropdown-arrow"></div>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button type="button" class="dropdown-item">Download</button>
+          <button type="button" class="dropdown-item">View details</button>
+          <button type="button" class="dropdown-item">Share file</button>
+          <button type="button" class="dropdown-item">Copy link file</button>
+          <div class="dropdown-divider"></div>
+          <button type="button" class="dropdown-item">Remove</button>
+        </div>
+      </div>
+      <!-- /.dropdown -->
+    </div>
+  </div>
+  <!-- /.list-group-item -->
+  {% endfor %}
+  {% endfor %}
+</div>
+<!-- /.list-group -->

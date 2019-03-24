@@ -1,0 +1,179 @@
+---
+layout: default
+title: Kanban Board
+active: pages.project.board
+footer: false
+pluginsCss:
+  - tributejs/tribute.css
+  - simplemde/simplemde.min.css
+  - flatpickr/flatpickr.min.css
+pluginsJs:
+  - sortablejs/Sortable.min.js
+  - tributejs/tribute.min.js
+  - simplemde/simplemde.min.js
+  - flatpickr/flatpickr.min.js
+pageJs:
+  - pages/board-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner page-inner-fill">
+    <!-- .page-navs -->
+    <header class="page-navs shadow-sm pr-3">
+      <!-- .btn-account -->
+      <a href="page-project.html" class="btn-account">
+        <div class="has-badge">
+          <span class="tile bg-pink text-white">SP</span>
+          <span class="user-avatar user-avatar-xs">
+            <img src="assets/images/avatars/team4.jpg" alt="">
+          </span>
+        </div>
+        <div class="account-summary">
+          <h1 class="card-title">Syrena Project</h1>
+          <h6 class="card-subtitle text-muted">4 deadline &middot; 2 overdue</h6>
+        </div>
+      </a>
+      <!-- /.btn-account -->
+
+      <!-- right actions -->
+      <div class="ml-auto">
+        <!-- invite members -->
+        <div class="dropdown d-inline-block">
+          <button type="button" class="btn btn-light btn-icon" title="Invite members" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-plus"></i>
+          </button>
+          <div class="dropdown-arrow"></div>
+          {% include ui/dropdown-invite-members.html %}
+        </div>
+        <!-- /invite members -->
+        <button type="button" class="btn btn-light btn-icon" data-toggle="page-expander" title="Expand board">
+          <i class="oi oi-fullscreen-enter fa-rotate-90 fa-fw"></i>
+        </button>
+        <button type="button" class="btn btn-light btn-icon" data-toggle="modal" data-target="#modalBoardConfig" title="Show menu">
+          <i class="fa fa-cog fa-fw"></i>
+        </button>
+      </div>
+      <!-- /right actions -->
+    </header>
+    <!-- /.page-navs -->
+
+    <!-- .board -->
+    <div id="board" class="board"
+      data-toggle="sortable"
+      data-draggable=".tasks"
+      data-handle=".task-header"
+      data-delay="100"
+      data-force-fallback="true">
+      <!-- .tasks -->
+      <div class="tasks">
+        <!-- .tasks-header -->
+        <div class="task-header">
+          <h3 class="task-title mr-auto">Backlogs <span class="badge text-muted">(3)</span></h3>
+          {% include ui/task-menu.html %}
+        </div>
+        <!-- /.tasks-header -->
+
+        <!-- .task-body -->
+        <div class="task-body"
+          data-toggle="sortable"
+          data-group="tasks"
+          data-delay="50"
+          data-force-fallback="true">
+          {% assign limit = 3 %}
+          {% assign offset = 4 %}
+          {% assign max = limit | plus:offset | minus:1 %}
+          {% include ui/task-issue-01.html %}
+        </div>
+        <!-- /.task-body -->
+      </div>
+      <!-- /.tasks -->
+
+      <!-- .tasks -->
+      <div class="tasks">
+        <!-- .tasks-header -->
+        <div class="task-header">
+          <h3 class="task-title mr-auto">In Progress <span class="badge text-muted">(1)</span></h3>
+          {% include ui/task-menu.html %}
+        </div>
+        <!-- /.tasks-header -->
+
+        <!-- .task-body -->
+        <div class="task-body"
+          data-toggle="sortable"
+          data-group="tasks"
+          data-delay="50"
+          data-force-fallback="true">
+          {% assign limit = 1 %}
+          {% assign offset = 3 %}
+          {% assign max = limit | plus:offset | minus:1 %}
+          {% include ui/task-issue-01.html %}
+        </div>
+        <!-- /.task-body -->
+      </div>
+      <!-- /.tasks -->
+
+      <!-- .tasks -->
+      <div class="tasks">
+        <!-- .tasks-header -->
+        <div class="task-header">
+          <h3 class="task-title mr-auto">In Review <span class="badge text-muted">(1)</span></h3>
+          {% include ui/task-menu.html %}
+        </div>
+        <!-- /.tasks-header -->
+
+        <!-- .task-body -->
+        <div class="task-body"
+          data-toggle="sortable"
+          data-group="tasks"
+          data-delay="50"
+          data-force-fallback="true">
+          {% assign limit = 1 %}
+          {% assign offset = 2 %}
+          {% assign max = limit | plus:offset | minus:1 %}
+          {% include ui/task-issue-01.html %}
+        </div>
+        <!-- /.task-body -->
+      </div>
+      <!-- /.tasks -->
+
+      <!-- .tasks -->
+      <div class="tasks">
+        <!-- .tasks-header -->
+        <div class="task-header">
+          <h3 class="task-title mr-auto">Done <span class="badge text-muted">(1)</span></h3>
+          {% include ui/task-menu.html %}
+        </div>
+        <!-- /.tasks-header -->
+
+        <!-- .task-body -->
+        <div class="task-body"
+          data-toggle="sortable"
+          data-group="tasks"
+          data-delay="50"
+          data-force-fallback="true">
+          {% assign limit = 1 %}
+          {% assign offset = 1 %}
+          {% assign max = limit | plus:offset | minus:1 %}
+          {% include ui/task-issue-01.html %}
+        </div>
+        <!-- /.task-body -->
+      </div>
+      <!-- /.tasks -->
+
+      <!-- .task-action -->
+      <div class="tasks-action">
+        {% include ui/publisher-06.html %}
+      </div>
+      <!-- /.task-action -->
+    </div>
+    <!-- /.board -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->
+
+{% include ui/modal-board-configs.html %}
+{% include ui/modal-new-task.html %}
+{% include ui/modal-view-task.html %}

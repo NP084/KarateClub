@@ -1,0 +1,515 @@
+<!-- .section-block -->
+<div class="section-block">
+  <h2 class="section-title">Dialogs</h2>
+  <p class="text-muted">Display a content in a layer above the App (like alert, helper text, etc) with Modal, Tooltips, and Popovers.</p>
+</div>
+<!-- /.section-block -->
+
+<!-- .section-deck -->
+<div class="section-deck">
+  <!-- .card -->
+  <div class="card card-fluid">
+    <div class="card-header">Tooltips & Popovers</div>
+    <!-- .card-body -->
+    <div class="card-body">
+      <p class="text-muted">Hover on buttons below to see tooltips.</p>
+      <div class="el-example">
+        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+          Tooltip on top
+        </button>
+        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right" title="Tooltip on right">
+          Tooltip on right
+        </button>
+        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
+          Tooltip on bottom
+        </button>
+        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Tooltip on left">
+          Tooltip on left
+        </button>
+        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+          Tooltip with HTML
+        </button>
+      </div>
+    </div>
+    <!-- /.card-body -->
+
+    <!-- .card-body -->
+    <div class="card-body border-top">
+      <p class="text-muted">Click buttons below to see Popover.</p>
+      <div class="el-example">
+        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Popover Title">Popover Left</button>
+        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Popover Title">Popover Top</button>
+        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Popover Title">Popover Bottom</button>
+        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Popover Title">Popover Right</button>
+      </div>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+
+  <!-- .card -->
+  <div class="card card-fluid">
+    <div class="card-header">Modals & Toastr</div>
+    <!-- .card-body -->
+    <div class="card-body">
+      <div class="el-example">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Open: normal</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLg">Open: large</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalSm">Open: small</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter">Open: center</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong">Open: long</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalScrollable">Open: scrollable</button>
+      </div>
+
+      <!-- Normal modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="exampleModalLabel" class="modal-title">Modal title</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Laudantium praesentium similique natus consequuntur, quae amet, sequi non velit placeat distinctio excepturi tempore quos expedita veritatis at corporis beatae maiores iste.</p>
+              <p>Omnis velit praesentium, incidunt voluptatibus voluptatem iure corporis minima error ipsum itaque magnam vero laborum molestiae vel. Saepe modi atque, iure dolores nulla dolor quia, eius libero ullam dicta explicabo!</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Click Me</button>
+              <button type="button" class="btn btn-light">Secondary Action</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- Large modal -->
+      <div id="exampleModalLg" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog modal-lg" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="myLargeModalLabel" class="modal-title">Modal title</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Officiis asperiores consectetur in, aspernatur, voluptate velit ut libero quo eius veritatis incidunt, fugit voluptatibus ullam voluptates error earum unde illo! Aliquid.</p>
+              <p>Explicabo, fugiat sapiente aliquam? Perspiciatis, harum ratione veritatis. Fuga velit eos quos numquam impedit, unde reiciendis asperiores sunt repellat distinctio, totam, veritatis mollitia. Id iusto repudiandae ad, architecto assumenda blanditiis.</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Click Me</button>
+              <button type="button" class="btn btn-light">Secondary Action</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- Small modal -->
+      <!-- .modal -->
+      <div id="exampleModalSm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog modal-sm" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="mySmallModalLabel" class="modal-title">Modal title</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Quis cum doloremque, ab culpa fugit deserunt necessitatibus! Eos saepe impedit, facilis veritatis, incidunt fuga optio sint, officiis molestias earum deserunt quas!</p>
+              <p>Modi vel nihil doloribus tempore amet. Facilis vel, cupiditate incidunt illo amet pariatur tenetur quam commodi neque, mollitia laboriosam aperiam fugiat, ratione. Ratione rem nobis temporibus facilis exercitationem porro? Obcaecati.</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- Normal modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="exampleModalCenterLabel" class="modal-title">Modal title</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Laudantium praesentium similique natus consequuntur, quae amet, sequi non velit placeat distinctio excepturi tempore quos expedita veritatis at corporis beatae maiores iste.</p>
+              <p>Omnis velit praesentium, incidunt voluptatibus voluptatem iure corporis minima error ipsum itaque magnam vero laborum molestiae vel. Saepe modi atque, iure dolores nulla dolor quia, eius libero ullam dicta explicabo!</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Click Me</button>
+              <button type="button" class="btn btn-light">Secondary Action</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- Normal modal -->
+      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="exampleModalLongLabel" class="modal-title">Modal title</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Click Me</button>
+              <button type="button" class="btn btn-light">Secondary Action</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- Normal modal -->
+      <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="exampleModalScrollableLabel" class="modal-title">Modal title</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Click Me</button>
+              <button type="button" class="btn btn-light">Secondary Action</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+    </div>
+    <!-- /.card-body -->
+
+    <!-- .card-body -->
+    <div class="card-body border-top">
+      <div class="el-example">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalAlert">Open: alert</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalAlertWarning">Open: warning</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalAlertDanger">Open: danger</button>
+      </div>
+
+      <!-- Alert Modal -->
+      <div class="modal modal-alert fade" id="exampleModalAlert" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalAlertLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="exampleModalAlertLabel" class="modal-title"><i class="fa fa-trophy text-success mr-1"></i> Congrats! You Unlock New Feature.</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Eligendi rem, pariatur saepe! Sunt, nulla, esse eligendi culpa doloremque non maxime!</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- Alert Warning Modal -->
+      <div class="modal modal-alert fade" id="exampleModalAlertWarning" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalAlertWarningLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="exampleModalAlertWarningLabel" class="modal-title"><i class="fa fa-bullhorn text-warning mr-1"></i> Modal: warning</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Eligendi rem, pariatur saepe! Sunt, nulla, esse eligendi culpa doloremque non maxime!</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-light">Secondary Action</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- Alert Danger Modal -->
+      <div class="modal modal-alert fade" id="exampleModalAlertDanger" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalAlertDangerLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="exampleModalAlertDangerLabel" class="modal-title"><i class="fa fa-exclamation-triangle text-red mr-1"></i> Alert: danger</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Eligendi rem, pariatur saepe! Sunt, nulla, esse eligendi culpa doloremque non maxime!</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+    </div>
+    <!-- /.card-body -->
+
+    <!-- .card-body -->
+    <div class="card-body border-top">
+      <div class="el-example">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalDrawerRight">Drawer: right</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalDrawerLeft">Drawer: left</button>
+        <button type="button" class="btn btn-lg btn-primary btn-floated" data-toggle="modal" data-target="#exampleModalDocked" data-backdrop="false">
+          <i class="fas fa-comment fa-lg"></i>
+        </button>
+      </div>
+
+      <!-- Modal Drawer Right -->
+      <div class="modal modal-drawer fade" id="exampleModalDrawerRight" tabindex="-1" role="dialog" aria-labelledby="exampleModalDrawerRightLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog modal-drawer-right" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="exampleModalDrawerRightLabel" class="modal-title">Drawer: right</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Eligendi rem, pariatur saepe! Sunt, nulla, esse eligendi culpa doloremque non maxime!</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- Modal Drawer Left -->
+      <div class="modal modal-drawer fade" id="exampleModalDrawerLeft" tabindex="-1" role="dialog" aria-labelledby="exampleModalDrawerLeftLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog modal-drawer-left modal-sm" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+              <h5 id="exampleModalDrawerLeftLabel" class="modal-title">Drawer: left</h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+              <p>Eligendi rem, pariatur saepe! Sunt, nulla, esse eligendi culpa doloremque non maxime!</p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+            <!-- /.modal-footer -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- Modal Docked -->
+      <div class="modal modal-docked fade" id="exampleModalDocked" tabindex="-1" role="dialog" aria-labelledby="exampleModalDockedLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog modal-sm modal-dialog-scrollable" role="document">
+          <!-- .modal-content -->
+          <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header bg-primary text-white">
+              <div class="d-block">
+                <p id="exampleModalDockedLabel">Hi 👋! I'm a Modal Docked</p>
+                <p class="text-center px-3">You can use .modal-{lg,sm} class to in/decrease my size an put any type of content in my body.</p>
+              </div>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body py-3">
+              <!-- .form-group -->
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="text" id="cname" class="form-control" placeholder="Name" required>
+                  <label for="cname">Name</label>
+                </div>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input type="email" id="cmail" class="form-control" placeholder="Email address" required>
+                  <label for="cmail">Email Address</label>
+                </div>
+              </div>
+              <!-- /.form-group -->
+              <button type="button" class="btn btn-lg btn-block btn-primary">Lets Chat</button>
+              <button type="button" class="btn btn-lg btn-block btn-link" data-dismiss="modal" aria-label="Close">Close</button>
+            </div>
+            <!-- /.modal-body -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+    </div>
+    <!-- /.card-body -->
+
+    <!-- .card-body -->
+    <!-- Deprecated – will remove on the next release -->
+    <!-- use native toastr bootstrap component instead -->
+    <div class="card-body border-top">
+      <button type="button" class="btn btn-secondary" onClick="$('#toast1').toast('show')">Try Bootstrap Toast</button>
+      <button type="button" id="toastr-demo" class="btn btn-secondary">Try Toastr 3rd party</button>
+
+      <!-- toasts container -->
+      <div aria-live="polite" aria-atomic="true">
+        <!-- Position it -->
+        <div style="position: fixed; top: 4.5rem; right: 1rem; z-index: 1050">
+          <!-- .toast -->
+          <div id="toast1" class="toast fade hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+            <div class="toast-header">
+              <img class="rounded mr-2" src="assets/images/avatars/bootstrap.svg" alt="" width="20">
+              <strong class="mr-auto">Bootstrap toast</strong>
+            </div>
+            <div class="toast-body">
+              <p>Hello, world! This is a toast message.</p>
+            </div>
+          </div>
+          <!-- /.toast -->
+        </div>
+      </div>
+      <!-- /toasts container -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /.section-deck -->
+

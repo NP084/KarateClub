@@ -1,0 +1,73 @@
+---
+layout: empty
+title: Locked
+---
+
+
+<!-- .auth -->
+<main class="auth">
+  <header id="auth-header" class="auth-header" style="background-image: url(assets/images/illustration/img-1.png);">
+    <h1>
+      <img src="assets/images/brand-inverse.png" alt="" height="72">
+      <span class="sr-only">Locked Screen</span>
+    </h1>
+    <div class="container">
+      <p>Your session is expired, please enter your password or <a href="auth-signin-v1.html">Sign out</a></p>
+    </div>
+  </header>
+  <!-- form -->
+  <form class="auth-form">
+    <div class="text-center mb-4">
+      <!-- .user-avatar -->
+      <div class="user-avatar user-avatar-xl mb-2">
+        <img src="assets/images/avatars/profile.jpg" alt="">
+      </div>
+      <!-- /.user-avatar -->
+      <h2 class="card-title">Beni Arisandi</h2>
+      <h6 class="card-subtitle text-muted">bent10@looper.com</h6>
+    </div>
+
+    <!-- .form-group -->
+    <div class="form-group">
+      <div class="input-group input-group-lg circle">
+        <input type="password" name="inputPassword" class="form-control" placeholder="Password" required autofocus>
+        <div class="input-group-prepend">
+          <button class="btn btn-reset text-primary px-3" type="submit">
+            <i class="fa fa-arrow-circle-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /.form-group -->
+  </form>
+  <!-- /.auth-form -->
+
+  <!-- copyright -->
+  <footer class="auth-footer">&copy; 2018 All Rights Reserved. <a href="#">Privacy</a> and <a href="#">Terms</a></footer>
+</main>
+<!-- /.auth -->
+
+
+<!-- BEGIN BASE JS -->
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/vendor/bootstrap/js/popper.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!-- END BASE JS -->
+
+<!-- BEGIN PLUGINS JS -->
+<script src="assets/vendor/particles.js/particles.min.js"></script>
+<script>
+/**
+ * Keep in mind that your scripts may not always be executed after the theme is completely ready,
+ * you might need to observe the `theme:load` event to make sure your scripts are executed after the theme is ready.
+ */
+$(document).on('theme:init', () => {
+  /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+  particlesJS.load('auth-header', 'assets/javascript/pages/particles.json');
+})
+</script>
+<!-- END PLUGINS JS -->
+
+<!-- BEGIN THEME JS -->
+<script src="assets/javascript/theme.min.js"></script>
+<!-- END THEME JS -->

@@ -1,0 +1,100 @@
+{% for task in site.data.tasks2 %}
+{% if forloop.index >= offset %}
+{% if forloop.index <= max %}
+<!-- .task-issue -->
+<div class="task-issue">
+  <!-- .card -->
+  <div class="card">
+    <!-- .card-header -->
+    <div class="card-header">
+      {% if task.labels %}
+      <div class="task-label-group">
+        {% for label in task.labels %}
+        <span class="task-label bg-{{label}}"></span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <h4 class="card-title">
+        <a href="#" data-toggle="modal" data-target="#modalViewTask">{{task.name}}</a>
+      </h4>
+      <h6 class="card-subtitle text-muted">
+        {% if task.overestimate %}
+        <span class="text-red">{{task.worked}}</span> / <span class="text-muted">{{task.estimate}}</span>
+        {% else %}
+        <span class="text-muted">{{task.worked}}</span> / <span class="text-muted">{{task.estimate}}</span>
+        {% endif %}
+        <span class="mx-1">&middot;</span>
+        <span class="due-date"><i class="far fa-fw fa-clock"></i> {{task.duedate}}</span>
+      </h6>
+    </div>
+    <!-- /.card-header -->
+    <!-- .card-body -->
+    <div class="card-body pt-0">
+      <!-- .list-group -->
+      <div class="list-group">
+        <!-- .list-group-item -->
+        <div class="list-group-item" data-toggle="modal" data-target="#modalViewTask">
+          <a href="#" class="stretched-link"></a>
+          <!-- .list-group-item-body -->
+          <div class="list-group-item-body">
+            <!-- members -->
+            {% assign limit = task.members %}
+            {% for people in site.data.people %}
+            {% if forloop.index <= limit %}
+            <figure class="user-avatar user-avatar-sm" data-toggle="tooltip" title="{{people.name}}">
+              <img src="assets/images/avatars/{{people.avatar}}" alt="{{people.name}}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            <!-- /members -->
+          </div>
+          <!-- /.list-group-item-body -->
+        </div>
+        <!-- /.list-group-item -->
+
+        {% if task.todos > 0 %}
+        <!-- .list-group-item -->
+        <div class="list-group-item pt-0" data-toggle="modal" data-target="#modalViewTask">
+          <a href="#" class="stretched-link"></a>
+          <!-- .list-group-item-body -->
+          <div class="list-group-item-body">
+            <div class="progress progress-xs">
+              <div class="progress-bar bg-success" role="progressbar" style="width: {{task.todosCompleted | times:100 | divided_by:task.todos}}%;" aria-valuenow="{{task.todosCompleted | times:100 | divided_by:task.todos}}" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+          <!-- /.list-group-item-body -->
+          <!-- .list-group-item-figure -->
+          <div class="list-group-item-figure">
+            <span class="todos">{{task.todosCompleted}}/{{task.todos}}</span>
+          </div>
+          <!-- /.list-group-item-figure -->
+        </div>
+        <!-- /.list-group-item -->
+        {% endif %}
+      </div>
+      <!-- /.list-group -->
+    </div>
+    <!-- /.card-body -->
+    <!-- .card-footer -->
+    <div class="card-footer">
+      {% if task.comments > 0 %}
+      <a href="#" class="card-footer-item card-footer-item-bordered text-muted" data-toggle="modal" data-target="#modalViewTask">
+        <i class="oi oi-comment-square mr-1"></i> {{task.comments}}
+      </a>
+      {% endif %}
+      <a href="#" class="card-footer-item card-footer-item-bordered text-muted">
+        {% if task.ongoing %}
+        <i class="fa fa-pause"></i>
+        {% else %}
+        <i class="fa fa-play text-teal"></i>
+        {% endif %}
+      </a>
+    </div>
+    <!-- /.card-footer -->
+  </div>
+  <!-- .card -->
+</div>
+<!-- /.task-issue -->
+{% endif %}
+{% endif %}
+{% endfor %}

@@ -1,0 +1,75 @@
+<!-- thead -->
+{% if include.context %}
+<thead class="thead-{{include.context}}">
+{% else %}
+<thead>
+{% endif %}
+  <tr>
+    <th colspan="2" style="min-width:320px">
+      <div class="thead-dd dropdown">
+        <span class="custom-control custom-control-nolabel custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="check-handle">
+          <label class="custom-control-label" for="check-handle"></label>
+        </span>
+        <div class="thead-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="fa fa-caret-down"></span>
+        </div>
+        <div class="dropdown-arrow"></div>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Select all</a>
+          <a class="dropdown-item" href="#">Unselect all</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Bulk remove</a>
+          <a class="dropdown-item" href="#">Bulk edit</a>
+          <a class="dropdown-item" href="#">Separate actions</a>
+        </div>
+      </div>
+    </th>
+    <th>Inventory</th>
+    <th>Variants</th>
+    <th>Prices</th>
+    <th>Sales</th>
+    <th style="width:100px; min-width:100px;">&nbsp;</th>
+  </tr>
+</thead>
+<!-- /thead -->
+<!-- tbody -->
+<tbody>
+  {% for product in site.data.products %}
+  {% if forloop.index >= offset %}
+  {% if forloop.index <= max %}
+  <!-- tr -->
+  <tr>
+    <td class="align-middle col-checker">
+      <div class="custom-control custom-control-nolabel custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="selectedRow[]" id="p{{product.id}}">
+        <label class="custom-control-label" for="p{{product.id}}"></label>
+      </div>
+    </td>
+    <td>
+      <a href="#" class="tile tile-img mr-1">
+        <img class="img-fluid" src="assets/images/dummy/img-{{product.img}}.jpg" alt="Card image cap">
+      </a>
+      <a href="#">{{product.name}}</a>
+    </td>
+    <td class="align-middle">{{product.inventory}}</td>
+    <td class="align-middle">{{product.variant}}</td>
+    <td class="align-middle">{{product.prices}}</td>
+    <td class="align-middle">{{product.sales}}</td>
+    <td class="align-middle text-right">
+      <a href="#" class="btn btn-sm btn-icon btn-secondary">
+        <i class="fa fa-pencil-alt"></i>
+        <span class="sr-only">Edit</span>
+      </a>
+      <a href="#" class="btn btn-sm btn-icon btn-secondary">
+        <i class="far fa-trash-alt"></i>
+        <span class="sr-only">Remove</span>
+      </a>
+    </td>
+  </tr>
+  <!-- /tr -->
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+</tbody>
+<!-- /tbody -->

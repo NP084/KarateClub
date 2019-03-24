@@ -1,0 +1,56 @@
+---
+layout: docs
+title: Theming
+active: theming
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner container">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <h1 class="page-title">Theming</h1>
+      <p class="text-muted">Easy theming and component changes with SCSS variables.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 class="section-title">Introduction</h2>
+        <p>Looper comes with <code>scss</code> directory in <code>src/assets</code>. In the <code>scss</code> directory you will look file structure that looks like this:</p>
+        <pre><code class="markdown">scss/
+├── dark/
+│   ├── bootstrap/
+│   ├── components/
+│   ├── variable-bs-overrides.scss
+│   └── _variables.scss
+├── default/
+│   ├── bootstrap/
+│   ├── components/
+│   ├── variable-bs-overrides.scss
+│   └── _variables.scss
+├── _variable-custom.scss
+├── custom.scss
+├── theme-dark.scss
+└── theme.scss</code></pre>
+
+        <p>Looper comes with `default` and `dark` skin which are separated in their own folders, see the folder structure above. Whenever possible, avoid modifying Looper core files. You can use <code>_variable-custom.scss</code> and <code>custom.scss</code> instead if you want to modify or creating new components. This is the best strategy to make it easier for you to update Looper when a new version is released.</p>
+
+
+        <h2 class="section-title">Bootstrap</h2>
+        <p>This folder is where custom bootstrap styles lives. With some effort, you can modify the look of Bootstrap components by override Bootstrap variables using <code>_variable-custom.scss</code> file. If you want to go deeper, you can use our <code>custom.scss</code> file to write your own styles.</p>
+
+
+        <h2 class="section-title">Components</h2>
+        <p>The components directory contains all new components that included in Looper. Each components separated in their own files in this directory. You can edit the look of each components by override looper components variables using <code>_variable-custom.scss</code> file, as well as <code>custom.scss</code> if you want to write your own styles.</p>
+      </div>
+      <!-- /.section-block -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

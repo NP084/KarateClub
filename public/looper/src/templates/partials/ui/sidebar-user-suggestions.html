@@ -1,0 +1,26 @@
+<!-- .list-group -->
+<div class="list-group list-group-reflow list-group-flush mb-3">
+  {% for people in site.data.people limit:5 offset:6 %}
+  <!-- .list-group-item -->
+  <div class="list-group-item py-2">
+    <div class="list-group-item-figure">
+      <a href="user-profile.html" class="user-avatar user-avatar-md">
+        <img src="assets/images/avatars/{{people.avatar}}" alt="{{people.name}}">
+      </a>
+    </div>
+    <div class="list-group-item-body">
+      <h4 class="list-group-item-title"><a href="#">{{people.name}}</a></h4>
+      <p class="list-group-item-text">{{people.job}}</p>
+    </div>
+    <div class="list-group-item-figure">
+      {% if people.follow %}
+      <button type="button" class="btn btn-sm btn-secondary">Follow</button>
+      {% else %}
+      <button type="button" class="btn btn-sm btn-secondary" disabled>Following</button>
+      {% endif %}
+    </div>
+  </div>
+  <!-- .list-group-item -->
+  {% endfor %}
+</div>
+<!-- /.list-group -->

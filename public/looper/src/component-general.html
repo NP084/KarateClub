@@ -1,0 +1,73 @@
+---
+layout: default
+title: General Elements
+active: components.general
+pluginsCss:
+  - toastr/toastr.min.css
+pluginsJs:
+  - toastr/toastr.min.js
+pageJs:
+  - pages/toastr-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Components
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">General Elements</h1>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+
+      {% include snippets/components/buttons.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/dialogs.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/indicators.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/progress.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/spinner.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/navs.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/navbars.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/containers.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/components/typography.html %}
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

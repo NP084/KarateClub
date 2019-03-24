@@ -1,0 +1,28 @@
+<!-- .publisher -->
+<div class="publisher keep-focus focus">
+  <label for="publisherInput8{{client.id}}" class="publisher-label">Send a message to client</label>
+  <!-- .publisher-input -->
+  <div class="publisher-input">
+    <textarea id="publisherInput8{{client.id}}" class="form-control" placeholder="Write a message"></textarea>
+  </div>
+  <!-- /.publisher-input -->
+  <!-- .publisher-actions -->
+  <div class="publisher-actions align-items-center">
+    <!-- .publisher-tools -->
+    <div class="publisher-tools mr-auto">
+      <div class="btn btn-light btn-icon fileinput-button">
+        <i class="fa fa-paperclip"></i>
+        <input type="file" id="attachment8{{client.id}}[]" name="attachment8{{client.id}}[]" multiple>
+      </div>
+      <button type="button" class="btn btn-light btn-icon"><i class="far fa-smile"></i></button>
+    </div>
+    <!-- /.publisher-tools -->
+    <div class="custom-control custom-control-inline custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="copymsg{{client.id}}" checked>
+      <label class="custom-control-label" for="copymsg{{client.id}}">Send me a copy</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+  </div>
+  <!-- /.publisher-actions -->
+</div>
+<!-- /.publisher -->

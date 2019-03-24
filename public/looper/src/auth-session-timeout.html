@@ -1,0 +1,47 @@
+---
+layout: default
+title: Session Timeout
+active: page-auths.session-timeout
+pluginsJs:
+  - bootstrap-session-timeout/bootstrap-session-timeout.min.js
+pageJs:
+  - pages/session-timeout-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Account
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Session Timeout</h1>
+      <p class="text-muted">Session timeout and keep-alive control with a nice Bootstrap warning dialog.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        <div class="alert alert-secondary has-icon">
+          <div class="alert-icon"><i class="oi oi-info"></i></div>
+          <p>The warning dialog will fire after <strong>10 seconds</strong>. The page will redirect after <strong>30 seconds</strong> with no activity.</p>
+          <p>Shows the warning dialog with countdown timer after 10 seconds. If user takes no action (interacts with the page in any way), browser is redirected to redirUrl. On any user action (mouse, keyboard or touch) the timeout timer as well as the countdown timer are reset (visible if you don't close the warning dialog).</p>
+        </div>
+      </div>
+      <!-- /.section-block -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

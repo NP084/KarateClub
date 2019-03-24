@@ -1,0 +1,83 @@
+<aside class="app-aside app-aside-light">
+  <!-- .aside-content -->
+  <div class="aside-content">
+    <!-- .aside-header -->
+    <header class="aside-header">
+      <!-- toggle menu -->
+      <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="Menu">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+      <!-- /toggle menu -->
+
+      <!-- .btn-account -->
+      <button class="btn-account d-flex d-md-none" type="button" data-toggle="collapse" data-target="#dropdown-aside">
+        <span class="user-avatar user-avatar-lg">
+          <img src="assets/images/avatars/profile.jpg" alt="">
+        </span>
+        <span class="account-icon">
+          <span class="fa fa-caret-down fa-lg"></span>
+        </span>
+        <span class="account-summary">
+          <span class="account-name">Beni Arisandi</span>
+          <span class="account-description">Marketing Manager</span>
+        </span>
+      </button>
+      <!-- /.btn-account -->
+
+      <!-- .dropdown-aside -->
+      <div id="dropdown-aside" class="dropdown-aside d-md-none collapse">
+        <!-- dropdown-items -->
+        <div class="pb-3">
+          <a class="dropdown-item" href="user-profile.html"><span class="dropdown-icon oi oi-person"></span> Profile</a>
+          <a class="dropdown-item" href="auth-signin-v1.html"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Help Center</a>
+          <a class="dropdown-item" href="#">Ask Forum</a>
+          <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
+        </div>
+        <!-- /dropdown-items -->
+      </div>
+      <!-- /.dropdown-aside -->
+
+      <!-- .top-bar-brand -->
+      <div class="top-bar-brand bg-primary">
+        <a href="index.html">
+          <img src="assets/images/brand-inverse.png" height="32" alt="">
+        </a>
+      </div>
+      <!-- /.top-bar-brand -->
+    </header>
+    <!-- /.aside-header -->
+
+    <!-- .aside-menu -->
+    <div class="aside-menu">
+      <!-- .stacked-menu -->
+      <nav id="stacked-menu" class="stacked-menu">
+        <!-- .menu -->
+        <ul class="menu">
+          {% for levelMenu in site.data.aside-menu %}
+            {% if levelMenu.type == 'header' %}
+            {% include snippets/aside/header-menu.html %}
+            {% endif %}
+
+            {% if levelMenu.type == 'link' %}
+            {% include snippets/aside/level-menu.html %}
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <!-- /.menu -->
+      </nav>
+      <!-- /.stacked-menu -->
+    </div>
+    <!-- /.aside-menu -->
+
+    <!-- Skin changer -->
+    <footer class="aside-footer border-top p-3">
+      <button class="btn btn-light btn-block text-primary" data-toggle="skin">Night mode <i class="fas fa-moon ml-1"></i></button>
+    </footer>
+    <!-- /Skin changer -->
+  </div>
+  <!-- /.aside-content -->
+</aside>

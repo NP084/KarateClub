@@ -1,0 +1,58 @@
+<!-- .card -->
+<div id="labels" class="card">
+  <!-- .card-body -->
+  <div class="card-body">
+    <!-- .form -->
+    <form>
+      <!-- .fieldset -->
+      <fieldset>
+        <legend>Labels</legend>
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label for="lbl1">Project name <abbr title="Required">*</abbr></label>
+          <input type="text" class="form-control" id="lbl1" placeholder="Required asterisks" required>
+        </div>
+        <!-- /.form-group -->
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label for="lbl2">Project name <span class="badge badge-danger">Required</span></label>
+          <input type="text" class="form-control" id="lbl2" placeholder="Required label" required>
+        </div>
+        <!-- /.form-group -->
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label for="lbl3">Description <span class="badge badge-secondary"><em>Optional</em></span></label>
+          <textarea class="form-control" id="lbl3" rows="3" placeholder="Optional label"></textarea>
+        </div>
+        <!-- /.form-group -->
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label class="d-flex justify-content-between" for="lbl4">
+            <span>Description</span>
+            <span class="text-muted">0 of 80 characters used</span>
+          </label>
+          <textarea class="form-control" id="lbl4" rows="3" placeholder="Label with description"></textarea>
+        </div>
+        <!-- /.form-group -->
+
+        <!-- .form-group -->
+        <div class="form-group">
+          <label class="d-flex justify-content-between" for="lbl5">
+            <span>Password</span>
+            <a href="#lbl5" data-toggle="password"><i class="fa fa-eye fa-fw"></i> <span>Show</span></a>
+          </label>
+          <input type="password" class="form-control" value="label_with_action" id="lbl5">
+        </div>
+        <!-- /.form-group -->
+      </fieldset>
+      <!-- /.fieldset -->
+    </form>
+    <!-- /.form -->
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->

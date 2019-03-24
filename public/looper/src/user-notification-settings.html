@@ -1,0 +1,248 @@
+---
+layout: default
+title: Notification Settings
+active: page-user.notification-settings
+---
+
+<!-- .page -->
+<div class="page">
+  {% include ui/profile-cover.html %}
+
+  <!-- .page-navs -->
+  <nav class="page-navs">
+    <!-- .nav-scroller -->
+    <div class="nav-scroller">
+      <!-- .nav -->
+      <div class="nav nav-center nav-tabs">
+        <a class="nav-link" href="user-profile.html">Overview</a>
+        <a class="nav-link" href="user-activities.html">Activities <span class="badge">16</span></a>
+        <a class="nav-link" href="user-teams.html">Teams</a>
+        <a class="nav-link" href="user-projects.html">Projects</a>
+        <a class="nav-link" href="user-tasks.html">Tasks</a>
+        <a class="nav-link active" href="user-profile-settings.html">Settings</a>
+      </div>
+      <!-- /.nav -->
+    </div>
+    <!-- /.nav-scroller -->
+  </nav>
+  <!-- /.page-navs -->
+
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="user-profile.html">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Overview
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-lg-4">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <h6 class="card-header">Your Details</h6>
+            <!-- .nav -->
+            <nav class="nav nav-tabs flex-column border-0">
+              <a href="user-profile-settings.html" class="nav-link">Profile</a>
+              <a href="user-account-settings.html" class="nav-link">Account</a>
+              <a href="user-billing-settings.html" class="nav-link">Billing</a>
+              <a href="user-notification-settings.html" class="nav-link active">Notifications</a>
+            </nav>
+            <!-- /.nav -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-8">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <h6 class="card-header">Notifications</h6>
+            <!-- .list-group -->
+            <div class="list-group list-group-flush">
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone follows you
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif01" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone mentions you
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif02" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone sends you a message
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif03" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+
+              <div class="list-group-header">Team Notifications</div>
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone invite you to a team
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif04" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone update a team
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif05" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone add new project
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif06" class="switcher-input">
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone update a project
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif07" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+
+              <div class="list-group-header">Project Notifications</div>
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone update a team
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif08" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone add new task
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif09" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Someone update a task
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif10" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+
+              <div class="list-group-header">News & Trending</div>
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Top members this week
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif11" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Top Teams this week
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif12" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Rating reminders
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif13" class="switcher-input">
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+              <!-- .list-group-item -->
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                Project deadline
+                <!-- .switcher -->
+                <label class="switcher-control switcher-control-success">
+                  <input type="checkbox" name="notif14" class="switcher-input" checked>
+                  <span class="switcher-indicator"></span>
+                </label>
+                <!-- /.switcher -->
+              </div>
+              <!-- /.list-group-item -->
+            </div>
+            <!-- /.list-group -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

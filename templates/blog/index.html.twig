@@ -1,24 +1,36 @@
-{% extends 'base.html.twig' %}
+{% extends 'blog/Template.html.twig' %}
 
-{% block title %}Hello BlogController!{% endblock %}
 
-{% block body %}
+{% block Content %}
 <div class="container">
     <div class="row justify-content-md-center">
-        {% for article in articles %}        
-        <article class="col-md-6">
-                <div class="card" style="width: 32rem;">
-                    <img src="{{ asset('upload/user/' ~ article.imageName) }}" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ article.title }}</h5>
-                        <p class="card-text">{{ article.content|raw }}</p>
-                        <a href="{{ path('blog_show', {'id':article.id}) }}" class="btn btn-primary">Lire la suite</a>
-                    </div>
-                </div>
-        </article>
-        {% endfor %} 
+        {% for article in articles %}
+        <div class="col-6">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-body">
+            <h5 class="card-title">{{ article.title }}</h5>
+            </div><!-- /.card-body -->
+            <!-- 16:9 aspect ratio -->
+            <figure class="embed-responsive embed-responsive-16by9 mb-0">
+                <img class="embed-responsive-item" src="https://media.gettyimages.com/photos/illuminated-hashtag-sign-on-table-in-fashion-studio-picture-id909598172" alt="Card image">
+            </figure><!-- /.embed-responsive -->
+            <!-- .card-body -->
+            <div class="card-body">
+            <p class="card-text"> {{ article.content|raw }}
+                 <a href="#" class="mention">@stilearningTwit</a> . <a href="#" class="hashtag">#looper</a> <a href="#" class="hashtag">#admin</a><br>
+                <time datetime="2018-02-12">Feb 12, 2018 at 08:19pm</time>
+            </p>
+            </div><!-- /.card-body -->
+            <!-- .card-footer -->
+            <div class="card-footer">
+            <div class="card-footer-content text-muted"> 
+                <a class="btn btn-primary btn-lg" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Lire la suite</a>
+            </div>
+            </div><!-- /.card-footer -->
+        </div>
     </div>
-    <br><br>
+        {% endfor %}
+    </div>
 </div>
-
 {% endblock %}

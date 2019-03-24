@@ -1,0 +1,35 @@
+<!-- .list-group -->
+<div class="list-group list-group-flush">
+  {% for member in site.data.leaderboard %}
+  <!-- .list-group-item -->
+  <div class="list-group-item">
+    <!-- .list-group-item-figure -->
+    <div class="list-group-item-figure">
+      <a href="user-profile.html" class="user-avatar" data-toggle="tooltip" title="{{member.name}}">
+        <img src="assets/images/avatars/{{member.avatar}}" alt="">
+      </a>
+    </div>
+    <!-- /.list-group-item-figure -->
+
+    <!-- .list-group-item-body -->
+    <div class="list-group-item-body">
+      <!-- .progress -->
+      <div class="progress progress-animated bg-transparent rounded-0" data-toggle="tooltip" data-html="true" title='<div class="text-left small"><i class="fa fa-fw fa-circle text-purple"></i> {{member.completed}}<br><i class="fa fa-fw fa-circle text-teal"></i> {{member.active}}<br><i class="fa fa-fw fa-circle text-red"></i> {{member.overdue}}</div>'>
+        <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="{{member.completed | times: 100 | divided_by: member.tasks}}" aria-valuemin="0" aria-valuemax="100" style="width: {{member.completed | times: 100 | divided_by: member.tasks}}%">
+          <span class="sr-only">{{member.completed | times: 100 | divided_by: member.tasks}}% Complete</span>
+        </div>
+        <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="{{member.active | times: 100 | divided_by: member.tasks}}" aria-valuemin="0" aria-valuemax="100" style="width: {{member.active | times: 100 | divided_by: member.tasks}}%">
+          <span class="sr-only">{{member.active | times: 100 | divided_by: member.tasks}}% Complete</span>
+        </div>
+        <div class="progress-bar bg-red" role="progressbar" aria-valuenow="{{member.overdue | times: 100 | divided_by: member.tasks}}" aria-valuemin="0" aria-valuemax="100" style="width: {{member.overdue | times: 100 | divided_by: member.tasks}}%">
+          <span class="sr-only">{{member.overdue | times: 100 | divided_by: member.tasks}}% Complete</span>
+        </div>
+      </div>
+      <!-- /.progress -->
+    </div>
+    <!-- /.list-group-item-body -->
+  </div>
+  <!-- /.list-group-item -->
+  {% endfor %}
+</div>
+<!-- /.list-group -->

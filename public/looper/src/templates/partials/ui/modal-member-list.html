@@ -1,0 +1,44 @@
+<!-- .modal -->
+<div class="modal fade" id="membersModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-dialog-overflow" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <!-- .input-group -->
+        <div class="input-group has-clearable">
+          <button type="button" class="close" aria-label="Close">
+            <i class="fa fa-times-circle"></i>
+          </button>
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <span class="oi oi-magnifying-glass"></span>
+            </span>
+          </div>
+          <input type="text" class="form-control" placeholder="Search Members">
+        </div>
+        <!-- /.input-group -->
+      </div>
+      <!-- /.modal-header -->
+
+      <!-- .modal-body -->
+      <div class="modal-body px-0">
+        {% assign limit = 10 %}
+        {% assign offset = 3 %}
+        {% assign max = limit | plus:offset | minus:1 %}
+        {% include ui/member-list-01.html %}
+      </div>
+      <!-- /.modal-body -->
+
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+      </div>
+      <!-- /.modal-footer -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

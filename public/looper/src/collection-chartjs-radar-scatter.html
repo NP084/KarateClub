@@ -1,0 +1,120 @@
+---
+layout: default
+title: Chart.js Radar & Scatter
+active: collections.chartjs.radar-scatter
+pluginsJs:
+  - chart.js/Chart.min.js
+pageJs:
+  - pages/chartjs-scatter-demo.js
+  - pages/chartjs-radar-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Collections
+            </a>
+          </li>
+          <li class="breadcrumb-item active">
+            <a href="#">Chart.js</a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title mr-sm-auto">Radar & Scatter</h1>
+      <p class="text-muted">A radar chart is a way of showing multiple data points and the variation between them. They are often useful for comparing the points of two or more different data sets.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <div style="position:relative; height:400px">
+                <canvas id="canvas-radar"></canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <div style="position:relative; height:400px">
+                <canvas id="canvas-radar-skip-points"></canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+
+
+      <hr>
+
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 class="section-title">Scatter Chart</h2>
+        <p class="text-muted">Scatter charts are based on basic line charts with the x axis changed to a linear axis. To use a scatter chart, data must be passed as objects containing X and Y properties.</p>
+      </div>
+      <!-- /.section-block -->
+
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-scatter" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-lg-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <canvas id="canvas-scatter-multi-axis" class="chartjs"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

@@ -1,0 +1,156 @@
+---
+layout: default
+title: Teams
+active: pages.teams
+footer: true
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <div class="d-flex justify-content-between">
+        <h1 class="page-title">Teams</h1>
+        <div class="btn-toolbar">
+          <button type="button" class="btn btn-primary">Add team</button>
+        </div>
+      </div>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .card -->
+      <div class="card card-fluid">
+        <!-- .card-header -->
+        <div class="card-header nav-scroller">
+          <!-- .nav-tabs -->
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link active show" data-toggle="tab" href="#project-myteams">My teams</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#project-explore-teams">Explore public teams</a>
+            </li>
+          </ul>
+          <!-- /.nav-tabs -->
+        </div>
+        <!-- /.card-header -->
+
+        <!-- .card-body -->
+        <div class="card-body">
+          <!-- grid row -->
+          <div class="row">
+            <!-- .col -->
+            <div class="col">
+              <!-- .input-group -->
+              <div class="input-group has-clearable">
+                <button type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+                </button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div>
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <!-- /.input-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-auto d-none d-sm-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <button class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Last updated <span class="fa fa-caret-down"></span>
+                </button>
+                <div class="dropdown-arrow"></div>
+                <!-- .dropdown-menu -->
+                <div class="dropdown-menu dropdown-menu-right stop-propagation">
+                  <h6 class="dropdown-header">Sort By</h6>
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="sortTeamsBy" value="0">
+                    <span class="custom-control-label">Name</span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="sortTeamsBy" value="1">
+                    <span class="custom-control-label">Name <span class="text-muted">(Decs)</span></span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="sortTeamsBy" value="2" checked>
+                    <span class="custom-control-label">Last updated</span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="sortTeamsBy" value="3">
+                    <span class="custom-control-label">Oldest updated</span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="sortTeamsBy" value="4">
+                    <span class="custom-control-label">Last created</span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="sortTeamsBy" value="5">
+                    <span class="custom-control-label">Oldest created</span>
+                  </label>
+                </div>
+                <!-- /.dropdown-menu -->
+              </div>
+              <!-- /.dropdown -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /grid row -->
+        </div>
+        <!-- /.card-body -->
+
+        <div class="text-muted px-3 mb-2">Showing 10 to 18 of 18 entries</div>
+
+        <!-- .tab-content -->
+        <div class="tab-content">
+          <!-- .tab-pane -->
+          <div class="tab-pane fade show active" id="project-myteams" role="tabpanel">
+            {% include ui/team-list-01.html %}
+
+            <!-- .pagination -->
+            <ul class="pagination justify-content-center mt-4">
+              <li class="page-item">
+                <a class="page-link" href="#" tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" tabindex="-1">Prev</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">2</a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" href="#"><i class="fa fa-angle-double-right"></i></a>
+              </li>
+            </ul>
+            <!-- /.pagination -->
+          </div>
+          <!-- /.tab-pane -->
+
+          <!-- .tab-pane -->
+          <div class="tab-pane fade" id="project-explore-teams" role="tabpanel">
+            <div class="alert alert-warning mx-3">
+              You can search for public teams only!
+            </div>
+          </div>
+          <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

@@ -1,0 +1,138 @@
+[
+  {
+    "title": "add payment method to user-billing page",
+    "completed": false
+  },
+  {
+    "title": "Sidebar enhancement: adding fluid width & expand classes like bootstrap navbar",
+    "completed": true
+  },
+  {
+    "title": "add view / edit task modal",
+    "completed": false
+  },
+  {
+    "title": "increase app-aside zindex on screen md & up",
+    "completed": false
+  },
+  {
+    "title": "change stacked-menu bg to transparent",
+    "completed": true
+  },
+  {
+    "title": "fix color-picker",
+    "completed": true
+  },
+  {
+    "title": "add create new task modal",
+    "completed": true
+  },
+  {
+    "title": "add flagging class for macos",
+    "completed": true
+  },
+  {
+    "title": "fixed overlap flatpickr zindex in modal",
+    "completed": false
+  },
+  {
+    "title": "mark toastr as a deprecated dependencies",
+    "completed": true
+  },
+  {
+    "title": "add filterlist fn to main script",
+    "completed": false
+  },
+  {
+    "title": "fix or remove .custom-control-nolabel",
+    "completed": true
+  },
+  {
+    "title": "change datatables sort icons",
+    "completed": true
+  },
+  {
+    "title": "reinvent apple fonts system",
+    "completed": false
+  },
+  {
+    "title": "improve jqvmap zoom buttons",
+    "completed": true
+  },
+  {
+    "title": "improve pagination active bg",
+    "completed": true
+  },
+  {
+    "title": "fix knobify footer item",
+    "completed": true
+  },
+  {
+    "title": "handle autofocus input when modal/dropdown shown",
+    "completed": true
+  },
+  {
+    "title": "add new tasks list input",
+    "completed": true
+  },
+  {
+    "title": "add page fullscreen behavior",
+    "completed": true
+  },
+  {
+    "title": "make content layout fluid",
+    "completed": true
+  },
+  {
+    "title": "different render line-height between OS due to different font-family",
+    "completed": true
+  },
+  {
+    "title": "add scrollable content to tasks component",
+    "completed": true
+  },
+  {
+    "title": "Fixed .message-title line-height",
+    "completed": true
+  },
+  {
+    "title": "Re-order navigations",
+    "completed": true
+  },
+  {
+    "title": "Add modal right & left",
+    "completed": true
+  },
+  {
+    "title": "clean up line-height comments",
+    "completed": true
+  },
+  {
+    "title": "Improved grays color scheme",
+    "completed": true
+  },
+  {
+    "title": "Prevent form-control height since v4.1.3",
+    "completed": true
+  },
+  {
+    "title": "Fixed item align on dropdown-sheet",
+    "completed": true
+  },
+  {
+    "title": "Re-store pooper.js due to lack of dropdown position on bootstrap-bundle",
+    "completed": true
+  },
+  {
+    "title": "Update Bootstrap to v4.1.3",
+    "completed": true
+  },
+  {
+    "title": "Add animation class to .progress",
+    "completed": true
+  },
+  {
+    "title": "Remove popper.js from package.json - use bootstrap-bundle instead",
+    "completed": true
+  }
+]

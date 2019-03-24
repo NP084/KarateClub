@@ -1,0 +1,164 @@
+<!-- .card -->
+<div class="card card-fluid">
+  <!-- .card-body -->
+  <div class="card-body">
+    <h4 class="card-title">Colorpicker</h4>
+    <h6 class="card-subtitle mb-4">Simple and customizable colorpicker.</h6>
+
+    <!-- form -->
+    <form>
+      <!-- .form-group -->
+      <div class="form-group">
+        <label for="colorpicker1" class="control-label">Simple input field</label>
+        <input id="colorpicker1" type="text" class="form-control" data-toggle="colorpicker" value="#9474a9">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label for="inputColorpicker2" class="control-label">As a component</label>
+        <div id="colorpicker2" class="input-group input-group-alt" data-toggle="colorpicker">
+          <input id="inputColorpicker2" type="text" class="form-control" value="#04C4A5">
+          <span class="input-group-append">
+            <span class="input-group-text colorpicker-input-addon"><i class="align-self-center"></i></span>
+          </span>
+        </div>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label for="inputColorpicker3" class="control-label">Custom options</label>
+        <div id="colorpicker3" class="input-group input-group-alt"
+            data-toggle="colorpicker"
+            data-color="#4D9DE0"
+            data-format="rgb">
+          <input id="inputColorpicker3" type="text" class="form-control" value="#C5906C">
+          <span class="input-group-append">
+            <span class="input-group-text colorpicker-input-addon"><i class="align-self-center"></i></span>
+          </span>
+        </div>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label for="inputColorpicker4" class="control-label">Disable alpha channel</label>
+        <div id="colorpicker4" class="input-group input-group-alt"
+            data-toggle="colorpicker"
+            data-use-alpha="false">
+          <input id="inputColorpicker4" type="text" class="form-control" value="#C5906C">
+          <span class="input-group-append">
+            <span class="input-group-text colorpicker-input-addon"><i class="align-self-center"></i></span>
+          </span>
+        </div>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label for="colorpicker5" class="control-label">Transparent color support</label>
+        <input id="colorpicker5" type="text" class="form-control"
+            data-toggle="colorpicker"
+            data-color="transparent"
+            data-format="rgba">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label for="colorpicker6" class="control-label">Horizontal mode</label>
+        <input id="colorpicker6" type="text" class="form-control"
+            data-toggle="colorpicker"
+            data-color="#C5906C"
+            data-horizontal="true">
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label">Inline mode</label>
+        <div class="d-block">
+          <div id="colorpicker7"
+            data-toggle="colorpicker"
+            data-color="#C56C6C"
+            data-container="true"
+            data-inline="true"></div>
+        </div>
+      </div>
+      <!-- /.form-group -->
+      <!-- .form-group -->
+      <div class="form-group">
+        <label for="inputColorpicker8" class="control-label">Aliased color palette</label>
+        <div id="colorpicker8" class="input-group input-group-alt"
+            data-toggle="colorpicker"
+            data-extensions='[
+              {
+                "name": "swatches",
+                "colors": {
+                  "black": "#000000",
+                  "white": "#ffffff",
+                  "red": "#FF0000",
+                  "default": "#777777",
+                  "primary": "#337ab7",
+                  "success": "#5cb85c",
+                  "info": "#5bc0de",
+                  "warning": "#f0ad4e",
+                  "danger": "#d9534f"
+                },
+                "namesAsValues": true
+              }
+            ]'>
+          <input id="inputColorpicker8" type="text" class="form-control" value="#9474a9">
+          <span class="input-group-append">
+            <span class="input-group-text colorpicker-input-addon"><i class="align-self-center"></i></span>
+          </span>
+        </div>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label">Custom template</label>
+        <div class="d-block">
+          <div id="colorpicker9" data-color="#04C4A5"></div>
+        </div>
+      </div>
+      <!-- /.form-group -->
+
+      <!-- .form-group -->
+      <div class="form-group">
+        <label class="control-label">Inside a modal</label>
+        <div class="d-block">
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#cpModal">Show modal</button>
+        </div>
+        <!-- .modal -->
+        <div class="modal fade" id="cpModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <!-- .modal-dialog -->
+          <div class="modal-dialog">
+            <!-- .modal-content -->
+            <div class="modal-content">
+              <!-- .modal-body -->
+              <div class="modal-body">
+                <div id="colorpicker10" class="input-group input-group-alt" data-toggle="colorpicker">
+                  <input type="text" class="form-control" value="#4D9DE0">
+                  <span class="input-group-append">
+                    <span class="input-group-text colorpicker-input-addon"><i class="align-self-center"></i></span>
+                  </span>
+                </div>
+              </div>
+              <!-- /.modal-body -->
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+      </div>
+      <!-- /.form-group -->
+    </form>
+    <!-- /form -->
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->

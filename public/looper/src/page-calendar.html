@@ -1,0 +1,71 @@
+---
+layout: default
+title: Calendar
+active: pages.calendar
+footer: false
+pluginsCss:
+  - fullcalendar/fullcalendar.min.css
+pluginsJs:
+  - moment/moment.min.js
+  - fullcalendar/fullcalendar.min.js
+pageJs:
+  - pages/fullcalendar-demo.js
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-fixed has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner page-inner-fill">
+    <!-- .page-navs -->
+    <nav class="page-navs pr-3">
+      <div class="btn-group">
+        <button id="calendar-prev" class="btn btn-secondary"><i class="fa fa-chevron-left"></i></button>
+        <button id="calendar-today" class="btn btn-secondary">Today</button>
+        <button id="calendar-next" class="btn btn-secondary"><i class="fa fa-chevron-right"></i></button>
+      </div>
+      <div class="ml-auto">
+        <button type="button" class="btn btn-success">Add event</button>
+        <button type="button" class="btn btn-secondary d-xl-none" data-toggle="sidebar">
+          <i class="fas fa-tasks"></i>
+        </button>
+      </div>
+    </nav>
+    <!-- /.page-navs -->
+
+    <!-- .board -->
+    <div class="board">
+      <div class="card">
+        <div id="calendar"></div>
+      </div>
+    </div>
+    <!-- /.board -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar page-sidebar-fixed">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-sm-none">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" onclick="Looper.toggleSidebar()">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.sidebar-header -->
+
+    <!-- .sidebar-section-fill -->
+    <div class="sidebar-section-fill">
+      <!-- .calendar-list -->
+      <div id="calendar-list"></div>
+      <!-- /.calendar-list -->
+    </div>
+    <!-- /.sidebar-section-fill -->
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

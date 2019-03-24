@@ -1,0 +1,83 @@
+[
+  {
+    "name": "double-broccoli-quinoa.pdf",
+    "type": "pdf",
+    "color": "teal",
+    "size": "1.07 MB",
+    "date": "Today",
+    "time": "12:20pm",
+    "uploadedBy": "Emma Griffin"
+  },
+  {
+    "name": "Baked-Chicken-and-Spinach-Flautas.pdf",
+    "type": "pdf",
+    "color": "teal",
+    "size": "0.39 MB",
+    "date": "Today",
+    "time": "5:22pm",
+    "uploadedBy": "Peter Willis"
+  },
+  {
+    "name": "Cajun Chicken Egg Pasta.jpg",
+    "type": "image",
+    "color": "pink",
+    "size": "0.93 MB",
+    "date": "Today",
+    "time": "9:32pm",
+    "uploadedBy": "Danielle Garza"
+  },
+  {
+    "name": "looper_build-1209.zip",
+    "type": "archive",
+    "color": "purple",
+    "size": "0.53 MB",
+    "date": "Jan 28, 2018",
+    "time": "3:13am",
+    "uploadedBy": "Rose McCoy"
+  },
+  {
+    "name": "looper_design-brief.zip",
+    "type": "archive",
+    "color": "purple",
+    "size": "2.04 MB",
+    "date": "Jan 28, 2018",
+    "time": "11:27pm",
+    "uploadedBy": "Rose McCoy"
+  },
+  {
+    "name": "Usulan Beasiswa Tahun 2018.pdf",
+    "type": "pdf",
+    "color": "teal",
+    "size": "1.1 MB",
+    "date": "Jan 21, 2018",
+    "time": "6:20pm",
+    "uploadedBy": "Peter Willis"
+  },
+  {
+    "name": "Daftar Peserta Ujian.xlsx",
+    "type": "excel",
+    "color": "green",
+    "size": "0.37 MB",
+    "date": "Jan 21, 2018",
+    "time": "1:32pm",
+    "uploadedBy": "Peter Willis"
+  },
+  {
+    "name": "data_not_verified.docx",
+    "type": "word",
+    "color": "blue",
+    "size": "0.94 MB",
+    "date": "Jan 21, 2018",
+    "time": "5:11am",
+    "uploadedBy": "Kathryn Black"
+  },
+  {
+    "name": "mockup-presentation.pptx",
+    "type": "powerpoint",
+    "color": "red",
+    "size": "0.59 MB",
+    "date": "Jan 19, 2018",
+    "time": "6:50am",
+    "uploadedBy": "Kathryn Black"
+  }
+]

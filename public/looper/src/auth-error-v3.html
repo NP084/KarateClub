@@ -1,0 +1,59 @@
+---
+layout: empty
+title: "Error 404: Page not found"
+---
+
+<!-- .empty-state -->
+<main id="notfound-state" class="empty-state empty-state-fullpage bg-black">
+  <!-- .empty-state-container -->
+  <div class="empty-state-container">
+    <div class="card">
+      <div class="card-header bg-light text-left">
+        <i class="fa fa-fw fa-circle text-red"></i>
+        <i class="fa fa-fw fa-circle text-yellow"></i>
+        <i class="fa fa-fw fa-circle text-teal"></i>
+      </div>
+      <div class="card-body">
+        <h1 class="state-header display-1 font-weight-bold">
+          <span>4</span>
+          <i class="far fa-frown text-red"></i>
+          <span>4</span>
+        </h1>
+        <h2>Page not found!</h2>
+
+        <p class="state-description lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist.</p>
+
+        <div class="state-action">
+          <a href="auth-error-v1.html" class="btn btn-lg btn-light"><i class="fa fa-angle-right"></i> Go Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.empty-state-container -->
+</main>
+<!-- /.empty-state -->
+
+
+<!-- BEGIN BASE JS -->
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/vendor/bootstrap/js/popper.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!-- END BASE JS -->
+
+<!-- BEGIN PLUGINS JS -->
+<script src="assets/vendor/particles.js/particles.min.js"></script>
+<script>
+/**
+ * Keep in mind that your scripts may not always be executed after the theme is completely ready,
+ * you might need to observe the `theme:load` event to make sure your scripts are executed after the theme is ready.
+ */
+$(document).on('theme:init', () => {
+  /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+  particlesJS.load('notfound-state', 'assets/javascript/pages/particles-error.json');
+})
+</script>
+<!-- END PLUGINS JS -->
+
+<!-- BEGIN THEME JS -->
+<script src="assets/javascript/theme.min.js"></script>
+<!-- END THEME JS -->

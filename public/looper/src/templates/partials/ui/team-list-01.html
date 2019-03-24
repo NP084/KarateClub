@@ -1,0 +1,44 @@
+<!-- .list-group -->
+<div class="list-group list-group-flush list-group-divider">
+  {% for team in site.data.teams %}
+  <!-- .list-group-item -->
+  <div class="list-group-item">
+    <div class="list-group-item-figure">
+      <a href="page-team.html" class="user-avatar user-avatar-md">
+        <img src="assets/images/avatars/{{team.avatar}}" alt="">
+      </a>
+    </div>
+    <div class="list-group-item-body">
+      <div class="d-sm-flex justify-content-sm-between align-items-sm-center">
+        <div class="team">
+          <h4 class="list-group-item-title">
+            <a href="page-team.html">{{team.name}}</a>
+            {% if team.owner %}
+            <a href="page-team.html" class="mention ml-1">Owner</a>
+            {% endif %}
+          </h4>
+          <p class="list-group-item-text">Updated {{team.updated}}</p>
+        </div>
+        <ul class="list-inline text-muted mb-0">
+          <li class="list-inline-item mr-3" data-toggle="tooltip" title="Members" data-placement="bottom">
+            <i class="fas fa-users text-teal"></i> {{team.members}}</li>
+          <li class="list-inline-item mr-3" data-toggle="tooltip" title="Clients" data-placement="bottom">
+            <i class="fas fa-user-tie text-pink"></i> {{team.clients}}</li>
+          <li class="list-inline-item mr-3" data-toggle="tooltip" title="Projects" data-placement="bottom">
+            <i class="fa fa-bookmark text-yellow"></i> {{team.projects}}</li>
+          {% if team.public %}
+          <li class="list-inline-item" data-toggle="tooltip" title="Public"><i class="fa fa-globe"></i></li>
+          {% else %}
+          <li class="list-inline-item" data-toggle="tooltip" title="Private"><i class="fa fa-lock"></i></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div class="list-group-item-figure">
+      <a href="#" class="btn btn-sm btn-icon btn-secondary stop-propagation"><i class="fas fa-ellipsis-h"></i></a>
+    </div>
+  </div>
+  <!-- /.list-group-item -->
+  {% endfor %}
+</div>
+<!-- /.list-group -->

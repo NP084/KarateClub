@@ -1,0 +1,54 @@
+[
+  {
+    "no": "#9463",
+    "project": "Syrena Project",
+    "initial": "SP",
+    "color": "pink",
+    "hasAttachment": false,
+    "date": "08/13/2018",
+    "due": "09/16/2018",
+    "amount": "$1,500",
+    "received": "$1,500",
+    "status": "Paid",
+    "state": "success"
+  },
+  {
+    "no": "#0754",
+    "project": "Mobile App Gex",
+    "initial": "BA",
+    "color": "purple",
+    "hasAttachment": false,
+    "date": "10/22/2018",
+    "due": "12/13/2018",
+    "amount": "$1,000",
+    "received": "-",
+    "status": "Outstanding",
+    "state": "warning"
+  },
+  {
+    "no": "#8613",
+    "project": "SVG Icon Bundle",
+    "initial": "SB",
+    "color": "teal",
+    "hasAttachment": true,
+    "date": "12/16/2018",
+    "due": "02/09/2019",
+    "amount": "$3,000",
+    "received": "$500",
+    "status": "Outstanding",
+    "state": "warning"
+  },
+  {
+    "no": "#9458",
+    "project": "Landing Page Booster",
+    "initial": "LB",
+    "color": "red",
+    "hasAttachment": false,
+    "date": "05/17/2018",
+    "due": "05/30/2018",
+    "amount": "$499",
+    "received": "-",
+    "status": "Past Due",
+    "state": "danger"
+  }
+]

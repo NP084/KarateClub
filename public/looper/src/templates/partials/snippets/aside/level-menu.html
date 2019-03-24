@@ -1,0 +1,23 @@
+{% assign actives = page.active | split: "." %}
+<!-- .menu-item -->
+{% if levelMenu.id == actives[0] %}
+<li class="menu-item has-active{% if levelMenu.isSlim %} menu-item-slim{% endif %}{% if levelMenu.childs %} has-child{% endif %}">
+{% else %}
+<li class="menu-item{% if levelMenu.isSlim %} menu-item-slim{% endif %}{% if levelMenu.childs %} has-child{% endif %}">
+{% endif %}
+  <a href="{{levelMenu.link}}" class="menu-link">
+    {% if levelMenu.icon %}
+    <span class="menu-icon {{levelMenu.icon}}"></span>
+    {% endif %}
+    {% if levelMenu.text %}
+    <span class="menu-text">{{levelMenu.text}}</span>
+    {% endif %}
+    {% if levelMenu.indicator %}
+    <span class="{{levelMenu.indicatorClasses}}">{{levelMenu.indicator}}</span>
+    {% endif %}
+  </a>
+  {% if levelMenu.childs %}
+  {% include snippets/aside/menu-item.html %}
+  {% endif %}
+</li>
+<!-- /.menu-item -->
