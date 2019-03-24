@@ -36,7 +36,11 @@ class ArticlesFixtures extends Fixture implements FixtureGroupInterface
 
                 $article->setTitle($faker->sentence())
                         -> setContent($content)
+<<<<<<< HEAD
                         //-> setImageName($faker->imageUrl())
+=======
+                      //  -> setImageName($faker->imageUrl())
+>>>>>>> Vika
                         -> setCreatedAt($faker->dateTimeBetween('-6 months'))
                         -> setCategory($category);
                 $manager-> persist($article);
