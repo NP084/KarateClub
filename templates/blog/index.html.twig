@@ -2,7 +2,6 @@
 
 
 {% block body %}
-
 <div class="container">
     <div class="row justify-content-md-center">
         {% for article in articles %}
@@ -14,7 +13,7 @@
             </div><!-- /.card-body -->
             <!-- 16:9 aspect ratio -->
             <figure class="embed-responsive embed-responsive-16by9 mb-0">
-                <img class="embed-responsive-item" src="https://media.gettyimages.com/photos/blog-text-on-hardwood-floor-against-wall-picture-id998839226" alt="Card image">
+                <img class="embed-responsive-item" src="{{ article.imageName }}" alt="Card image">
             </figure><!-- /.embed-responsive -->
             <!-- .card-body -->
             <div class="card-body">
@@ -25,7 +24,9 @@
             </div><!-- /.card-body -->
             <!-- .card-footer -->
             <div class="card-footer">
-            <div class="card-footer-content text-muted"> Card Footer </div>
+            <div class="card-footer-content text-muted"> 
+                <a class="btn btn-primary btn-lg" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Lire la suite</a>
+            </div>
             </div><!-- /.card-footer -->
         </div>
     </div>
