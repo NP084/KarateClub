@@ -41,7 +41,7 @@ class MemberController extends AbstractController
 
     /**
      * MODIFICATION D'UNE PERSONNE DE CONTACT.
-     * @Route("/member/editPoC/id={id}/idCL={idCL}/idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
+     * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
      * @Security("user.getId() == contactList.getUser().getId()")
      */
@@ -67,7 +67,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
+     * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      */
     public function profileEdit(User $user, Request $request, ObjectManager $manager){
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
@@ -135,7 +135,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/member/id={id}", name="profile_show",  requirements={"id"="\d+"})
+     * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
      */
     public function profileShow(User $user, Request $request){
         // $usr = $this->getuser();
@@ -148,7 +148,7 @@ class MemberController extends AbstractController
 
     /**
      * Supprime une personne de contact.
-     * @Route("/member/removePoC/idCL={idCL}/idUser={idUser}", name="remove_PoC", requirements={"idCL"="\d+"})
+     * @Route("/member-removePoC-idCL={idCL}-idUser={idUser}", name="remove_PoC", requirements={"idCL"="\d+"})
      */
     public function removePoC($idCL, $idUser){
         $entityManager=$this->getDoctrine()->getManager();
@@ -229,7 +229,7 @@ class MemberController extends AbstractController
 
     /**
      * Supprime un numéro de téléphone d'un user. (le numéro reste dans la DB)
-     * @Route("/member/removePhone/idPhone={idPhone}/idUser={idUser}", name="remove_phone", requirements={"id"="\d+"})
+     * @Route("/member-removePhone-idPhone={idPhone}-idUser={idUser}", name="remove_phone", requirements={"id"="\d+"})
      */
     public function removeUserPhone($idPhone, $idUser){
         $entityManager=$this->getDoctrine()->getManager();
@@ -244,7 +244,7 @@ class MemberController extends AbstractController
 
     /**
      * Supprime une adresse d'un user. (l'adresse reste dans la DB)
-     * @Route("/member/removeAdress/idAdress={idAdress}/idUser={idUser}", name="remove_adress", requirements={"id"="\d+"})
+     * @Route("/member-removeAdress-idAdress={idAdress}-idUser={idUser}", name="remove_adress", requirements={"id"="\d+"})
      */
     public function removeUserAdress($idAdress, $idUser){
         $entityManager=$this->getDoctrine()->getManager();

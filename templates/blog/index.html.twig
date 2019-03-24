@@ -1,7 +1,7 @@
-{% extends 'base.html.twig' %}
+{% extends 'blog/Template.html.twig' %}
 
 
-{% block body %}
+{% block Content %}
 <div class="container">
     <div class="row justify-content-md-center">
         {% for article in articles %}
@@ -13,7 +13,7 @@
             </div><!-- /.card-body -->
             <!-- 16:9 aspect ratio -->
             <figure class="embed-responsive embed-responsive-16by9 mb-0">
-                <img class="embed-responsive-item" src="{{ article.imageName }}" alt="Card image">
+                <img class="embed-responsive-item" src="https://media.gettyimages.com/photos/illuminated-hashtag-sign-on-table-in-fashion-studio-picture-id909598172" alt="Card image">
             </figure><!-- /.embed-responsive -->
             <!-- .card-body -->
             <div class="card-body">
