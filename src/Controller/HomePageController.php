@@ -12,6 +12,6 @@ class HomePageController extends AbstractController
      */
     public function index()
     {
-        return $this->render('home_page/index.html.twig');
+        return $this->render('home_page/philosophy.html.twig');
     }
 }

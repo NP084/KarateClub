@@ -47,7 +47,7 @@ class TemplateGuesserTest extends \PHPUnit\Framework\TestCase
             'indexAction',
         ], new Request());
 
-        $this->assertEquals('@Foo/foo/index.html.twig', (string) $templateReference);
+        $this->assertEquals('@Foo/foo/philosophy.html.twig', (string) $templateReference);
     }
 
     public function testGuessTemplateWithoutBundle()
@@ -58,7 +58,7 @@ class TemplateGuesserTest extends \PHPUnit\Framework\TestCase
             'indexAction',
         ], new Request());
 
-        $this->assertEquals('my_admin/out_of_bundle/index.html.twig', (string) $templateReference);
+        $this->assertEquals('my_admin/out_of_bundle/philosophy.html.twig', (string) $templateReference);
     }
 
     public function testGuessTemplateWithSubNamespace()
@@ -99,7 +99,7 @@ class TemplateGuesserTest extends \PHPUnit\Framework\TestCase
             'indexAction',
         ], new Request());
 
-        $this->assertEquals('@Foo/foo/index.html.twig', (string) $templateReference);
+        $this->assertEquals('@Foo/foo/philosophy.html.twig', (string) $templateReference);
     }
 
     /**

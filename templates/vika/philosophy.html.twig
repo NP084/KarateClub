@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La philosophie{% endblock %}
+
+{% block Content %}
+
+    <article>
+        <h2>{{ contentPage.Name }}</h2>
+        <div class="content">
+            {{ contentPage.content | raw }}
+        </div>
+    </article>
+
+{% endblock %}
