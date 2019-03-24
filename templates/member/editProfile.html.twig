@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block Body %}
     {% if app.user and app.user.id == app.request.get("id") %}
         <a href="{{ path('profile_show',{'id':app.user.id})}}" class="btn-btn-primary">
             Retour
@@ -10,26 +10,35 @@
 
             {{ form_start(formUser) }}
 
-            {# <div class="form-group">
+             <div class="form-group">
             <label for="">Nom</label>
-            {{ form_row(formUser.name) }}
+            {{ form_widget(formUser.name) }}
         </div>
 
         <div class="form-group">
             <label for="">Prénom</label>
-            {{ form_row(formUser.firstname) }}
+            {{ form_widget(formUser.firstname) }}
         </div>
 
         <div class="form-group">
             <label for="">Date de naissance</label>
-            {{ form_row(formUser.birthday) }}
+            {{ form_widget(formUser.birthday) }}
         </div>
 
         <div class="form-group">
             <label for="">Genre</label>
-            {{ form_row(formUser.sex) }}
+            {{ form_widget(formUser.sex) }}
         </div>
-#}
+
+            <div class="form-group">
+                <label for="">Grade</label>
+                {{ form_widget(formUser.belt) }}
+            </div>
+
+            <div class="form-group">
+                <label for="">Date d'obtention</label>
+                {{ form_widget(formUser.receiptDate) }}
+            </div>
             <button type="submit" class="btn btn-link">Enregister modification(s)</button>
             {{ form_end(formUser) }}
 

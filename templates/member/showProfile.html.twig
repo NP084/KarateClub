@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block Body %}
     {% if app.user and app.user.id == app.request.get("id") %}
 
         {# vérifie si l'id du visiteur correspond à l'id du membre qu'il veut consulter #}
