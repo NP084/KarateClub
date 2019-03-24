@@ -67,7 +67,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/member/id={id}/edit", name="profile_edit", requirements={"id"="\d+"})
+     * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      */
     public function profileEdit(User $user, Request $request, ObjectManager $manager){
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
@@ -134,7 +134,7 @@ class MemberController extends AbstractController
         ]);
     }
     /**
-     * @Route("/member/id={id}", name="profile_show",  requirements={"id"="\d+"})
+     * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
      */
     public function profileShow(User $user, Request $request){
         // $usr = $this->getuser();
