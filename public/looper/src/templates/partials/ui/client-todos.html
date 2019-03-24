@@ -1,0 +1,57 @@
+<!-- .card -->
+<div class="card">
+  <!-- .card-body -->
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <h3 id="client-tasks-tab" class="card-title">To do</h3>
+      <div class="card-title-control">
+        <div class="dropdown">
+          <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-ellipsis-v"></i>
+          </button>
+          <div class="dropdown-arrow"></div>
+          <div class="dropdown-menu dropdown-menu-right">
+            <h6 class="dropdown-header">Sort by</h6>
+            <label class="custom-control custom-radio stop-propagation">
+              <input type="radio" class="custom-control-input" name="todoSorting" value="0" checked>
+              <span class="custom-control-label">My order</span>
+            </label>
+            <label class="custom-control custom-radio stop-propagation">
+              <input type="radio" class="custom-control-input" name="todoSorting" value="1">
+              <span class="custom-control-label">Due date</span>
+            </label>
+            <div class="dropdown-divider"></div>
+            <button type="button" class="dropdown-item">Rename list</button>
+            <button type="button" class="dropdown-item">Delete completed todos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include ui/todo-list-02.html %}
+  </div>
+  <!-- /.card-body -->
+  <!-- .card-footer -->
+  <div class="card-footer">
+    <a href="#" class="card-footer-item">
+      <i class="fa fa-plus-circle mr-1"></i> Add todo
+    </a>
+  </div>
+  <!-- /.card-footer -->
+</div>
+<!-- /.card -->
+
+<!-- .card -->
+<div class="card">
+  <div class="card-header border-0" id="headingCompletedTodo">
+    <button class="btn btn-block btn-reset d-flex justify-content-between collapsed" data-toggle="collapse" data-target="#completedTodo" aria-expanded="false" aria-controls="completedTodo">
+      <span><i class="fa fa-history text-muted mr-2"></i> Completed (27)</span>
+      <span class="collapse-indicator"><i class="fa fa-fw fa-chevron-down"></i></span>
+    </button>
+  </div>
+  <div id="completedTodo" class="collapse" aria-labelledby="headingCompletedTodo">
+    <div class="card-body pt-0">
+      {% include ui/todo-list-03.html %}
+    </div>
+  </div>
+</div>
+<!-- /.card -->

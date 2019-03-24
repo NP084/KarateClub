@@ -27,7 +27,6 @@ class BlogController extends AbstractController
     {
         $articles = $repo -> findAll();
 
-
         return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
             'articles' => $articles,
@@ -42,8 +41,8 @@ class BlogController extends AbstractController
     }
 
     /**
-    * @Route("/blog/new", name="blog_create")
-    * @Route("/blog/{id}/edit", name="blog_edit")
+    * @Route("/blog-new", name="blog_create")
+    * @Route("/blog-{id}-edit", name="blog_edit")
     */
     public function form(Article $article=null, Request $request, ObjectManager $manager){
 
@@ -75,7 +74,7 @@ class BlogController extends AbstractController
     }
 
     /**
-    * @Route("/blog/{id}", name="blog_show")
+    * @Route("/blog-{id}", name="blog_show")
     */
     public function show(Article $article, Request $request, ObjectManager $manager){
         $comment = new Comment();

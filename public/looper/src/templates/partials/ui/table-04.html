@@ -1,0 +1,27 @@
+<!-- thead -->
+<thead>
+  <tr>
+    <th style="min-width:259px">Task</th>
+    <th>Due Date</th>
+    <th>Estimate</th>
+    <th>Worked</th>
+  </tr>
+</thead>
+<!-- /thead -->
+<!-- tbody -->
+<tbody>
+  {% for task in site.data.tasks limit:5 offset:0 %}
+  <!-- tr -->
+  <tr>
+    <td class="align-middle text-truncate">
+      <a href="#project" class="tile tile-circle bg-{{task.color}} text-white mr-1">{{task.initial}}</a>
+      <a href="#task">{{task.name}}</a>
+    </td>
+    <td class="align-middle">{{task.duedate}}</td>
+    <td class="align-middle">{{task.estimate}}</td>
+    <td class="align-middle">{{task.worked}}</td>
+  </tr>
+  <!-- /tr -->
+  {% endfor %}
+</tbody>
+<!-- /tbody -->

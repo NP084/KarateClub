@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- End Required meta tags -->
+
+    {% include head.html %}
+
+  </head>
+
+  <body>
+    <!-- .app -->
+    <div class="app has-fullwidth">
+      <!--[if lt IE 10]>
+      <div class="page-message" role="alert">You are using an <strong>outdated</strong> browser. Please <a class="alert-link" href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</div>
+      <![endif]-->
+
+      <!-- .app-header -->
+      {% include header-fw.html %}
+      <!-- /.app-header -->
+
+      <!-- .app-aside -->
+      {% include aside-fw.html %}
+      <!-- /.app-aside -->
+
+      <!-- .app-main -->
+      <main class="app-main">
+        <!-- .wrapper -->
+        <div class="wrapper">
+          {{content}}
+        </div>
+        <!-- /.wrapper -->
+
+        {% include footer.html %}
+      </main>
+      <!-- /.app-main -->
+    </div>
+    <!-- /.app -->
+
+    {% include scripts.html %}
+
+  </body>
+</html>

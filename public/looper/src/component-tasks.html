@@ -1,0 +1,279 @@
+---
+layout: default
+title: Tasks
+active: components.ctasks
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Components
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Tasks</h1>
+      <p class="text-muted">A tasks gives you a clear visual overview of what is being worked on and who is working on it and other information that used for project management purpose.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        <!-- .board -->
+        <div class="board">
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .tasks-header -->
+            <div class="task-header">
+              <h3 class="task-title mr-auto">Backlogs <span class="badge">(2)</span></h3>
+              <div class="dropdown">
+                <button class="btn btn-light btn-icon"><i class="fa fa-ellipsis-v"></i></button>
+              </div>
+            </div>
+            <!-- /.tasks-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 2 %}
+              {% assign offset = 4 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-01.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .tasks-header -->
+            <div class="task-header">
+              <h3 class="task-title mr-auto">In Progress <span class="badge">(1)</span></h3>
+              <div class="dropdown">
+                <button class="btn btn-light btn-icon"><i class="fa fa-ellipsis-v"></i></button>
+              </div>
+            </div>
+            <!-- /.tasks-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 1 %}
+              {% assign offset = 1 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-01.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .tasks-header -->
+            <div class="task-header">
+              <h3 class="task-title mr-auto">In Review <span class="badge">(2)</span></h3>
+              <div class="dropdown">
+                <button class="btn btn-light btn-icon"><i class="fa fa-ellipsis-v"></i></button>
+              </div>
+            </div>
+            <!-- /.tasks-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 2 %}
+              {% assign offset = 2 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-01.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .tasks-header -->
+            <div class="task-header">
+              <h3 class="task-title mr-auto">Done <span class="badge">(1)</span></h3>
+              <div class="dropdown">
+                <button class="btn btn-light btn-icon"><i class="fa fa-ellipsis-v"></i></button>
+              </div>
+            </div>
+            <!-- /.tasks-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 1 %}
+              {% assign offset = 3 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-01.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+
+          <!-- .task-action -->
+          <div class="tasks-action">
+            {% include ui/publisher-06.html %}
+          </div>
+          <!-- /.task-action -->
+        </div>
+        <!-- /.board -->
+      </div>
+      <!-- /.section-block -->
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 class="section-title">Simple style</h2>
+
+        <!-- .board -->
+        <div class="board">
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .tasks-header -->
+            <div class="task-header">
+              <h3 class="task-title mr-auto">Backlogs <span class="badge">(5)</span></h3>
+              <div class="dropdown">
+                <button class="btn btn-light btn-icon"><i class="fa fa-ellipsis-v"></i></button>
+              </div>
+            </div>
+            <!-- /.tasks-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 5 %}
+              {% assign offset = 1 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-02.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .tasks-header -->
+            <div class="task-header">
+              <h3 class="task-title mr-auto">In Progress <span class="badge">(2)</span></h3>
+              <div class="dropdown">
+                <button class="btn btn-light btn-icon"><i class="fa fa-ellipsis-v"></i></button>
+              </div>
+            </div>
+            <!-- /.tasks-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 2 %}
+              {% assign offset = 4 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-02.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .tasks-header -->
+            <divdiv class="task-header">
+              <h3 class="task-title mr-auto">In Review <span class="badge">(4)</span></h3>
+              <div class="dropdown">
+                <button class="btn btn-light btn-icon"><i class="fa fa-ellipsis-v"></i></button>
+              </div>
+            </divdiv>
+            <!-- /.tasks-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 4 %}
+              {% assign offset = 2 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-02.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .tasks-header -->
+            <div class="task-header">
+              <h3 class="task-title mr-auto">Done <span class="badge">(3)</span></h3>
+              <div class="dropdown">
+                <button class="btn btn-light btn-icon"><i class="fa fa-ellipsis-v"></i></button>
+              </div>
+            </div>
+            <!-- /.tasks-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 3 %}
+              {% assign offset = 3 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-02.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+
+          <!-- .task-action -->
+          <div class="tasks-action">
+            {% include ui/publisher-06.html %}
+          </div>
+          <!-- /.task-action -->
+        </div>
+        <!-- /.board -->
+      </div>
+      <!-- /.section-block -->
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 class="section-title">List Style</h2>
+
+        <!-- .board -->
+        <div class="board board-list">
+          <!-- .tasks -->
+          <div class="tasks">
+            <!-- .tasks-header -->
+            <div class="task-header">
+              <h3 class="task-title mr-auto">On Going Tasks <span class="badge">(6)</span></h3>
+              <select class="custom-select" style="width:160px">
+                <option value="">Filter project</option>
+                <option value="1">Looper Admin Theme</option>
+                <option value="2">Smart Paper</option>
+                <option value="3">Booking Up</option>
+                <option value="4">Online Store</option>
+              </select>
+            </div>
+            <!-- /.tasks-header -->
+
+            <!-- .task-body -->
+            <div class="task-body">
+              {% assign limit = 6 %}
+              {% assign offset = 1 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/task-issue-03.html %}
+            </div>
+            <!-- /.task-body -->
+          </div>
+          <!-- /.tasks -->
+        </div>
+        <!-- /.board -->
+      </div>
+      <!-- /.section-block -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

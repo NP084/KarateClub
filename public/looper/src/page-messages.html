@@ -1,0 +1,117 @@
+---
+layout: default
+title: Messages
+active: pages.messages
+footer: false
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-navs -->
+  <nav class="page-navs">
+    <!-- .nav-scroller -->
+    <div class="nav-scroller">
+      <!-- .nav -->
+      <div class="nav nav-tabs">
+        <a class="nav-link active show" data-toggle="tab" href="#tab1">All <span class="badge">(7)</span></a>
+        <a class="nav-link" data-toggle="tab" href="#tab2">Starred</a>
+        <a class="nav-link" data-toggle="tab" href="#tab3">Trash</a>
+      </div>
+      <!-- /.nav -->
+    </div>
+    <!-- /.nav-scroller -->
+  </nav>
+  <!-- /.page-navs -->
+
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <div class="d-flex justify-content-between">
+        <div class="d-md-inline-block">
+          <!-- .input-group -->
+          <div class="input-group input-group-alt">
+            <!-- .input-group -->
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search message">
+            </div>
+            <!-- /.input-group -->
+            <!-- .input-group-append -->
+            <div class="input-group-append">
+              <select class="custom-select">
+                <option selected>Filter By</option>
+                <option value="1">Team</option>
+                <option value="3">Project</option>
+                <option value="2">People</option>
+              </select>
+            </div>
+            <!-- /.input-group-append -->
+          </div>
+          <!-- /.input-group -->
+        </div>
+
+        <button type="button" class="btn btn-success d-none d-sm-inline-block">New Message</button>
+      </div>
+
+      <button type="button" class="btn btn-success btn-floated d-block d-sm-none">
+        <span class="fa fa-plus"></span>
+      </button>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .card -->
+      <div class="card">
+        {% include ui/messages-01.html %}
+      </div>
+      <!-- /.card -->
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <!-- record sumary -->
+        <p class="text-muted">Showing 1 to 10 of 1,000 entries</p>
+        <!-- /record sumary -->
+
+        <!-- .pagination -->
+        <ul class="pagination justify-content-center mb-5 mb-sm-0">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1"><i class="fa fa-lg fa-angle-left"></i></a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">...</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">13</a>
+          </li>
+          <li class="page-item active">
+            <a class="page-link" href="#">14</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">15</a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">...</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">24</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#"><i class="fa fa-lg fa-angle-right"></i></a>
+          </li>
+        </ul>
+        <!-- /.pagination -->
+      </div>
+      <!-- /.section-block -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

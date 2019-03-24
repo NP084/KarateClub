@@ -1,0 +1,472 @@
+[
+  {
+    "alias": "A",
+    "color": "blue",
+    "desc": "A standalone code editor written in JavaScript.",
+    "docs": "https://ace.c9.io/#nav=howto",
+    "name": "Ace",
+    "npm": "ace-builds",
+    "repo": "https://github.com/ajaxorg/ace",
+    "status": "optional"
+  },
+  {
+    "alias": "A",
+    "color": "yellow",
+    "desc": "Add Github like mentions autocomplete to your application.",
+    "docs": "https://github.com/ichord/At.js/wiki",
+    "name": "At.js",
+    "npm": "at.js jquery.caret",
+    "repo": "https://github.com/ichord/At.js",
+    "status": "optional"
+  },
+  {
+    "alias": "B",
+    "color": "purple",
+    "desc": "The most popular HTML, CSS, and JavaScript framework for developing responsive, mobile first projects on the web.",
+    "docs": "https://getbootstrap.com/docs",
+    "name": "Bootstrap",
+    "npm": "bootstrap",
+    "repo": "https://github.com/twbs/bootstrap",
+    "status": "required"
+  },
+  {
+    "alias": "B",
+    "color": "orange",
+    "desc": "Simple and customizable colorpicker component for jQuery, which is also compatible with Bootstrap.",
+    "docs": "https://farbelous.io/bootstrap-colorpicker/",
+    "name": "Bootstrap Colorpicker",
+    "npm": "bootstrap-colorpicker",
+    "repo": "https://github.com/farbelous/bootstrap-colorpicker",
+    "status": "optional"
+  },
+  {
+    "alias": "B",
+    "color": "purple",
+    "desc": "Session timeout and keep-alive control with a nice Bootstrap warning dialog.",
+    "docs": "https://github.com/orangehill/bootstrap-session-timeout#documentation",
+    "name": "Bootstrap Session Timeout",
+    "npm": "github:orangehill/bootstrap-session-timeout",
+    "repo": "https://github.com/orangehill/bootstrap-session-timeout",
+    "status": "optional"
+  },
+  {
+    "alias": "B",
+    "color": "dark",
+    "desc": "A mobile and touch friendly input spinner component for Bootstrap.",
+    "docs": "https://www.virtuosoft.eu/code/bootstrap-touchspin/",
+    "name": "Bootstrap TouchSpin",
+    "npm": "bootstrap-touchspin",
+    "repo": "https://github.com/istvan-ujjmeszaros/bootstrap-touchspin",
+    "status": "optional"
+  },
+  {
+    "alias": "B",
+    "color": "red",
+    "desc": "A stepper for Bootstrap 4.x.",
+    "docs": "https://github.com/Johann-S/bs-stepper/tree/v1.3.0#how-to-use-it",
+    "name": "BS Stepper",
+    "npm": "bs-stepper",
+    "repo": "https://github.com/Johann-S/bs-stepper",
+    "status": "optional"
+  },
+  {
+    "alias": "C",
+    "color": "pink",
+    "desc": "Simple yet flexible JavaScript charting for designers & developers.",
+    "docs": "http://www.chartjs.org/docs/latest/",
+    "name": "Chart.js",
+    "npm": "chart.js",
+    "repo": "https://github.com/chartjs/Chart.js",
+    "status": "optional"
+  },
+  {
+    "alias": "C",
+    "color": "teal",
+    "desc": "A lightweight JavaScript plugin for alerting users about the use of cookies on your website.",
+    "docs": "https://cookieconsent.insites.com/documentation/about-cookie-consent/",
+    "name": "Cookie Consent",
+    "npm": "cookieconsent",
+    "repo": "https://github.com/insites/cookieconsent/",
+    "status": "optional"
+  },
+  {
+    "alias": "D",
+    "color": "purple",
+    "desc": "A table enhancing plug-in for the jQuery Javascript library, adding sorting, paging and filtering abilities to plain HTML tables with minimal effort.",
+    "docs": "https://datatables.net/manual/installation",
+    "name": "Datatables",
+    "npm": "datatables.net datatables.net-bs4 datatables.net-autofill datatables.net-autofill-bs4 datatables.net-buttons datatables.net-buttons-bs4 datatables.net-colreorder datatables.net-colreorder-bs4 datatables.net-fixedcolumns datatables.net-fixedcolumns-bs4 datatables.net-fixedheader datatables.net-fixedheader-bs4 datatables.net-keytable datatables.net-keytable-bs4 datatables.net-rowgroup datatables.net-rowgroup-bs4 datatables.net-rowreorder datatables.net-rowreorder-bs4 datatables.net-responsive datatables.net-responsive-bs4 datatables.net-scroller datatables.net-scroller-bs4 datatables.net-select datatables.net-select-bs4",
+    "repo": "https://github.com/DataTables/DataTables",
+    "status": "optional"
+  },
+  {
+    "alias": "E",
+    "color": "green",
+    "desc": "A lightweight plugin to draw simple, animated pie charts for single values.",
+    "docs": "https://rendro.github.io/easy-pie-chart/",
+    "name": "Easy Pie Chart",
+    "npm": "easy-pie-chart",
+    "repo": "https://github.com/rendro/easy-pie-chart",
+    "status": "optional"
+  },
+  {
+    "alias": "F",
+    "color": "blue",
+    "desc": "A lightweight and powerful datetime picker with no dependencies.",
+    "docs": "https://flatpickr.js.org/",
+    "name": "Flatpickr",
+    "npm": "flatpickr",
+    "repo": "https://github.com/flatpickr/flatpickr",
+    "status": "optional"
+  },
+  {
+    "alias": "F",
+    "color": "red",
+    "desc": "Attractive JavaScript charts for jQuery.",
+    "docs": "https://github.com/flot/flot/blob/master/API.md",
+    "name": "Flot",
+    "npm": "github:flot/flot",
+    "repo": "https://github.com/flot/flot",
+    "status": "optional"
+  },
+  {
+    "alias": "F",
+    "color": "teal",
+    "desc": "The iconic SVG, font, and CSS toolkit.",
+    "docs": "https://fontawesome.com/icons?d=gallery&m=free",
+    "name": "Font Awesome",
+    "npm": "@fortawesome/fontawesome-free",
+    "repo": "https://github.com/FortAwesome/Font-Awesome",
+    "status": "recommended"
+  },
+  {
+    "alias": "F",
+    "color": "blue",
+    "desc": "A JavaScript event calendar.",
+    "docs": "https://datatables.net/manual/installation",
+    "name": "Fullcalendar",
+    "npm": "datatables.net datatables.net-bs4 datatables.net-autofill datatables.net-autofill-bs4 datatables.net-buttons datatables.net-buttons-bs4 datatables.net-colreorder datatables.net-colreorder-bs4 datatables.net-fixedcolumns datatables.net-fixedcolumns-bs4 datatables.net-fixedheader datatables.net-fixedheader-bs4 datatables.net-keytable datatables.net-keytable-bs4 datatables.net-rowgroup datatables.net-rowgroup-bs4 datatables.net-rowreorder datatables.net-rowreorder-bs4 datatables.net-responsive datatables.net-responsive-bs4 datatables.net-scroller datatables.net-scroller-bs4 datatables.net-select datatables.net-select-bs4",
+    "repo": "https://github.com/DataTables/DataTables",
+    "status": "optional"
+  },
+  {
+    "alias": "G",
+    "color": "green",
+    "desc": "A simple, interactive, modern gantt chart library for the web",
+    "docs": "https://frappe.io/gantt",
+    "name": "Gantt",
+    "npm": "frappe-gantt-v2",
+    "repo": "https://github.com/frappe/gantt",
+    "status": "optional"
+  },
+  {
+    "alias": "H",
+    "color": "teal",
+    "desc": "Javascript syntax highlighter.",
+    "docs": "http://highlightjs.readthedocs.io/en/latest/",
+    "name": "Highlight.js",
+    "npm": "highlight.js highlightjs-line-numbers.js",
+    "repo": "https://github.com/isagalaev/highlight.js",
+    "status": "optional"
+  },
+  {
+    "alias": "H",
+    "color": "blue",
+    "desc": "Client-side HTML-to-PDF rendering using pure JS.",
+    "docs": "https://github.com/eKoopmans/html2pdf.js#getting-started",
+    "name": "html2pdf.js",
+    "npm": "html2pdf.js",
+    "repo": "https://github.com/eKoopmans/html2pdf.js",
+    "status": "optional"
+  },
+  {
+    "alias": "J",
+    "color": "purple",
+    "desc": "jQuery Vector Map Library.",
+    "docs": "https://www.10bestdesign.com/jqvmap/documentation/",
+    "name": "JQVmap",
+    "npm": "jqvmap",
+    "repo": "https://github.com/10bestdesign/jqvmap/",
+    "status": "optional"
+  },
+  {
+    "alias": "M",
+    "color": "pink",
+    "desc": "Cascading grid layout library.",
+    "docs": "https://masonry.desandro.com/",
+    "name": "Masonry",
+    "npm": "masonry-layout",
+    "repo": "https://github.com/desandro/masonry",
+    "status": "optional"
+  },
+  {
+    "alias": "N",
+    "color": "black",
+    "desc": "Drag & drop hierarchical list with mouse and touch compatibility.",
+    "docs": "https://github.com/RamonSmit/Nestable2#usage",
+    "name": "Nestable2",
+    "npm": "nestable2",
+    "repo": "https://github.com/RamonSmit/Nestable2",
+    "status": "optional"
+  },
+  {
+    "alias": "O",
+    "color": "green",
+    "desc": "An open source icon set with 223 marks in SVG, webfont and raster formats.",
+    "docs": "https://useiconic.com/open",
+    "name": "Open Iconic",
+    "npm": "open-iconic",
+    "repo": "https://github.com/iconic/open-iconic",
+    "status": "recommended"
+  },
+  {
+    "alias": "P",
+    "color": "pink",
+    "desc": "Automatically add a progress bar to your site.",
+    "docs": "http://github.hubspot.com/pace/",
+    "name": "Pace",
+    "npm": "pace-progress",
+    "repo": "https://github.com/HubSpot/pace",
+    "status": "recommended"
+  },
+  {
+    "alias": "P",
+    "color": "teal",
+    "desc": "Validate your forms, frontend, without writing a single line of javascript.",
+    "docs": "http://parsleyjs.org/doc/",
+    "name": "Parsley",
+    "npm": "parsleyjs",
+    "repo": "https://github.com/guillaumepotier/Parsley.js/",
+    "status": "optional"
+  },
+  {
+    "alias": "P",
+    "color": "orange",
+    "desc": "A lightweight JavaScript library for creating particles.",
+    "docs": "https://vincentgarreau.com/particles.js/",
+    "name": "Particles.js",
+    "npm": "particles.js",
+    "repo": "https://github.com/VincentGarreau/particles.js/",
+    "status": "optional"
+  },
+  {
+    "alias": "P",
+    "color": "cyan",
+    "desc": "Minimalistic but perfect custom scrollbar plugin.",
+    "docs": "https://github.com/utatti/perfect-scrollbar#how-to-use",
+    "name": "Perfect Scrollbar",
+    "npm": "perfect-scrollbar",
+    "repo": "https://github.com/utatti/perfect-scrollbar",
+    "status": "recommended"
+  },
+  {
+    "alias": "P",
+    "color": "gray",
+    "desc": "JavaScript image gallery for mobile and desktop, modular, framework independent.",
+    "docs": "http://photoswipe.com/documentation/getting-started.html",
+    "name": "PhotoSwipe",
+    "npm": "photoswipe",
+    "repo": "https://github.com/dimsemenov/PhotoSwipe",
+    "status": "optional"
+  },
+  {
+    "alias": "P",
+    "color": "indigo",
+    "desc": "A simple, accessible and customisable media player for Video, Audio, YouTube and Vimeo.",
+    "docs": "https://github.com/sampotts/plyr#quick-setup",
+    "name": "Plyr",
+    "npm": "plyr",
+    "repo": "https://github.com/sampotts/plyr",
+    "status": "optional"
+  },
+  {
+    "alias": "P",
+    "color": "yellow",
+    "desc": "A library used to position poppers in web applications.",
+    "docs": "https://popper.js.org/popper-documentation.html",
+    "name": "Popper.js",
+    "npm": "popper.js",
+    "repo": "https://github.com/FezVrasta/popper.js",
+    "status": "required"
+  },
+  {
+    "alias": "Q",
+    "color": "yellow",
+    "desc": "a modern WYSIWYG editor built for compatibility and extensibility.",
+    "docs": "https://quilljs.com/docs/quickstart/",
+    "name": "Quill",
+    "npm": "quill katex",
+    "repo": "https://github.com/quilljs/quill",
+    "status": "optional"
+  },
+  {
+    "alias": "S",
+    "color": "red",
+    "desc": "A jQuery-based replacement for select boxes. It supports searching, remote data sets, and pagination of results.",
+    "docs": "https://select2.org/",
+    "name": "Select2",
+    "npm": "select2",
+    "repo": "https://github.com/select2/select2",
+    "status": "optional"
+  },
+  {
+    "alias": "S",
+    "color": "green",
+    "desc": "A simple, beautiful, and embeddable JavaScript Markdown editor.",
+    "docs": "https://github.com/sparksuite/simplemde-markdown-editor#install",
+    "name": "SimpleMDE",
+    "npm": "simplemde",
+    "repo": "https://github.com/sparksuite/simplemde-markdown-editor",
+    "status": "optional"
+  },
+  {
+    "alias": "S",
+    "color": "red",
+    "desc": "A JavaScript library for reorderable drag-and-drop lists on modern browsers and touch devices.",
+    "docs": "https://github.com/RubaXa/Sortable#usage",
+    "name": "Sortable",
+    "npm": "sortablejs",
+    "repo": "https://github.com/RubaXa/Sortable",
+    "status": "optional"
+  },
+  {
+    "alias": "S",
+    "color": "purple",
+    "desc": "A plugin for the jQuery javascript library to generate small sparkline charts directly in the browser.",
+    "docs": "https://omnipotent.net/jquery.sparkline/#s-docs",
+    "name": "Sparklines",
+    "npm": "jquery.sparkline",
+    "repo": "https://github.com/gwatts/jquery.sparkline",
+    "status": "optional"
+  },
+  {
+    "alias": "S",
+    "color": "orange",
+    "desc": "A flexible stacked navigation menu.",
+    "docs": "http://docs.stilearning.com/drawerjs/latest/StackedMenu.html",
+    "name": "Stacked Menu",
+    "npm": "gitlab:bent10/stacked-menu",
+    "repo": "https://gitlab.com/bent10/stacked-menu",
+    "status": "recommended"
+  },
+  {
+    "alias": "T",
+    "color": "orange",
+    "desc": "Simple javascript toast notifications.",
+    "docs": "https://github.com/CodeSeven/toastr#quick-start",
+    "name": "Toastr",
+    "npm": "toastr",
+    "repo": "https://github.com/CodeSeven/toastr",
+    "status": "optional"
+  },
+  {
+    "alias": "T",
+    "color": "cyan",
+    "desc": "A cross-browser @mention engine written in ES6, no dependencies.",
+    "docs": "https://github.com/zurb/tribute#installing",
+    "name": "Tribute",
+    "npm": "tributejs",
+    "repo": "https://github.com/zurb/tribute",
+    "status": "optional"
+  },
+  {
+    "alias": "T",
+    "color": "twitter",
+    "desc": "A fast and fully-featured autocomplete library.",
+    "docs": "https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md",
+    "name": "Typeahead.js",
+    "npm": "typeahead.js handlebars",
+    "repo": "https://github.com/twitter/typeahead.js",
+    "status": "optional"
+  },
+  {
+    "alias": "C",
+    "color": "green",
+    "desc": "Cascading grid layout library.",
+    "docs": "https://clipboardjs.com/",
+    "name": "clipboard.js",
+    "npm": "clipboard",
+    "repo": "https://github.com/zenorocha/clipboard.js",
+    "status": "optional"
+  },
+  {
+    "alias": "J",
+    "color": "indigo",
+    "desc": "A fast, small, and feature-rich JavaScript library.",
+    "docs": "http://api.jquery.com/",
+    "name": "jQuery",
+    "npm": "jquery",
+    "repo": "https://github.com/jquery/jquery",
+    "status": "required"
+  },
+  {
+    "alias": "J",
+    "color": "red",
+    "desc": "A simple and html agnostic date countdown plugin for jQuery.",
+    "docs": "http://hilios.github.io/jQuery.countdown/documentation.html",
+    "name": "jQuery Countdown",
+    "npm": "jquery-countdown",
+    "repo": "https://github.com/hilios/jQuery.countdown",
+    "status": "optional"
+  },
+  {
+    "alias": "J",
+    "color": "gray",
+    "desc": "File Upload widget with multiple file selection, drag&drop support, progress bars, validation and preview images, audio and video for jQuery.",
+    "docs": "https://github.com/blueimp/jQuery-File-Upload/wiki",
+    "name": "jQuery File Upload",
+    "npm": "blueimp-file-upload",
+    "repo": "https://github.com/blueimp/jQuery-File-Upload",
+    "status": "optional"
+  },
+  {
+    "alias": "J",
+    "color": "yellow",
+    "desc": "Nice, downward compatible, touchable, jQuery dial.",
+    "docs": "http://anthonyterrien.com/knob/",
+    "name": "jQuery Knob",
+    "npm": "jquery-knob",
+    "repo": "https://github.com/aterrien/jQuery-Knob",
+    "status": "optional"
+  },
+  {
+    "alias": "J",
+    "color": "teal",
+    "desc": "A jQuery plugin that provides interactive trees.",
+    "docs": "https://github.com/vakata/jstree#getting-started",
+    "name": "jsTree",
+    "npm": "jstree",
+    "repo": "https://github.com/vakata/jstree",
+    "status": "optional"
+  },
+  {
+    "alias": "N",
+    "color": "pink",
+    "desc": "A javaScript range slider.",
+    "docs": "https://refreshless.com/nouislider/",
+    "name": "noUiSlider",
+    "npm": "nouislider wnumb",
+    "repo": "https://github.com/leongersen/noUiSlider",
+    "status": "optional"
+  },
+  {
+    "alias": "S",
+    "color": "orange",
+    "desc": "Super simple WYSIWYG Editor.",
+    "docs": "https://summernote.org/getting-started/",
+    "name": "summernote",
+    "npm": "summernote",
+    "repo": "https://github.com/summernote/summernote",
+    "status": "optional"
+  },
+  {
+    "alias": "T",
+    "color": "yellow",
+    "desc": "Input mask for React, Angular, Ember, Vue, & plain JavaScript.",
+    "docs": "https://github.com/text-mask/text-mask/blob/master/componentDocumentation.md#readme",
+    "name": "Text Mask",
+    "npm": "vanilla-text-mask text-mask-addons",
+    "repo": "https://github.com/text-mask/text-mask",
+    "status": "optional"
+  }
+]

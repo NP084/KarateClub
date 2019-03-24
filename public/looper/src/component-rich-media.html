@@ -1,0 +1,58 @@
+---
+layout: default
+title: Media Rich
+active: components.rich-media
+pluginsCss:
+  - photoswipe/photoswipe.css
+  - photoswipe/photoswipe-skin/default-skin.css
+  - plyr/plyr.css
+pluginsJs:
+  - masonry-layout/masonry.pkgd.js
+  - photoswipe/photoswipe.min.js
+  - photoswipe/photoswipe-ui-default.min.js
+  - plyr/plyr.js
+pageJs:
+  - pages/photoswipe-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Components
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Rich Media</h1>
+      <p class="text-muted">Create amazing media rich boxes with unlimited style options.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      {% include snippets/rich-media/avatars.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/rich-media/figures.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/rich-media/photoswipe.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/rich-media/plyr.html %}
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

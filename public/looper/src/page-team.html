@@ -1,0 +1,177 @@
+---
+layout: default
+title: Bootstrap Team Overview
+active: pages.team.team-overview
+footer: false
+pluginsCss:
+  - flatpickr/flatpickr.min.css
+pluginsJs:
+  - flatpickr/flatpickr.min.js
+  - chart.js/Chart.min.js
+pageJs:
+  - pages/team-overview-demo.js
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <!-- .d-flex -->
+      <div class="d-flex justify-content-between align-items-center">
+        <!-- .breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active">
+              <a href="page-teams.html">
+                <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Teams
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <!-- /.breadcrumb -->
+
+        <button type="button" class="btn btn-light btn-icon d-xl-none" data-toggle="sidebar"><i class="fa fa-angle-double-left"></i></button>
+      </div>
+      <!-- /.d-flex -->
+
+      <!-- grid row -->
+      <div class="row text-center text-sm-left">
+        <!-- grid column -->
+        <div class="col-sm-auto col-12 mb-2">
+          <!-- .has-badge -->
+          <div class="has-badge has-badge-bottom">
+            <a href="#" class="user-avatar user-avatar-xl">
+              <img src="assets/images/avatars/team4.jpg" alt="">
+            </a>
+            <span class="tile tile-circle tile-xs" data-toggle="tooltip" title="Public"><i class="fas fa-globe"></i></span>
+          </div>
+          <!-- /.has-badge -->
+        </div>
+        <!-- /grid column -->
+        <!-- grid column -->
+        <div class="col">
+          <h1 class="page-title">Creative Division</h1>
+          <p class="text-muted">We make stunning and cool responsive web and app design which suitable for any project purpose for your business.</p>
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+
+      <!-- .nav-scroller -->
+      <div class="nav-scroller border-bottom">
+        <!-- .nav -->
+        <div class="nav nav-tabs">
+          <a class="nav-link active" href="page-team.html">Overview</a>
+          <a class="nav-link" href="page-team-feeds.html">Feeds</a>
+          <a class="nav-link" href="page-team-projects.html">Projects</a>
+          <a class="nav-link" href="page-team-members.html">Members</a>
+          <a class="nav-link" href="#">Settings</a>
+        </div>
+        <!-- /.nav -->
+      </div>
+      <!-- /.nav-scroller -->
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      {% include ui/metrics-team.html %}
+
+      <!-- .section-block -->
+      <div class="section-block d-flex justify-content-between align-items-center my-3">
+        <h1 class="section-title mb-0">Achievement</h1>
+        {% include ui/dropdown-datepicker-02.html %}
+      </div>
+      <!-- /.section-block -->
+
+      <!-- .card -->
+      <div class="card card-body">
+        <!-- legend -->
+        <ul class="list-inline small">
+          <li class="list-inline-item"><i class="fa fa-fw fa-circle text-teal"></i> Projects</li>
+          <li class="list-inline-item"><i class="fa fa-fw fa-circle text-purple"></i> Completed</li>
+        </ul>
+        <!-- /legend -->
+
+        <div class="chartjs">
+          <canvas id="canvas-achievement"></canvas>
+        </div>
+      </div>
+      <!-- /.card -->
+
+      <!-- .section-deck -->
+      <div class="section-deck">
+        <!-- .card -->
+        <div class="card card-fluid">
+          {% include ui/leads-funnel-01.html %}
+        </div>
+        <!-- /.card -->
+
+        <!-- .card -->
+        <div class="card card-fluid">
+          <!-- .card-body -->
+          <div class="card-body pb-0">
+            <h3 class="card-title">Leaderboards</h3>
+
+            <!-- legend -->
+            <ul class="list-inline small">
+              <li class="list-inline-item"><i class="fa fa-fw fa-square text-teal"></i> Mailchimp</li>
+              <li class="list-inline-item"><i class="fa fa-fw fa-square text-indigo"></i> Facebook</li>
+              <li class="list-inline-item"><i class="fa fa-fw fa-square text-pink"></i> Google</li>
+              <li class="list-inline-item"><i class="fa fa-fw fa-square text-purple"></i> Linkedin</li>
+            </ul>
+            <!-- /legend -->
+          </div>
+          <!-- /.card-body -->
+
+          {% include ui/leaderboard-02.html %}
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.section-deck -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-sm-none">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" onclick="Looper.toggleSidebar()"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.sidebar-header -->
+
+    <!-- .sidebar-section-fill -->
+    <div class="sidebar-section-fill">
+      <!-- .card -->
+      <div class="card card-reflow">
+        {% include ui/team-summary.html %}
+
+        {% include ui/leads-source-01.html %}
+
+        <!-- .card-body -->
+        <div class="card-body border-top">
+          <div class="d-flex justify-content-between my-3">
+            <h4 class="card-title">Recent activity</h4>
+            <a href="#">View all</a>
+          </div>
+          {% include ui/timeline-02.html %}
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.sidebar-section-fill -->
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

@@ -1,0 +1,33 @@
+<aside class="app-aside app-aside-expand-md app-aside-light">
+  <!-- .aside-content -->
+  <div class="aside-content">
+    <!-- .aside-menu -->
+    <div class="aside-menu p-3">
+      <!-- .stacked-menu -->
+      <nav id="stacked-menu" class="stacked-menu">
+        <!-- .menu -->
+        <ul class="menu">
+          {% for levelMenu in site.data.docs-menu %}
+            {% if levelMenu.type == 'header' %}
+            {% include snippets/aside/header-menu.html %}
+            {% endif %}
+
+            {% if levelMenu.type == 'link' %}
+            {% include snippets/aside/level-menu.html %}
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <!-- /.menu -->
+      </nav>
+      <!-- /.stacked-menu -->
+    </div>
+    <!-- /.aside-menu -->
+
+    <!-- Skin changer -->
+    <footer class="aside-footer p-3">
+      <button class="btn btn-light btn-block text-primary" data-toggle="skin">Night mode <i class="fas fa-moon ml-1"></i></button>
+    </footer>
+    <!-- /Skin changer -->
+  </div>
+  <!-- /.aside-content -->
+</aside>

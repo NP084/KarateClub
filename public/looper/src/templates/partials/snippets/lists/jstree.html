@@ -1,0 +1,236 @@
+<!-- .section-block -->
+<div class="section-block">
+  <h2 class="section-title">Treeview</h2>
+  <p class="text-muted">jQuery tree plugin, that provides interactive trees. Supports HTML &amp; JSON data sources, AJAX &amp; async callback loading.</p>
+</div>
+<!-- /.section-block -->
+
+
+<!-- grid row -->
+<div class="row">
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Basic</h4>
+        <!-- #jstree1 -->
+        <div id="jstree1">
+          <ul>
+            <li data-jstree='{"opened":true, "type":"root"}'>Root
+              <ul>
+                <li data-jstree='{"type":"folder"}'>Directory</li>
+                <li data-jstree='{"type":"file"}'>File Unread</li>
+                <li data-jstree='{"opened":true, "type":"folder"}'>Another directory
+                  <ul>
+                    <li data-jstree='{"type":"text"}'>File text</li>
+                    <li data-jstree='{"type":"word"}'>File word</li>
+                    <li data-jstree='{"type":"excel"}'>File excel</li>
+                    <li data-jstree='{"type":"ppt", "disabled":true}'>File powerpoint</li>
+                    <li data-jstree='{"type":"pdf"}'>File pdf</li>
+                    <li data-jstree='{"type":"archive"}'>File archive</li>
+                    <li data-jstree='{"type":"image"}'>File image</li>
+                    <li data-jstree='{"type":"audio"}'>File audio</li>
+                    <li data-jstree='{"type":"video"}'>File video</li>
+                  </ul>
+                </li>
+                <li data-jstree='{"type":"folder"}'>Something else</li>
+                <li data-jstree='{"type":"file"}'>File node</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!-- /#jstree1 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">JSON data</h4>
+        <!-- #jstree2 -->
+        <div id="jstree2"></div>
+        <!-- /#jstree2 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Ajax</h4>
+        <!-- #jstree3 -->
+        <div id="jstree3"></div>
+        <!-- /#jstree3 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Working with events</h4>
+        <p class="card-subtitle text-muted mb-3">Let's use the most basic event <code>changed</code> - it fires when selection on the tree changes:</p>
+        <!-- #jstree4 -->
+        <div id="jstree4"></div>
+        <!-- /#jstree4 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Checkbox</h4>
+        <!-- #jstree5 -->
+        <div id="jstree5"></div>
+        <!-- /#jstree5 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Contextmenu</h4>
+        <!-- #jstree6 -->
+        <div id="jstree6"></div>
+        <!-- /#jstree6 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Drag & drop</h4>
+        <!-- #jstree7 -->
+        <div id="jstree7"></div>
+        <!-- /#jstree7 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Massload</h4>
+        <!-- #jstree8 -->
+        <div id="jstree8"></div>
+        <!-- /#jstree8 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Search</h4>
+        <!-- .form-group -->
+        <div class="form-group has-clearable" style="width: 300px">
+          <button type="button" class="close show" aria-label="Close">
+            <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+          </button>
+          <input id="jstree9_q" type="text" class="form-control">
+        </div>
+        <!-- /.form-group -->
+        <!-- #jstree9 -->
+        <div id="jstree9"></div>
+        <!-- /#jstree9 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Sort</h4>
+        <!-- #jstree10 -->
+        <div id="jstree10"></div>
+        <!-- /#jstree10 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+
+  <!-- grid column -->
+  <div class="col-lg-6">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <!-- .card-body -->
+      <div class="card-body">
+        <h4 class="card-title">Wholerow</h4>
+        <!-- #jstree11 -->
+        <div id="jstree11"></div>
+        <!-- /#jstree11 -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- grid column -->
+</div>
+<!-- grid row -->
+
+
+
+
+

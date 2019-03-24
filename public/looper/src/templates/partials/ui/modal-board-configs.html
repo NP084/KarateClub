@@ -1,0 +1,98 @@
+<!-- Layer #1 Modal -->
+<!-- .modalBoardConfig -->
+<div class="modal modal-drawer fade" id="modalBoardConfig" tabindex="-1" role="dialog" aria-labelledby="modalBoardConfigTitle" aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-drawer-right" role="document">
+    <!-- .modal-content -->
+    <div id="modalContentLayer1" class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 id="modalBoardConfigTitle" class="modal-title">Menu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <!-- .nav -->
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#modalLayer2" data-toggle="modal" data-dismiss="modal" data-content-layer="board-overview.html">Overview</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#modalLayer2" data-toggle="modal" data-dismiss="modal" data-content-layer="board-teams.html">Teams</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#modalLayer2" data-toggle="modal" data-dismiss="modal" data-content-layer="board-time-tracking.html">Time tracking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#modalLayer2" data-toggle="modal" data-dismiss="modal" data-content-layer="board-files.html">Files</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#modalLayer2" data-toggle="modal" data-dismiss="modal" data-content-layer="board-feeds.html">Feeds</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#modalLayer2" data-toggle="modal" data-dismiss="modal" data-content-layer="board-tickets.html">Tickets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#modalLayer2" data-toggle="modal" data-dismiss="modal" data-content-layer="board-settings.html">Settings</a>
+          </li>
+        </ul>
+        <!-- /.nav -->
+
+        <hr>
+
+        <h2 class="section-title"><i class="oi oi-pulse text-muted mr-2"></i>Recent activity</h2>
+
+        {% include ui/timeline-02.html %}
+        {% include ui/timeline-02.html %}
+
+        <div class="text-center p-3">
+          <a href="#" class="btn btn-link">View all activity ...</a>
+        </div>
+      </div>
+      <!-- /.modal-body -->
+    </div>
+    <!-- .modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modalBoardConfig -->
+<!-- /Layer #1 Modal -->
+
+<!-- Layer #2 Modal -->
+<!-- You can create modal as many as your menu or simply create
+layer modal with dinamy content to handle your menus (overview, members, time tracking, and so on) -->
+<!-- .modalBoardConfig -->
+<div class="modal modal-drawer fade" id="modalLayer2" tabindex="-1" role="dialog" aria-labelledby="modalLayer2Title" aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-drawer-right" role="document">
+    <!-- .modal-content -->
+    <div id="modalContentLayer2" class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header d-block">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modalBoardConfig">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back
+            </a>
+          </li>
+        </ol>
+        <h5 id="modalLayer2Title" class="modal-title">
+          <span id="layer-title">Overview</span>
+        </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, neque odio nisi.</p>
+      </div>
+      <!-- /.modal-body -->
+    </div>
+    <!-- .modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modalBoardConfig -->
+<!-- /Layer #2 Modal -->

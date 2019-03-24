@@ -1,0 +1,25 @@
+<!-- .dropdown-menu -->
+<div class="dropdown-menu dropdown-menu-md stop-propagation" id="dntmLabels" aria-labelledby="dropdownTaskLabels2">
+  <h6 id="dropdownTaskLabels2" class="dropdown-header">Select labels</h6>
+  <div class="dropdown-divider"></div>
+  <div class="form-group px-3 py-2 mb-0">
+    <input type="text" class="form-control" data-filter="#dntmLabels .filterable" placeholder="Search" data-autofocus="true">
+  </div>
+  <label class="custom-control custom-checkbox filterable">
+    <input type="checkbox" class="custom-control-input task-nolabel" name="taskLabels[]" value="0" data-label="No Label" checked>
+    <span class="custom-control-label">No Label</span>
+  </label>
+  <div class="dropdown-divider"></div>
+  <div class="dropdown-scroll">
+    {% for label in site.data.labels %}
+    <label class="custom-control custom-checkbox filterable">
+      <input type="checkbox" class="custom-control-input task-label" name="taskLabels[]" value="{{forloop.index}}" data-label="{{label.text}}">
+      <span class="custom-control-label"><i class="fa fa-square fa-lg text-{{label.color}} mr-1"></i> {{label.text}}</span>
+    </label>
+    {% endfor %}
+  </div>
+  <div class="dropdown-divider"></div>
+  <a href="#" class="dropdown-item">Create new label</a>
+  <a href="#" class="dropdown-item">Manage labels</a>
+</div>
+<!-- /.dropdown-menu -->

@@ -1,0 +1,63 @@
+---
+layout: default
+title: Gantt View
+active: pages.project.gantt
+footer: false
+pluginsJs:
+  - moment/moment.min.js
+  - frappe-gantt/snap.svg-min.js
+  - frappe-gantt/frappe-gantt.min.js
+pageJs:
+  - pages/gantt-view-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner page-inner-fill">
+    <!-- .page-navs -->
+    <header class="page-navs shadow-sm pr-3">
+      <!-- .btn-account-->
+      <a href="page-project.html" class="btn-account">
+        <div class="has-badge">
+          <span class="tile bg-pink text-white">SP</span>
+          <span class="user-avatar user-avatar-xs">
+            <img src="assets/images/avatars/team4.jpg" alt="">
+          </span>
+        </div>
+        <div class="account-summary">
+          <h1 class="card-title">Syrena Project</h1>
+          <h6 class="card-subtitle text-muted">4 deadline &middot; 2 overdue</h6>
+        </div>
+      </a>
+      <!-- .btn-account -->
+
+      <!-- right actions -->
+      <div class="ml-auto">
+        <button type="button" class="btn btn-light btn-icon" data-toggle="modal" data-target="#modalBoardConfig" title="Show menu">
+          <i class="fa fa-cog fa-fw"></i>
+        </button>
+      </div>
+      <!-- /right actions -->
+    </header>
+    <!-- /.page-navs -->
+
+    <!-- .board -->
+    <div class="board d-flex flex-column overflow-x">
+      <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
+        <!-- <label class="btn btn-secondary"><input type="radio" name="ganttView" value="Quarter Day">Quarter Day</label>
+        <label class="btn btn-secondary"><input type="radio" name="ganttView" value="Half Day">Half Day</label> -->
+        <label class="btn btn-secondary active"><input type="radio" name="ganttView" value="Day" checked>Day</label>
+        <label class="btn btn-secondary"><input type="radio" name="ganttView" value="Week">Week</label>
+        <label class="btn btn-secondary"><input type="radio" name="ganttView" value="Month">Month</label>
+      </div>
+
+      <div class="gantt-container flex-grow-1">
+        <svg id="gantt-target"></svg>
+      </div>
+    </div>
+    <!-- /.board -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

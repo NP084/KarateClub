@@ -1,0 +1,30 @@
+<!-- thead -->
+{% if context != nil %}
+<thead class="thead-{{context}}">
+{% else %}
+<thead>
+{% endif %}
+  <tr>
+    <th style="min-width:200px">Product</th>
+    <th>Variants</th>
+    <th>Prices</th>
+  </tr>
+</thead>
+<!-- /thead -->
+<!-- tbody -->
+<tbody>
+  {% for product in site.data.products %}
+  {% if forloop.index >= offset %}
+  {% if forloop.index <= max %}
+  <!-- tr -->
+  <tr>
+    <td>{{product.name}}</td>
+    <td>{{product.inventory}}</td>
+    <td>{{product.prices}}</td>
+  </tr>
+  <!-- /tr -->
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+</tbody>
+<!-- /tbody -->

@@ -1,0 +1,62 @@
+---
+layout: default
+title: Profile
+active: page-user.activities
+---
+
+<!-- .page -->
+<div class="page">
+  {% include ui/profile-cover.html %}
+
+  <!-- .page-navs -->
+  <nav class="page-navs">
+    <!-- .nav-scroller -->
+    <div class="nav-scroller">
+      <!-- .nav -->
+      <div class="nav nav-center nav-tabs">
+        <a class="nav-link" href="user-profile.html">Overview</a>
+        <a class="nav-link active" href="user-activities.html">Activities</a>
+        <a class="nav-link" href="user-teams.html">Teams</a>
+        <a class="nav-link" href="user-projects.html">Projects</a>
+        <a class="nav-link" href="user-tasks.html">Tasks</a>
+        <a class="nav-link" href="user-profile-settings.html">Settings</a>
+      </div>
+      <!-- /.nav -->
+    </div>
+    <!-- /.nav-scroller -->
+  </nav>
+  <!-- /.page-navs -->
+
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="user-profile.html">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Overview
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Activities</h1>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        {% include ui/timeline-01.html %}
+      </div>
+      <!-- /.section-block -->
+      <p class="text-center">
+        <button type="button" class="btn btn-light"><i class="fa fa-fw fa-angle-double-down"></i> Load more</button>
+      </p>
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

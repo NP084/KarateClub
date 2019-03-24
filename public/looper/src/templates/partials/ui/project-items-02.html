@@ -1,0 +1,87 @@
+{% for project in site.data.projects %}
+<!-- grid column -->
+<div class="col-lg-6 col-xl-4">
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-header -->
+    <div class="card-header border-0">
+      <div class="d-flex justify-content-between align-items-center">
+        {% if project.finished %}
+        <span class="badge bg-muted" data-toggle="tooltip" data-placement="bottom" title="Finished">
+          <span class="sr-only">Finished</span>
+          <i class="fa fa-fw fa-check-circle text-teal"></i>
+        </span>
+        {% else %}
+        <span class="badge bg-muted" data-toggle="tooltip" data-placement="bottom" title="Deadline">
+          <span class="sr-only">Deadline</span>
+          <i class="fa fa-calendar-alt text-muted mr-1"></i> {{project.deadline}}
+        </span>
+        {% endif %}
+        <div class="dropdown">
+          <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-ellipsis-v"></i>
+          </button>
+          <div class="dropdown-arrow"></div>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a href="#" class="dropdown-item">View Project</a>
+            <a href="#" class="dropdown-item">Add Member</a>
+            <a href="#" class="dropdown-item">Edit</a>
+            <a href="#" class="dropdown-item">Remove</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.card-header -->
+    <!-- .card-body -->
+    <div class="card-body text-center">
+      <!-- avatars -->
+      <div class="has-badge mb-3">
+        <a href="page-project.html" class="tile tile-lg bg-{{project.color}}">{{project.initial}}</a>
+        <a href="#team" class="user-avatar user-avatar-xs"><img src="assets/images/avatars/{{project.team}}" alt=""></a>
+      </div>
+      <!-- /avatars -->
+      <!-- /.media -->
+      <h5 class="card-title">
+        <a href="page-project.html">{{project.name}}</a>
+      </h5>
+      <p class="card-subtitle text-muted">Progress in {{project.completed | times: 100 | divided_by: project.tasks | round}}% - Last update {{project.lastUpdate}}</p>
+
+      <!-- .my-3 -->
+      <div class="my-3">
+        {% include ui/avatar-group-01.html %}
+      </div>
+      <!-- /.my-3 -->
+
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col">
+          <strong>Budget</strong>
+          <span class="d-block">{{project.budget}}$</span>
+        </div>
+        <!-- /grid column -->
+        <!-- grid column -->
+        <div class="col">
+          <strong>Tasks</strong>
+          <span class="d-block">{{project.tasks | minus: project.completed}}</span>
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+    </div>
+    <!-- /.card-body -->
+
+    {% if project.finished == false %}
+    <!-- .progress -->
+    <div class="progress progress-xs" data-toggle="tooltip" title="{{project.completed | times: 100 | divided_by: project.tasks | round}}%">
+      <div class="progress-bar bg-{{project.color}}" role="progressbar" aria-valuenow="{{project.completed}}" aria-valuemin="0" aria-valuemax="100" style="width: {{project.completed | times: 100 | divided_by: project.tasks | round}}%">
+        <span class="sr-only">{{project.completed | times: 100 | divided_by: project.tasks | round}}% Complete</span>
+      </div>
+    </div>
+    <!-- /.progress -->
+    {% endif %}
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /grid column -->
+{% endfor %}

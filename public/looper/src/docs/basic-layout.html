@@ -1,0 +1,270 @@
+---
+layout: docs
+title: Basic Layout
+active: basic-layout
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <h1 class="page-title">Basic Layout</h1>
+      <p class="text-muted">Be sure to have your pages set up with Looper layout components. That means you must placing your navigations, content, etc inside layout components.</p>
+      <button class="btn btn-dark btn-floated d-none d-sm-block d-xl-none" type="button" data-toggle="sidebar">
+        <i class="fa fa-th-list"></i>
+      </button>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 id="app" class="section-title">App</h2>
+        <p>Looper layout should be wrapped into the <code>.app</code> component.</p>
+
+        <pre><code class="html">&lt;!-- .app --&gt;
+&lt;div class=&quot;app&quot;&gt;
+  &lt;!-- app layout goes here --&gt;
+&lt;/div&gt;
+&lt;!-- /.app --&gt;</code></pre>
+
+        <p>As Looper comes with some layout variants that you can see on the <a href="{{site.homepage}}/layout-blank.html" target="_blank">Demo Pages</a>. The app component give you ability to control layout variants. For example if you want to clipped the header to align the app content, you just need to add <code>.has-clipped-header</code> class into app component.</p>
+
+        <p>Looper has 3 layout components (header, aside, and page content), each component are not required but recommended. Lets see the basic template for each part. Please refer to <a href="{{site.homepage}}/layout-blank.html" target="_blank">Layouts Demo</a> template for more details.</p>
+        <pre><code class="html">&lt;!-- .app --&gt;
+&lt;div class=&quot;app&quot;&gt;
+  &lt;!-- .app-header --&gt;
+  &lt;header class=&quot;app-header app-header-dark&quot;&gt;
+    &lt;!-- your brand and navigations goes here --&gt;
+  &lt;/header&gt;
+  &lt;!-- /.app-header --&gt;
+
+  &lt;!-- .app-aside --&gt;
+  &lt;aside class=&quot;app-aside app-aside-light app-aside-expand-md&quot;&gt;
+    &lt;!-- the app navigations goes here --&gt;
+  &lt;/aside&gt;
+  &lt;!-- /.app-aside --&gt;
+
+  &lt;!-- .app-main --&gt;
+  &lt;main class=&quot;app-main&quot;&gt;
+    &lt;!-- .wrapper --&gt;
+    &lt;div class=&quot;wrapper&quot;&gt;
+      &lt;!-- your awesome app content goes here --&gt;
+    &lt;/div&gt;
+    &lt;!-- /.wrapper --&gt;
+  &lt;/main&gt;
+  &lt;!-- /.app-main --&gt;
+&lt;/div&gt;
+&lt;!-- /.app --&gt;</code></pre>
+
+
+        <h2 id="header" class="section-title">Header</h2>
+        <pre><code class="html">&lt;header class=&quot;app-header app-header-dark&quot;&gt;
+  &lt;!-- .top-bar --&gt;
+  &lt;div class=&quot;top-bar&quot;&gt;
+    &lt;!-- .top-bar-brand --&gt;
+    &lt;div class=&quot;top-bar-brand&quot;&gt;
+      &lt;a href=&quot;/&quot;&gt;
+        &lt;img src=&quot;assets/images/brand-inverse.png&quot; height=&quot;32px&quot; alt=&quot;&quot;&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;!-- /.top-bar-brand --&gt;
+
+    &lt;!-- .top-bar-list --&gt;
+    &lt;div class=&quot;top-bar-list&quot;&gt;
+      &lt;!-- .top-bar-item --&gt;
+      &lt;div class=&quot;top-bar-item px-2 d-md-none d-lg-none d-xl-none&quot;&gt;
+        &lt;!-- toggle menu --&gt;
+        &lt;button class=&quot;hamburger hamburger-squeeze&quot; type=&quot;button&quot; data-toggle=&quot;aside&quot; aria-label=&quot;Menu&quot; aria-controls=&quot;navigation&quot;&gt;
+          &lt;span class=&quot;hamburger-box&quot;&gt;
+            &lt;span class=&quot;hamburger-inner&quot;&gt;&lt;/span&gt;
+          &lt;/span&gt;
+        &lt;/button&gt;
+        &lt;!-- /toggle menu --&gt;
+      &lt;/div&gt;
+      &lt;!-- /.top-bar-item --&gt;
+
+      &lt;!-- .top-bar-item --&gt;
+      &lt;div class=&quot;top-bar-item top-bar-item-full&quot;&gt;
+        &lt;!-- .top-bar-search --&gt;
+        &lt;div class=&quot;top-bar-search&quot;&gt;
+          &lt;div class=&quot;input-group input-group-search&quot;&gt;
+            &lt;div class=&quot;input-group-prepend&quot;&gt;
+              &lt;span class=&quot;input-group-text&quot;&gt;
+                &lt;span class=&quot;oi oi-magnifying-glass&quot;&gt;&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; aria-label=&quot;Search&quot; placeholder=&quot;Search&quot;&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- /.top-bar-search --&gt;
+      &lt;/div&gt;
+      &lt;!-- /.top-bar-item --&gt;
+
+      &lt;!-- .top-bar-item --&gt;
+      &lt;div class=&quot;top-bar-item top-bar-item-right px-0 d-none d-sm-flex&quot;&gt;
+        &lt;!-- .nav --&gt;
+        &lt;ul class=&quot;header-nav nav&quot;&gt;
+          &lt;!-- .nav-item --&gt;
+          &lt;li class=&quot;nav-item&quot;&gt;
+            &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;
+              &lt;span class=&quot;oi oi-grid-three-up&quot;&gt;&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+          &lt;!-- /.nav-item --&gt;
+        &lt;/ul&gt;
+        &lt;!-- /.nav --&gt;
+
+        &lt;!-- .btn-account --&gt;
+        &lt;div class=&quot;dropdown&quot;&gt;
+          &lt;button class=&quot;btn-account d-none d-md-flex&quot; type=&quot;button&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+            &lt;span class=&quot;user-avatar&quot;&gt;
+              &lt;img src=&quot;assets/images/avatars/profile.jpg&quot; alt=&quot;&quot;&gt;
+            &lt;/span&gt;
+            &lt;span class=&quot;account-summary pr-lg-4 d-none d-lg-block&quot;&gt;
+              &lt;span class=&quot;account-name&quot;&gt;John Doe&lt;/span&gt;
+              &lt;span class=&quot;account-description&quot;&gt;@johndoe&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/button&gt;
+          &lt;div class=&quot;dropdown-arrow dropdown-arrow-left&quot;&gt;&lt;/div&gt;
+          &lt;!-- .dropdown-menu --&gt;
+          &lt;div class=&quot;dropdown-menu&quot;&gt;
+            &lt;h6 class=&quot;dropdown-header d-none d-md-block d-lg-none&quot;&gt;John Doe&lt;/h6&gt;
+            &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;dropdown-icon oi oi-person&quot;&gt;&lt;/span&gt; Profile&lt;/a&gt;
+            &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;dropdown-icon oi oi-account-logout&quot;&gt;&lt;/span&gt; Logout&lt;/a&gt;
+            &lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+            &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Help Center&lt;/a&gt;
+            &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Ask Forum&lt;/a&gt;
+            &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Keyboard Shortcuts&lt;/a&gt;
+          &lt;/div&gt;
+          &lt;!-- /.dropdown-menu --&gt;
+        &lt;/div&gt;
+        &lt;!-- /.btn-account --&gt;
+      &lt;/div&gt;
+      &lt;!-- /.top-bar-item --&gt;
+    &lt;/div&gt;
+    &lt;!-- /.top-bar-list --&gt;
+  &lt;/div&gt;
+  &lt;!-- /.top-bar --&gt;
+&lt;/header&gt;</code></pre>
+
+
+        <h2 id="aside" class="section-title">Aside</h2>
+        <pre><code class="html">&lt;aside class=&quot;app-aside app-aside-light app-aside-expand-md&quot;&gt;
+  &lt;!-- .aside-content --&gt;
+  &lt;div class=&quot;aside-content&quot;&gt;
+    &lt;!-- .aside-header --&gt;
+    &lt;header class=&quot;aside-header d-block d-md-none&quot;&gt;
+      &lt;!-- .btn-account --&gt;
+      &lt;button class=&quot;btn-account&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#dropdown-aside&quot;&gt;
+        &lt;span class=&quot;user-avatar user-avatar-lg&quot;&gt;
+          &lt;img src=&quot;assets/images/avatars/profile.jpg&quot; alt=&quot;&quot;&gt;
+        &lt;/span&gt;
+        &lt;span class=&quot;account-icon&quot;&gt;
+          &lt;span class=&quot;fa fa-caret-down fa-lg&quot;&gt;&lt;/span&gt;
+        &lt;/span&gt;
+        &lt;span class=&quot;account-summary&quot;&gt;
+          &lt;span class=&quot;account-name&quot;&gt;John Doe&lt;/span&gt;
+          &lt;span class=&quot;account-description&quot;&gt;@johndoe&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/button&gt;
+      &lt;!-- /.btn-account --&gt;
+
+      &lt;!-- .dropdown-aside --&gt;
+      &lt;div id=&quot;dropdown-aside&quot; class=&quot;dropdown-aside collapse&quot;&gt;
+        &lt;!-- dropdown-items --&gt;
+        &lt;div class=&quot;pb-3&quot;&gt;
+          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;dropdown-icon oi oi-person&quot;&gt;&lt;/span&gt; Profile&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;dropdown-icon oi oi-account-logout&quot;&gt;&lt;/span&gt; Logout&lt;/a&gt;
+          &lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Help Center&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Ask Forum&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Keyboard Shortcuts&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;!-- /dropdown-items --&gt;
+      &lt;/div&gt;
+      &lt;!-- /.dropdown-aside --&gt;
+    &lt;/header&gt;
+    &lt;!-- /.aside-header --&gt;
+
+    &lt;!-- .aside-menu --&gt;
+    &lt;section class=&quot;aside-menu perfect-scrollbar&quot;&gt;
+      &lt;!-- .stacked-menu --&gt;
+      &lt;nav id=&quot;stacked-menu&quot; class=&quot;stacked-menu&quot;&gt;
+        &lt;!-- .menu --&gt;
+        &lt;ul class=&quot;menu&quot;&gt;
+          &lt;li class=&quot;menu-header&quot;&gt;Menus&lt;/li&gt;
+          &lt;!-- .menu-item --&gt;
+          &lt;li class=&quot;menu-item&quot;&gt;
+            &lt;!-- .menu-link --&gt;
+            &lt;a href=&quot;#&quot; class=&quot;menu-link&quot;&gt;
+              &lt;span class=&quot;menu-icon oi oi-dashboard&quot;&gt;&lt;/span&gt;
+              &lt;span class=&quot;menu-text&quot;&gt;Dashboard&lt;/span&gt;
+              &lt;span class=&quot;badge badge-success&quot;&gt;20+&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;!-- /.menu-link --&gt;
+          &lt;/li&gt;
+          &lt;!-- /.menu-item --&gt;
+        &lt;/ul&gt;
+        &lt;!-- /.menu --&gt;
+      &lt;/nav&gt;
+      &lt;!-- /.stacked-menu --&gt;
+    &lt;/section&gt;
+    &lt;!-- /.aside-menu --&gt;
+  &lt;/div&gt;
+  &lt;!-- /.aside-content --&gt;
+&lt;/aside&gt;</code></pre>
+
+
+        <h2 id="page-content" class="section-title">Page content</h2>
+        <pre><code class="html">&lt;!-- .app-main --&gt;
+&lt;main class=&quot;app-main&quot;&gt;
+  &lt;!-- .wrapper --&gt;
+  &lt;div class=&quot;wrapper&quot;&gt;
+    &lt;!-- .page --&gt;
+    &lt;div class=&quot;page&quot;&gt;
+      &lt;!-- .page-inner --&gt;
+      &lt;div class=&quot;page-inner&quot;&gt;
+        &lt;!-- .page-title-bar --&gt;
+        &lt;header class=&quot;page-title-bar&quot;&gt;
+          &lt;!-- page title stuff goes here --&gt;
+          &lt;h1 class=&quot;page-title&quot;&gt;Page title&lt;/h1&gt;
+        &lt;/header&gt;
+        &lt;!-- /.page-title-bar --&gt;
+
+        &lt;!-- .page-section --&gt;
+        &lt;div class=&quot;page-section&quot;&gt;
+          &lt;!-- page content goes here --&gt;
+          &lt;p&gt;Hellow world!&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;!-- /.page-section --&gt;
+      &lt;/div&gt;
+      &lt;!-- /.page-inner --&gt;
+    &lt;/div&gt;
+    &lt;!-- /.page --&gt;
+  &lt;/div&gt;
+  &lt;!-- /.wrapper --&gt;
+&lt;/main&gt;
+&lt;!-- /.app-main --&gt;</code></pre>
+      </div>
+      <!-- /.section-block -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar page-sidebar-fixed">
+    <nav id="nav-content" class="nav flex-column mt-4">
+      <a href="#app" class="nav-link smooth-scroll">App</a>
+      <a href="#header" class="nav-link smooth-scroll">Header</a>
+      <a href="#aside" class="nav-link smooth-scroll">Aside</a>
+      <a href="#page-content" class="nav-link smooth-scroll">Page content</a>
+    </nav>
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->

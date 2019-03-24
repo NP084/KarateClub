@@ -1,0 +1,90 @@
+{% for task in site.data.tasks %}
+{% if forloop.index >= offset %}
+{% if forloop.index <= max %}
+<!-- .task-issue -->
+<div class="task-issue">
+  <!-- .card -->
+  <div class="card">
+    <!-- .card-header -->
+    <div class="card-header">
+      <h4 class="card-title"><a href="#">{{task.name}}</a></h4>
+      <h6 class="card-subtitle text-muted">
+        {% if task.overestimate %}
+        <span class="text-red">{{task.worked}}</span> / <span class="text-muted">{{task.estimate}}</span>
+        {% else %}
+        <span class="text-muted">{{task.worked}}</span> / <span class="text-muted">{{task.estimate}}</span>
+        {% endif %}
+        <span class="mx-1">&middot;</span>
+        <span class="due-date"><i class="far fa-fw fa-clock"></i> {{task.duedate}}</span>
+      </h6>
+    </div>
+    <!-- /.card-header -->
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .list-group -->
+      <div class="list-group">
+        <!-- .list-group-item -->
+        <div class="list-group-item">
+          <!-- .list-group-item-body -->
+          <div class="list-group-item-body py-1 text-truncate">
+            <a href="#" class="tile tile-sm bg-{{task.color}} text-white" data-toggle="tooltip" title="{{task.project}} Project">{{task.initial}}</a>
+            <span class="text-muted mx-2"><i class="fas fa-long-arrow-alt-right"></i></span>
+            <!-- members -->
+            <div class="avatar-group">
+              {% assign limit = task.members %}
+              {% for people in site.data.people %}
+              {% if forloop.index <= limit %}
+              <a href="#" class="user-avatar user-avatar-sm" data-toggle="tooltip" title="{{people.name}}">
+                <img src="assets/images/avatars/{{people.avatar}}" alt="{{people.name}}">
+              </a>
+              {% endif %}
+              {% endfor %}
+            </div>
+            <!-- /members -->
+          </div>
+          <!-- /.list-group-item-body -->
+        </div>
+        <!-- /.list-group-item -->
+
+        {% if task.todos > 0 %}
+        <!-- .list-group-item -->
+        <div class="list-group-item pt-0">
+          <a href="#" class="stretched-link"></a>
+          <!-- .list-group-item-body -->
+          <div class="list-group-item-body">
+            <div class="progress progress-xs">
+              <div class="progress-bar bg-success" role="progressbar" style="width: {{task.todosCompleted | times:100 | divided_by:task.todos}}%;" aria-valuenow="{{task.todosCompleted | times:100 | divided_by:task.todos}}" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+          <!-- /.list-group-item-body -->
+          <!-- .list-group-item-figure -->
+          <div class="list-group-item-figure">
+            <span class="todos">{{task.todosCompleted}}/{{task.todos}}</span>
+          </div>
+          <!-- /.list-group-item-figure -->
+        </div>
+        <!-- /.list-group-item -->
+        {% endif %}
+      </div>
+      <!-- /.list-group -->
+    </div>
+    <!-- /.card-body -->
+    <!-- .card-footer -->
+    <div class="card-footer">
+      {% if task.comments > 0 %}
+      <a href="#" class="card-footer-item card-footer-item-bordered text-muted">
+        <i class="oi oi-comment-square mr-1"></i> {{task.comments}}
+      </a>
+      {% endif %}
+      <a href="#" class="card-footer-item card-footer-item-bordered text-muted">
+        <i class="fa fa-pause"></i>
+      </a>
+    </div>
+    <!-- /.card-footer -->
+  </div>
+  <!-- .card -->
+</div>
+<!-- /.task-issue -->
+{% endif %}
+{% endif %}
+{% endfor %}

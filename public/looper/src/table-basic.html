@@ -1,0 +1,472 @@
+---
+layout: default
+title: Basic Table
+active: tables.basic
+pageJs:
+  - pages/table-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <!-- .breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Tables
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <!-- /.breadcrumb -->
+
+      <!-- floating action -->
+      <button type="button" class="btn btn-success btn-floated"><span class="fa fa-plus"></span></button>
+      <!-- /floating action -->
+
+      <!-- title and toolbar -->
+      <div class="d-md-flex align-items-md-start">
+        <h1 class="page-title mr-sm-auto">Basic Table</h1>
+        <!-- .btn-toolbar -->
+        <div class="btn-toolbar">
+          <button type="button" class="btn btn-light">
+            <i class="oi oi-data-transfer-download"></i>
+            <span class="ml-1">Export</span>
+          </button>
+          <button type="button" class="btn btn-light">
+            <i class="oi oi-data-transfer-upload"></i>
+            <span class="ml-1">Import</span>
+          </button>
+          <div class="dropdown">
+            <button type="button" class="btn btn-light" data-toggle="dropdown">
+              <span>More</span>
+              <span class="fa fa-caret-down"></span>
+            </button>
+            <div class="dropdown-arrow dropdown-arrow-right"></div>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a href="#" class="dropdown-item">Add tasks</a>
+              <a href="#" class="dropdown-item">Invite members</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">Share</a>
+              <a href="#" class="dropdown-item">Archive</a>
+              <a href="#" class="dropdown-item">Remove</a>
+            </div>
+          </div>
+        </div>
+        <!-- /.btn-toolbar -->
+      </div>
+      <!-- /title and toolbar -->
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .card -->
+      <div class="card card-fluid">
+        <!-- .card-header -->
+        <div class="card-header">
+          <!-- .nav-tabs -->
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link active show" data-toggle="tab" href="#tab1">All</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#tab2">Ongoing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#tab3">Completed</a>
+            </li>
+          </ul><!-- /.nav-tabs -->
+        </div>
+        <!-- /.card-header -->
+
+        <!-- .card-body -->
+        <div class="card-body">
+          <!-- .form-group -->
+          <div class="form-group">
+            <!-- .input-group -->
+            <div class="input-group input-group-alt">
+              <!-- .input-group-prepend -->
+              <div class="input-group-prepend">
+                <select class="custom-select">
+                  <option selected>Filter By</option>
+                  <option value="1">Tags</option>
+                  <option value="2">Vendor</option>
+                  <option value="3">Variants</option>
+                  <option value="4">Prices</option>
+                  <option value="5">Sales</option>
+                </select>
+              </div>
+              <!-- /.input-group-prepend -->
+              <!-- .input-group -->
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div>
+                <input type="text" class="form-control" placeholder="Search record">
+              </div>
+              <!-- /.input-group -->
+            </div>
+            <!-- /.input-group -->
+          </div>
+          <!-- /.form-group -->
+
+          <!-- .table-responsive -->
+          <div class="text-muted">Showing 1 to 10 of 1,000 entries</div>
+          <div class="table-responsive">
+            <!-- .table -->
+            <table class="table">
+              {% assign limit = 10 %}
+              {% assign offset = 3 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/table-01.html %}
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.table-responsive -->
+
+          <!-- .pagination -->
+          <ul class="pagination justify-content-center mt-4">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1"><i class="fa fa-lg fa-angle-left"></i></a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">...</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">13</a>
+            </li>
+            <li class="page-item active">
+              <a class="page-link" href="#">14</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">15</a>
+            </li>
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">...</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">24</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#"><i class="fa fa-lg fa-angle-right"></i></a>
+            </li>
+          </ul>
+          <!-- /.pagination -->
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 class="section-title">Nested Rows</h2>
+      </div>
+      <!-- /.section-block -->
+
+      <!-- .card -->
+      <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+          <div class="table-responsive">
+            <!-- .table -->
+            <table class="table">
+              {% assign limit = 5 %}
+              {% assign offset = 3 %}
+              {% assign max = limit | plus:offset | minus:1 %}
+              {% include ui/table-row-details.html %}
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 class="section-title">Inside Modal</h2>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalTable">
+          Table in modal
+        </button>
+      </div>
+      <!-- /.section-block -->
+
+      <!-- Modal -->
+      <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="modalTableLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 id="modalTableLabel" class="modal-title">Result for <em>"lorem ipsume dolor"</em></h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body p-0">
+              <!-- .table -->
+              <table class="table table-striped">
+                {% assign limit = 5 %}
+                {% assign offset = 12 %}
+                {% assign max = limit | plus:offset | minus:1 %}
+                {% include ui/table-02.html %}
+              </table>
+              <!-- /.table -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Close</button>
+              <nav aria-label="Page navigation">
+                <ul class="pagination mb-0">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.modal -->
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 class="section-title">Table Variants</h2>
+      </div>
+      <!-- /.section-block -->
+
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-xl-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-header -->
+            <div class="card-header border-0">
+              <div class="d-flex align-items-center">
+                <span class="mr-auto">Hoverable</span>
+                <div class="dropdown">
+                  <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-arrow"></div>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a href="#" class="dropdown-item">Edit</a>
+                    <a href="#" class="dropdown-item">Archive</a>
+                    <a href="#" class="dropdown-item">Remove</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table table-hover">
+                {% assign limit = 5 %}
+                {% assign offset = 12 %}
+                {% assign max = limit | plus:offset | minus:1 %}
+                {% include ui/table-02.html %}
+              </table>
+              <!-- /.table -->
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-xl-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-header -->
+            <div class="card-header border-0">
+              <div class="d-flex align-items-center">
+                <span class="mr-auto">Striped rows</span>
+                <div class="dropdown">
+                  <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-arrow"></div>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a href="#" class="dropdown-item">Edit</a>
+                    <a href="#" class="dropdown-item">Archive</a>
+                    <a href="#" class="dropdown-item">Remove</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table table-striped">
+                {% assign limit = 5 %}
+                {% assign offset = 12 %}
+                {% assign max = limit | plus:offset | minus:1 %}
+                {% include ui/table-02.html %}
+              </table>
+              <!-- /.table -->
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-xl-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-header -->
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <span class="mr-auto">Bordered</span>
+                <button type="button" class="btn btn-icon btn-light">
+                  <i class="fa fa-copy"></i>
+                </button>
+                <button type="button" class="btn btn-icon btn-light">
+                  <i class="fa fa-download"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table table-bordered">
+                {% assign limit = 5 %}
+                {% assign offset = 12 %}
+                {% assign max = limit | plus:offset | minus:1 %}
+                {% include ui/table-02.html %}
+              </table>
+              <!-- /.table -->
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-xl-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-header -->
+            <div class="card-header border-0">
+              <div class="d-flex align-items-center">
+                <span class="mr-auto">Condensed</span>
+                <button type="button" class="btn btn-icon btn-light">
+                  <i class="fa fa-copy"></i>
+                </button>
+                <button type="button" class="btn btn-icon btn-light">
+                  <i class="fa fa-download"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table table-sm mb-0">
+                {% assign limit = 8 %}
+                {% assign offset = 12 %}
+                {% assign max = limit | plus:offset | minus:1 %}
+                {% include ui/table-02.html %}
+              </table>
+              <!-- /.table -->
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <h2 class="section-title">Head options</h2>
+      </div>
+      <!-- /.section-block -->
+
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-xl-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table table-hover">
+                {% assign limit = 5 %}
+                {% assign offset = 12 %}
+                {% assign max = limit | plus:offset | minus:1 %}
+                {% assign context = "light" %}
+                {% include ui/table-02.html %}
+              </table>
+              <!-- /.table -->
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-xl-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table table-hover">
+                {% assign limit = 5 %}
+                {% assign offset = 12 %}
+                {% assign max = limit | plus:offset | minus:1 %}
+                {% assign context = "dark" %}
+                {% include ui/table-02.html %}
+              </table>
+              <!-- /.table -->
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

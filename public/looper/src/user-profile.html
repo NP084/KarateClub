@@ -1,0 +1,247 @@
+---
+layout: default
+title: Profile
+active: page-user.profile
+pluginsCss:
+  - flatpickr/flatpickr.min.css
+pluginsJs:
+  - flatpickr/flatpickr.min.js
+  - chart.js/Chart.min.js
+pageJs:
+  - pages/profile-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  {% include ui/profile-cover.html %}
+
+  <!-- .page-navs -->
+  <nav class="page-navs">
+    <!-- .nav-scroller -->
+    <div class="nav-scroller">
+      <!-- .nav -->
+      <div class="nav nav-center nav-tabs">
+        <a class="nav-link active" href="user-profile.html">Overview</a>
+        <a class="nav-link" href="user-activities.html">Activities <span class="badge">16</span></a>
+        <a class="nav-link" href="user-teams.html">Teams</a>
+        <a class="nav-link" href="user-projects.html">Projects</a>
+        <a class="nav-link" href="user-tasks.html">Tasks</a>
+        <a class="nav-link" href="user-profile-settings.html">Settings</a>
+      </div>
+      <!-- /.nav -->
+    </div>
+    <!-- /.nav-scroller -->
+  </nav>
+  <!-- /.page-navs -->
+
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        {% include ui/metrics-04.html %}
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h1 class="section-title mb-0">Achievement</h1>
+          {% include ui/dropdown-datepicker-02.html %}
+        </div>
+      </div>
+      <!-- /.section-block -->
+
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-xl-8">
+          <!-- .card -->
+          <div class="card card-body card-fluid">
+            <!-- legend -->
+            <ul class="list-inline small">
+              <li class="list-inline-item"><i class="fa fa-fw fa-circle text-teal"></i> Assigned tasks</li>
+              <li class="list-inline-item"><i class="fa fa-fw fa-circle text-purple"></i> Completed tasks</li>
+            </ul>
+            <!-- /legend -->
+
+            <div class="chartjs" style="height: 253px">
+              <canvas id="canvas-achievement"></canvas>
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-xl-4">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-header -->
+            <div class="card-header">Overview</div>
+            <!-- /.card-header -->
+
+            <!-- .card-body -->
+            <div class="card-body">
+              <dl class="d-flex justify-content-between">
+                <dt class="text-left">
+                  <span class="mr-2">Revenue</span>
+                  <small class="text-success"><i class="fa fa-caret-up"></i> 87%</small>
+                </dt>
+                <dd class="text-right mb-0">
+                  <strong>17,400</strong>
+                  <small class="text-muted">USD</small>
+                </dd>
+              </dl>
+              <dl class="d-flex justify-content-between mb-0">
+                <dt class="text-left">
+                  <span class="mr-2">Projects</span>
+                  <small class="text-success"><i class="fa fa-caret-up"></i> 24%</small>
+                </dt>
+                <dd class="text-right mb-0">
+                  <strong>5</strong>
+                </dd>
+              </dl>
+            </div>
+            <!-- /.card-body -->
+
+            <!-- .card-body -->
+            <div class="card-body border-top">
+              <dl class="d-flex justify-content-between">
+                <dt class="text-left">
+                  <span class="mr-2">Expenses</span>
+                  <small class="text-danger"><i class="fa fa-caret-down"></i> 12%</small>
+                </dt>
+                <dd class="text-right mb-0">
+                  <strong>1,600</strong>
+                  <small class="text-muted">USD</small>
+                </dd>
+              </div>
+            </dl>
+            <!-- /.card-body -->
+
+            <!-- .card-body -->
+            <div class="card-body border-top">
+              <div class="summary">
+                <p class="text-left">
+                  <strong class="mr-2">Earnings</strong>
+                  <small class="text-success"><i class="fa fa-caret-up"></i> 24%</small>
+                </p>
+                <p class="text-center">
+                  <strong class="h3">15,800</strong>
+                  <span class="text-muted">USD</span>
+                </p>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-xl-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-header -->
+            <div class="card-header border-0">
+              <!-- .d-flex -->
+              <div class="d-flex align-items-center">
+                <span class="mr-auto">Time Spent: Projects</span>
+                <!-- .card-header-control -->
+                <div class="card-header-control">
+                  <!-- .dropdown -->
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fa fa-fw fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-arrow"></div>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a href="#" class="dropdown-item">Actions</a>
+                      <a href="#" class="dropdown-item">Goes here</a>
+                      <a href="#" class="dropdown-item">Remove</a>
+                    </div>
+                  </div>
+                  <!-- /.dropdown -->
+                </div>
+                <!-- /.card-header-control -->
+              </div>
+              <!-- /.d-flex -->
+            </div>
+            <!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                {% include ui/table-03.html %}
+              </table>
+              <!-- /.table -->
+            </div>
+            <!-- /.table-responsive -->
+            <!-- .card-footer -->
+            <div class="card-footer">
+              <a href="#" class="card-footer-item">View report <i class="fa fa-fw fa-angle-right"></i></a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-xl-6">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-header -->
+            <div class="card-header border-0">
+              <!-- .d-flex -->
+              <div class="d-flex align-items-center">
+                <span class="mr-auto">Time Spent: Tasks</span>
+                <!-- .card-header-control -->
+                <div class="card-header-control">
+                  <!-- .dropdown -->
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fa fa-fw fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-arrow"></div>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a href="#" class="dropdown-item">Actions</a>
+                      <a href="#" class="dropdown-item">Goes here</a>
+                      <a href="#" class="dropdown-item">Remove</a>
+                    </div>
+                  </div>
+                  <!-- /.dropdown -->
+                </div>
+                <!-- /.card-header-control -->
+              </div>
+              <!-- /.d-flex -->
+            </div>
+            <!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                {% include ui/table-04.html %}
+              </table>
+              <!-- /.table -->
+            </div>
+            <!-- /.table-responsive -->
+            <!-- .card-footer -->
+            <div class="card-footer">
+              <a href="#" class="card-footer-item">View report <i class="fa fa-fw fa-angle-right"></i></a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

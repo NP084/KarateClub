@@ -1,0 +1,54 @@
+<!-- .table-responsive -->
+<div class="table-responsive">
+  <!-- .table -->
+  <table class="table">
+    <!-- thead -->
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th style="min-width:200px">Vendor</th>
+        <th></th>
+        <th>Category</th>
+        <th></th>
+      </tr>
+    </thead>
+    <!-- /thead -->
+    <!-- tbody -->
+    <tbody>
+      {% for expense in site.data.expenses %}
+      <!-- tr -->
+      <tr>
+        <td class="align-middle">{{expense.date}}</td>
+        <td class="align-middle">{{expense.amount}}</td>
+        <td class="align-middle">{{expense.vendor}}</td>
+        <td class="align-middle">
+          {% if expense.hasAttachment %}
+            <i class="fa fa-paperclip text-muted"></i>
+          {% endif %}
+        </td>
+        <td class="align-middle">
+          <span class="badge text-white bg-{{expense.state}}">{{expense.category}}</span>
+        </td>
+        <td class="align-middle text-right">
+          <div class="dropdown">
+            <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+              <i class="fa fa-ellipsis-h"></i>
+              <span class="sr-only">Actions</span>
+            </button>
+            <div class="dropdown-arrow"></div>
+            <div class="dropdown-menu dropdown-menu-right">
+              <button class="dropdown-item" type="button">Edit</button>
+              <button class="dropdown-item" type="button">Delete</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <!-- /tr -->
+      {% endfor %}
+    </tbody>
+    <!-- /tbody -->
+  </table>
+  <!-- /.table -->
+</div>
+<!-- /.table-responsive -->

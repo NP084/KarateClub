@@ -1,0 +1,11 @@
+<!-- .menu-header -->
+<li class="menu-header">
+  {% if levelMenu.button %}
+  <button type="button" class="btn" data-toggle="tooltip" title="{{ levelMenu.buttonTitle }}" data-container="body"><span class="{{ levelMenu.button }}"></span></button>
+  {% endif %}
+  {% if levelMenu.indicator %}
+  <span class="{{ levelMenu.indicatorClasses }}">{{ levelMenu.indicator }}</span>
+  {% endif %}
+  {{ levelMenu.text }}
+</li>
+<!-- /.menu-header -->

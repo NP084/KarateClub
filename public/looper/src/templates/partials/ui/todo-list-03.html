@@ -1,0 +1,30 @@
+<!-- .todo-list -->
+<div class="todo-list todo-list-bordered">
+  {% for todo in site.data.todos %}
+  {% if todo.completed == true %}
+  <!-- .todo -->
+  <div class="todo">
+    <!-- .custom-control -->
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="todo{{forloop.index}}" checked>
+      <label class="custom-control-label" for="todo{{forloop.index}}">
+        <span>{{todo.title | capitalize}}</span>
+      </label>
+    </div>
+    <!-- /.custom-control -->
+    <!-- .todo-actions -->
+    <div class="todo-actions d-block">
+      <button type="button" class="btn btn-sm btn-icon btn-light" data-todoid="{{forloop.index}}">
+        <i class="fa fa-arrows-alt"></i>
+      </button>
+      <button type="button" class="btn btn-sm btn-icon btn-light" data-todoid="{{forloop.index}}">
+        <i class="fa fa-trash-alt"></i>
+      </button>
+    </div>
+    <!-- /.todo-actions -->
+  </div>
+  <!-- /.todo -->
+  {% endif %}
+  {% endfor %}
+</div>
+<!-- /.todo-list -->

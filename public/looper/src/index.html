@@ -1,0 +1,158 @@
+---
+layout: default
+title: Dashboard
+active: dashboard
+pluginsCss:
+  - flatpickr/flatpickr.min.css
+pluginsJs:
+  - flatpickr/flatpickr.min.js
+  - easy-pie-chart/jquery.easypiechart.min.js
+  - chart.js/Chart.min.js
+pageJs:
+  - pages/dashboard-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <div class="d-flex flex-column flex-md-row">
+        <p class="lead">
+          <span class="font-weight-bold">Hi, Beni.</span>
+          <span class="d-block text-muted">Here’s what’s happening with your business today.</span>
+        </p>
+        <div class="ml-auto">
+          {% include ui/dropdown-datepicker-01.html %}
+        </div>
+      </div>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        {% include ui/metrics-06.html %}
+      </div>
+      <!-- /.section-block -->
+
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-12 col-lg-12 col-xl-4">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <h3 class="card-title mb-4">Completion Tasks</h3>
+
+              <div class="chartjs" style="height: 292px">
+                <canvas id="completion-tasks"></canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-12 col-lg-6 col-xl-4">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+              <h3 class="card-title">Tasks Performance</h3>
+              <!-- easy-pie-chart -->
+              <div class="text-center pt-3">
+                <div class="chart-inline-group" style="height:214px">
+                  <div class="easypiechart" data-toggle="easypiechart" data-percent="60" data-size="214" data-bar-color="#346CB0" data-track-color="false" data-scale-color="false" data-rotate="225"></div>
+                  <div class="easypiechart" data-toggle="easypiechart" data-percent="50" data-size="174" data-bar-color="#00A28A" data-track-color="false" data-scale-color="false" data-rotate="225"></div>
+                  <div class="easypiechart" data-toggle="easypiechart" data-percent="75" data-size="134" data-bar-color="#5F4B8B" data-track-color="false" data-scale-color="false" data-rotate="225"></div>
+                </div>
+              </div>
+              <!-- /easy-pie-chart -->
+            </div>
+            <!-- /.card-body -->
+            <!-- .card-footer -->
+            <div class="card-footer">
+              <div class="card-footer-item">
+                <i class="fa fa-fw fa-circle text-indigo"></i> 100%
+                <div class="text-muted small">Assigned</div>
+              </div>
+              <div class="card-footer-item">
+                <i class="fa fa-fw fa-circle text-purple"></i> 75%
+                <div class="text-muted small">Completed</div>
+              </div>
+              <div class="card-footer-item">
+                <i class="fa fa-fw fa-circle text-teal"></i> 60%
+                <div class="text-muted small">Active</div>
+              </div>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+
+        <!-- grid column -->
+        <div class="col-12 col-lg-6 col-xl-4">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body pb-0">
+              <h3 class="card-title">Leaderboard</h3>
+
+              <!-- legend -->
+              <ul class="list-inline small">
+                <li class="list-inline-item"><i class="fa fa-fw fa-circle text-light"></i> Tasks</li>
+                <li class="list-inline-item"><i class="fa fa-fw fa-circle text-purple"></i> Completed</li>
+                <li class="list-inline-item"><i class="fa fa-fw fa-circle text-teal"></i> Active</li>
+                <li class="list-inline-item"><i class="fa fa-fw fa-circle text-red"></i> Overdue</li>
+              </ul>
+              <!-- /legend -->
+            </div>
+            <!-- /.card-body -->
+
+            {% include ui/leaderboard-01.html %}
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+
+      <!-- section-deck -->
+      <div class="section-deck">
+        <!-- .card -->
+        <div class="card card-fluid pb-3">
+          <div class="card-header">Active Projects</div>
+          {% include ui/project-list-01.html %}
+        </div>
+        <!-- /.card -->
+
+        <!-- .card -->
+        <div class="card card-fluid">
+          <div class="card-header">Active Tasks: To-Dos</div>
+          <!-- .card-body -->
+          <div class="card-body">
+            {% include ui/todo-list-01.html %}
+          </div>
+          <!-- /.card-body -->
+          <!-- .card-footer -->
+          <div class="card-footer">
+            <a href="#" class="card-footer-item">View all <i class="fa fa-fw fa-angle-right"></i></a>
+          </div>
+          <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /section-deck -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

@@ -1,0 +1,40 @@
+<!-- .card -->
+<div class="card">
+  <!-- .card-header -->
+  <div class="card-header d-flex">
+    <!-- .dropdown -->
+    <div class="dropdown">
+      <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-filter mr-1"></i> All (3) <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-arrow"></div>
+      <!-- .dropdown-menu -->
+      <div class="dropdown-menu stop-propagation">
+        <h6 id="client-projects-tab" class="dropdown-header">Projects</h6>
+        <label class="custom-control custom-radio">
+          <input type="radio" class="custom-control-input" name="clientProjectFilter" value="0" checked>
+          <span class="custom-control-label">All (3)</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input type="radio" class="custom-control-input" name="clientProjectFilter" value="1">
+          <span class="custom-control-label">On Going (1)</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input type="radio" class="custom-control-input" name="clientProjectFilter" value="2">
+          <span class="custom-control-label">Completed (2)</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input type="radio" class="custom-control-input" name="clientProjectFilter" value="3">
+          <span class="custom-control-label">Archived (0)</span>
+        </label>
+      </div>
+      <!-- /.dropdown-menu -->
+    </div>
+    <!-- /.dropdown -->
+    <button type="button" class="btn btn-primary ml-auto">Add project</button>
+  </div>
+  <!-- /.card-header -->
+
+  {% include ui/project-list-02.html %}
+</div>
+<!-- /.card -->

@@ -1,0 +1,65 @@
+---
+layout: default
+title: Editors
+active: forms.editors
+pluginsCss:
+  - summernote/summernote-bs4.css
+  - highlightjs/styles/github.css
+  - katex/katex.min.css
+  - quill/quill.snow.css
+  - simplemde/simplemde.min.css
+pluginsJs:
+  - summernote/summernote-bs4.min.js
+  - highlightjs/highlight.pack.js
+  - katex/katex.min.js
+  - quill/quill.min.js
+  - simplemde/simplemde.min.js
+  - ace/min/ace.js
+  - ace/min/ext-statusbar.js
+pageJs:
+  - pages/summernote-demo.js
+  - pages/ace-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Forms
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Editors</h1>
+      <p class="text-muted">Summernote, Quilljs, Simplemde and Ace Editor.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+
+      {% include snippets/forms/summernote.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/quill.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/simplemde.html %}
+
+      <hr class="my-5">
+
+      {% include snippets/forms/ace.html %}
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

@@ -1,0 +1,94 @@
+<!-- .list-group-messages -->
+<div class="list-group list-group-messages list-group-flush list-group-bordered">
+  {% for message in site.data.messages %}
+  <!-- message item -->
+  {% if message.isRead %}
+  <div class="list-group-item read">
+  {% else %}
+  <div class="list-group-item unread">
+  {% endif %}
+    <!-- message figure -->
+    <div class="list-group-item-figure">
+      <span class="rating rating-sm mr-3">
+        {% if message.isStar %}
+        <input type="checkbox" id="star{{forloop.index}}" value="1" checked>
+        {% else %}
+        <input type="checkbox" id="star{{forloop.index}}" value="1">
+        {% endif %}
+        <label for="star{{forloop.index}}"><span class="fa fa-star"></span></label>
+      </span>
+      <!-- .avatar -->
+      {% if message.badge %}
+      <div class="avatar has-badge">
+      {% else %}
+      <div class="avatar">
+      {% endif %}
+        {% if message.hasAvatar %}
+        <a href="page-conversations.html" class="user-avatar">
+          <img src="assets/images/avatars/{{message.avatar}}" alt="">
+        </a>
+        {% else %}
+        <a href="page-conversations.html" class="tile tile-circle bg-{{message.color}}">{{message.initial}}</a>
+        {% endif %}
+
+        {% if message.badge %}
+        <span class="tile tile-xs tile-circle bg-red">{{message.badge}}</span>
+        {% endif %}
+      </div>
+      <!-- /.avatar -->
+    </div>
+    <!-- /message figure -->
+    <!-- message body -->
+    <div class="list-group-item-body pl-md-2">
+      <!-- grid row -->
+      <div class="row">
+        <!-- grid column -->
+        <div class="col-12 col-lg-3 d-none d-lg-block">
+          <h4 class="list-group-item-title text-truncate">
+            <a href="page-conversations.html">{{message.team}}</a>
+          </h4>
+          <p class="list-group-item-text">{{message.time}}</p>
+        </div>
+        <!-- /grid column -->
+        <!-- grid column -->
+        <div class="col-12 col-lg-9">
+          <h4 class="list-group-item-title text-truncate">
+            <a href="page-conversations.html">{{message.subject}}</a>
+          </h4>
+          <p class="list-group-item-text text-truncate">{{message.snippet}}</p>
+        </div>
+        <!-- /grid column -->
+        <!-- grid column -->
+        <div class="col-12 d-lg-none">
+          <p class="list-group-item-text">{{message.time}}</p>
+        </div>
+        <!-- /grid column -->
+      </div>
+      <!-- /grid row -->
+    </div>
+    <!-- /message body -->
+    <!-- message actions -->
+    <div class="list-group-item-figure">
+      <!-- .dropdown -->
+      <div class="dropdown">
+        <button class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown">
+          <i class="fa fa-ellipsis-h"></i>
+        </button>
+        <div class="dropdown-arrow"></div>
+        <!-- .dropdown-menu -->
+        <div class="dropdown-menu dropdown-menu-right">
+          <a href="#" class="dropdown-item">Mark as read</a>
+          <a href="#" class="dropdown-item">Mark as unread</a>
+          <a href="#" class="dropdown-item">Toggle star</a>
+          <a href="#" class="dropdown-item">Trash</a>
+        </div>
+        <!-- /.dropdown-menu -->
+      </div>
+      <!-- /.dropdown -->
+    </div>
+    <!-- /message actions -->
+  </div>
+  <!-- /message item -->
+  {% endfor %}
+</div>
+<!-- /.list-group-messages -->

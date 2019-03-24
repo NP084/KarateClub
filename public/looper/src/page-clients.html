@@ -1,0 +1,68 @@
+---
+layout: default
+title: Clients
+active: pages.clients
+footer: false
+---
+
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-fluid has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner page-inner-fill position-relative">
+    <header class="page-navs bg-light shadow-sm">
+      <!-- .input-group -->
+      <div class="input-group has-clearable">
+        <button type="button" class="close" aria-label="Close">
+          <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+        </button>
+        <label class="input-group-prepend" for="searchClients">
+          <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+        </label>
+        <input type="text" class="form-control" id="searchClients" data-filter=".board .list-group-item" placeholder="Find clients">
+      </div>
+      <!-- /.input-group -->
+    </header>
+    <button type="button" class="btn btn-primary btn-floated position-absolute" data-toggle="modal" data-target="#clientNewModal" title="Add new client">
+      <i class="fa fa-plus"></i>
+    </button>
+    <!-- board -->
+    <div class="board p-0 perfect-scrollbar">
+
+      {% include ui/client-list.html %}
+
+    </div>
+    <!-- /board -->
+  </div>
+  <!-- /.page-inner -->
+
+  <!-- .page-sidebar -->
+  <div class="page-sidebar bg-light">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-xl-none">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" onclick="Looper.toggleSidebar()">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.sidebar-header -->
+
+    <!-- .sidebar-section -->
+    <div class="sidebar-section sidebar-section-fill">
+      {% include ui/client-details.html %}
+    </div>
+    <!-- /.sidebar-section -->
+  </div>
+  <!-- /.page-sidebar -->
+
+  <!-- Keep in mind that modals should be placed outsite of page sidebar -->
+  {% include ui/client-new-modal.html %}
+  {% include ui/client-billing-edit-modal.html %}
+  {% include ui/client-contact-new-modal.html %}
+  {% include ui/client-contact-edit-modal.html %}
+</div>
+<!-- /.page -->

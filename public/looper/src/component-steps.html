@@ -1,0 +1,166 @@
+---
+layout: default
+title: Steps
+active: components.steps
+pluginsJs:
+  - parsleyjs/parsley.min.js
+  - text-mask/vanillaTextMask.js
+  - text-mask/addons/textMaskAddons.js
+  - bs-stepper/js/bs-stepper.min.js
+pageJs:
+  - pages/steps-demo.js
+---
+
+<!-- .page -->
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#">
+              <i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Components
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Stepper</h1>
+      <p class="text-muted">A process/progress indicator component communicates to the user the progress of a particular process.</p>
+    </header>
+    <!-- /.page-title-bar -->
+
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .section-block -->
+      <div class="section-block">
+        <!-- Default Steps -->
+        {% include snippets/components/steps.html %}
+      </div>
+      <!-- /.section-block -->
+
+      <hr class="my-5">
+
+      <!-- .section-block -->
+      <div class="section-block">
+        <!-- Progress List -->
+        <h2 class="section-title">Progress List</h2>
+        <p class="text-muted">Alternative indicator with progress list component</p>
+
+        <!-- .card -->
+        <div class="card">
+          <!-- .card-body -->
+          <div class="card-body">
+            <!-- .progress-list -->
+            <ol class="progress-list mb-sm-0">
+              <li class="success">
+                <button type="button" data-toggle="tooltip" title="Step 1">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                  <span class="sr-only">Step 1</span>
+                </button>
+              </li>
+              <li class="success">
+                <button type="button" data-toggle="tooltip" title="Step 2">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                  <span class="sr-only">Step 2</span>
+                </button>
+              </li>
+              <li class="active">
+                <button type="button" data-toggle="tooltip" title="Step 3">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                  <span class="sr-only">Step 3</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" data-toggle="tooltip" title="Step 4">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                  <span class="sr-only">Step 4</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" data-toggle="tooltip" title="Step 5">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                  <span class="sr-only">Step 5</span>
+                </button>
+              </li>
+            </ol>
+            <!-- /.progress-list -->
+          </div>
+          <!-- /.card-body -->
+          <!-- .card-body -->
+          <div class="card-body">
+            <p>Nesciunt qui vero sed dolores velit nihil est omnis exercitationem facilis, voluptatem ipsa, veritatis unde molestiae incidunt aperiam dicta consequuntur, facere commodi.</p>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+        <div class="my-5"></div>
+
+        <!-- Progress List with label -->
+        <!-- .card -->
+        <div class="card">
+          <!-- .card-body -->
+          <div class="card-body">
+            <!-- .progress-list -->
+            <ol class="progress-list mb-0 mb-sm-4">
+              <li class="success">
+                <button type="button">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                </button>
+                <span class="progress-label d-none d-sm-inline-block">Step 1</span>
+              </li>
+              <li class="success">
+                <button type="button">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                </button>
+                <span class="progress-label d-none d-sm-inline-block">Step 2</span>
+              </li>
+              <li class="active error">
+                <button type="button">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                </button>
+                <span class="progress-label d-none d-sm-inline-block">Step 3</span>
+              </li>
+              <li>
+                <button type="button">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                </button>
+                <span class="progress-label d-none d-sm-inline-block">Step 4</span>
+              </li>
+              <li>
+                <button type="button">
+                  <!-- progress indicator -->
+                  <span class="progress-indicator"></span>
+                </button>
+                <span class="progress-label d-none d-sm-inline-block">Step 5</span>
+              </li>
+            </ol>
+            <!-- /.progress-list -->
+          </div>
+          <!-- /.card-body -->
+          <!-- .card-body -->
+          <div class="card-body">
+            <p>Earum temporibus consequuntur facilis iste obcaecati soluta, inventore, vero labore accusantium in commodi eaque, similique necessitatibus ab dolorem non repudiandae pariatur culpa!</p>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.section-block -->
+    </div>
+    <!-- /.page-section -->
+  </div>
+  <!-- /.page-inner -->
+</div>
+<!-- /.page -->

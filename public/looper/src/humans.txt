@@ -1,0 +1,16 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Beni Arisandi -- <role> -- @
+
+# THANKS
+
+    <name>
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3, SCSS, JavaScript
+    Node, Gulp, Babel
+    HTML5 Boilerplate
