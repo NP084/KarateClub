@@ -68,11 +68,15 @@
             <div class="wrapper">
                     <!-- .page -->
                     <div class="page">
-                        <!-- .page-navs -->
+
+                        {% block Template %}{% endblock %}
+
+                        <!-- Ajouter condition si connecté pour la nav barre-->
                         {% include "OutilsTemplates/NavBarre.html.twig" %}
+                        
                         <!-- .page-inner -->
                         <div class="page-inner">
-                            {% block body %}{% endblock %}
+                            {% block Body %}{% endblock %}
                          </div>
                     </div><!-- /.page -->
             </div><!-- /.wrapper -->
