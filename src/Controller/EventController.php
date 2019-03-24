@@ -12,7 +12,7 @@ class EventController extends AbstractController
      */
     public function index()
     {
-        return $this->render('event/philosophy.html.twig', [
+        return $this->render('event/showContent.html.twig', [
             'controller_name' => 'EventController',
         ]);
     }

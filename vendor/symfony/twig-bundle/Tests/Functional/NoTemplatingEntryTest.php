@@ -26,7 +26,7 @@ class NoTemplatingEntryTest extends TestCase
         $kernel->boot();
 
         $container = $kernel->getContainer();
-        $content = $container->get('twig')->render('philosophy.html.twig');
+        $content = $container->get('twig')->render('showContent.html.twig');
         $this->assertContains('{ a: b }', $content);
     }
 

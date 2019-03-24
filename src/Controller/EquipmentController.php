@@ -12,7 +12,7 @@ class EquipmentController extends AbstractController
      */
     public function index()
     {
-        return $this->render('equipment/philosophy.html.twig', [
+        return $this->render('equipment/showContent.html.twig', [
             'controller_name' => 'EquipmentController',
         ]);
     }

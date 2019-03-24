@@ -21,7 +21,7 @@ class TemplateReferenceTest extends TestCase
         $reference = new TemplateReference('AcmeBlogBundle', 'Admin\Post', 'index', 'html', 'twig');
 
         $this->assertSame(
-            '@AcmeBlogBundle/Resources/views/Admin/Post/philosophy.html.twig',
+            '@AcmeBlogBundle/Resources/views/Admin/Post/showContent.html.twig',
             $reference->getPath()
         );
     }

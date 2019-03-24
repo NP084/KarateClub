@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class VikaController extends AbstractController
 {
     /**
-     * @Route("/vika-philosophy", name="philosophy")
+     * @Route("/vika-{id}", name="VikaContent", requirements={"id"="\d+"})
      */
-    public function philisophyContent(ContentPage $philosophy){
+    public function vikashow(ContentPage $philosophy){
 
-        return $this->render('vika/philosophy.html.twig', [
+        return $this->render('vika/showContent.html.twig', [
             'contentPage' => $philosophy,
         ]);
     }

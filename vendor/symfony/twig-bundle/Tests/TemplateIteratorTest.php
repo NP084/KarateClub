@@ -32,9 +32,9 @@ class TemplateIteratorTest extends TestCase
         $this->assertEquals(
             [
                 '@Bar/base.html.twig',
-                '@Bar/philosophy.html.twig',
+                '@Bar/showContent.html.twig',
                 '@Bar/layout.html.twig',
-                '@Foo/philosophy.html.twig',
+                '@Foo/showContent.html.twig',
                 'layout.html.twig',
                 'sub/sub.html.twig',
             ],

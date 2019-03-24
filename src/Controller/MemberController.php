@@ -34,7 +34,7 @@ class MemberController extends AbstractController
      */
     public function index()
     {
-        return $this->render('member/philosophy.html.twig', [
+        return $this->render('member/showContent.html.twig', [
             'controller_name' => 'MemberController',
         ]);
     }

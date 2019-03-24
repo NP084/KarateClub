@@ -12,30 +12,30 @@ class NativeFilesystemLoaderTest extends TestCase
         $loader = new NativeFilesystemLoader(null, __DIR__.'/../');
         $loader->addPath('Fixtures/templates', 'Test');
 
-        $this->assertSame('Fixtures'.\DIRECTORY_SEPARATOR.'templates'.\DIRECTORY_SEPARATOR.'Foo'.\DIRECTORY_SEPARATOR.'philosophy.html.twig', $loader->getCacheKey('@Test/Foo/philosophy.html.twig'));
+        $this->assertSame('Fixtures'.\DIRECTORY_SEPARATOR.'templates'.\DIRECTORY_SEPARATOR.'Foo'.\DIRECTORY_SEPARATOR.'showContent.html.twig', $loader->getCacheKey('@Test/Foo/showContent.html.twig'));
     }
 
     /**
      * @expectedException \Twig\Error\LoaderError
-     * @expectedExceptionMessage Template reference "TestBundle::Foo/philosophy.html.twig" not found, did you mean "@Test/Foo/philosophy.html.twig"?
+     * @expectedExceptionMessage Template reference "TestBundle::Foo/showContent.html.twig" not found, did you mean "@Test/Foo/showContent.html.twig"?
      */
     public function testWithLegacyStyle1()
     {
         $loader = new NativeFilesystemLoader(null, __DIR__.'/../');
         $loader->addPath('Fixtures/templates', 'Test');
 
-        $loader->getCacheKey('TestBundle::Foo/philosophy.html.twig');
+        $loader->getCacheKey('TestBundle::Foo/showContent.html.twig');
     }
 
     /**
      * @expectedException \Twig\Error\LoaderError
-     * @expectedExceptionMessage Template reference "TestBundle:Foo:philosophy.html.twig" not found, did you mean "@Test/Foo/philosophy.html.twig"?
+     * @expectedExceptionMessage Template reference "TestBundle:Foo:showContent.html.twig" not found, did you mean "@Test/Foo/showContent.html.twig"?
      */
     public function testWithLegacyStyle2()
     {
         $loader = new NativeFilesystemLoader(null, __DIR__.'/../');
         $loader->addPath('Fixtures/templates', 'Test');
 
-        $loader->getCacheKey('TestBundle:Foo:philosophy.html.twig');
+        $loader->getCacheKey('TestBundle:Foo:showContent.html.twig');
     }
 }
