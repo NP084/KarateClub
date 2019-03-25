@@ -78,7 +78,7 @@ class UserConnected implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->email,
+            $this->username,
             $this->password,
             // $this->salt,
         ));
@@ -89,7 +89,7 @@ class UserConnected implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->email,
+            $this->username,
             $this->password,
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
