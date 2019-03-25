@@ -203,18 +203,6 @@ class User
         return $this;
     }
 
-    public function getBirthday(): ?\DateTimeInterface
-    {
-        return $this->birthday;
-    }
-
-    public function setBirthday(?\DateTimeInterface $birthday): self
-    {
-        $this->birthday = $birthday;
-
-        return $this;
-    }
-
     public function getCreatedUser(): ?\DateTimeInterface
     {
         return $this->createdUser;
