@@ -13,6 +13,7 @@ use App\Entity\Category;
 use App\Entity\CityUser;
 use App\Entity\Comment;
 use App\Entity\User;
+use App\Entity\UserConnected;
 use App\Entity\Adress;
 use App\Entity\Country;
 use App\DataFixtures\AppFixtures;
@@ -48,6 +49,7 @@ class UserFixtures extends Fixture
         for ($k=1; $k<=25; $k++){
 
             $user = new User();
+            $userC = new UserConnected();
 
             $userAdress = new Adress();
             $userAdress->setType("Domicile")
@@ -70,16 +72,17 @@ class UserFixtures extends Fixture
                  ->setCountry($country);
             $manager->persist($city);
 
-            $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,'testtest'));
+            $userC->setPassword($this->passwordEncoder->encodePassword($userC,'testtest'))
+                  ->setEmail($faker->email)
+                  ->setUsername($faker->userName)
+                  ->setName($faker->lastName())
+                  ->setFirstname($faker->firstName())
+                  ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))
+                  ->setCreatedUser($faker->dateTimeBetween('-6 months'))
+                  ->setUser($user);
+            $manager-> persist($userC);
 
-            $user->setEmail($faker->email)
-                 ->setUsername($faker->userName)
-                 ->setName($faker->lastName())
-                 ->setSex('Male')
-                 ->setFirstname($faker->firstName())
-                 ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))
-                 ->setCreatedUser($faker->dateTimeBetween('-6 months'))
+            $user->setSex('Male')
                  ->setBelt($faker->safeColorName());
             $manager-> persist($user);
 

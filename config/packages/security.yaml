@@ -7,7 +7,7 @@ security:
         in_memory: { memory: ~ }
         in_database:
             entity:
-                class: App\Entity\User
+                class: App\Entity\UserConnected
                 property: email
 
     firewalls:

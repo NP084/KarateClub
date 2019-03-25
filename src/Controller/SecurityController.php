@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\RegistrationType;
+use App\Entity\UserConnected;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -18,7 +19,7 @@ class SecurityController extends AbstractController
     * @Route("/inscription", name="security_registration")
     */
     public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder){
-        $user = new User();
+        $user = new UserConnected();
 
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);

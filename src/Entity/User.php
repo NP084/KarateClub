@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
+//use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -15,12 +15,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="app_user")
  * @Vich\Uploadable
- * @UniqueEntity(
- *  fields={"email"},
- *  message="L'email indiqué est déjà utilisé !"
- * )
  */
-class User implements UserInterface, \Serializable
+class User
 {
     /**
      * @ORM\Id()
@@ -28,31 +24,6 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Email()
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(
-     *      min=6,
-     *      max=24,
-     *      minMessage = "Votre mot de passe doit faire minimum {{ limit }} caractères !",
-     *      maxMessage = "Votre mot de passe doit faire maximum {{ limit }} caractères !")
-     * @Assert\EqualTo(propertyPath="confirm_password", message="Les mots de passe ne correspondent pas!")
-     */
-    private $password;
-
-
-    public $confirm_password;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Phone", mappedBy="user")
@@ -63,27 +34,6 @@ class User implements UserInterface, \Serializable
      * @ORM\ManyToMany(targetEntity="App\Entity\Adress", inversedBy="users")
      */
     private $adress;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $firstname;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $birthday;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $createdUser;
-
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -165,28 +115,6 @@ class User implements UserInterface, \Serializable
         $this->isActive = true;
     }
 
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // $this->salt,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // $this->salt
-            ) = unserialize($serialized, array('allowed_classes' => false));
-    }
-
     public function setImageName(?string $imageName): void
     {
         $this->imageName = $imageName;
@@ -219,52 +147,6 @@ class User implements UserInterface, \Serializable
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function eraseCredentials(){
-
-    }
-    public function getSalt(){
-
-    }
-    public function getRoles(){
-        return ['ROLE_USER'];
     }
 
     /**
@@ -321,30 +203,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): self
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
     public function getBirthday(): ?\DateTimeInterface
     {
         return $this->birthday;
@@ -368,7 +226,6 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
-
 
     public function getBelt(): ?string
     {
