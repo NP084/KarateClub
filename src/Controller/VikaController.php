@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VikaController extends AbstractController
 {
     /**
-     * @Route("/vika-{name}", name="VikaContent", requirements={"id"="\d+"})
+     * @Route("/vika-{path}", name="VikaContent", requirements={"id"="\d+"})
      */
     public function vikashow(ContentPage $contentPage){
 
