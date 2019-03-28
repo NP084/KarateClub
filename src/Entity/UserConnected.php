@@ -106,6 +106,8 @@ class UserConnected implements UserInterface, \Serializable
     public function getRoles(){
         if ($this->email == "admin@admin.com") {
             return ['ROLE_ADMIN'];
+        } elseif ($this->email == "money@money.com") {
+            return ['ROLE_MONEY'];
         } else {
             return ['ROLE_USER'];
         }
