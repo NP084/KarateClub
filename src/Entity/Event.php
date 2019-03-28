@@ -54,7 +54,7 @@ class Event
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TimePeriod", inversedBy="event")
+     * @ORM\ManyToMany(targetEntity="App\Entity\TimePeriod", inversedBy="events")
      */
     private $timePeriod;
 
@@ -62,6 +62,7 @@ class Event
     {
         $this->media = new ArrayCollection();
         $this->registrations = new ArrayCollection();
+        $this->timePeriod = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,14 +173,28 @@ class Event
         return $this;
     }
 
-    public function getTimePeriod(): ?TimePeriod
+    /**
+     * @return Collection|TimePeriod[]
+     */
+    public function getTimePeriod(): Collection
     {
         return $this->timePeriod;
     }
 
-    public function setTimePeriod(?TimePeriod $timePeriod): self
+    public function addTimePeriod(TimePeriod $timePeriod): self
     {
-        $this->timePeriod = $timePeriod;
+        if (!$this->timePeriod->contains($timePeriod)) {
+            $this->timePeriod[] = $timePeriod;
+        }
+
+        return $this;
+    }
+
+    public function removeTimePeriod(TimePeriod $timePeriod): self
+    {
+        if ($this->timePeriod->contains($timePeriod)) {
+            $this->timePeriod->removeElement($timePeriod);
+        }
 
         return $this;
     }

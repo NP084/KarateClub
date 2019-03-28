@@ -33,9 +33,15 @@ class TimePeriod
      */
     private $event;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="timePeriod")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->event = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,5 +102,13 @@ class TimePeriod
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
     }
 }
