@@ -98,11 +98,18 @@ class UserConnected implements UserInterface, \Serializable
     public function eraseCredentials(){
 
     }
+
     public function getSalt(){
 
     }
+
     public function getRoles(){
-        return ['ROLE_USER'];
+        if ($this->email == "admin@admin.com") {
+            return ['ROLE_ADMIN'];
+        } else {
+            return ['ROLE_USER'];
+        }
+
     }
 
     public function getId(): ?int
