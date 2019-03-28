@@ -39,11 +39,6 @@ class Equipment
     private $refIntern;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Media", mappedBy="equipment")
-     */
-    private $media;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rental", mappedBy="equipment")
      */
     private $rentals;
@@ -56,7 +51,6 @@ class Equipment
 
     public function __construct()
     {
-        $this->media = new ArrayCollection();
         $this->rentals = new ArrayCollection();
     }
 
@@ -109,34 +103,6 @@ class Equipment
     public function setRefIntern(string $refIntern): self
     {
         $this->refIntern = $refIntern;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Media[]
-     */
-    public function getMedia(): Collection
-    {
-        return $this->media;
-    }
-
-    public function addMedium(Media $medium): self
-    {
-        if (!$this->media->contains($medium)) {
-            $this->media[] = $medium;
-            $medium->addEquipment($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMedium(Media $medium): self
-    {
-        if ($this->media->contains($medium)) {
-            $this->media->removeElement($medium);
-            $medium->removeEquipment($this);
-        }
 
         return $this;
     }

@@ -44,11 +44,6 @@ class Event
     private $createdEv;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Media", mappedBy="event")
-     */
-    private $media;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="event")
      */
     private $registrations;
@@ -130,34 +125,6 @@ class Event
     public function setCreatedEv(\DateTimeInterface $createdEv): self
     {
         $this->createdEv = $createdEv;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Media[]
-     */
-    public function getMedia(): Collection
-    {
-        return $this->media;
-    }
-
-    public function addMedium(Media $medium): self
-    {
-        if (!$this->media->contains($medium)) {
-            $this->media[] = $medium;
-            $medium->addEvent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMedium(Media $medium): self
-    {
-        if ($this->media->contains($medium)) {
-            $this->media->removeElement($medium);
-            $medium->removeEvent($this);
-        }
 
         return $this;
     }

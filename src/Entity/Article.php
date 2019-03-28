@@ -57,11 +57,6 @@ class Article
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Media", mappedBy="article")
-     */
-    private $media;
-
-    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * @Vich\UploadableField(mapping="article_picture", fileNameProperty="imageName")
      * @var File
@@ -118,7 +113,6 @@ class Article
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,7 +143,6 @@ class Article
 
         return $this;
     }
-
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -201,34 +194,6 @@ class Article
             if ($comment->getArticle() === $this) {
                 $comment->setArticle(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Media[]
-     */
-    public function getMedia(): Collection
-    {
-        return $this->media;
-    }
-
-    public function addMedium(Media $medium): self
-    {
-        if (!$this->media->contains($medium)) {
-            $this->media[] = $medium;
-            $medium->addArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMedium(Media $medium): self
-    {
-        if ($this->media->contains($medium)) {
-            $this->media->removeElement($medium);
-            $medium->removeArticle($this);
         }
 
         return $this;
