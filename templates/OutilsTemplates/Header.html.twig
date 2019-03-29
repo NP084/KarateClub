@@ -49,6 +49,8 @@
 
             <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
             <!-- Ajouter condition sinon bouton connexion -->
+                {% if not app.user%}
+                {% else %}
                 <!-- .btn-account -->
                 <div class="dropdown">
                     <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="looper/dist/assets/images/avatars/profile.jpg" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Beni Arisandi </font></font></span> <span class="account-description"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Directeur Marketing</font></font></span></span></button>
@@ -59,7 +61,8 @@
                         <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
                     </div><!-- /.dropdown-menu -->
                 </div><!-- /.btn-account -->
-                   
+                {% endif %}
+
                 <!-- Bouton Se connecter -->
                 {% if not app.user%}
                     <a href="{{ path('security_login') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Connexion</a>
