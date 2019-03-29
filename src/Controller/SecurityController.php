@@ -11,6 +11,7 @@ use App\Form\RegistrationType;
 use App\Entity\UserConnected;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -69,7 +70,7 @@ class SecurityController extends AbstractController
             /* @var $user User */
             if ($user === null) {
                 $this->addFlash('danger', 'Email Inconnu');
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('home');
             }
             $token = $tokenGenerator->generateToken();
             try{
