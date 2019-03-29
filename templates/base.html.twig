@@ -73,9 +73,11 @@
                         <div class="page">
 
                             {% block Template %}{% endblock %}
-                            <!-- Ajouter condition si connecté pour la nav barre-->
-                            {% include "OutilsTemplates/NavBarre.html.twig" %}
-                            
+                            {% if not app.user%}
+                            {% else %}
+                                {% include "OutilsTemplates/NavBarre.html.twig" %}
+                            {% endif %}
+
                             <!-- .page-inner -->
                             <div class="page-inner">
                                 {% block Body %}{% endblock %}
