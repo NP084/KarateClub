@@ -65,25 +65,26 @@
     </head>
     <body>
         {% include "OutilsTemplates/Header.html.twig" %}
-        <main class="app-main">
-            <!-- .wrapper -->
-            <div class="wrapper">
-                    <!-- .page -->
-                    <div class="page">
+        <div class="app">
+            <main class="app-main">
+                <!-- .wrapper -->
+                <div class="wrapper">
+                        <!-- .page -->
+                        <div class="page">
 
-                        {% block Template %}{% endblock %}
-                        <!-- Ajouter condition si connecté pour la nav barre-->
-                        {% include "OutilsTemplates/NavBarre.html.twig" %}
-                        
-                        <!-- .page-inner -->
-                        <div class="page-inner">
-                            {% block Body %}{% endblock %}
-                        </div>
-                    </div><!-- /.page -->
-            </div><!-- /.wrapper -->
-            {% include "OutilsTemplates/Footer.html.twig" %}
-        </main>
-
+                            {% block Template %}{% endblock %}
+                            <!-- Ajouter condition si connecté pour la nav barre-->
+                            {% include "OutilsTemplates/NavBarre.html.twig" %}
+                            
+                            <!-- .page-inner -->
+                            <div class="page-inner">
+                                {% block Body %}{% endblock %}
+                            </div>
+                        </div><!-- /.page -->
+                </div><!-- /.wrapper -->
+                {% include "OutilsTemplates/Footer.html.twig" %}
+            </main>
+        </div>
 
         <!-- BEGIN BASE JS -->
         <script src="looper/dist/assets/vendor/jquery/jquery.min.js"></script>
