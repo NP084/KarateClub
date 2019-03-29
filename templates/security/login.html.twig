@@ -12,8 +12,14 @@
         <input placeholder="Mot de passe" required name="_password" type="password" class="form-control">
     </div>
     <div class="form_group">
+
         <button type="submit" class="btn btn-success">Connexion !</button>
-        <a href="/inscription" target="_self">Mot de passe oublié!</a>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me">Rester connecté!
+            </label>
+        </div>
+        <a href="{{ path('app_forgotten_password') }}" target="_self">Mot de passe oublié!</a>
     </div>
     <div class="form_group">
         <a href="/inscription" target="_self"><input type="button" class="btn btn-success" value="Créer un compte"></a>
