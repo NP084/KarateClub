@@ -23,7 +23,7 @@
         {% if (userConnected.user) %}
             {% if (userConnected.user.belt) %}
                  <h5> Grade</h5>
-                    <p> Grade : {{ userConnected.user.belt }} reçu le {{ userConnected.user.receiptDate }}</p>
+                    <p> Grade : {{ userConnected.user.belt }} reçu le {{ userConnected.user.receiptDate |date('d/m/Y') }}</p>
             {% endif %}
 
             <h4> </br> Coordonnées :</h4>
