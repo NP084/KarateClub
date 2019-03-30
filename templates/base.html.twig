@@ -49,6 +49,7 @@
         <link rel="stylesheet" href="looper/dist/assets/stylesheets/theme-dark.min.css" data-skin="dark">
         <link rel="stylesheet" href="looper/dist/assets/stylesheets/custom.css">
         <!-- Disable unused skin immediately -->
+        
         <script>
         var skin = localStorage.getItem('skin') || 'default';
         var unusedLink = document.querySelector('link[data-skin]:not([data-skin="'+ skin +'"])');
@@ -108,8 +109,11 @@
         <script src="looper/dist/assets/javascript/theme.min.js"></script> <!-- END THEME JS -->
         <!-- BEGIN PAGE LEVEL JS -->
         <script src="looper/dist/assets/javascript/pages/dashboard-demo.js"></script>
-        <script src="assets/javascript/pages/fullcalendar-demo.js"></script> <!-- END PAGE LEVEL JS -->
+        <script src="assets/javascript/pages/fullcalendar-demo.js"></script> 
+        <script src="assets/javascript/pages/table-demo.js"></script> 
         <!-- END PAGE LEVEL JS -->
+
+
         {% block javascripts %}{% endblock %}
 
     </body>
