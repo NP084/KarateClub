@@ -6,10 +6,12 @@ use App\Entity\Adress;
 use App\Entity\City;
 use App\Entity\ContactList;
 use App\Entity\PersonOfContact;
+use App\Entity\UserConnected;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
 use App\Form\PersonOfContactType;
+use App\Form\UserConnectedType;
 use App\Form\UserType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,16 +71,10 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      */
-    public function profileEdit(User $user, Request $request, ObjectManager $manager){
+    public function profileEdit(UserConnected $user, Request $request, ObjectManager $manager){
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        $formUser = $this->createForm(UserType::class, $user);
-        $formUser->handleRequest($request);
-        if($formUser->isSubmitted()){
-          //  $user=$this->getUser();
-          //  $manager->persist($user);
-            $manager->flush();
-            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
-        };
+        $formUserConnected = $this->createForm(UserConnectedType::class, $user);
+        $formUserConnected->handleRequest($request);
 
         // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
         $phone = new Phone();
@@ -124,8 +120,8 @@ class MemberController extends AbstractController
 
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
-            'user'           => $user,
-            'formUser'       => $formUser->createView(),
+            'userConnected'  => $user,
+            'formUser'       => $formUserConnected->createView(),
             'phoneForm'      => $formPhone->createView(),
             'adressForm'     => $formAdress->createView(),
             'cityForm'       => $formCity->createView(),
@@ -136,13 +132,11 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
      */
-    public function profileShow(User $user, Request $request){
-        // $usr = $this->getuser();
-        // if ($usr->getId() !== $user->getId()){
+    public function profileShow(UserConnected $user, Request $request){
+
         return $this->render('member/showProfile.html.twig',[
-            'user' => $user
+            'userConnected' => $user
         ]);
-        //    }
     }
 
     /**
