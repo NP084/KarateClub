@@ -84,14 +84,13 @@ class MemberController extends AbstractController
         // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
         if($formPoC->isSubmitted() && $formPoC->isValid()){
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->addUserPoC($user, $contactList, $PoC, $request, $manager);
+            $this->addUserPoC($userConnected, $contactList, $PoC, $request, $manager);
             return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
         }
 
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'userConnected'  => $userConnected,
-            'user'           => $user,
             'formUser'       => $formUser->createView(),
             'phoneForm'      => $formPhone->createView(),
             'adressForm'     => $formAdress->createView(),
@@ -117,18 +116,19 @@ class MemberController extends AbstractController
     public function removePoC($idCL, $idUser){
         $entityManager=$this->getDoctrine()->getManager();
         $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
-        $user = $entityManager->getRepository(User::class)->find($idUser);
+        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
+        $user = $userConnected->getUser();
 
         $user->removeContactList($contactList);
         $entityManager->flush();
 
-        return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
     }
 
     /**
      * AJOUTE NOUVELLE PERSONNE DE CONTACT à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public function addUserPoC(User $user, ContactList $contactList, PersonOfContact $PoC, Request $request, ObjectManager $manager){
+    public function addUserPoC(UserConnected $userConnected, ContactList $contactList, PersonOfContact $PoC, Request $request, ObjectManager $manager){
         $repo = $this->getDoctrine()
             ->getRepository(PersonOfContact::class);
         $PoCTest = $repo->findOneBy([
@@ -159,11 +159,11 @@ class MemberController extends AbstractController
                 // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
                 $contactList->setPersonOfContact($PoCTest);
             }
-            $user   ->addContactList($contactList);
+            $userConnected->getUser()->addContactList($contactList);
             $manager->flush();
         }else{
             // associe l'adresse existante à cet user
-            $user   ->addContactList($contactListTest);
+            $userConnected->getUser()->addContactList($contactListTest);
             $manager->flush();
         }
     }
@@ -272,11 +272,11 @@ class MemberController extends AbstractController
      * MODIFICATION D'UNE PERSONNE DE CONTACT.
      * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
-     * @Security("user.getId() == contactList.getUser().getId()")
+     * @Security("user.getUser().getId() == contactList.getUser().getId()")
      */
     public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager){
         $entityManager=$this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($id);
+        $userConnected = $entityManager->getRepository(UserConnected::class)->find($id);
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
 
         $formCL = $this->createForm(ContactListType::class, $contactList);
@@ -285,7 +285,7 @@ class MemberController extends AbstractController
         if($formCL->isSubmitted() && $formCL->isValid()){
             $manager->persist($contactList);
             $manager->flush();
-            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+            return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
         }
 
         return $this->render('member/editPersonOfContact.html.twig', [
