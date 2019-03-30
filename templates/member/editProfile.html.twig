@@ -17,10 +17,9 @@
             <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y')}} </p>
 
             <h2> Modification des données personnelles </h2>
+            {{ form_start(formUser) }}
+
             <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
-
-                {{ form_start(formUser) }}
-
                 <div class="form-group">
                     <label for="">Genre</label>
                     {{ form_widget(formUser.sex) }}

@@ -36,9 +36,15 @@ class MemberController extends AbstractController
     public function profileEdit(UserConnected $userConnected, Request $request, ObjectManager $manager){
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
 
-        $user = new User();
+        $user = $userConnected->getUser();
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
+
+        if($formUser->isSubmitted() && $formUser->isValid()){
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+        }
 
         // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
         $phone = new Phone();
@@ -85,6 +91,7 @@ class MemberController extends AbstractController
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'userConnected'  => $userConnected,
+            'user'           => $user,
             'formUser'       => $formUser->createView(),
             'phoneForm'      => $formPhone->createView(),
             'adressForm'     => $formAdress->createView(),
