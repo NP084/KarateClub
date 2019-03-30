@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\UserConnected;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -18,10 +18,6 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('birthday', DateType::class, [
-                'years' => range(1900, date('Y')-4),
-                'format' => 'dd-MM-yyyy',
-            ])
             ->add('belt')
             ->add('receiptDate',DateType::class, [
                 'required'=> false,
@@ -43,7 +39,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => UserConnected::class,
+            'data_class' => User::class,
         ]);
     }
 }

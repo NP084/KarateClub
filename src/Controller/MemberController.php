@@ -28,53 +28,17 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-
 class MemberController extends AbstractController
 {
     /**
-     * @Route("/member", name="member")
-     */
-    public function index()
-    {
-        return $this->render('member/showContent.html.twig', [
-            'controller_name' => 'MemberController',
-        ]);
-    }
-
-    /**
-     * MODIFICATION D'UNE PERSONNE DE CONTACT.
-     * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
-     * @ParamConverter("contactList", options={"id"="idCL"})
-     * @Security("user.getId() == contactList.getUser().getId()")
-     */
-    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager){
-        $entityManager=$this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($id);
-        $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
-
-        $formCL = $this->createForm(ContactListType::class, $contactList);
-        $formCL->handleRequest($request);
-
-        if($formCL->isSubmitted() && $formCL->isValid()){
-            $manager->persist($contactList);
-            $manager->flush();
-            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
-        }
-
-        return $this->render('member/editPersonOfContact.html.twig', [
-            'contactList'    =>$contactList,
-            'ContactListForm'=>$formCL->createView(),
-            'personOfContact'=>$personOfContact,
-        ]);
-    }
-
-    /**
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      */
-    public function profileEdit(UserConnected $user, Request $request, ObjectManager $manager){
+    public function profileEdit(UserConnected $userConnected, Request $request, ObjectManager $manager){
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        $formUserConnected = $this->createForm(UserConnectedType::class, $user);
-        $formUserConnected->handleRequest($request);
+
+        $user = new User();
+        $formUser = $this->createForm(UserType::class, $user);
+        $formUser->handleRequest($request);
 
         // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
         $phone = new Phone();
@@ -84,8 +48,8 @@ class MemberController extends AbstractController
         // Formulaire d'ajout d'un n° de téléphone a été envoyé :
         if($formPhone->isSubmitted() && $formPhone->isValid()){
             // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
-            $this->addUserPhone($user, $phone, $request, $manager);
-            return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+            $this->addUserPhone($userConnected, $phone, $request, $manager);
+            return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
         }
 
         // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
@@ -96,11 +60,11 @@ class MemberController extends AbstractController
         $formCity = $this->createForm(CityType::class, $city);
         $formCity->handleRequest($request);
 
-        // Formulaire d'ajout d'une nouvelle adress a été envoyé :
+        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
         if($formAdress->isSubmitted() && $formAdress->isValid()){
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->addUserAdress($user, $adress, $city, $request, $manager);
-            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+            $this->addUserAdress($userConnected, $adress, $city, $request, $manager);
+            return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
         }
 
         // Formulaire Personne de contact
@@ -115,13 +79,13 @@ class MemberController extends AbstractController
         if($formPoC->isSubmitted() && $formPoC->isValid()){
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
             $this->addUserPoC($user, $contactList, $PoC, $request, $manager);
-            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+            return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
         }
 
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
-            'userConnected'  => $user,
-            'formUser'       => $formUserConnected->createView(),
+            'userConnected'  => $userConnected,
+            'formUser'       => $formUser->createView(),
             'phoneForm'      => $formPhone->createView(),
             'adressForm'     => $formAdress->createView(),
             'cityForm'       => $formCity->createView(),
@@ -200,7 +164,7 @@ class MemberController extends AbstractController
     /**
      * AJOUTE NOUVEAU PHONE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public function addUserPhone(User $user, Phone $phone, Request $request, ObjectManager $manager){
+    public function addUserPhone(UserConnected $userConnected, Phone $phone, Request $request, ObjectManager $manager){
         $repo = $this->getDoctrine()
             ->getRepository(Phone::class);
         $phoneTest = $repo->findOneBy([
@@ -210,11 +174,11 @@ class MemberController extends AbstractController
         if (!$phoneTest) {
             // enregistre le nouveau numéro dans la DB
             $manager->persist($phone);
-            $user->addPhone($phone);
+            $userConnected->getUser()->addPhone($phone);
             $manager->flush();
         }else{
             // associe le n° existant à cet user
-            $user->addPhone($phoneTest);
+            $userConnected->getUser()->addPhone($phoneTest);
             $manager->flush();
         }
     }
@@ -227,12 +191,13 @@ class MemberController extends AbstractController
     public function removeUserPhone($idPhone, $idUser){
         $entityManager=$this->getDoctrine()->getManager();
         $phone = $entityManager->getRepository(Phone::class)->find($idPhone);
-        $user = $entityManager->getRepository(User::class)->find($idUser);
+        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
+        $user = $userConnected->getUser();
 
         $phone->removeUser($user);
         $entityManager->flush();
 
-        return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
     }
 
     /**
@@ -241,20 +206,21 @@ class MemberController extends AbstractController
      */
     public function removeUserAdress($idAdress, $idUser){
         $entityManager=$this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($idUser);
+        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
+        $user = $userConnected->getUser();
         $adress = $entityManager->getRepository(Adress::class)->find($idAdress);
 
         $user->removeAdress($adress);
         $entityManager->flush();
 
-        return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
     }
 
 
     /**
      * AJOUTE NOUVELLE ADRESSE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public function addUserAdress(User $user, Adress $adress, City $city, Request $request, ObjectManager $manager){
+    public function addUserAdress(UserConnected $userConnected, Adress $adress, City $city, Request $request, ObjectManager $manager){
         $repoCity = $this->getDoctrine()
             ->getRepository(City::class);
         $cityTest = $repoCity->findOneBy([
@@ -287,12 +253,38 @@ class MemberController extends AbstractController
                 // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
                 $adress->setCity($cityTest);
             }
-            $user   ->addAdress($adress);
+            $userConnected->getUser()->addAdress($adress);
             $manager->flush();
         }else{
             // associe l'adresse existante à cet user
-            $user   ->addAdress($adressTest);
+            $userConnected->getUser()->addAdress($adressTest);
             $manager->flush();
         }
+    }
+    /**
+     * MODIFICATION D'UNE PERSONNE DE CONTACT.
+     * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
+     * @ParamConverter("contactList", options={"id"="idCL"})
+     * @Security("user.getId() == contactList.getUser().getId()")
+     */
+    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager){
+        $entityManager=$this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($id);
+        $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
+
+        $formCL = $this->createForm(ContactListType::class, $contactList);
+        $formCL->handleRequest($request);
+
+        if($formCL->isSubmitted() && $formCL->isValid()){
+            $manager->persist($contactList);
+            $manager->flush();
+            return $this->redirectToRoute('profile_edit',['id'=>$user->getId()]);
+        }
+
+        return $this->render('member/editPersonOfContact.html.twig', [
+            'contactList'    =>$contactList,
+            'ContactListForm'=>$formCL->createView(),
+            'personOfContact'=>$personOfContact,
+        ]);
     }
 }
