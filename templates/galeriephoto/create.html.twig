@@ -43,7 +43,7 @@
 
     <div class="row">
         <div class="col-md-5">
-            {{ form_widget(formMedia.imageFile) }}
+            {{ form_widget(formGaleriephoto.media.vars.prototype)|e }}
         </div>
 
     </div>
@@ -70,15 +70,16 @@
     </button>
 
 
+
+
+    {#
+
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/jquery.collection.js') }}"></script>
 
     <script type="text/javascript">
         $('.my-selector').collection();
     </script>
-
-
-    {#
 
       <script>
         var $collectionHolder;
