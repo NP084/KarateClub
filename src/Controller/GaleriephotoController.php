@@ -30,13 +30,20 @@ class GaleriephotoController extends AbstractController
         if (!$galerie){
             $galerie = new Gallery();
         }
-        $media = new Media();
+       // $media = new Media();
+
+        $name1 = new Media();
+        $name1 -> setImageName('photo1');
+        $name2 = new Media();
+        $name2 -> setImageName('photo2');
+        $galerie->addMedium($name1);
+        $galerie->addMedium($name2);
 
         $form = $this->createForm(GalleryType::class, $galerie);
         $form->handleRequest($request);
 
-        $formMedia = $this->createForm(MediaType::class, $media);
-        $form->handleRequest($request);
+   /*     $formMedia = $this->createForm(MediaType::class, $media);
+        $form->handleRequest($request);*/
 
         if ($form->isSubmitted() && $form->isValid()){
             if (!$galerie->getId()){
@@ -50,7 +57,7 @@ class GaleriephotoController extends AbstractController
 
         return $this->render('galeriephoto/create.html.twig', [
             'formGaleriephoto'=>$form->createView(),
-            'formMedia'=>$formMedia->createView(),
+        //    'formMedia'=>$formMedia->createView(),
             'editMode'=> $galerie->getId()!==null
         ]);
     }

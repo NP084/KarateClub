@@ -1,20 +1,44 @@
 {% extends "base.html.twig" %}
 
+{% block extra_js %}
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+{% endblock %}
+
 
 {% block Body %}
 
     <h1> Création d'une nouvelle galerie </h1>
 
-    {% form_theme formGaleriephoto 'jquery.collection.html.twig' %}
-
+    {%
+        form_theme formGaleriephoto
+        'jquery.collection.html.twig'
+    %}
+{#
     {{ form_start(formGaleriephoto) }}
+#}
+    {{ form_row(formGaleriephoto.name) }}
+    {{ form_row(formGaleriephoto.description) }}
+
+    <h3>Photos</h3>
+    <ul class="media" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}">
 
     {% for media in formGaleriephoto.media  %}
 
+{#
         {{ form_widget(media.imageFile) }}
+#}
+        {% block GalleryType_widget %}
+            <li>{{ form_widget(media.imageName) }}</li>
 
-        </div>
-        <div class="col-md-3">
+                <p class="text-center">
+                    <a href="#" class="collection-remove btn btn-warning">-</a>
+                    <a href="#" class="collection-add btn btn-success">+</a>
+               </p>
+        {% endblock %}
+
+
+
+     {#   <div class="col-md-3">
             <a href="#" class="collection-up btn btn-default" title="Move fruit up"><span class="glyphicon glyphicon-arrow-up"></span></a>
             <a href="#" class="collection-down btn btn-default" title="Move fruit down"><span class="glyphicon glyphicon-arrow-down"></span></a>
         </div>
@@ -25,11 +49,8 @@
         <div class="col-md-1">
             <a href="#" class="collection-duplicate btn btn-default" title="Duplicate fruit"><span class="glyphicon glyphicon-th-large"></span></a>
         </div>
-        </div>
-
+        </div>#}
     {% endfor %}
-
-    </ul>
 
 
     {#
@@ -38,12 +59,15 @@
       #}
 
 
-
+{#
     {{ form_end(formGaleriephoto)}}
+#}
 
-    <div class="row">
+    </ul>
+
+   {# <div class="row">
         <div class="col-md-5">
-            {{ form_widget(formGaleriephoto.media.vars.prototype)|e }}
+            {{ form_widget(formGaleriephoto.media.vars.prototype.imageName)|e }}
         </div>
 
     </div>
@@ -59,7 +83,7 @@
         <a href="#" class="collection-duplicate btn btn-default" title="Duplicate fruit"><span class="glyphicon glyphicon-th-large"></span></a>
     </div>
     </div>
-
+#}
 
     <button type="submit" class="btn btn-success">
         {%if editMode %}
@@ -68,20 +92,9 @@
             Ajouter l'article
         {% endif %}
     </button>
+{#
 
-
-
-
-    {#
-
-    <script src="{{ asset('js/jquery.js') }}"></script>
-    <script src="{{ asset('js/jquery.collection.js') }}"></script>
-
-    <script type="text/javascript">
-        $('.my-selector').collection();
-    </script>
-
-      <script>
+    <script>
         var $collectionHolder;
 
         // setup an "add a tag" link
@@ -130,8 +143,19 @@
             $newLinkLi.before($newFormLi);
         }
     </script>
-
 #}
+
+
+
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+
+    <script type="text/javascript">
+        $('.my-selector').collection();
+    </script>
+
+
+
 
 {% endblock %}
 
