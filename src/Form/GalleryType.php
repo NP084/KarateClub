@@ -22,7 +22,6 @@ class GalleryType extends AbstractType
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'prototype'     => true,
-                'multiple'      => true,
                 'attr' => array(
                     'class' => 'my-selector',
                 ),
