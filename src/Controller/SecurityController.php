@@ -78,10 +78,10 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('security_login');//'home' il n'y a jamais eu  d'exception
             }
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
-            $message = (new \Swift_Message('Mot de passe oublié'))
+            $message = (new \Swift_Message('Mot de passe oublié VIKA'))
                 ->setFrom('vanrijmenantp@gmail.com')
                 ->setTo($user->getEmail())
-                ->setBody("Voici le token pour reseter votre mot de passe : " . $url, 'text/html');
+                ->setBody("Voici le lien pour entrer votre nouveau mot de passe : " . $url, 'text/html');
             $mailer->send($message);//je ne recois jamais de message pourtant je suis redirigé apres vers la bonne route
             $this->addFlash('notice', 'Mail envoyé');
             return $this->redirectToRoute('blog');//'home' ok quand je mets un email de la basse de donnée
