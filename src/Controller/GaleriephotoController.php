@@ -28,14 +28,14 @@ class GaleriephotoController extends AbstractController
 
         if (!$galerie){
             $galerie = new Gallery();
-            $media   = new  Media();
+           // $media   = new  Media();
         }
 
         $form = $this->createForm(GalleryType::class, $galerie);
         $form->handleRequest($request);
 
-        $formMedia = $this->createForm(MediaType::class, $media);
-        $form->handleRequest($request);
+     //   $formMedia = $this->createForm(MediaType::class, $media);
+     //   $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
             if (!$galerie->getId()){
@@ -49,7 +49,7 @@ class GaleriephotoController extends AbstractController
 
         return $this->render('galeriephoto/create.html.twig', [
             'formGaleriephoto'=>$form->createView(),
-            'formMedia'=>$formMedia->createView(),
+         //   'formMedia'=>$formMedia->createView(),
             'editMode'=> $galerie->getId()!==null
         ]);
     }
