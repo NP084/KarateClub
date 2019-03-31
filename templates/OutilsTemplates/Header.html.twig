@@ -10,7 +10,7 @@
 
             <!-- .navbar -->
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a class="navbar-brand" href="{{ path('home') }}">Home</a> <!-- toggle menu -->
+                <a class="navbar-brand" href="{{ path('home') }}">Accueil</a> <!-- toggle menu -->
                 <button class="hamburger hamburger hamburger-squeeze hamburger-toggle d-lg-none" type="button" data-toggle="collapse" data-target="#navbarColor2" aria-controls="navbarColor2" aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>
                 <!-- .navbar-collapse -->
                 <div class="collapse navbar-collapse" id="navbarColor2">
@@ -33,14 +33,19 @@
                                     <a class="dropdown-item" href="#">Compétition</a>
                                     <a class="dropdown-item" href="#">Matériels</a>
                                 </div>
-                            </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="{{ path('blog')}}">Actualités<span class="sr-only">(current)</span> </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link" data-toggle="dropdown" href="{{ path('blog')}}" role="button">Actualités<span class="caret"></span></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Galerie photo</a> 
+                                </div>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" href="#">Suivi pédagogique</a>
                         </li>                         
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>  
 
 
                     </ul><!-- /.navbar-nav -->
