@@ -10,7 +10,7 @@
 
             <!-- .navbar -->
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a class="navbar-brand" href="{{ path('home') }}">Home</a> <!-- toggle menu -->
+                <a class="navbar-brand" href="{{ path('home') }}">Accueil</a> <!-- toggle menu -->
                 <button class="hamburger hamburger hamburger-squeeze hamburger-toggle d-lg-none" type="button" data-toggle="collapse" data-target="#navbarColor2" aria-controls="navbarColor2" aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>
                 <!-- .navbar-collapse -->
                 <div class="collapse navbar-collapse" id="navbarColor2">
@@ -33,14 +33,19 @@
                                     <a class="dropdown-item" href="#">Compétition</a>
                                     <a class="dropdown-item" href="#">Matériels</a>
                                 </div>
-                            </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="{{ path('blog')}}">Actualités<span class="sr-only">(current)</span> </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link" data-toggle="dropdown" href="{{ path('blog')}}" role="button">Actualités<span class="caret"></span></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Galerie photo</a> 
+                                </div>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" href="#">Suivi pédagogique</a>
                         </li>                         
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>  
 
 
                     </ul><!-- /.navbar-nav -->
@@ -49,23 +54,33 @@
 
             <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
             <!-- Ajouter condition sinon bouton connexion -->
+                {% if not app.user%}
+                {% else %}
                 <!-- .btn-account -->
                 <div class="dropdown">
-                    <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="looper/dist/assets/images/avatars/profile.jpg" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Beni Arisandi </font></font></span> <span class="account-description"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Directeur Marketing</font></font></span></span></button>
+                    <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{{ vich_uploader_asset(app.user.getUser(), 'imageFile') }}" alt=" " width="42" /></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ app.user.firstname }} {{ app.user.name }} </font></font></span> <span class="account-description"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Directeur Marketing</font></font></span></span></button>
                     <div class="dropdown-arrow dropdown-arrow-left">
                     </div><!-- .dropdown-menu -->
                     <div class="dropdown-menu">
-                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> Beni Arisandi </h6><a class="dropdown-item" href="looper/dist/user-profile.html"><span class="dropdown-icon oi oi-person"></span> Profile</a> <a class="dropdown-item" href="looper/dist/auth-signin-v1.html"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{ app.user.firstname }} {{ app.user.name }} </h6><a class="dropdown-item" href="looper/dist/user-profile.html"><span class="dropdown-icon oi oi-person"></span> Profile</a> <a class="dropdown-item" href="looper/dist/auth-signin-v1.html"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
                         <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
-                        </div><!-- /.dropdown-menu -->
-                    </div><!-- /.btn-account -->
-                    
-                    <!-- Logo Social -->
-                    <div class="social">
+                    </div><!-- /.dropdown-menu -->
+                </div><!-- /.btn-account -->
+                {% endif %}
+
+                <!-- Bouton Se connecter -->
+                {% if not app.user%}
+                    <a href="{{ path('security_login') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Connexion</a>
+                {% else %}
+                    <a href="{{ path('security_logout') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Déconnexion</a>
+                {% endif %}
+
+
+                <!-- Logo Social -->
+                <div class="social">
                         <ul>
                             <li><a href="https://www.facebook.com"><i class="fa fa-lg fa-facebook"></i></a></li>
                         </ul>
-                    </div>
                 </div>
             </div>
         </div><!-- /.top-bar -->

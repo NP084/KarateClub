@@ -84,7 +84,7 @@ class UserConnected implements UserInterface, \Serializable
     */
     public function getResetToken(): string
     {
-      return $this->resetToken;
+        return $this->resetToken;
     }
 
     /**
@@ -92,7 +92,13 @@ class UserConnected implements UserInterface, \Serializable
     */
     public function setResetToken(?string $resetToken): void
     {
-      $this->resetToken = $resetToken;
+        $this->resetToken = $resetToken;
+    }
+
+    public function __construct()
+    {
+        $user = new User();
+        $this->setUser($user);
     }
 
     /** @see \Serializable::serialize() */

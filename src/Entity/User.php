@@ -112,7 +112,7 @@ class User
         $this->histories = new ArrayCollection();
         $this->contactLists = new ArrayCollection();
         $this->updatedImage = new \DateTime();
-        $this->isActive = true;
+        $this->isActive = false;
     }
 
     public function setImageName(?string $imageName): void

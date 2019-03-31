@@ -17,17 +17,37 @@
                 </figure><!-- /.embed-responsive -->
                 <!-- .card-body -->
                 <div class="card-body">
-                <p class="card-text"> {{ article.content|raw }}
-                    <a href="#" class="mention">@stilearningTwit</a> . <a href="#" class="hashtag">#looper</a> <a href="#" class="hashtag">#admin</a><br>
-                    <time datetime="2018-02-12">Feb 12, 2018 at 08:19pm</time>
+                <p class="card-text"> 
+                    
+                        {{ article.content|raw }}
+                    
                 </p>
                 </div><!-- /.card-body -->
                 <!-- .card-footer -->
                 <div class="card-footer">
-                <div class="card-footer-content text-muted"> 
-                    <a class="btn btn-primary btn-lg" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Lire la suite</a>
-                </div>
-            </div><!-- /.card-footer -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="card-footer-content text-muted"> 
+                                <a class="btn btn-primary btn-md" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Lire la suite</a>
+                            </div>
+                        </div>
+                        {% if app.user%}
+                            <div class="col-2">
+                                <div class="card-footer-content text-muted"> 
+                                    <a class="btn btn-primary btn-md" href="{{ path('blog_edit', {'id':article.id}) }}" role="button">Editer</a>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card-footer-content text-muted"> 
+                                    <a class="btn btn-primary btn-md" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Supprimer</a>
+                                </div>
+                            </div>
+                        {% else %}
+                        {% endif %}
+                    </div>
+                    
+                    
+                </div><!-- /.card-footer -->
         </div>
     </div>
         {% endfor %}
