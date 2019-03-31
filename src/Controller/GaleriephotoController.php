@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Gallery;
-use App\Form\MediaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Media;

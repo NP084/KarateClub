@@ -3,8 +3,50 @@
 
 {% block Body %}
 
+    <h1> Création d'une nouvelle galerie </h1>
 
-    <script>
+    {% form_theme formGaleriephoto 'jquery.collection.html.twig' %}
+
+    {{ form_start(formGaleriephoto) }}
+
+    <ul class="media" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}>
+        {% for media in formGaleriephoto.media  %}
+
+            <li>{{ form_row(media.imageFile) }}</li>
+        {% endfor %}
+
+    </ul>
+
+
+    {#
+        {{ form_start(formMedia) }}
+        {{ form_end(formMedia) }}
+      #}
+
+
+    <button type="submit" class="btn btn-success">
+        {%if editMode %}
+            Enregister modification(s)
+        {% else %}
+            Ajouter l'article
+        {% endif %}
+    </button>
+
+
+{{ form_end(formGaleriephoto)}}
+
+
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+
+    <script type="text/javascript">
+        $('.my-selector').collection();
+    </script>
+
+
+    {#
+
+      <script>
         var $collectionHolder;
 
         // setup an "add a tag" link
@@ -54,36 +96,7 @@
         }
     </script>
 
-
-    <h1> Création d'une nouvelle galerie </h1>
-
-{{ form_start(formGaleriephoto) }}
-
-    <ul class="media" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}>
-        {% for media in formGaleriephoto.media  %}
-            <li>{{ form_row(media.imageFile) }}</li>
-        {% endfor %}
-
-    </ul>
-
-
-    {#
-        {{ form_start(formMedia) }}
-        {{ form_end(formMedia) }}
-      #}
-
-
-
-    <button type="submit" class="btn btn-success">
-        {%if editMode %}
-            Enregister modification(s)
-        {% else %}
-            Ajouter l'article
-        {% endif %}
-    </button>
-
-
-{{ form_end(formGaleriephoto)}}
-
+#}
 
 {% endblock %}
+

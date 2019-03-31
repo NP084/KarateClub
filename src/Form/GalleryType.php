@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Gallery;
+use App\Form\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,9 +17,14 @@ class GalleryType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('media', CollectionType::class, [
-                'entry_type'    => GalleryType::class,
+                'entry_type'    => MediaType::class,
                 'entry_options' => ['label' => false],
                 'allow_add'     => true,
+                'allow_delete'  => true,
+                'prototype'     => true,
+                'attr' => array(
+                    'class' => 'my-selector',
+                ),
             ]);
         ;
     }

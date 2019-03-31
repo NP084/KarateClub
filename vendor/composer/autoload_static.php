@@ -556,6 +556,7 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
 
     public static $classMap = array (
         'Collator' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/Collator.php',
+        'Fuz\\Symfony\\Collection\\ScriptHandler' => __DIR__ . '/..' . '/ninsuo/symfony-collection/ScriptHandler.php',
         'IntlDateFormatter' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/IntlDateFormatter.php',
         'Locale' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/Locale.php',
         'NumberFormatter' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/NumberFormatter.php',
