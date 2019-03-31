@@ -18,7 +18,7 @@ class GalleryType extends AbstractType
             ->add('media', CollectionType::class, [
                 'entry_type'    => GalleryType::class,
                 'entry_options' => ['label' => false],
-             //   'allow_add'     => true,
+                'allow_add'     => true,
             ]);
         ;
     }
