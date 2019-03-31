@@ -12,6 +12,7 @@ use App\Entity\UserConnected;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -66,7 +67,7 @@ class SecurityController extends AbstractController
             /* @var $user User */
             if ($user === null) {
                 $this->addFlash('danger', 'Email Inconnu');
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('security_registration');//'home' j'ai changé la page pour voir quelle boucle il fait quand on met email qui n est pas dans la base de données
             }
             $token = $tokenGenerator->generateToken();
             try{
@@ -74,19 +75,16 @@ class SecurityController extends AbstractController
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('security_login');//'home' il n'y a jamais eu  d'exception
             }
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
             $message = (new \Swift_Message('Mot de passe oublié'))
-                ->setFrom('g.ponty@dev-web.io')
+                ->setFrom('vanrijmenantp@gmail.com')
                 ->setTo($user->getEmail())
-                ->setBody(
-                    "blablabla voici le token pour reseter votre mot de passe : " . $url,
-                    'text/html'
-                );
-            $mailer->send($message);
+                ->setBody("Voici le token pour reseter votre mot de passe : " . $url, 'text/html');
+            $mailer->send($message);//je ne recois jamais de message pourtant je suis redirigé apres vers la bonne route
             $this->addFlash('notice', 'Mail envoyé');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('blog');//'home' ok quand je mets un email de la basse de donnée
         }
         return $this->render('security/forgotten_password.html.twig');
     }
@@ -98,7 +96,7 @@ class SecurityController extends AbstractController
     {
         if ($request->isMethod('POST')) {
             $entityManager = $this->getDoctrine()->getManager();
-            $user = $entityManager->getRepository(User::class)->findOneByResetToken($token);
+            $user = $entityManager->getRepository(UserConnected::class)->findOneByResetToken($token);
             /* @var $user User */
             if ($user === null) {
                 $this->addFlash('danger', 'Token Inconnu');
