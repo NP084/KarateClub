@@ -11,43 +11,41 @@
         <div class="metadata">Inscrit sur le site depuis  : {{ userConnected.createdUser |date('d/m/Y')}}</div>
 
         <h4> </br> Informations générales :</h4>
-        <div class="content">
-            <p> Nom d'utilisateur : {{ userConnected.username}} </p>
-            <p> Email : {{ userConnected.email }} </p>
-            <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y')}} </p>
+        <p> Nom d'utilisateur : {{ userConnected.username}} </p>
+        <p> Email : {{ userConnected.email }} </p>
+        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y')}} </p>
 
-            <h2> Modification des données personnelles </h2>
-            {{ form_start(formUser) }}
+        <h2> Modification des données personnelles </h2>
+        {{ form_start(formUser) }}
 
-            <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
-                <div class="form-group">
-                    <label for="">Genre</label>
-                    {{ form_widget(formUser.sex) }}
-                </div>
+        <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
+            <div class="form-group">
+                <label for="">Genre</label>
+                {{ form_widget(formUser.sex) }}
+            </div>
 
-                <div class="form-group">
-                    <label for="">Grade</label>
-                    {{ form_widget(formUser.belt) }}
-                </div>
+            <div class="form-group">
+                <label for="">Grade</label>
+                {{ form_widget(formUser.belt) }}
+            </div>
 
-                <div class="form-group">
-                    <label for="">Date d'obtention</label>
-                    {{ form_widget(formUser.receiptDate) }}
-                </div>
+            <div class="form-group">
+                <label for="">Date d'obtention</label>
+                {{ form_widget(formUser.receiptDate) }}
+            </div>
 
-                <div class="form-group">
-                    <label for="">Ajoutez une photo de profile</label>
-                    {{ form_widget(formUser.imageFile) }}
-                </div>
+            <div class="form-group">
+                <label for="">Ajoutez une photo de profil</label>
+                {{ form_widget(formUser.imageFile) }}
+            </div>
 
-                <button type="submit" class="btn btn-link">Enregister modification(s)</button>
+            <button type="submit" class="btn btn-link">Enregister modification(s)</button>
 
-                {{ form_end(formUser) }}
+            {{ form_end(formUser) }}
 
-                <div class="col-4">
-                    <button type="submit" class="btn btn-link">Modifier mot de passe</button>
-                </div>
-        </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-link">Modifier mot de passe</button>
+            </div>
 
         </form>
 
