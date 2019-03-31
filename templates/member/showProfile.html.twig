@@ -1,143 +1,140 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
+
+    <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
+        </br> Modifier profile </br>
+    </a>
+
     {% if app.user and app.user.id == app.request.get("id") %}
 
         {# vérifie si l'id du visiteur correspond à l'id du membre qu'il veut consulter #}
         <h2>Profile utilisateur </h2>
-        <h3>{{ user.name }} {{ user.firstName }} </h3>
-        <div class="metadata">Inscrit sur le site depuis  : {{ user.createdUser |date('d/m/Y')}}</div>
+        <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
+        <div class="metadata">Inscrit sur le site depuis  : {{ userConnected.createdUser |date('d/m/Y')}}</div>
 
         <h4> </br> Informations générales :</h4>
         <div class="content">
-        {# <img src="{{ article.image}}" alt=""> #}
-        <p> Nom d'utilisateur : {{ user.username}} </p>
-        <p> Email : {{ user.email }} </p>
-        <p> Date de naissance : {{ user.birthday |date('d/m/Y')}} </p>
-        {% if (user.belt) %}
-            <p> Grade : {{ user.belt }} reçu le {{ user.receiptDate }}</p>
+        <p> Nom d'utilisateur : {{ userConnected.username}} </p>
+        <p> Email : {{ userConnected.email }} </p>
+        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y')}} </p>
+
+        {# Si la table user qui contient les détails sur le user est associée à userConnected#}
+        {% if (userConnected.user) %}
+            {% if (userConnected.user.belt) %}
+                 <h5> Grade</h5>
+                    <p> Grade : {{ userConnected.user.belt }} reçu le {{ userConnected.user.receiptDate |date('d/m/Y') }}</p>
+            {% endif %}
+
+            <h4> </br> Coordonnées :</h4>
+            <h5> Téléphone </h5>
+            {% for phone in userConnected.user.phones %}
+                <div class="phone">
+                    <div class="row">
+                        <div class="col-2">
+                            {{ phone.type }}
+                        </div>
+                        <div class="col">
+                            {{ phone.num}}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h5> <br> Adresses </h5>
+            {% for adress in userConnected.user.adress %}
+                <div class="adress">
+                    <div class="row">
+                        <div class="col-1">
+                            {{ adress.type}}
+                        </div>
+                        <div class="col">
+                            {{ adress.num }}
+                            BP  {{ adress.postBox }}
+                            {{ adress.streetName }}
+                        </div>
+                        <div class="col">
+                            {{ adress.city.cityName }}
+                            ({{ adress.city.zip }})
+                        </div>
+                        <div class="col">
+                            {{ adress.city.country.countryName }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h4> </br> Personnes de contact :</h4>
+            {% for contactList in userConnected.user.contactLists %}
+                <div class="POC">
+                    <div class="row">
+                        <div class="col-1">
+                            {{ contactList.personOfContact.name }}
+                        </div>
+                        <div class="col-1">
+                            {{ contactList.personOfContact.firstName }}
+                        </div>
+                        <div class="col-3">
+                            {{ contactList.personOfContact.num1}}
+                        </div>
+                        <div class="col-1">
+                            {{ contactList.relation}}
+                        </div>
+                        <div class="col-7">
+                            Info : {{ contactList.info}}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {#Affichle les inscriptions du membre#}
+
+            <h4> <br> Liste des inscriptions </h4>
+            <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Date d'inscription</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Info</th>
+            </tr>
+            </thead>
+
+            {% for registration in userConnected.user.registration %}
+                <div class="rental">
+                <div class="row">
+                    <div class="col">
+                        {{ registration.registrationDate | date ('d/m/Y') }}
+                    </div>
+                    <div class="col">
+                        {{ registration.event.title }}
+                    </div>
+                    <div class="col">
+                        {{ registration.remark}}
+                    </div>
+                </div>
+            {% endfor %}
+
+            {#Affichle l'historique du membre#}
+
+            <h4> <br> Parcours </h4>
+
+            {% for history in userConnected.user.histories %}
+                <div class="row">
+                    <div class="col">
+                        {{ history.refDate | date ('d/m/Y') }}
+                    </div>
+                    <div class="col">
+                        {{ history.description }}
+                    </div>
+                    <div class="col">
+                        {{ history.comment}}
+                    </div>
+                </div>
+            {% endfor %}
+
         {% endif %}
 
-        <h5> Grade</h5>
 
-        <div class="form_group">
-            <input placeholder="Nouveau grade" required name="_belt" type="text" class="form-control">
-        </div>
-        <div class="form_group">
-            <input placeholder="Date d'obtention: jj/mm/aaaa" required name="_receiptDate" type="date" class="form-control">
-        </div>
-        <a href="{{ path('profile_show',{'id':user.id}) }}" class="btn-btn-primary">
-            Ajouter un grade !
-        </a>
-
-        <h4> </br> Coordonnées :</h4>
-        <h5> Téléphone </h5>
-        {% for phone in user.phones %}
-            <div class="phone">
-                <div class="row">
-                    <div class="col-2">
-                        {{ phone.type }}
-                    </div>
-                    <div class="col">
-                        {{ phone.num}}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-
-        <h5> <br> Adresses </h5>
-        {% for adress in user.adress %}
-            <div class="adress">
-                <div class="row">
-                    <div class="col-1">
-                        {{ adress.type}}
-                    </div>
-                    <div class="col">
-                        {{ adress.num }}
-                        BP  {{ adress.postBox }}
-                        {{ adress.streetName }}
-                    </div>
-                    <div class="col">
-                        {{ adress.city.cityName }}
-                        ({{ adress.city.zip }})
-                    </div>
-                    <div class="col">
-                        {{ adress.city.country.countryName }}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-
-        <h4> </br> Personnes de contact :</h4>
-        {% for contactList in user.contactLists %}
-            <div class="POC">
-                <div class="row">
-                    <div class="col-1">
-                        {{ contactList.personOfContact.name }}
-                    </div>
-                    <div class="col-1">
-                        {{ contactList.personOfContact.firstName }}
-                    </div>
-                    <div class="col-3">
-                        {{ contactList.personOfContact.num1}}
-                    </div>
-                    <div class="col-1">
-                        {{ contactList.relation}}
-                    </div>
-                    <div class="col-7">
-                        Info : {{ contactList.info}}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-
-        <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
-            </br> Modifier profile </br>
-        </a>
-
-        {#Affichle les inscriptions du membre#}
-        <h4> <br> Liste des inscriptions </h4>
-        {#
-        <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Date d'inscription</th>
-            <th scope="col">Titre</th>
-            <th scope="col">Info</th>
-        </tr>
-        </thead>
-        #}
-        {% for registration in user.registration %}
-            <div class="rental">
-            <div class="row">
-                <div class="col">
-                    {{ registration.registrationDate | date ('d/m/Y') }}
-                </div>
-                <div class="col">
-                    {{ registration.event.title }}
-                </div>
-                <div class="col">
-                    {{ registration.remark}}
-                </div>
-            </div>
-        {% endfor %}
-
-        {#Affichle l'historique du membre#}
-        <h4> <br> Parcours </h4>
-
-        {% for history in user.histories %}
-            <div class="row">
-                <div class="col">
-                    {{ history.refDate | date ('d/m/Y') }}
-                </div>
-                <div class="col">
-                    {{ history.description }}
-                </div>
-                <div class="col">
-                    {{ history.comment}}
-                </div>
-            </div>
-        {% endfor %}
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}

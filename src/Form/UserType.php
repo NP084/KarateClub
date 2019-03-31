@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Phone ;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserType extends AbstractType
@@ -19,15 +18,6 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           // ->add('email', EmailType::class)
-           // ->add('username')
-            ->add('name')
-            ->add('firstname')
-            ->add('birthday', DateType::class, [
-                'years' => range(1900, date('Y')-4),
-                'format' => 'dd-MM-yyyy',
-            ])
-          //  ->add('createdUser')
             ->add('belt')
             ->add('receiptDate',DateType::class, [
                 'required'=> false,
@@ -37,21 +27,14 @@ class UserType extends AbstractType
             ])
             ->add('sex', ChoiceType::class,[
                 'choices' => [
+                    'Sélectionner' => 'Indéfini',
                     'Homme' => 'Homme',
                     'Femme' => 'Femme',
                 ],
             ])
             ->add('imageFile', VichImageType::class, [
                 'required'=> false
-            ])
-      //      ->add('phones', EntityType::class,[
-       //         'class' => Phone::class,
-          //      'choice_label' => 'num'
-        //    ])
-       //     ->add('phones')
-       //     ->add('adress')
-       //     ->add('personOfContact')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

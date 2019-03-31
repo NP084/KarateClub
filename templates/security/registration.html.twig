@@ -1,6 +1,11 @@
 {% extends 'base.html.twig'%}
 
 {% block Body %}
+    {% if app.user %}
+
+    <p>Vous êtes déjà inscrit</p>
+    <a href="{{ path('security_logout') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Déconnexion?</a>
+    {% else %}
     <h1>Inscription sur le site</h1>
 
     {{form_start(form)}}
@@ -15,4 +20,6 @@
 
     <button type="submit" class="btn btn-success">Inscription!</button>
     {{ form_end(form) }}
+    {% endif %}
+
 {% endblock %}
