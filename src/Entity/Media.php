@@ -5,9 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
+ * @Vich\Uploadable
  */
 class Media
 {
@@ -21,62 +25,58 @@ class Media
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private $imageName;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * @Vich\UploadableField(mapping="media_picture", fileNameProperty="imageName")
+     * @var File
      */
-    private $description;
+    private $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
-    private $pathway;
+    private $updatedImage;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="media")
      */
-    private $createdEv;
+    private $gallery;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function setImageName(?string $imageName): void
     {
-        return $this->title;
+        $this->imageName = $imageName;
     }
 
-    public function setTitle(string $title): self
+    public function getImageName(): ?string
     {
-        $this->title = $title;
-
-        return $this;
+        return $this->imageName;
     }
 
-    public function getDescription(): ?string
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
     {
-        return $this->description;
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedImage = new  \DateTimeImmutable();
+        }
     }
 
-    public function setDescription(?string $description): self
+    public function getImageFile(): ?File
     {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getPathway(): ?string
-    {
-        return $this->pathway;
-    }
-
-    public function setPathway(string $pathway): self
-    {
-        $this->pathway = $pathway;
-
-        return $this;
+        return $this->imageFile;
     }
 
     public function getCreatedEv(): ?\DateTimeInterface
@@ -87,6 +87,18 @@ class Media
     public function setCreatedEv(\DateTimeInterface $createdEv): self
     {
         $this->createdEv = $createdEv;
+
+        return $this;
+    }
+
+    public function getGallery(): ?Gallery
+    {
+        return $this->gallery;
+    }
+
+    public function setGallery(?Gallery $gallery): self
+    {
+        $this->gallery = $gallery;
 
         return $this;
     }

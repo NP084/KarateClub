@@ -5,6 +5,15 @@
 <h1> Création d'une nouvelle galerie </h1>
 
 {{ form_start(formGaleriephoto) }}
+{#
+    {% for media in formGaleriephoto.media  %}
+        {{ form_row(media.imageFile) }}
+    {% endfor %}
+  #}
+    
+    {{ form_start(formMedia) }}
+    {{ form_end(formMedia) }}
+
 
     <button type="submit" class="btn btn-success">
         {%if editMode %}
