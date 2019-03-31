@@ -12,8 +12,16 @@ class GaleriephotoController extends AbstractController
      */
     public function index()
     {
-        return $this->render('galeriephoto/showContent.html.twig', [
+        return $this->render('galeriephoto/index.html.twig', [
             'controller_name' => 'GaleriephotoController',
         ]);
     }
+
+    /**
+     * @Route("/galeriephoto-new", name="galeriephoto_create")
+     */
+    public function create()
+    {
+        return $this->render('galeriephoto/create.html.twig');
+    }  
 }

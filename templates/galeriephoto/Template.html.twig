@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+{% block title %}Galerie photo{% endblock %}
+{% block Body %}
+<div class="row justify-content-between">
+        <div class="col">
+            <h2>Bienvenu dans la galerie photo</h2>
+        </div>
+        <div class="col-2">
+            {% if not app.user%}
+            <a class="btn btn-primary btn-md" href="{{ path('galeriephoto_create')}}" role="button">Nouvelle galerie</a>
+            {% endif %}
+        </div>
+    </div>
+        <br><br>    
+    {% block Content %}{% endblock %}
+{% endblock %}
