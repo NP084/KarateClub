@@ -34,7 +34,14 @@
                     <label for="">Date d'obtention</label>
                     {{ form_widget(formUser.receiptDate) }}
                 </div>
+
+                <div class="form-group">
+                    <label for="">Ajoutez une photo de profile</label>
+                    {{ form_widget(formUser.imageFile) }}
+                </div>
+
                 <button type="submit" class="btn btn-link">Enregister modification(s)</button>
+
                 {{ form_end(formUser) }}
 
                 <div class="col-4">
