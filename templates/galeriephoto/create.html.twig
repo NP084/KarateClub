@@ -1,1 +1,21 @@
 {% extends "base.html.twig" %}
+
+{% block Body %}
+
+<h1> Création d'une nouvelle galerie </h1>
+
+{{ form_start(formGaleriephoto) }}
+
+    <button type="submit" class="btn btn-success">
+        {%if editMode %}
+            Enregister modification(s)
+        {% else %}
+            Ajouter l'article
+        {% endif %}
+    </button>
+
+
+{{ form_end(formGaleriephoto)}}
+
+
+{% endblock %}
