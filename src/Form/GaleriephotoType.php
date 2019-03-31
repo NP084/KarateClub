@@ -15,7 +15,6 @@ class GaleriephotoType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('pathway')
-            ->add('createdEv')
         ;
     }
 
