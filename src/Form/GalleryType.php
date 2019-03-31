@@ -22,6 +22,7 @@ class GalleryType extends AbstractType
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'prototype'     => true,
+                'multiple'      => true,
                 'attr' => array(
                     'class' => 'my-selector',
                 ),
@@ -34,5 +35,10 @@ class GalleryType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Gallery::class,
         ]);
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'GalleryType';
     }
 }
