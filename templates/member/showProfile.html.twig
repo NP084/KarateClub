@@ -18,6 +18,7 @@
         <p> Nom d'utilisateur : {{ userConnected.username}} </p>
         <p> Email : {{ userConnected.email }} </p>
         <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y')}} </p>
+        <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}" alt="{{ userConnected.user.imageFile }}" width="300" />
 
         {# Si la table user qui contient les détails sur le user est associée à userConnected#}
         {% if (userConnected.user) %}
