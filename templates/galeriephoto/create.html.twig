@@ -1,10 +1,52 @@
 {% extends "base.html.twig" %}
 
+{% block javascripts %}
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+{% endblock %}
+
+
 {% block Body %}
 
-<h1> Création d'une nouvelle galerie </h1>
+    <h1> Création d'une nouvelle galerie </h1>
+    {{ form_start(formGaleriephoto) }}
 
-{{ form_start(formGaleriephoto) }}
+    {#
+        {%
+            form_theme formGaleriephoto
+            'jquery.collection.html.twig'
+        %}
+
+        {{ form_start(formGaleriephoto) }}
+    #}
+    {{ form_row(formGaleriephoto.name) }}
+    {{ form_row(formGaleriephoto.description) }}
+
+    <h3>Photos</h3>
+    <ul class="media" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}">
+
+    {% for media in formGaleriephoto.media  %}
+
+{#
+        {{ form_widget(media.imageFile) }}
+#}
+            <li>{{ form_widget(media.imageFile) }}</li>
+          {#  <li>{{ form_widget(media.updatedImage) }}</li> #}
+
+
+    {% endfor %}
+
+
+            {#
+                {{ form_start(formMedia) }}
+                {{ form_end(formMedia) }}
+              #}
+
+
+{#
+    {{ form_end(formGaleriephoto)}}
+#}
+
+    </ul>
 
     <button type="submit" class="btn btn-success">
         {%if editMode %}
@@ -15,7 +57,8 @@
     </button>
 
 
-{{ form_end(formGaleriephoto)}}
+    {{ form_end(formGaleriephoto) }}
 
 
 {% endblock %}
+
