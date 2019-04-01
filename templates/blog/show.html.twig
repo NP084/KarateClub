@@ -6,8 +6,9 @@
     <h2>{{ article.title }}</h2>
     <div class="metadata">Ecrit le {{ article.createdAt |date('d/m/Y')}} à {{article.createdAt |date('H:i')}} dans la catégorie {{article.category.title}}</div>
     <div class="content">
-        <img src="{{ article.imageName}}" alt="">
-        <a href="{{ asset('upload/user/' ~ article.imageName) }}">View brochure (PDF)</a>
+        <img src="{{ asset('/upload/media/' ~ article.imageName) }}" alt="">
+     {#   <a href="{{ asset('/upload/media/' ~ article.imageName) }}">View image</a>  #}
+
         {{ article.content | raw }}
     </div>
 </article>
