@@ -15,7 +15,6 @@ class EncadrementType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('imagename')
-            ->add('datecreat')
         ;
     }
 
