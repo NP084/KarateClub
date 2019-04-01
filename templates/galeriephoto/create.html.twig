@@ -23,7 +23,7 @@
 
     <h3>Photos</h3>
 
-    <ul class="media" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}">
+    <ul class="medias" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}">
         {% for media in formGaleriephoto.media %}
             <li> {{ form_row(media.imageFile) }} </li>
         {% endfor %}

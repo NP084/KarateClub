@@ -7,7 +7,7 @@ var $newLinkLi = $('<li></li>').append($addMediaButton);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of medias
-    $collectionHolder = $('ul.media');
+    $collectionHolder = $('ul.medias');
 
     // add the "add a media" anchor and li to the media ul
     $collectionHolder.append($newLinkLi);
