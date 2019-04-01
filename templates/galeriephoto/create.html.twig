@@ -9,7 +9,6 @@
 
     <h1> Création d'une nouvelle galerie </h1>
     {{ form_start(formGaleriephoto) }}
-
     {#
         {%
             form_theme formGaleriephoto
@@ -18,35 +17,26 @@
 
         {{ form_start(formGaleriephoto) }}
     #}
-    {{ form_row(formGaleriephoto.name) }}
-    {{ form_row(formGaleriephoto.description) }}
+    {{ form_label(formGaleriephoto.name, 'Titre de la galerie') }}
+    {{ form_widget(formGaleriephoto.name) }}
+    {{ form_label(formGaleriephoto.description, 'Description (optionnel)') }}
+    {{ form_widget(formGaleriephoto.description) }}
 
     <h3>Photos</h3>
-    <ul class="media" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}">
+    <ul class="media" data-prototype="{{ form_row(formGaleriephoto.media.vars.prototype)|e('html_attr') }}">
 
     {% for media in formGaleriephoto.media  %}
-
-{#
-        {{ form_widget(media.imageFile) }}
-#}
-            <li>{{ form_widget(media.imageFile) }}</li>
-          {#  <li>{{ form_widget(media.updatedImage) }}</li> #}
-
-
+{#        <div class="media">
+            <div class="row">
+                <div class="col-sm-6" >#}
+                    <li>{{ form_row(media.imageFile) }}</li>
+                    {#  <li>{{ form_widget(media.updatedImage) }}</li> #}
+{#                </div>
+            </div>
+        </div>#}
     {% endfor %}
-
-
-            {#
-                {{ form_start(formMedia) }}
-                {{ form_end(formMedia) }}
-              #}
-
-
-{#
-    {{ form_end(formGaleriephoto)}}
-#}
-
     </ul>
+
 
     <button type="submit" class="btn btn-success">
         {%if editMode %}
