@@ -8,6 +8,8 @@
 {% block Body %}
 
     <h1> Création d'une nouvelle galerie </h1>
+    {{ form_start(formGaleriephoto) }}
+
     {#
         {%
             form_theme formGaleriephoto
@@ -27,9 +29,11 @@
 {#
         {{ form_widget(media.imageFile) }}
 #}
-            <li>{{ form_widget(media.imageName) }}</li>
+            <li>{{ form_widget(media.imageFile) }}</li>
+          {#  <li>{{ form_widget(media.updatedImage) }}</li> #}
 
-            {% endfor %}
+
+    {% endfor %}
 
 
             {#
@@ -53,6 +57,7 @@
     </button>
 
 
+    {{ form_end(formGaleriephoto) }}
 
 
 {% endblock %}

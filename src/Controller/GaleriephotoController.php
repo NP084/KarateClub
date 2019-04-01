@@ -34,6 +34,7 @@ class GaleriephotoController extends AbstractController
 
         $name1 = new Media();
         $name1 -> setImageName('photo1');
+        $name1 -> setUpdatedImage(new \DateTime());
         $name2 = new Media();
         $name2 -> setImageName('photo2');
         $galerie->addMedium($name1);
@@ -46,9 +47,9 @@ class GaleriephotoController extends AbstractController
         $form->handleRequest($request);*/
 
         if ($form->isSubmitted() && $form->isValid()){
-            if (!$galerie->getId()){
-                $galerie->setCreatedEv(new \DateTime());
-            }
+            // if (!$galerie->getId()){
+            //    $galerie->setCreatedEv(new \DateTime());
+            //}
             $manager->persist($galerie);
             $manager->flush();
             /* return $this->redirectToRoute('blog_show',['id'=>$galerie->getId()]); */

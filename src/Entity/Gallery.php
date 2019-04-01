@@ -29,7 +29,7 @@ class Gallery
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="gallery")
+     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="gallery", cascade={"persist"} )
      */
     private $media;
 

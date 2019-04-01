@@ -35,15 +35,14 @@ class Media
     private $imageFile;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     */
-    private $updatedImage;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="media")
      */
     private $gallery;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedImage;
 
     public function getId(): ?int
     {
@@ -79,17 +78,6 @@ class Media
         return $this->imageFile;
     }
 
-    public function getCreatedEv(): ?\DateTimeInterface
-    {
-        return $this->createdEv;
-    }
-
-    public function setCreatedEv(\DateTimeInterface $createdEv): self
-    {
-        $this->createdEv = $createdEv;
-
-        return $this;
-    }
 
     public function getGallery(): ?Gallery
     {
@@ -99,6 +87,18 @@ class Media
     public function setGallery(?Gallery $gallery): self
     {
         $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    public function getUpdatedImage(): ?\DateTimeInterface
+    {
+        return $this->updatedImage;
+    }
+
+    public function setUpdatedImage(\DateTimeInterface $updatedImage): self
+    {
+        $this->updatedImage = $updatedImage;
 
         return $this;
     }
