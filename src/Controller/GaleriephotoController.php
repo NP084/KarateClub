@@ -50,8 +50,14 @@ class GaleriephotoController extends AbstractController
             // if (!$galerie->getId()){
             //    $galerie->setCreatedEv(new \DateTime());
             //}
-            $manager->persist($galerie);
-            $manager->flush();
+
+            if ($galerie->getId()){
+                $manager->persist($galerie);
+            }else{
+                $manager->persist($galerie);
+                $manager->flush();
+            }
+
             /* return $this->redirectToRoute('blog_show',['id'=>$galerie->getId()]); */
             return $this->redirectToRoute('galeriephoto');
         }
