@@ -5,13 +5,9 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
- * @Vich\Uploadable
  */
 class Media
 {
@@ -25,80 +21,72 @@ class Media
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $imageName;
+    private $title;
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * @Vich\UploadableField(mapping="media_picture", fileNameProperty="imageName")
-     * @var File
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $imageFile;
+    private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="media")
+     * @ORM\Column(type="string", length=255)
      */
-    private $gallery;
+    private $pathway;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updatedImage;
+    private $createdEv;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setImageName(?string $imageName): void
+    public function getTitle(): ?string
     {
-        $this->imageName = $imageName;
+        return $this->title;
     }
 
-    public function getImageName(): ?string
+    public function setTitle(string $title): self
     {
-        return $this->imageName;
-    }
-
-    /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
-     */
-    public function setImageFile(?File $imageFile = null): void
-    {
-        $this->imageFile = $imageFile;
-
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedImage = new  \DateTimeImmutable();
-        }
-    }
-
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-
-    public function getGallery(): ?Gallery
-    {
-        return $this->gallery;
-    }
-
-    public function setGallery(?Gallery $gallery): self
-    {
-        $this->gallery = $gallery;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getUpdatedImage(): ?\DateTimeInterface
+    public function getDescription(): ?string
     {
-        return $this->updatedImage;
+        return $this->description;
     }
 
-    public function setUpdatedImage(\DateTimeInterface $updatedImage): self
+    public function setDescription(?string $description): self
     {
-        $this->updatedImage = $updatedImage;
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPathway(): ?string
+    {
+        return $this->pathway;
+    }
+
+    public function setPathway(string $pathway): self
+    {
+        $this->pathway = $pathway;
+
+        return $this;
+    }
+
+    public function getCreatedEv(): ?\DateTimeInterface
+    {
+        return $this->createdEv;
+    }
+
+    public function setCreatedEv(\DateTimeInterface $createdEv): self
+    {
+        $this->createdEv = $createdEv;
 
         return $this;
     }
