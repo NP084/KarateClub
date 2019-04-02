@@ -28,41 +28,27 @@ class GaleriephotoController extends AbstractController
 
     /**
      * @Route("/gallery-new", name="galeriephoto_create")
+     * @Route("/gallery-{id}-edit", name="gallery_edit", requirements={"id"="\d+"})
      */
     public function form(Gallery $galerie = null, Request $request, ObjectManager $manager)
     {
-
         if (!$galerie) {
             $galerie = new Gallery();
         }
-        // $media = new Media();
-
-        /*        $name1 = new Media();
-                $name1 -> setImageName('photo1');
-                $name1 -> setUpdatedImage(new \DateTime());
-                $name2 = new Media();
-                $name2 -> setImageName('photo2');
-                $galerie->addMedium($name1);
-                $galerie->addMedium($name2);*/
 
         $form = $this->createForm(GalleryType::class, $galerie);
         $form->handleRequest($request);
 
-        /*     $formMedia = $this->createForm(MediaType::class, $media);
-             $form->handleRequest($request);*/
-
         if ($form->isSubmitted() && $form->isValid()) {
-            // if (!$galerie->getId()){
-            //    $galerie->setCreatedEv(new \DateTime());
-            //}
-
             if ($galerie->getId()) {
+                $medias = $galerie->getMedia();
+                foreach ($medias as $media){
+                    $manager->persist($media);
+                    $media->setGallery($galerie);
+                    $manager->flush();
+                }
                 $manager->persist($galerie);
             } else {
-                /*$entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($galerie);
-                $entityManager->flush();*/
-
                 $medias = $galerie->getMedia();
                 foreach ($medias as $media){
                     $manager->persist($media);

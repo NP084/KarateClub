@@ -23,7 +23,7 @@ class Media
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imageName;
 
@@ -35,12 +35,12 @@ class Media
     private $imageFile;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="media",  cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="media",  cascade={"persist", "remove"})
      */
     private $gallery;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedImage;
 
