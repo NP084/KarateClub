@@ -35,7 +35,7 @@ class Media
     private $imageFile;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="media",  cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="media",  cascade={"persist"})
      */
     private $gallery;
 

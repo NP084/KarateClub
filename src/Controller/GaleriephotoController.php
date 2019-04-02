@@ -46,6 +46,11 @@ class GaleriephotoController extends AbstractController
                     $manager->persist($media);
                     $media->setGallery($galerie);
                     $manager->flush();
+                    if ($media->getImageName()==null){
+                        $em = $this->getDoctrine()->getEntityManager();
+                        $em->remove($media);
+                        $em->flush();
+                    }
                 }
                 $manager->persist($galerie);
             } else {
@@ -53,6 +58,11 @@ class GaleriephotoController extends AbstractController
                 foreach ($medias as $media){
                     $manager->persist($media);
                     $media->setGallery($galerie);
+                    if ($media->getImageName()==null){
+                        $em = $this->getDoctrine()->getEntityManager();
+                        $em->remove($media);
+                        $em->flush();
+                    }
                 }
                 $manager->persist($galerie);
                 $manager->flush();
