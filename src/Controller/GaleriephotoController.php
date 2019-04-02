@@ -40,30 +40,21 @@ class GaleriephotoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($galerie->getId()) {
-                $medias = $galerie->getMedia();
-                foreach ($medias as $media){
-                    $manager->persist($media);
-                    $media->setGallery($galerie);
-                    $manager->flush();
-                    if ($media->getImageName()==null){
-                        $em = $this->getDoctrine()->getEntityManager();
-                        $em->remove($media);
-                        $em->flush();
-                    }
+            $medias = $galerie->getMedia();
+            foreach ($medias as $media){
+                $manager->persist($media);
+                $media->setGallery($galerie);
+                $manager->flush();
+                if ($media->getImageName()==null){
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->remove($media);
+                    $em->flush();
                 }
+            }
+            // if pour éviter les doublons
+            if ($galerie->getId()) {
                 $manager->persist($galerie);
             } else {
-                $medias = $galerie->getMedia();
-                foreach ($medias as $media){
-                    $manager->persist($media);
-                    $media->setGallery($galerie);
-                    if ($media->getImageName()==null){
-                        $em = $this->getDoctrine()->getEntityManager();
-                        $em->remove($media);
-                        $em->flush();
-                    }
-                }
                 $manager->persist($galerie);
                 $manager->flush();
             }
