@@ -62,6 +62,12 @@ class GaleriephotoController extends AbstractController
                 /*$entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($galerie);
                 $entityManager->flush();*/
+
+                $medias = $galerie->getMedia();
+                foreach ($medias as $media){
+                    $manager->persist($media);
+                    $media->setGallery($galerie);
+                }
                 $manager->persist($galerie);
                 $manager->flush();
             }
