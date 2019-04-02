@@ -35,7 +35,7 @@ class Gallery
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="gallery", cascade={"persist"} )
+     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="gallery", cascade={"persist", "remove"}, orphanRemoval=true )
      */
     private $media;
 

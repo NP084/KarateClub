@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Gallery;
 use App\Form\MediaType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
