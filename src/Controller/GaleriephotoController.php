@@ -6,6 +6,7 @@ use App\Entity\Gallery;
 use App\Entity\Media;
 use App\Form\GalleryType;
 use App\Form\MediaType;
+use App\Repository\GalleryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -15,17 +16,20 @@ use Symfony\Component\HttpFoundation\Request;
 class GaleriephotoController extends AbstractController
 {
     /**
-     * @Route("/galeriephoto", name="galeriephoto")
+     * @Route("/galleries", name="galeriephoto")
      */
-    public function index()
+    public function index(GalleryRepository $repo)
     {
-        return $this->render('galeriephoto/index.html.twig');
+        $galleries = $repo->findAll();
+        return $this->render('galeriephoto/index.html.twig', [
+            'galleries'=>$galleries,
+        ]);
     }
 
     /**
-     * @Route("/galeriephoto-new", name="galeriephoto_create")
+     * @Route("/gallery-new", name="galeriephoto_create")
      */
-    public function form(Media $galerie = null, Request $request, ObjectManager $manager)
+    public function form(Gallery $galerie = null, Request $request, ObjectManager $manager)
     {
 
         if (!$galerie) {
@@ -55,11 +59,12 @@ class GaleriephotoController extends AbstractController
             if ($galerie->getId()) {
                 $manager->persist($galerie);
             } else {
+                /*$entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($galerie);
+                $entityManager->flush();*/
                 $manager->persist($galerie);
                 $manager->flush();
             }
-
-            /* return $this->redirectToRoute('blog_show',['id'=>$galerie->getId()]); */
             return $this->redirectToRoute('galeriephoto');
         }
 
