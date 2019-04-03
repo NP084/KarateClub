@@ -26,6 +26,11 @@
 
                             <input type="password" class="form-control"  id="lbl5" required name="_password"  placeholder="Mot de Passe">
                             <label class="d-flex justify-content-between" for="lbl5">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="ckb7" name="_remember_me">
+                                    <label class="custom-control-label" for="ckb7" >Rester connecté!</label>
+                                </div>
+
                                 <a href="#lbl5" data-toggle="password"><i class="fa fa-eye fa-fw"></i> <span>Afficher</span></a>
                             </label>
                         </div>
@@ -34,19 +39,15 @@
 {#                        </div>#}
 
                         <div class="form_group">
+                            <button type="submit" class="btn btn-secondary">Connexion !</button>
+                            <a href="/inscription" target="_self"><input type="button" class="btn btn-light" value="Créer un compte"></a>
 
-                            <button type="submit" class="btn btn-success">Connexion !</button>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="ckb7" name="_remember_me">
-                                <label class="custom-control-label" for="ckb7">Rester connecté!</label>
-                            </div>
 
-                            <a href="{{ path('app_forgotten_password') }}" target="_self" >Mot de passe oublié!</a>
+                            <p class="text-right">
+                                <a href="{{ path('app_forgotten_password') }}" target="_self" class="btn btn-link" >Mot de passe oublié!</a></p>
                         </div>
                         <div class="modal-footer">
-                        <div class="form_group">
-                            <a href="/inscription" target="_self"><input type="button" class="btn btn-success" value="Créer un compte"></a>
-                        </div>
+
                         </div>
                     </form>
                 </div>
