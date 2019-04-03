@@ -11,22 +11,36 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ path('security_login') }}" method="post">
-                        <div class="form_group">
-                            <input placeholder="Adresse email..." required name="_username" type="text" class="form-control">
+
+                        <div class="form-group">
+
+                                <input type="email" class="form-control" id="fl1" required name="_username"  placeholder="Adresse E-mail">
+
                         </div>
 
-                        <div class="form_group">
-                            <input placeholder="Mot de passe" required name="_password" type="password" class="form-control">
+
+{#                        <div class="form_group">#}
+{#                            <input placeholder="Adresse email..." required name="_username" type="text" class="form-control">#}
+{#                        </div>#}
+                        <div class="form-group">
+
+                            <input type="password" class="form-control"  id="lbl5" required name="_password"  placeholder="Mot de Passe">
+                            <label class="d-flex justify-content-between" for="lbl5">
+                                <a href="#lbl5" data-toggle="password"><i class="fa fa-eye fa-fw"></i> <span>Afficher</span></a>
+                            </label>
                         </div>
+{#                        <div class="form_group">#}
+{#                            <input placeholder="Mot de passe" required name="_password" type="password" class="form-control">#}
+{#                        </div>#}
 
                         <div class="form_group">
 
                             <button type="submit" class="btn btn-success">Connexion !</button>
-                            <div class="checkbox mb-3">
-                                <label>
-                                    <input type="checkbox" name="_remember_me">Rester connecté!
-                                </label>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="ckb7" name="_remember_me">
+                                <label class="custom-control-label" for="ckb7">Rester connecté!</label>
                             </div>
+
                             <a href="{{ path('app_forgotten_password') }}" target="_self" >Mot de passe oublié!</a>
                         </div>
                         <div class="modal-footer">
