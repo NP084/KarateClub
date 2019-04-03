@@ -6,11 +6,16 @@ use App\Entity\ContentPage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
 use App\Repository\EncadrementRepository;
 use App\Form\EncadrementType;
 use App\Entity\Encadrement;
 use Doctrine\Common\Persistence\ObjectManager;
+
+
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 class VikaController extends AbstractController
 {
@@ -35,13 +40,21 @@ class VikaController extends AbstractController
             }
             $manager->persist($personne);
             $manager->flush();
-            return $this->redirectToRoute('encadrement_show',['id'=>$personne->getId()]);
+            return $this->redirectToRoute('encadrement_index',['id'=>$personne->getId()]);
         }
 
         return $this->render('vika/Encadrementcreate.html.twig', [
             'formEncadrement'=>$form->createView(),
             'editMode'=> $personne->getId()!==null
         ]);
+    }
+
+    /**
+     * @Route("/vika-encadrement", name="encadrement_index")
+     */
+    public function vikaencadrement(){
+
+        return $this->render('vika/Encadrementindex.html.twig');
     }
 
     /**

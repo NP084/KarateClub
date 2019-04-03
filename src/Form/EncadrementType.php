@@ -6,6 +6,9 @@ use App\Entity\Encadrement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+
+
 
 class EncadrementType extends AbstractType
 {
@@ -14,7 +17,7 @@ class EncadrementType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('imagename')
+            ->add('imageFile', VichImageType::class)
         ;
     }
 
