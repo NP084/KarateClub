@@ -14,14 +14,26 @@ use App\Form\ArticleType;
 use App\Entity\Article;
 use Doctrine\Common\Persistence\ObjectManager;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 class BlogController extends AbstractController
 {
+    public function __construct(ArticleRepository $repository, ObjectManager $em)
+    {
+        $this->repository = $repository;
+        $this->em = $em;
+    }
+
     /**
      * @Route("/blog", name="blog")
      */
-    public function index(ArticleRepository $repo)
+    public function index(PaginatorInterface $paginator, Request $request)//: Response
     {
-        $articles = $repo -> findAll();
+        $articles = $paginator->paginate(
+            $this->repository->findAllVisibleQuery(),
+            $request->query->getInt('page',1),
+            10
+        );
 
         return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
@@ -69,7 +81,7 @@ class BlogController extends AbstractController
     * @Route("/blog-{id}", name="blog_show")
     */
     public function show(Article $article, Request $request, ObjectManager $manager){
-        
+
         return $this->render('blog/show.html.twig', [
             'article' => $article,
         ]);
