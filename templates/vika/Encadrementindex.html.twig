@@ -1,56 +1,70 @@
 {% extends "base.html.twig" %}
 
 {% block Body %}
-<h2>Encadrement</h2>
-
-<div class="container">
+<h2>Encadrement sportif</h2>
 
         <div class="row justify-content-md-center">
-            <div class="col-6">
+            <div class="col-12">
                     <div class="card">
-                        <!-- .card-header -->
-                        <div class="card-body">
-                        <h5 class="card-title">Titre</h5>
-                        </div><!-- /.card-body -->
-                        <!-- .card-body -->
+                        <div class="card-header"> Encadrement</div>
                         <div class="card-body">
                         <p class="card-text"> 
                             
-                               Essai
+                                Aziz MAANINOU et tous les instructeurs de VIKA offrent aux adhérents la garantie d'un enseignement maîtrisé, à la portée de tous.
                             
                         </p>
+
                         </div><!-- /.card-body -->
+                        <div class="card-footer">
+                            <div class="card-footer-content">
+                                    <div class="row justify-content-md">
+                                            {% for personne in personnes %}
+                                            <div class="col-5">
+                                                <div class="card">
+                                                    <!-- .card-header -->
+                                                    <div class="card-body">
+                                                    <h5 class="card-title">{{ personne.name }}</h5>
+                                                    </div><!-- /.card-body -->
+                                                    <!-- 16:9 aspect ratio -->
+                                                    <figure class="embed-responsive embed-responsive-16by9 mb-0">
+                                                        <img class="embed-responsive-item" src="upload/media/{{ personne.imagename }}" alt="Card image">
+                                                    </figure><!-- /.embed-responsive -->
+                                                    <!-- .card-body -->
+                                                    <div class="card-body">
+                                                        <p class="card-text">{{ personne.description|raw }}</p>
+                                                    </div>
+                                                        {% if not app.user%}
+                                                        <div class="card-footer">
+                                                                <div class="row">
+                                                                        <div class="col-2-right">
+                                                                            <div class="card-footer-content text-muted"> 
+                                                                                <a class="btn btn-primary btn-md" href="{{ path('blog_edit', {'id':personne.id}) }}" role="button">Editer</a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-2-right">
+                                                                            <div class="card-footer-content text-muted"> 
+                                                                                <a class="btn btn-primary btn-md" href="{{ path('blog_show', {'id':personne.id}) }}" role="button">Supprimer</a>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        {% else %}
+                                                        {% endif %}
+                                                    
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                            </div>
+                        </div>
                     </div>
             </div>
         </div>
     
 
 
-        <div class="row justify-content-md-center">
-            {% for personne in personnes %}
-            <div class="col-6">
-                <div class="card">
-                    <!-- .card-header -->
-                    <div class="card-body">
-                    <h5 class="card-title">{{ personne.name }}</h5>
-                    </div><!-- /.card-body -->
-                    <!-- 16:9 aspect ratio -->
-                    <figure class="embed-responsive embed-responsive-16by9 mb-0">
-                        <img class="embed-responsive-item" src="{{ personne.imagename }}" alt="Card image">
-                    </figure><!-- /.embed-responsive -->
-                    <!-- .card-body -->
-                    <div class="card-body">
-                    <p class="card-text"> 
-                        
-                            {{ personne.description|raw }}
-                        
-                    </p>
-                    </div><!-- /.card-body -->
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-</div>
+
+
     
 
 {% endblock %}
