@@ -34,15 +34,18 @@ class VikaController extends AbstractController
         $form = $this->createForm(EncadrementType::class, $personne);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
-            if (!$personne->getId()){
-                $personne->setDatecreat(new \DateTime());
-            }
+        // if pour éviter les doublons
+        if ($personne->getId()) {
+            $manager->persist($personne);
+            return $this->redirectToRoute('encadrement_index',['id'=>$personne->getId()]);
+        } else {
+            if ($form->isSubmitted() && $form->isValid()){
             $manager->persist($personne);
             $manager->flush();
             return $this->redirectToRoute('encadrement_index',['id'=>$personne->getId()]);
+            }
         }
-
+        
         return $this->render('vika/Encadrementcreate.html.twig', [
             'formEncadrement'=>$form->createView(),
             'editMode'=> $personne->getId()!==null
