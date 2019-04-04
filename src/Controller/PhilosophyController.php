@@ -12,8 +12,7 @@ class PhilosophyController extends AbstractController
      * @Route("/philosophie", name="philosophy")
      */
 
-    public function philosophy()
-    {
-        return $this->render('philosophy/Philosophy.html.twig');
-    }
+    public function login(){
+        return $this->render('security/login.html.twig');
+
 }
