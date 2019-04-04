@@ -6,16 +6,19 @@ use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class GaleriephotoType extends AbstractType
+class MediaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('pathway')
-        ;
+       //     ->add('imageName')
+              ->add('imageFile', VichImageType::class, [
+            'required'=> false
+        ]);
+       //     ->add('updatedImage');
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

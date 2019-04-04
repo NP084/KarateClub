@@ -44,7 +44,7 @@ class BlogController extends AbstractController
 
         if (!$article){
             $article=New Article();
-            $article->setTitle("Titre de l'exemple");
+           // $article->setTitle("Titre de l'exemple");
         }
 
         $form = $this->createForm(ArticleType::class, $article);

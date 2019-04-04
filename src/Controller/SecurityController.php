@@ -58,7 +58,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/forgotten_password", name="app_forgotten_password")
      */
-    public function forgottenPassword(Request $request,\Swift_Mailer $mailer,TokenGeneratorInterface $tokenGenerator)//: Response
+    public function forgottenPassword(Request $request,\Swift_Mailer $mailer,TokenGeneratorInterface $tokenGenerator)
     {
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
             /* @var $user User */
             if ($user === null) {
                 $this->addFlash('danger', 'Email Inconnu');
-                return $this->redirectToRoute('security_registration');//'home' j'ai changé la page pour voir quelle boucle il fait quand on met email qui n est pas dans la base de données
+                return $this->redirectToRoute('security_registration');
             }
             $token = $tokenGenerator->generateToken();
             try{
@@ -75,16 +75,16 @@ class SecurityController extends AbstractController
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
-                return $this->redirectToRoute('security_login');//'home' il n'y a jamais eu  d'exception
+                return $this->redirectToRoute('home');
             }
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
-            $message = (new \Swift_Message('Mot de passe oublié'))
-                ->setFrom('vanrijmenantp@gmail.com')
+            $message = (new \Swift_Message('Mot de passe oublié VIKA'))
+                ->setFrom('vi.ka.59@hotmail.fr')
                 ->setTo($user->getEmail())
-                ->setBody("Voici le token pour reseter votre mot de passe : " . $url, 'text/html');
-            $mailer->send($message);//je ne recois jamais de message pourtant je suis redirigé apres vers la bonne route
+                ->setBody("Voici le lien pour entrer votre nouveau mot de passe : " . $url, 'text/html');
+            $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
-            return $this->redirectToRoute('blog');//'home' ok quand je mets un email de la basse de donnée
+            return $this->redirectToRoute('home');
         }
         return $this->render('security/forgotten_password.html.twig');
     }

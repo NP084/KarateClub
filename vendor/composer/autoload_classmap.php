@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Collator' => $vendorDir . '/symfony/intl/Resources/stubs/Collator.php',
+    'Fuz\\Symfony\\Collection\\ScriptHandler' => $vendorDir . '/ninsuo/symfony-collection/ScriptHandler.php',
     'IntlDateFormatter' => $vendorDir . '/symfony/intl/Resources/stubs/IntlDateFormatter.php',
     'Locale' => $vendorDir . '/symfony/intl/Resources/stubs/Locale.php',
     'NumberFormatter' => $vendorDir . '/symfony/intl/Resources/stubs/NumberFormatter.php',
