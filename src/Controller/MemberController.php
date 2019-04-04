@@ -34,7 +34,7 @@ class MemberController extends AbstractController
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      */
     public function profileEdit(UserConnected $userConnected, Request $request, ObjectManager $manager){
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
+//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
 
         $user = $userConnected->getUser();
         $formUser = $this->createForm(UserType::class, $user);
@@ -101,6 +101,7 @@ class MemberController extends AbstractController
     }
     /**
      * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
+     * @Route("/admin-id={id}", name="admin_show",  requirements={"id"="\d+"})
      */
     public function profileShow(UserConnected $user, Request $request){
 

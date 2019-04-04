@@ -18,7 +18,7 @@
     {{ form_row(form.confirm_password, {'label': 'Confirmez le mode de passe', 'attr': {'placeholder':'Confirmez svp...'}}) }}
 
 
-    <button type="submit" class="btn btn-success">Inscription!</button>
+        <a href={{ path('enregistre') }}><button type="submit" class="btn btn-success">Inscription!</button></a>
     {{ form_end(form) }}
     {% endif %}
 
