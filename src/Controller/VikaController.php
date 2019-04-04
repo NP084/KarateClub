@@ -10,73 +10,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class VikaController extends AbstractController
 {
-
-
-    /**
-     * @Route("/vika-encadrement-new", name="encadrement_create")
-     * @Route("/vika-encadrement-{id}-edit", name="encadrement_edit")
-     */
-    public function form(Encadrement $personne = null, Request $request, ObjectManager $manager)
-    {
-
-        if (!$personne) {
-            $personne = New Encadrement();
-        }
-
-        $form = $this->createForm(EncadrementType::class, $personne);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            if (!$personne->getId()) {
-                $personne->setDatecreat(new \DateTime());
-            }
-            $manager->persist($personne);
-            $manager->flush();
-            return $this->redirectToRoute('encadrement_index', ['id' => $personne->getId()]);
-        }
-
-        return $this->render('vika/Encadrementcreate.html.twig', [
-            'formEncadrement' => $form->createView(),
-            'editMode' => $personne->getId() !== null
-        ]);
-    }
-
-    /**
-     * @Route("/vika-encadrement", name="encadrement_index")
-     */
-    public function vikaencadrement(EncadrementRepository $repo)
-    {
-
-        $personnes = $repo->findAll();
-
-        return $this->render('vika/Encadrementindex.html.twig', [
-            'personnes' => $personnes,
-        ]);
-    }
-
-
     /**
      * @Route("/vika-{path}-edit", name="VikaContentEdit")
      *
      */
-    public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager)
-    {
+    public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager ){
 
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()){
 
             $manager->persist($content);
             $manager->flush();
-            return $this->redirectToRoute('VikeContentEdit', ['id' => $content->getId()]);
+            return $this->redirectToRoute('VikeContentEdit',['id'=>$content->getId()]);
         }
 
         return $this->render('vika/vikacreate.html.twig', [
-            'formContent' => $form->createView(),
+            'formContent'=>$form->createView(),
 
         ]);
     }
@@ -85,11 +38,12 @@ class VikaController extends AbstractController
      * @Route("/vika-{path}", name="VikaContent")
      *
      */
-    public function vikashow(ContentPage $contentPage)
-    {
+    public function vikashow(ContentPage $contentPage){
 
         return $this->render('vika/showContent.html.twig', [
             'contentPage' => $contentPage,
         ]);
     }
+
+
 }
