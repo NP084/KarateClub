@@ -21,7 +21,9 @@ class ArticleType extends AbstractType
                 'choice_label'=>'title'
             ])
             ->add('content')
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class, [
+                'required'=> false
+            ]);
         ;
     }
 
