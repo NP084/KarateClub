@@ -3,6 +3,23 @@
 
 {% block Content %}
 <div class="container">
+    {% if (is_granted('ROLE_ADMIN'))%}
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="tile tile-img tile-lg">
+                        <img src="Logo_Vika.png" alt="" style="height: 35px;width: auto;">
+                    </div>
+                    Nouveau article
+                </div>
+                <div class="card-body">
+                    <a class="btn btn-primary btn-block btn-xl" href="{{ path('blog_create')}}" role="button">Ajouter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <div class="row justify-content-md-center">
         {% for article in articles %}
         <div class="col-6">
@@ -44,7 +61,7 @@
                                 </div>
                                 <div class="col-2">
                                     <div class="card-footer-content text-muted">
-                                        <a class="btn btn-primary btn-md" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Supprimer</a>
+                                        <a class="btn btn-primary btn-md" href="{{ path('blog_delete', {'id':article.id}) }}" role="button">Supprimer</a>
                                     </div>
                                 </div>
                             {% else %}

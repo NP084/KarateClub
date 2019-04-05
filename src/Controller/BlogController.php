@@ -73,6 +73,19 @@ class BlogController extends Controller//AbstractController
     }
 
     /**
+     * Supprime l'article.
+     * @Route("/blog-delete-{id}", name="blog_delete")
+     */
+    public function EncadrementDelete($id){
+        $em = $this->getDoctrine()->getEntityManager();
+        $article = $em->getRepository(Article::class)->find($id);
+        $em->remove($article);
+        $em->flush();
+
+        return $this->redirectToRoute('blog');
+    }
+
+    /**
     * @Route("/blog-{id}", name="blog_show")
     */
     public function show(Article $article, Request $request, ObjectManager $manager){
