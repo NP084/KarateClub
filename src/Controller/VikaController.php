@@ -3,37 +3,25 @@
 namespace App\Controller;
 
 use App\Entity\ContentPage;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use App\Repository\EncadrementRepository;
-use App\Form\EncadrementType;
-use App\Entity\Encadrement;
+use App\Form\ArticleType;
+use App\Form\ContentType;
 use Doctrine\Common\Persistence\ObjectManager;
-
-
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class VikaController extends AbstractController
 {
-
-
     /**
-    * @Route("/vika-encadrement-new", name="encadrement_create")
-    * @Route("/vika-encadrement-{id}-edit", name="encadrement_edit")
-    */
-    public function form(Encadrement $personne=null, Request $request, ObjectManager $manager){
+     * @Route("/vika-{path}-edit", name="VikaContentEdit")
+     *
+     */
+    public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager ){
 
-        if (!$personne){
-            $personne=New Encadrement();
-        }
-
-        $form = $this->createForm(EncadrementType::class, $personne);
+        $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
 
+<<<<<<< HEAD
         // if pour éviter les doublons
         if ($personne->getId()) {
             $manager->persist($personne);
@@ -58,15 +46,24 @@ class VikaController extends AbstractController
     public function vikaencadrement(EncadrementRepository $repo){
 
         $personnes = $repo -> findAll();
+=======
+        if ($form->isSubmitted() && $form->isValid()){
 
-        return $this->render('vika/Encadrementindex.html.twig', [
-            'personnes' => $personnes,
+            $manager->persist($content);
+            $manager->flush();
+            return $this->redirectToRoute('VikeContentEdit',['id'=>$content->getId()]);
+        }
+
+        return $this->render('vika/vikacreate.html.twig', [
+            'formContent'=>$form->createView(),
+>>>>>>> master
+
         ]);
     }
 
-
     /**
-     * @Route("/vika-{path}", name="VikaContent", requirements={"id"="\d+"})
+     * @Route("/vika-{path}", name="VikaContent")
+     *
      */
     public function vikashow(ContentPage $contentPage){
 
@@ -74,5 +71,6 @@ class VikaController extends AbstractController
             'contentPage' => $contentPage,
         ]);
     }
+
 
 }
