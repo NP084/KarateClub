@@ -46,8 +46,9 @@ class VikaFixtures extends Fixture implements FixtureGroupInterface
 
 <p>Un aménagement des entraînements est spécialement prévu pour la découverte du Karaté do par les enfants ( rubrique Inscription et Cours ).</p>';
 
-        $philosophy ->setName('Philosophie')
-                    ->setContent($philosophyContent);
+        $philosophy ->setTitle('Philosophie')
+                    ->setContent($philosophyContent)
+                    ->setPath('Philosophie');
 
         $manager->persist($philosophy);
 
@@ -63,8 +64,9 @@ class VikaFixtures extends Fixture implements FixtureGroupInterface
 </ul>
 <p>VIKA vous offre ainsi toutes les garanties de compétences techniques et pédagogiques par son encadrement et vous permet d\'évoluer dans un environnement sécurisé.</p>';
 
-        $bureau ->setName('Bureau')
-                ->setContent($bureauContent);
+        $bureau ->setTitle('Bureau')
+                ->setContent($bureauContent)
+                ->setPath('Bureau');
         $manager->persist($bureau);
 
         $manager->flush();
