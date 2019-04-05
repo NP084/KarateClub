@@ -1,16 +1,14 @@
 {% extends "base.html.twig" %}
 
 {% block Body %}
-<h2>Encadrement sportif</h2>
+<h2>{{ contentPage.title }}</h2>
 
         <div class="row justify-content-md-center">
             <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                         <p class="card-text"> 
-                            
-                                Aziz MAANINOU et tous les instructeurs de VIKA offrent aux adhérents la garantie d'un enseignement maîtrisé, à la portée de tous.
-                            
+                                {{ contentPage.content | raw }}                            
                         </p>
                         {% if not app.user%}
                         <div class="row">
