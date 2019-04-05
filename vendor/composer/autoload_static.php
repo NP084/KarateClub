@@ -110,6 +110,10 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         array (
             'Monolog\\' => 8,
         ),
+        'K' => 
+        array (
+            'Knp\\Bundle\\PaginatorBundle\\' => 27,
+        ),
         'F' => 
         array (
             'Fig\\Link\\' => 9,
@@ -427,6 +431,10 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'Knp\\Bundle\\PaginatorBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/knplabs/knp-paginator-bundle',
+        ),
         'Fig\\Link\\' => 
         array (
             0 => __DIR__ . '/..' . '/fig/link-util/src',
@@ -532,6 +540,13 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
             'Metadata\\' => 
             array (
                 0 => __DIR__ . '/..' . '/jms/metadata/src',
+            ),
+        ),
+        'K' => 
+        array (
+            'Knp\\Component' => 
+            array (
+                0 => __DIR__ . '/..' . '/knplabs/knp-components/src',
             ),
         ),
         'D' => 
