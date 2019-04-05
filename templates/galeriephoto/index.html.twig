@@ -2,6 +2,31 @@
 
 
 {% block Body %}
+<h2>Bienvenue dans la galerie photo</h2>
+<div class="container">
+        {% if (is_granted('ROLE_ADMIN'))%}
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="tile tile-img tile-lg">
+                            <img src="Logo_Vika.png" alt="" style="height: 35px;width: auto;">
+                        </div>
+                        Nouvelle galerie photo
+                    </div>
+                    <div class="card-body">
+                        <a class="btn btn-primary btn-block btn-xl" href="{{ path('galeriephoto_create')}}" role="button">Ajouter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    
+        <div class="row justify-content-md-center">
+            
+        </div>
+</div>
+
     <div class="row justify-content-between">
         <div class="col">
             <h2>Bienvenue dans la galerie photo</h2>
