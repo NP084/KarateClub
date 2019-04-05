@@ -18,6 +18,17 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class BlogController extends AbstractController
 {
+
+    /**
+    * @var ArticleRepository
+    **/
+    private $repository;
+
+    /**
+    * @var ObjectManager
+    **/
+    private $em;
+
     public function __construct(ArticleRepository $repository, ObjectManager $em)
     {
         $this->repository = $repository;

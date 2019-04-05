@@ -17,7 +17,6 @@ class ArticleRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Article::class);
-        //$this->repository = $repository;
     }
 
     /**
@@ -26,7 +25,14 @@ class ArticleRepository extends ServiceEntityRepository
     public function findAllVisibleQuery(): Query
     {
         return $this->findVisibleQuery()
-          ->getQuery();
+            ->getQuery();
+            //->getResult();
+    }
+
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id','ASC');
     }
 
     // /**
