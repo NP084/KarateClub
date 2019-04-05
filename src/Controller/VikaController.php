@@ -25,7 +25,7 @@ class VikaController extends AbstractController
 
             $manager->persist($content);
             $manager->flush();
-            return $this->redirectToRoute('VikeContentEdit',['id'=>$content->getId()]);
+            return $this->redirectToRoute('VikaContentEdit',['id'=>$content->getId()]);
         }
 
         return $this->render('vika/vikacreate.html.twig', [
