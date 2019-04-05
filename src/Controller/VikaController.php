@@ -46,14 +46,16 @@ class VikaController extends AbstractController
     }
 
     /**
-     * @Route("/vika-{path}", name="encadrement_index")
+     * @Route("/vika-page-{path}", name="encadrement_index")
      */
-    public function vikaEncadrement(EncadrementRepository $repo){
+    public function vikaEncadrement(EncadrementRepository $repo, ContentPage $contentPage){
 
         $personnes = $repo -> findAll();
 
         return $this->render('vika/Encadrementindex.html.twig', [
-            'personnes' => $personnes,]);
+            'personnes' => $personnes,
+            'contentPage' => $contentPage,
+            ]);
     }
 
     /**
