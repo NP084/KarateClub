@@ -32,11 +32,11 @@ class VikaController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()){
             if (!$personne->getId()){
-                $personne->setCreatedAt(new \DateTime());
+                $personne->setDatecreat(new \DateTime());
             }
             $manager->persist($personne);
             $manager->flush();
-            return $this->redirectToRoute('encadrement_index',['id'=>$personne->getId()]);
+            return $this->redirectToRoute('encadrement_index',['path'=>'Encadrement']);
         }
 
         return $this->render('vika/Encadrementcreate.html.twig', [
@@ -44,6 +44,21 @@ class VikaController extends AbstractController
             'editMode'=> $personne->getId()!==null
         ]);
     }
+
+    /**
+     * Supprime l'entraineur.
+     * @Route("/vika-encadrement-delete-{id}", name="encadrement_delete")
+     */
+    public function EncadrementDelete($id){
+        $em = $this->getDoctrine()->getEntityManager();
+        $personne = $em->getRepository(Encadrement::class)->find($id);
+        $em->remove($personne);
+        $em->flush();
+
+        return $this->redirectToRoute('encadrement_index',['path'=>'Encadrement']);
+    }
+
+
 
     /**
      * @Route("/vika-page-{path}", name="encadrement_index")

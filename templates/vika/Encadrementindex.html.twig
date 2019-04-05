@@ -10,10 +10,10 @@
                         <p class="card-text"> 
                                 {{ contentPage.content | raw }}                            
                         </p>
-                        {% if not app.user%}
+                        {% if (is_granted('ROLE_ADMIN'))%}
                         <div class="row">
                             <div class="col-auto">
-                                <a class="btn btn-primary btn-md" href="" role="button">Editer</a>
+                                <a class="btn btn-primary btn-md" href="{{ path('VikaContentEdit', {'path':'Encadrement'}) }}" role="button">Editer</a>
                             </div>
                             <div class="col-auto">
                                 <a class="btn btn-primary btn-md" href="/vika-encadrement-new" role="button">Ajouter entraineur</a>
@@ -36,7 +36,7 @@
                                                     <div class="card-body">
                                                         <p class="card-text">{{ personne.description|raw }}</p>
                                                     </div>
-                                                        {% if not app.user%}
+                                                        {% if (is_granted('ROLE_ADMIN'))%}
                                                         <div class="card-footer">
                                                                 <div class="row justify-content-start">
                                                                         <div class="col-4">
@@ -46,7 +46,7 @@
                                                                         </div>
                                                                         <div class="col-4">
                                                                             <div class="card-footer-content text-muted"> 
-                                                                                <a class="btn btn-primary btn-md" href="{{ path('encadrement_edit', {'id':personne.id}) }}" role="button">Supprimer</a>
+                                                                                <a class="btn btn-primary btn-md" href="{{ path('encadrement_delete', {'id':personne.id}) }}" role="button">Supprimer</a>
                                                                             </div>
                                                                         </div>
                                                                 </div>
