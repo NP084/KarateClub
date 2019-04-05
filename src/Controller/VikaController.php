@@ -9,19 +9,29 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\EncadrementType;
+use App\Entity\Encadrement;
+use App\Repository\EncadrementRepository;
+
+
+
+
 
 class VikaController extends AbstractController
 {
     /**
-     * @Route("/vika-{path}-edit", name="VikaContentEdit")
-     *
+     * @Route("/vika-encadrement-new", name="encadrement_create")
+     * @Route("/vika-encadrement-{id}-edit", name="encadrement_edit")
      */
-    public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager ){
+    public function form(Encadrement $personne=null, Request $request, ObjectManager $manager ){
 
-        $form = $this->createForm(ContentType::class, $content);
+        if (!$personne) {
+            $personne = New Encadrement();
+        }
+
+        $form = $this->createForm(EncadrementType::class, $personne);
         $form->handleRequest($request);
 
-<<<<<<< HEAD
         // if pour éviter les doublons
         if ($personne->getId()) {
             $manager->persist($personne);
@@ -43,22 +53,12 @@ class VikaController extends AbstractController
     /**
      * @Route("/vika-encadrement", name="encadrement_index")
      */
-    public function vikaencadrement(EncadrementRepository $repo){
+    public function vikaEncadrement(EncadrementRepository $repo){
 
         $personnes = $repo -> findAll();
-=======
-        if ($form->isSubmitted() && $form->isValid()){
 
-            $manager->persist($content);
-            $manager->flush();
-            return $this->redirectToRoute('VikeContentEdit',['id'=>$content->getId()]);
-        }
-
-        return $this->render('vika/vikacreate.html.twig', [
-            'formContent'=>$form->createView(),
->>>>>>> master
-
-        ]);
+        return $this->render('vika/Encadrementindex.html.twig', [
+            'personnes' => $personnes,]);
     }
 
     /**
