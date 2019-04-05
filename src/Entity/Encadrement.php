@@ -112,11 +112,9 @@ class Encadrement
         return $this->imagename;
     }
 
-    public function setImagename(string $imagename): self
+    public function setImagename(?string $imagename): void
     {
         $this->imagename = $imagename;
-
-        return $this;
     }
 
     public function getDatecreat(): ?\DateTimeInterface
