@@ -7,50 +7,52 @@
         {% for article in articles %}
         <div class="col-6">
             <div class="card">
-                <!-- .card-header -->
                 <div class="card-body">
                 <h5 class="card-title">{{ article.title }}</h5>
-                </div><!-- /.card-body -->
+                </div>
                 <!-- 16:9 aspect ratio -->
                 <figure class="embed-responsive embed-responsive-16by9 mb-0">
                     <img class="embed-responsive-item" src="{{ asset('/upload/media/' ~ article.imageName)}}" alt="Card image">
-                   {# <img class="embed-responsive-item" src="https://media.gettyimages.com/photos/illuminated-hashtag-sign-on-table-in-fashion-studio-picture-id909598172" alt="Card image">#}
-                </figure><!-- /.embed-responsive -->
-                <!-- .card-body -->
+                </figure>
+
                 <div class="card-body">
                 <p class="card-text">
-
-                        {{ article.content|raw }}
-
+                    {{ article.content|raw }}
                 </p>
-                </div><!-- /.card-body -->
-                <!-- .card-footer -->
+                </div>
+
                 <div class="card-footer">
-                    <div class="row">
-                        <div class="col">
-                            <div class="card-footer-content text-muted">
-                                <a class="btn btn-primary btn-md" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Lire la suite</a>
+                    <div class="card-footer-content text-muted">
+                        <div class="row">
+                            <div class="col">
+                                <div class="metadata">Ecrit le {{ article.createdAt |date('d/m/Y')}} à {{article.createdAt |date('H:i')}} dans la catégorie {{article.category.title}}</div>
                             </div>
                         </div>
-                        {% if app.user%}
-                            <div class="col-2">
+    
+                        <div class="row">
+                            <div class="col-4">
                                 <div class="card-footer-content text-muted">
-                                    <a class="btn btn-primary btn-md" href="{{ path('blog_edit', {'id':article.id}) }}" role="button">Editer</a>
+                                    <a class="btn btn-primary btn-md" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Lire la suite</a>
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <div class="card-footer-content text-muted">
-                                    <a class="btn btn-primary btn-md" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Supprimer</a>
+                            {% if (is_granted('ROLE_ADMIN'))%}
+                                <div class="col-3"></div>
+                                <div class="col-2">
+                                    <div class="card-footer-content text-muted">
+                                        <a class="btn btn-primary btn-md" href="{{ path('blog_edit', {'id':article.id}) }}" role="button">Editer</a>
+                                    </div>
                                 </div>
-                            </div>
-                        {% else %}
-                        {% endif %}
+                                <div class="col-2">
+                                    <div class="card-footer-content text-muted">
+                                        <a class="btn btn-primary btn-md" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Supprimer</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                            {% endif %}
+                        </div>
                     </div>
-
-
-                </div><!-- /.card-footer -->
+                </div>
             </div>
-
         </div>
 
         {% endfor %}

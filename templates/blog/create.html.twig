@@ -2,7 +2,13 @@
 
 {% block Body %}
 
-    <h1> Création d'un article ! </h1>
+    <h1>
+        {%if editMode %}
+            Modification d'un article
+        {% else %}
+            Création d'un article
+        {% endif %} 
+    </h1>
 
     {{ form_start(formArticle) }}
 
@@ -20,12 +26,15 @@
         <label for="">Contenu</label>
         {{ form_widget(formArticle.content) }}
     </div>
-{#
-    <div class="form-group">
-        <label for="">Titre</label>
-        {{ form_widget(formArticle.imageFile) }}
-    </div>
-#}
+    <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="">Nom de l'image</label>
+                    {{ form_widget(formArticle.imageFile) }}                     
+                </div>
+            </div>
+        </div>
+
     <button type="submit" class="btn btn-success">
         {%if editMode %}
             Enregister modification(s)

@@ -2,15 +2,29 @@
 
 {% block Content %}
 
-<article>
-    <h2>{{ article.title }}</h2>
-    <div class="metadata">Ecrit le {{ article.createdAt |date('d/m/Y')}} à {{article.createdAt |date('H:i')}} dans la catégorie {{article.category.title}}</div>
-    <div class="content">
-        <img src="{{ asset('/upload/media/' ~ article.imageName) }}" alt="">
-     {#   <a href="{{ asset('/upload/media/' ~ article.imageName) }}">View image</a>  #}
-
-        {{ article.content | raw }}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                </div>
+                <figure class="embed-responsive embed-responsive-16by9 mb-0">
+                    <img class="embed-responsive-item" src="{{ asset('/upload/media/' ~ article.imageName) }}" alt="Card image">
+                </figure>
+                <div class="card-body">
+                    <p class="card-text">
+                        {{ article.content|raw }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                        <div class="card-footer-content text-muted">
+                            <div class="metadata">Ecrit le {{ article.createdAt |date('d/m/Y')}} à {{article.createdAt |date('H:i')}} dans la catégorie {{article.category.title}}</div>
+                        </div>
+                </div>
+            </div>
+        </div>
     </div>
-</article>
+</div>
 
 {% endblock %}
