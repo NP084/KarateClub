@@ -7,6 +7,7 @@ use App\Entity\Media;
 use App\Form\GalleryType;
 use App\Form\MediaType;
 use App\Repository\GalleryRepository;
+use App\Repository\MediaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -67,4 +68,15 @@ class GaleriephotoController extends AbstractController
             'editMode' => $galerie->getId() !== null
         ]);
     }
+
+    /**
+     * @Route("/gallery-view-{id}", name="gallery_show")
+     */
+    public function galerieShow(Gallery $galerie,Request $request){
+
+        return $this->render('galeriephoto/galerieshow.html.twig',[
+            'galerie' => $galerie
+        ]);
+    }
+
 }

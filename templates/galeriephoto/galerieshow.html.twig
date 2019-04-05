@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block Body %}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">{{ galerie.name }}</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    {{ galerie.description }}
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="container-fluid">
+                    {% for photo in galerie.media %}
+                        <img class="embed-responsive-item rounded" src="{{ asset('/upload/galerie/' ~ photo.imageName)}}" alt="Card image" width="auto">
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
