@@ -46,7 +46,7 @@ class VikaController extends AbstractController
     }
 
     /**
-     * @Route("/vika-{path}", name="encadrement_index")
+     * @Route("/vika-e-{path}", name="encadrement_index")
      */
     public function vikaEncadrement(EncadrementRepository $repo){
 
@@ -69,7 +69,7 @@ class VikaController extends AbstractController
 
             $manager->persist($content);
             $manager->flush();
-            return $this->redirectToRoute('VikaContentEdit',['id'=>$content->getId()]);
+            return $this->redirectToRoute('VikaContentEdit',['path'=>$content->getPath()]);
         }
 
         return $this->render('vika/vikacreate.html.twig', [
