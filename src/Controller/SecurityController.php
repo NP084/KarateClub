@@ -44,7 +44,7 @@ class SecurityController extends AbstractController
     * @Route("/connexion", name="security_login")
     */
     public function login(){
-        return $this->render('security/login.html.twig');
+        return $this->render('security/registered.html.twig');
 
     }
 
@@ -55,15 +55,7 @@ class SecurityController extends AbstractController
     public function logout(){
 
     }
-    /**
-     * @Route("/registered", name="enregistre")
-     */
-    public function index()
-    {
-        return $this->render('registered/showContent.html.twig', [
-            'controller_name' => 'RegisteredController',
-        ]);
-    }
+
 
     /**
      * @Route("/forgotten_password", name="app_forgotten_password")
