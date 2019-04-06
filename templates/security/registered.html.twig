@@ -1,6 +1,7 @@
 {% extends 'base.html.twig'%}
 
 {% block Body %}
+    {% if not app.user%}
     <div align="center">
     <div class="col-lg-4" >
         <div class="alert alert-success alert-dismissible fade show">
@@ -9,6 +10,7 @@
         </div>
     </div>
     </div>
+    {% endif %}
            <h1>Se connecter</h1>
 
 
