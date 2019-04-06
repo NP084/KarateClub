@@ -17,6 +17,21 @@
         {{ form_widget(formContent.content) }}
     </div>
 
+    <body>
+    <div id="summernote"></div>
+    <script>
+        $('#summernote').summernote({
+            placeholder: 'Hello bootstrap 4',
+            tabsize: 2,
+            height: 100
+
+        });
+
+    </script>
+    </body>
+    </html>
+
+
 
     {#
         <div class="form-group">
@@ -41,5 +56,7 @@
         <button type="submit">Enregistrer</button>
     </form>
     -->
+
+
 
 {% endblock %}
