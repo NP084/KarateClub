@@ -10,7 +10,7 @@
         </div>
     </div>
     </div>
-    {% endif %}
+
            <h1>Se connecter</h1>
 
 
@@ -54,6 +54,17 @@
 
                         </div>
                     </form>
+    {% else %}
+        <div align="center">
+            <div class="col-lg-4" >
+                <div class="alert alert-success alert-dismissible fade show">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Vous êtes déjà connecté.  <a href="{{ path('home_page') }}" class="alert-link">Revenir sur la page d'accueil</a>.
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
 
 
 {% endblock Body %}
