@@ -4,16 +4,16 @@
 
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
         {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-            <a class="nav-link" href="{{ path('admin_edit',{'id':app.user.id}) }}"><font
+            <a class="btn btn-success" href="{{ path('admin_edit',{'id':app.user.id}) }}"><font
                         style="vertical-align: inherit;"><font style="vertical-align: inherit;">Modifier son
                         profile </font></font></a>
         {% else %}
             {% if (is_granted('ROLE_ADMIN')) %}
-                <a href="{{ path('admin_edit',{'id':userConnected.id}) }}" class="btn-btn-primary">
+                <a class="btn btn-success" href="{{ path('admin_edit',{'id':userConnected.id}) }}" class="btn-btn-primary">
                     </br> Modifier le profile de l'utilisateur</br>
                 </a>
             {% else %}
-                <a href="{{ path('profile_edit',{'id':userConnected.id}) }}" class="btn-btn-primary">
+                <a class="btn btn-success" href="{{ path('profile_edit',{'id':userConnected.id}) }}" class="btn-btn-primary">
                     </br> Modifier son profile </br>
                 </a>
             {% endif %}

@@ -3,11 +3,11 @@
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
         {% if (is_granted('ROLE_ADMIN')) %}
-            <a href="{{ path('admin_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
+            <a class="btn btn-success" href="{{ path('admin_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
                 Retour
             </a>
         {% else %}
-            <a href="{{ path('profile_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
+            <a class="btn btn-success" href="{{ path('profile_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
                 Retour
             </a>
         {% endif %}
