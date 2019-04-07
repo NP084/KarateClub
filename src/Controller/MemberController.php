@@ -112,7 +112,6 @@ class MemberController extends AbstractController
         if ($histories == null) {
             $history = new History();
             $history->setDescription($user->getBelt())
-                    ->setComment('Changement de grade')
                     ->setRefDate($user->getReceiptDate())
                     ->setUser($user);
             $manager->persist($history);

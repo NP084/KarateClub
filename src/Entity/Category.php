@@ -43,11 +43,18 @@ class Category
      */
     private $equipment;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="category")
+     */
+    private $history;
+
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->event = new ArrayCollection();
         $this->equipment = new ArrayCollection();
+        $this->history = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -171,4 +178,36 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return Collection|History[]
+     */
+    public function getHistory(): Collection
+    {
+        return $this->history;
+    }
+
+    public function addHistory(History $history): self
+    {
+        if (!$this->history->contains($history)) {
+            $this->history[] = $history;
+            $history->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistory(History $history): self
+    {
+        if ($this->history->contains($history)) {
+            $this->history->removeElement($history);
+            // set the owning side to null (unless already changed)
+            if ($history->getCategory() === $this) {
+                $history->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

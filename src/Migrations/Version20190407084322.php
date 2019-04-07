@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190404191757 extends AbstractMigration
+final class Version20190407084322 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,9 @@ final class Version20190404191757 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE encadrement CHANGE imagename imagename VARCHAR(255) DEFAULT NULL, CHANGE datecreat datecreat DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE history ADD category_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE history ADD CONSTRAINT FK_27BA704B12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
+        $this->addSql('CREATE INDEX IDX_27BA704B12469DE2 ON history (category_id)');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +32,8 @@ final class Version20190404191757 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE encadrement CHANGE datecreat datecreat DATETIME NOT NULL, CHANGE imagename imagename VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE history DROP FOREIGN KEY FK_27BA704B12469DE2');
+        $this->addSql('DROP INDEX IDX_27BA704B12469DE2 ON history');
+        $this->addSql('ALTER TABLE history DROP category_id');
     }
 }
