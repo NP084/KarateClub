@@ -2,29 +2,43 @@
 
 {% block Body %}
 
-    <a href="{{ path('profile_edit',{'id':app.user.id})}}" class="btn-btn-primary">
-        </br> Modifier profile </br>
-    </a>
-
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
+        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
+            <a class="nav-link" href="{{ path('admin_edit',{'id':app.user.id}) }}"><font
+                        style="vertical-align: inherit;"><font style="vertical-align: inherit;">Modifier son
+                        profile </font></font></a>
+        {% else %}
+            {% if (is_granted('ROLE_ADMIN')) %}
+                <a href="{{ path('admin_edit',{'id':userConnected.id}) }}" class="btn-btn-primary">
+                    </br> Modifier le profile de l'utilisateur</br>
+                </a>
+            {% else %}
+                <a href="{{ path('profile_edit',{'id':userConnected.id}) }}" class="btn-btn-primary">
+                    </br> Modifier son profile </br>
+                </a>
+            {% endif %}
+
+        {% endif %}
 
         {# vérifie si l'id du visiteur correspond à l'id du membre qu'il veut consulter #}
         <h2>Profile utilisateur </h2>
         <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
-        <div class="metadata">Inscrit sur le site depuis  : {{ userConnected.createdUser |date('d/m/Y')}}</div>
+        <div class="metadata">Inscrit sur le site depuis : {{ userConnected.createdUser |date('d/m/Y') }}</div>
 
         <h4> </br> Informations générales :</h4>
         <div class="content">
-        <p> Nom d'utilisateur : {{ userConnected.username}} </p>
+        <p> Nom d'utilisateur : {{ userConnected.username }} </p>
         <p> Email : {{ userConnected.email }} </p>
-        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y')}} </p>
-        <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}" alt="{{ userConnected.user.imageFile }}" width="300" />
+        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
+        <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}" alt="{{ userConnected.user.imageFile }}"
+             width="300"/>
 
         {# Si la table user qui contient les détails sur le user est associée à userConnected#}
         {% if (userConnected.user) %}
             {% if (userConnected.user.belt) %}
-                 <h5> Grade</h5>
-                    <p> Grade : {{ userConnected.user.belt }} reçu le {{ userConnected.user.receiptDate |date('d/m/Y') }}</p>
+                <h5> Grade</h5>
+                <p> Grade : {{ userConnected.user.belt }} reçu
+                    le {{ userConnected.user.receiptDate |date('d/m/Y') }}</p>
             {% endif %}
 
             <h4> </br> Coordonnées :</h4>
@@ -36,22 +50,22 @@
                             {{ phone.type }}
                         </div>
                         <div class="col">
-                            {{ phone.num}}
+                            {{ phone.num }}
                         </div>
                     </div>
                 </div>
             {% endfor %}
 
-            <h5> <br> Adresses </h5>
+            <h5><br> Adresses </h5>
             {% for adress in userConnected.user.adress %}
                 <div class="adress">
                     <div class="row">
                         <div class="col-1">
-                            {{ adress.type}}
+                            {{ adress.type }}
                         </div>
                         <div class="col">
                             {{ adress.num }}
-                            BP  {{ adress.postBox }}
+                            BP {{ adress.postBox }}
                             {{ adress.streetName }}
                         </div>
                         <div class="col">
@@ -76,13 +90,13 @@
                             {{ contactList.personOfContact.firstName }}
                         </div>
                         <div class="col-3">
-                            {{ contactList.personOfContact.num1}}
+                            {{ contactList.personOfContact.num1 }}
                         </div>
                         <div class="col-1">
-                            {{ contactList.relation}}
+                            {{ contactList.relation }}
                         </div>
                         <div class="col-7">
-                            Info : {{ contactList.info}}
+                            Info : {{ contactList.info }}
                         </div>
                     </div>
                 </div>
@@ -90,7 +104,7 @@
 
             {#Affichle les inscriptions du membre#}
 
-            <h4> <br> Liste des inscriptions </h4>
+            <h4><br> Liste des inscriptions </h4>
             <table class="table">
             <thead>
             <tr>
@@ -110,14 +124,14 @@
                         {{ registration.event.title }}
                     </div>
                     <div class="col">
-                        {{ registration.remark}}
+                        {{ registration.remark }}
                     </div>
                 </div>
             {% endfor %}
 
             {#Affichle l'historique du membre#}
 
-            <h4> <br> Parcours </h4>
+            <h4><br> Parcours </h4>
 
             {% for history in userConnected.user.histories %}
                 <div class="row">
@@ -128,7 +142,7 @@
                         {{ history.description }}
                     </div>
                     <div class="col">
-                        {{ history.category.title}}
+                        {{ history.category.title }}
                     </div>
                 </div>
             {% endfor %}

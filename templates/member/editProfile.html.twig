@@ -2,9 +2,15 @@
 
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
-        <a href="{{ path('profile_show',{'id':app.user.id}) }}" class="btn-btn-primary">
-            Retour
-        </a>
+        {% if (is_granted('ROLE_ADMIN')) %}
+            <a href="{{ path('admin_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
+                Retour
+            </a>
+        {% else %}
+            <a href="{{ path('profile_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
+                Retour
+            </a>
+        {% endif %}
 
         <h2>Profile utilisateur </h2>
         <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
@@ -15,8 +21,7 @@
         <p> Email : {{ userConnected.email }} </p>
         <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
 
-        <h2> Modification des données personnelles </h2>
-        {{ form_start(formUser) }}
+
 
         {#seuls les admin peuvent modifier les champs
         sex
@@ -24,60 +29,68 @@
         receiptDate
         image#}
         {% if (is_granted('ROLE_ADMIN')) %}
-            <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
-                <div class="form-group">
-                    <label for="">Genre</label>
-                    {{ form_widget(formUser.sex) }}
-                </div>
+            <h2> Modification des données personnelles </h2>
+            {{ form_start(formUser) }}
 
-                <div class="form-group">
-                    <label for="">Grade</label>
-                    {{ form_widget(formUser.belt) }}
-                </div>
-                <div class="form-group">
-                    <label for="">Date d'obtention</label>
-                    {{ form_widget(formUser.receiptDate) }}
-                </div>
+            <div class="form-group">
+                <label for="">Genre</label>
+                {{ form_widget(formUser.sex) }}
+            </div>
 
-                <div class="form-group">
-                    <label for="">Ajoutez une photo de profil</label>
-                    {{ form_widget(formUser.imageFile) }}
-                </div>
+            <div class="form-group">
+                <label for="">Grade</label>
+                {{ form_widget(formUser.belt) }}
+            </div>
+            <div class="form-group">
+                <label for="">Date d'obtention</label>
+                {{ form_widget(formUser.receiptDate) }}
+            </div>
 
-                <button type="submit" class="btn btn-link">Enregister modification(s)</button>
+            <div class="form-group">
+                <label for="">Ajoutez une photo de profil</label>
+                {{ form_widget(formUser.imageFile) }}
+            </div>
 
-                {{ form_end(formUser) }}
-            </form>
+            <button type="submit" class="btn btn-success">
+                Enregister modification(s)
+            </button>
+            {{ form_end(formUser) }}
         {% endif %}
-
         {% if (app.user.id == app.request.get("id")) %}
             <div class="col-4">
-                <button type="submit" class="btn btn-link">Modifier mot de passe</button>
+                <button type="submit" class="btn btn-success">Modifier mot de passe</button>
             </div>
         {% endif %}
 
-        <h3><br>Téléphones</h3>
+
+
+        <h3>Téléphones</h3>
         {% if (userConnected.user) %}
             {% for phone in userConnected.user.phones %}
-                <form action="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':app.user.id}) }}" method="post">
-                    <div class="phone">
-                        <div class="row">
-                            <div class="col-2">
-                                {{ phone.type }}
-                            </div>
-                            <div class="col">
-                                {{ phone.num }}
-                            </div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-link">Supprimer numéro</button>
-                            </div>
+                {% if (is_granted('ROLE_ADMIN')) %}
+                    <form action="{{ path('remove_phone_admin',{'idPhone':phone.id, 'idUser':userConnected.id}) }}" method="post">
+                {% else %}
+                    <form action="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':userConnected.id}) }}" method="post">
+                {% endif %}
+
+                <div class="phone">
+                    <div class="row">
+                        <div class="col-2">
+                            {{ phone.type }}
+                        </div>
+                        <div class="col">
+                            {{ phone.num }}
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-link">Supprimer numéro</button>
                         </div>
                     </div>
+                </div>
                 </form>
             {% endfor %}
         {% endif %}
 
-        <h4><br>Nouveau numéro</h4>
+        <h4>Nouveau numéro</h4>
         {#
                     <select name="Type">
                         <option value="Domicile">Domicile</option>
@@ -85,66 +98,69 @@
                         <option value="Travaille">Travail</option>
                     </select>
         #}
-        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
-            <div class="phone">
-                <div class="row">
-                    <div class="col-2">
-                        {{ form_start(phoneForm) }}
-                        Type
-                        {{ form_widget(phoneForm.type,  {'attr':{
-                            'placeholder':"Domicile, travail..."
-                        }}) }}
-                    </div>
-                    <div class="col">
-                        Numéro
-                        {{ form_widget(phoneForm.num,  {'attr':{
-                            'placeholder':"Votre nouveau numéro..."
-                        }}) }}
-                    </div>
-                    <div class="col">
-                        <button type="submit" class="btn btn-link"><br>Ajouter numéro</button>
-                        {{ form_end(phoneForm) }}
-                    </div>
+        <div class="phone">
+            <div class="row">
+                <div class="col-2">
+                    {{ form_start(phoneForm) }}
+                    Type
+                    {{ form_widget(phoneForm.type,  {'attr':{
+                        'placeholder':"Domicile, travail..."
+                    }}) }}
+                </div>
+                <div class="col-9">
+                    Numéro
+                    {{ form_widget(phoneForm.num,  {'attr':{
+                        'placeholder':"Votre nouveau numéro..."
+                    }}) }}
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-success">Ajouter numéro</button>
+                    {{ form_end(phoneForm) }}
                 </div>
             </div>
-        </form>
+        </div>
         {#Affiche adresses#}
-        <h3><br>Adresses</h3>
+        <h3>Adresses</h3>
         {% if (userConnected.user) %}
             {% for adress in userConnected.user.adress %}
-                <form action="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':app.user.id}) }}" method="post">
-                    <div class="adress">
-                        <div class="row">
-                            <div class="col-2">
-                                {{ adress.type }}
-                            </div>
-                            <div class="col">
-                                {{ adress.num }} (BP:{{ adress.postBox }})
-                            </div>
-                            <div class="col">
-                                {{ adress.streetName }}
-                            </div>
-                            <div class="col">
-                                {{ adress.city.cityName }}
-                                ({{ adress.city.zip }})
-                            </div>
-                            <div class="col">
-                                {{ adress.city.country.countryName }}
-                            </div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-link">Supprimer adresse</button>
-                            </div>
+                {% if (is_granted('ROLE_ADMIN')) %}
+                    <form action="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':userConnected.id}) }}" method="post">
+                {% else %}
+                    <form action="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':userConnected.id}) }}" method="post">
+                {% endif %}
+                <div class="adress">
+                    <div class="row">
+                        <div class="col-2">
+                            {{ adress.type }}
+                        </div>
+                        <div class="col">
+                            {{ adress.num }} (BP:{{ adress.postBox }})
+                        </div>
+                        <div class="col">
+                            {{ adress.streetName }}
+                        </div>
+                        <div class="col">
+                            {{ adress.city.cityName }}
+                            ({{ adress.city.zip }})
+                        </div>
+                        <div class="col">
+                            {{ adress.city.country.countryName }}
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-link">Supprimer adresse</button>
                         </div>
                     </div>
+                </div>
                 </form>
             {% endfor %}
         {% endif %}
 
-        <h4><br>Nouvelle adresse</h4>
-        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
-            {{ form_start(adressForm) }}
+        <h4>Nouvelle adresse</h4>
+        <div class="phone">
+
             <div class="row">
                 <div class="col-2">
+                    {{ form_start(adressForm) }}
                     Type {{ form_widget(adressForm.type) }}
                 </div>
                 <div class="col-2">
@@ -159,87 +175,86 @@
                 <div class="col-2">
                     CP {{ (form_widget(cityForm.zip) ) }}
                 </div>
-                <div class="col-4">
+                <div class="col-5">
                     Ville {{ form_widget(cityForm.cityName) }}
                 </div>
                 <div class="col-4">
                     Pays {{ form_widget(cityForm.country) }}
                 </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-link"><br>Ajouter adresse</button>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-success">Ajouter adresse</button>
                     {{ form_end(adressForm) }}
                 </div>
             </div>
-        </form>
+        </div>
 
         {#Affiche personnes de contact#}
-        <h3><br>Personnes de contact</h3>
+        <h3>Personnes de contact</h3>
         {% for contactList in userConnected.user.contactLists %}
-            {# <form action="{{path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}" method="post">#}
+            {% if (is_granted('ROLE_ADMIN')) %}
+                <form action="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':userConnected.id}) }}" method="post">
+            {% else %}
+                <form action="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':userConnected.id}) }}" method="post">
+            {% endif %}
             <div class="personOfContact">
                 <div class="row">
                     <div class="col-2">
                         Nom: {{ contactList.personOfContact.name }}
                     </div>
-                    <div class="col">
+                    <div class="col-2">
                         Prénom : {{ contactList.personOfContact.firstName }}
                     </div>
-                    <div class="col">
+                    <div class="col-2">
                         Numéro : {{ contactList.personOfContact.num1 }}
                     </div>
-                    <div class="col">
+                    <div class="col-2">
                         Relation : {{ contactList.relation }}
                     </div>
-                    <div class="col">
+                    <div class="col-11">
                         Info : {{ contactList.info }}
                     </div>
-                </div>
-                <div>
-                    <div class="row">
+                    <div class="col-3">
                         <div class="col">
-                            {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
-                            <a href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':app.user.id}) }}">Supprimer
-                                personne de contact</a>
+                            <button type="submit" class="btn btn-link">Supprimer la personne de contact</button>
                         </div>
+                    </div>
+                    <div class="col-3">
+                        <a href="{{ path('edit_PoC',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                            Modifier personne de contact</a>
                     </div>
                 </div>
             </div>
-            {# </form> #}
-            <div class="col">
-                <a href="{{ path('edit_PoC',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">Modifier
-                    personne de contact</a>
-            </div>
+            </form>
+
         {% endfor %}
 
-        <h4><br>Nouvelle personne de contact</h4>
-        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
-            {{ form_start(PoCForm) }}
-            <div class="row">
-                <div class="col-3">
-                    Nom {{ form_widget(PoCForm.name) }}
-                </div>
-                <div class="col-3">
-                    Prénom {{ form_widget(PoCForm.firstName) }}
-                </div>
-                <div class="col-3">
-                    Numéro {{ form_widget(PoCForm.num1) }}
-                </div>
-                <div class="col-2">
-                    Relation {{ (form_widget(ContactListForm.relation) ) }}
-                </div>
-                <div class="col-11">
-                    Info {{ (form_widget(ContactListForm.info) ) }}
-                </div>
-                <div class="col-3">
-                    <button type="submit" class="btn btn-link"><br>Ajouter une nouvelle personne de contact</button>
-                    {{ form_end(PoCForm) }}
-                </div>
+        <h4>Nouvelle personne de contact</h4>
+        <div class="row">
+            <div class="col-3">
+                {{ form_start(PoCForm) }}
+                Nom {{ form_widget(PoCForm.name) }}
             </div>
-        </form>
+            <div class="col-3">
+                Prénom {{ form_widget(PoCForm.firstName) }}
+            </div>
+            <div class="col-3">
+                Numéro {{ form_widget(PoCForm.num1) }}
+            </div>
+            <div class="col-2">
+                Relation {{ (form_widget(ContactListForm.relation) ) }}
+            </div>
+            <div class="col-11">
+                Info {{ (form_widget(ContactListForm.info) ) }}
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-success">Ajouter une nouvelle personne de contact</button>
+                {{ form_end(PoCForm) }}
+            </div>
+        </div>
 
         {% if (is_granted('ROLE_ADMIN')) %}
 
-            <h3><br>Parcours</h3>
+            <h3>Parcours</h3>
             {% for history in userConnected.user.Histories %}
                 <div class="personOfContact">
                     <div class="row">
@@ -257,16 +272,15 @@
                         <div class="row">
                             <div class="col">
                                 {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
-                                <a href="{{ path('remove_history',{'id':history.id, 'idUser':app.user.id}) }}">Supprimer
-                                    personne de contact</a>
+                                <a href="{{ path('remove_history_admin',{'id':history.id, 'idUser':userConnected.id}) }}">Supprimer la ligne</a>
                             </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
 
-            <h4><br>Ajouter une nouvelle ligne dans le parcours</h4>
-            <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
+            <h4>Ajouter une nouvelle ligne dans le parcours</h4>
+            <form action="{{ path('admin_edit',{'id':userConnected.id}) }}" method="post">
                 {{ form_start(historyForm) }}
                 <div class="row">
                     <div class="col-md-6">
@@ -281,7 +295,7 @@
                         Catégorie {{ form_widget(historyForm.category) }}
                     </div>
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-link"><br>Ajouter un nouvel historique</button>
+                        <button type="submit" class="btn btn-link">Ajouter un nouvel historique</button>
                         {{ form_end(historyForm) }}
                     </div>
                 </div>

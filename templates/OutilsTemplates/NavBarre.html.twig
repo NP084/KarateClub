@@ -5,11 +5,22 @@
         <div class="nav-scroller">
             <!-- .nav -->
             <div class="nav nav-tabs">
-                <a class="nav-link" href="{{path('profile_show',{'id':app.user.id}) }}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mon profil </font></font></a>
-                <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mes activités</font></font></a>
-                <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mon parcours</font></font></a>
+                {% if (is_granted('ROLE_ADMIN')) %}
+                    <a class="nav-link" href="{{ path('admin_show',{'id':app.user.id}) }}"><font
+                                style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mon
+                                profil </font></font></a>
+                {% else %}
+                    <a class="nav-link" href="{{ path('profile_show',{'id':app.user.id}) }}"><font
+                                style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mon
+                                profil </font></font></a>
+                {% endif %}
+                <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font
+                                style="vertical-align: inherit;">Mes activités</font></font></a>
+                <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font
+                                style="vertical-align: inherit;">Mon parcours</font></font></a>
                 {# <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mon matériel</font></font></a> #}
-                <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mes documents</font></font></a> 
+                <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font
+                                style="vertical-align: inherit;">Mes documents</font></font></a>
             </div><!-- /.nav -->
         </div><!-- /.nav-scroller -->
     </nav><!-- /.page-navs -->
