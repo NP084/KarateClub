@@ -105,6 +105,11 @@ class User
      */
     private $isActive;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserConnected", cascade={"persist", "remove"})
+     */
+    private $userConnected;
+
     public function __construct()
     {
         $this->phones = new ArrayCollection();
@@ -406,6 +411,18 @@ class User
                 $contactList->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserConnected(): ?UserConnected
+    {
+        return $this->userConnected;
+    }
+
+    public function setUserConnected(?UserConnected $userConnected): self
+    {
+        $this->userConnected = $userConnected;
 
         return $this;
     }

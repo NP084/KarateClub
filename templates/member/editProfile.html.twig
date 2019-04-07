@@ -7,7 +7,8 @@
                 Retour
             </a>
         {% else %}
-            <a class="btn btn-success" href="{{ path('profile_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
+            <a class="btn btn-success" href="{{ path('profile_show',{'id':userConnected.id}) }}"
+               class="btn-btn-primary">
                 Retour
             </a>
         {% endif %}
@@ -219,8 +220,13 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <a href="{{ path('edit_PoC',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
-                            Modifier personne de contact</a>
+                        {% if (is_granted('ROLE_ADMIN')) %}
+                            <a href="{{ path('edit_PoC_admin',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                Modifier personne de contact</a>
+                        {% else %}
+                            <a href="{{ path('edit_PoC',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                Modifier personne de contact</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -272,7 +278,8 @@
                         <div class="row">
                             <div class="col">
                                 {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
-                                <a href="{{ path('remove_history_admin',{'id':history.id, 'idUser':userConnected.id}) }}">Supprimer la ligne</a>
+                                <a href="{{ path('remove_history_admin',{'id':history.id, 'idUser':userConnected.id}) }}">Supprimer
+                                    la ligne</a>
                             </div>
                         </div>
                     </div>

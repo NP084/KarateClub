@@ -1,15 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
-    {% if app.user and app.user.id == app.request.get("id") %}
-        {#  {% if  app.user.id == app.request.get("id") %} #}
-        <a href="{{ path('profile_show',{'id':app.user.id})}}" class="btn-btn-primary">
-            Retour
-        </a>
+    {% if is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id") %}
+        {% if (is_granted('ROLE_ADMIN')) %}
+            <a class="btn btn-success" href="{{ path('admin_edit',{'id':contactList.user.userConnected.id}) }}">
+                Retour
+            </a>
+        {% else %}
+            <a class="btn btn-success" href="{{ path('profile_edit',{'id':userConnected.user.userConnected.id}) }}">
+                Retour
+            </a>
+        {% endif %}
         {#Affiche personnes de contact#}
         <h2> <br>Modification d'un personne de contact</h2>
 
-        <form action="{{path('edit_PoC',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}" method="post">
+        <form action="{{path('edit_PoC_admin',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}" method="post">
             <div class="row">
                 <div class="col-4">
                     Nom: {{ contactList.personOfContact.name }}

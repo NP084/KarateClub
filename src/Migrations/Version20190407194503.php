@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190407084322 extends AbstractMigration
+final class Version20190407194503 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,9 +22,9 @@ final class Version20190407084322 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE history ADD category_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE history ADD CONSTRAINT FK_27BA704B12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
-        $this->addSql('CREATE INDEX IDX_27BA704B12469DE2 ON history (category_id)');
+        $this->addSql('ALTER TABLE app_user ADD user_connected_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE app_user ADD CONSTRAINT FK_88BDF3E9F2063BA5 FOREIGN KEY (user_connected_id) REFERENCES userConnected (id)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_88BDF3E9F2063BA5 ON app_user (user_connected_id)');
     }
 
     public function down(Schema $schema) : void
@@ -32,8 +32,8 @@ final class Version20190407084322 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE history DROP FOREIGN KEY FK_27BA704B12469DE2');
-        $this->addSql('DROP INDEX IDX_27BA704B12469DE2 ON history');
-        $this->addSql('ALTER TABLE history DROP category_id');
+        $this->addSql('ALTER TABLE app_user DROP FOREIGN KEY FK_88BDF3E9F2063BA5');
+        $this->addSql('DROP INDEX UNIQ_88BDF3E9F2063BA5 ON app_user');
+        $this->addSql('ALTER TABLE app_user DROP user_connected_id');
     }
 }

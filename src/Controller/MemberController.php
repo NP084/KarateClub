@@ -386,10 +386,11 @@ class MemberController extends AbstractController
      * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      * @Route("/admin-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC_admin", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
-     * @Security("user.getUser().getId() == contactList.getUser().getId()")
      */
-    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager)
+    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
+        //* @Security("user.getUser().getId() == contactList.getUser().getId()")
+
         $entityManager = $this->getDoctrine()->getManager();
         $userConnected = $entityManager->getRepository(UserConnected::class)->find($id);
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
@@ -400,8 +401,11 @@ class MemberController extends AbstractController
         if ($formCL->isSubmitted() && $formCL->isValid()) {
             $manager->persist($contactList);
             $manager->flush();
-            return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
-        }
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+            } else {
+                return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+            }        }
 
         return $this->render('member/editPersonOfContact.html.twig', [
             'contactList' => $contactList,
