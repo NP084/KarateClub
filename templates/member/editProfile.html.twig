@@ -230,6 +230,26 @@
             </div>
         </form>
 
+        <h3> <br>Nouvel historique</h3>
+        <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
+            {{ form_start(historyForm) }}
+            <div class="row">
+                <div class="col-md-5">
+                    Description {{ form_widget(historyForm.description) }}
+                </div>
+                <div class="col-md-2">
+                    Date {{ form_widget(historyForm.refDate) }}
+                </div>
+                <div class="col-md-2">
+                    Catégorie {{ form_widget(historyForm.category) }}
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-link"><br>Ajouter un nouvel historique</button>
+                    {{ form_end(historyForm) }}
+                </div>
+            </div>
+        </form>
+
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}

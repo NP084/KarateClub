@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adress;
+use App\Entity\Category;
 use App\Entity\City;
 use App\Entity\ContactList;
 use App\Entity\History;
@@ -11,6 +12,7 @@ use App\Entity\UserConnected;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
+use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
 use App\Form\UserConnectedType;
 use App\Form\UserType;
@@ -89,6 +91,18 @@ class MemberController extends AbstractController
             return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
         }
 
+        // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
+        $history = new History();
+        $formHistory = $this->createForm(HistoryType::class, $history);
+        $formHistory->handleRequest($request);
+
+        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
+        if($formHistory->isSubmitted() && $formHistory->isValid()){
+            // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
+
+            return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
+        }
+
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'userConnected'  => $userConnected,
@@ -96,6 +110,7 @@ class MemberController extends AbstractController
             'phoneForm'      => $formPhone->createView(),
             'adressForm'     => $formAdress->createView(),
             'cityForm'       => $formCity->createView(),
+            'historyForm'    => $formHistory->createView(),
             'PoCForm'        => $formPoC->createView(),
             'ContactListForm'=>$formContactList->createView()
         ]);
