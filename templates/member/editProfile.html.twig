@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
-    {% if app.user and app.user.id == app.request.get("id") %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
         <a href="{{ path('profile_show',{'id':app.user.id})}}" class="btn-btn-primary">
             Retour
         </a>
