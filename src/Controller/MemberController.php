@@ -45,7 +45,7 @@ class MemberController extends AbstractController
         if($formUser->isSubmitted() && $formUser->isValid()){
             $manager->persist($user);
             // si changement de grade, on l'ajoute à l'historique du user
-            $this->addHistory($user, $manager,$historyNull=null);
+            $this->addHistory($user, null, $manager);
             $manager->flush();
             return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
         }
@@ -99,7 +99,7 @@ class MemberController extends AbstractController
         // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
         if($formHistory->isSubmitted()){
             // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
-            $this->addHistory($user, $manager,$history);
+            $this->addHistory($user, $history, $manager);
             return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
         }
 
@@ -116,14 +116,20 @@ class MemberController extends AbstractController
         ]);
     }
 
-    public function addHistory(User $user, ObjectManager $manager, History $history2=null){
-            $repo = $this -> getDoctrine()
+    public function addHistory(User $user, History $newHistory=null, ObjectManager $manager){
+        if($newHistory){
+            $newHistory->setUser($user);
+            $manager->persist($newHistory);
+            $manager->flush();
+        }
+
+        // dans le cas où il y a un passage de grade :
+        $repo = $this -> getDoctrine()
                 -> getRepository(History::class);
             $histories = $repo->findOneBy([
                 'user'        => $user -> getId(),
                 'description' => $user -> getBelt(),
             ]);
-
             if ($histories == null) {
                 $history = new History();
                 $repo2 = $this -> getDoctrine()
@@ -137,14 +143,6 @@ class MemberController extends AbstractController
                     ->setUser($user);
                 $manager->persist($history);
                 $manager->flush();
-            }
-            else{
-                if($history2){
-                    $history2->setUser($user);
-                    $manager->persist($history2);
-                    $manager->flush();
-
-                }
             }
     }
 
