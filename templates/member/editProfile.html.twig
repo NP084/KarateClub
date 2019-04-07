@@ -18,36 +18,43 @@
         <h2> Modification des données personnelles </h2>
         {{ form_start(formUser) }}
 
-        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
-            <div class="form-group">
-                <label for="">Genre</label>
-                {{ form_widget(formUser.sex) }}
-            </div>
+        {#seuls les admin peuvent modifier les champs
+        sex
+        belt
+        receiptDate
+        image#}
+        {% if (is_granted('ROLE_ADMIN')) %}
+            <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="">Genre</label>
+                    {{ form_widget(formUser.sex) }}
+                </div>
 
-            <div class="form-group">
-                <label for="">Grade</label>
-                {{ form_widget(formUser.belt) }}
-            </div>
+                <div class="form-group">
+                    <label for="">Grade</label>
+                    {{ form_widget(formUser.belt) }}
+                </div>
+                <div class="form-group">
+                    <label for="">Date d'obtention</label>
+                    {{ form_widget(formUser.receiptDate) }}
+                </div>
 
-            <div class="form-group">
-                <label for="">Date d'obtention</label>
-                {{ form_widget(formUser.receiptDate) }}
-            </div>
+                <div class="form-group">
+                    <label for="">Ajoutez une photo de profil</label>
+                    {{ form_widget(formUser.imageFile) }}
+                </div>
 
-            <div class="form-group">
-                <label for="">Ajoutez une photo de profil</label>
-                {{ form_widget(formUser.imageFile) }}
-            </div>
+                <button type="submit" class="btn btn-link">Enregister modification(s)</button>
 
-            <button type="submit" class="btn btn-link">Enregister modification(s)</button>
+                {{ form_end(formUser) }}
+            </form>
+        {% endif %}
 
-            {{ form_end(formUser) }}
-
+        {% if (app.user.id == app.request.get("id")) %}
             <div class="col-4">
                 <button type="submit" class="btn btn-link">Modifier mot de passe</button>
             </div>
-
-        </form>
+        {% endif %}
 
         <h3><br>Téléphones</h3>
         {% if (userConnected.user) %}
@@ -230,54 +237,56 @@
             </div>
         </form>
 
+        {% if (is_granted('ROLE_ADMIN')) %}
 
-        <h3><br>Parcours</h3>
-        {% for history in userConnected.user.Histories %}
-            <div class="personOfContact">
-                <div class="row">
-                    <div class="col-2">
-                        Description: {{ history.description }}
-                    </div>
-                    <div class="col">
-                        Date : {{ history.refDate |date('d/m/Y') }}
-                    </div>
-                    <div class="col">
-                        Catégorie : {{ history.category.title }}
-                    </div>
-                </div>
-                <div>
+            <h3><br>Parcours</h3>
+            {% for history in userConnected.user.Histories %}
+                <div class="personOfContact">
                     <div class="row">
+                        <div class="col-2">
+                            Description: {{ history.description }}
+                        </div>
                         <div class="col">
-                            {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
-                            <a href="{{ path('remove_history',{'id':history.id, 'idUser':app.user.id}) }}">Supprimer
-                                personne de contact</a>
+                            Date : {{ history.refDate |date('d/m/Y') }}
+                        </div>
+                        <div class="col">
+                            Catégorie : {{ history.category.title }}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div class="col">
+                                {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
+                                <a href="{{ path('remove_history',{'id':history.id, 'idUser':app.user.id}) }}">Supprimer
+                                    personne de contact</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
 
-        <h4><br>Ajouter une nouvelle ligne dans le parcours</h4>
-        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
-            {{ form_start(historyForm) }}
-            <div class="row">
-                <div class="col-md-6">
-                    {#attr : nbre de ligne affichée dans le textBox de "Description #}
-                    Description {{ form_widget(historyForm.description,  { 'attr': {
-                        'rows' : '8' }} ) }}
+            <h4><br>Ajouter une nouvelle ligne dans le parcours</h4>
+            <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
+                {{ form_start(historyForm) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {#attr : nbre de ligne affichée dans le textBox de "Description #}
+                        Description {{ form_widget(historyForm.description,  { 'attr': {
+                            'rows' : '8' }} ) }}
+                    </div>
+                    <div class="col-md-2">
+                        Date {{ form_widget(historyForm.refDate) }}
+                    </div>
+                    <div class="col-md-3">
+                        Catégorie {{ form_widget(historyForm.category) }}
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-link"><br>Ajouter un nouvel historique</button>
+                        {{ form_end(historyForm) }}
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    Date {{ form_widget(historyForm.refDate) }}
-                </div>
-                <div class="col-md-3">
-                    Catégorie {{ form_widget(historyForm.category) }}
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-link"><br>Ajouter un nouvel historique</button>
-                    {{ form_end(historyForm) }}
-                </div>
-            </div>
-        </form>
+            </form>
+        {% endif %}
 
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
