@@ -2,23 +2,23 @@
 
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
-        <a href="{{ path('profile_show',{'id':app.user.id})}}" class="btn-btn-primary">
+        <a href="{{ path('profile_show',{'id':app.user.id}) }}" class="btn-btn-primary">
             Retour
         </a>
 
         <h2>Profile utilisateur </h2>
         <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
-        <div class="metadata">Inscrit sur le site depuis  : {{ userConnected.createdUser |date('d/m/Y')}}</div>
+        <div class="metadata">Inscrit sur le site depuis : {{ userConnected.createdUser |date('d/m/Y') }}</div>
 
         <h4> </br> Informations générales :</h4>
-        <p> Nom d'utilisateur : {{ userConnected.username}} </p>
+        <p> Nom d'utilisateur : {{ userConnected.username }} </p>
         <p> Email : {{ userConnected.email }} </p>
-        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y')}} </p>
+        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
 
         <h2> Modification des données personnelles </h2>
         {{ form_start(formUser) }}
 
-        <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
+        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
             <div class="form-group">
                 <label for="">Genre</label>
                 {{ form_widget(formUser.sex) }}
@@ -49,17 +49,17 @@
 
         </form>
 
-        <h3> <br>Téléphones</h3>
+        <h3><br>Téléphones</h3>
         {% if (userConnected.user) %}
             {% for phone in userConnected.user.phones %}
-                <form action="{{path('remove_phone',{'idPhone':phone.id, 'idUser':app.user.id}) }}" method="post">
+                <form action="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':app.user.id}) }}" method="post">
                     <div class="phone">
                         <div class="row">
                             <div class="col-2">
                                 {{ phone.type }}
                             </div>
                             <div class="col">
-                                {{ phone.num}}
+                                {{ phone.num }}
                             </div>
                             <div class="col">
                                 <button type="submit" class="btn btn-link">Supprimer numéro</button>
@@ -70,41 +70,42 @@
             {% endfor %}
         {% endif %}
 
-        <h4> <br>Nouveau numéro</h4>
+        <h4><br>Nouveau numéro</h4>
         {#
                     <select name="Type">
                         <option value="Domicile">Domicile</option>
                         <option value="Portable">Portable</option>
                         <option value="Travaille">Travail</option>
                     </select>
-        #}  <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
-        <div class = "phone">
-            <div class="row">
-                <div class="col-2">
-                    {{ form_start(phoneForm) }}
-                    Type
-                    {{ form_widget(phoneForm.type,  {'attr':{
-                        'placeholder':"Domicile, travail..."
-                    }}) }}
-                </div>
-                <div class="col">
-                    Numéro
-                    {{ form_widget(phoneForm.num,  {'attr':{
-                        'placeholder':"Votre nouveau numéro..."
-                    }}) }}
-                </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-link"><br>Ajouter numéro</button>
-                    {{ form_end(phoneForm) }}
+        #}
+        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
+            <div class="phone">
+                <div class="row">
+                    <div class="col-2">
+                        {{ form_start(phoneForm) }}
+                        Type
+                        {{ form_widget(phoneForm.type,  {'attr':{
+                            'placeholder':"Domicile, travail..."
+                        }}) }}
+                    </div>
+                    <div class="col">
+                        Numéro
+                        {{ form_widget(phoneForm.num,  {'attr':{
+                            'placeholder':"Votre nouveau numéro..."
+                        }}) }}
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-link"><br>Ajouter numéro</button>
+                        {{ form_end(phoneForm) }}
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
         {#Affiche adresses#}
-        <h3> <br>Adresses</h3>
+        <h3><br>Adresses</h3>
         {% if (userConnected.user) %}
             {% for adress in userConnected.user.adress %}
-                <form action="{{path('remove_adress',{'idAdress':adress.id, 'idUser':app.user.id}) }}" method="post">
+                <form action="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':app.user.id}) }}" method="post">
                     <div class="adress">
                         <div class="row">
                             <div class="col-2">
@@ -114,14 +115,14 @@
                                 {{ adress.num }} (BP:{{ adress.postBox }})
                             </div>
                             <div class="col">
-                                {{ adress.streetName}}
+                                {{ adress.streetName }}
                             </div>
                             <div class="col">
-                                {{ adress.city.cityName}}
-                                ({{ adress.city.zip}})
+                                {{ adress.city.cityName }}
+                                ({{ adress.city.zip }})
                             </div>
                             <div class="col">
-                                {{ adress.city.country.countryName}}
+                                {{ adress.city.country.countryName }}
                             </div>
                             <div class="col">
                                 <button type="submit" class="btn btn-link">Supprimer adresse</button>
@@ -132,8 +133,8 @@
             {% endfor %}
         {% endif %}
 
-        <h4> <br>Nouvelle adresse</h4>
-        <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
+        <h4><br>Nouvelle adresse</h4>
+        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
             {{ form_start(adressForm) }}
             <div class="row">
                 <div class="col-2">
@@ -146,16 +147,16 @@
                     BP {{ form_widget(adressForm.postBox) }}
                 </div>
                 <div class="col-11">
-                    Rue  {{ form_widget(adressForm.streetName) }}
+                    Rue {{ form_widget(adressForm.streetName) }}
                 </div>
                 <div class="col-2">
                     CP {{ (form_widget(cityForm.zip) ) }}
                 </div>
                 <div class="col-4">
-                    Ville  {{ form_widget(cityForm.cityName)}}
+                    Ville {{ form_widget(cityForm.cityName) }}
                 </div>
                 <div class="col-4">
-                    Pays  {{ form_widget(cityForm.country)}}
+                    Pays {{ form_widget(cityForm.country) }}
                 </div>
                 <div class="col">
                     <button type="submit" class="btn btn-link"><br>Ajouter adresse</button>
@@ -165,47 +166,46 @@
         </form>
 
         {#Affiche personnes de contact#}
-        <h3> <br>Personnes de contact</h3>
-        {% if (userConnected.user) %}
-
-            {% for contactList in userConnected.user.contactLists %}
-                {# <form action="{{path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}" method="post">#}
-                <div class="personOfContact">
+        <h3><br>Personnes de contact</h3>
+        {% for contactList in userConnected.user.contactLists %}
+            {# <form action="{{path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}" method="post">#}
+            <div class="personOfContact">
+                <div class="row">
+                    <div class="col-2">
+                        Nom: {{ contactList.personOfContact.name }}
+                    </div>
+                    <div class="col">
+                        Prénom : {{ contactList.personOfContact.firstName }}
+                    </div>
+                    <div class="col">
+                        Numéro : {{ contactList.personOfContact.num1 }}
+                    </div>
+                    <div class="col">
+                        Relation : {{ contactList.relation }}
+                    </div>
+                    <div class="col">
+                        Info : {{ contactList.info }}
+                    </div>
+                </div>
+                <div>
                     <div class="row">
-                        <div class="col-2">
-                            Nom: {{ contactList.personOfContact.name }}
-                        </div>
                         <div class="col">
-                            Prénom : {{ contactList.personOfContact.firstName }}
-                        </div>
-                        <div class="col">
-                            Numéro : {{ contactList.personOfContact.num1 }}
-                        </div>
-                        <div class="col">
-                            Relation : {{ contactList.relation }}
-                        </div>
-                        <div class="col">
-                            Info : {{ contactList.info }}
-                        </div>
-                    </div>
-                    <div>
-                        <div class="row">
-                            <div class="col">
-                                {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
-                                <a href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':app.user.id}) }}">Supprimer personne de contact</a>
-                            </div>
+                            {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
+                            <a href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':app.user.id}) }}">Supprimer
+                                personne de contact</a>
                         </div>
                     </div>
                 </div>
-                {# </form> #}
-                <div class="col">
-                    <a href="{{ path('edit_PoC',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">Modifier personne de contact</a>
-                </div>
-            {% endfor %}
-        {% endif %}
+            </div>
+            {# </form> #}
+            <div class="col">
+                <a href="{{ path('edit_PoC',{'id':app.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">Modifier
+                    personne de contact</a>
+            </div>
+        {% endfor %}
 
-        <h4> <br>Nouvelle personne de contact</h4>
-        <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
+        <h4><br>Nouvelle personne de contact</h4>
+        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
             {{ form_start(PoCForm) }}
             <div class="row">
                 <div class="col-3">
@@ -215,7 +215,7 @@
                     Prénom {{ form_widget(PoCForm.firstName) }}
                 </div>
                 <div class="col-3">
-                    Numéro  {{ form_widget(PoCForm.num1) }}
+                    Numéro {{ form_widget(PoCForm.num1) }}
                 </div>
                 <div class="col-2">
                     Relation {{ (form_widget(ContactListForm.relation) ) }}
@@ -230,8 +230,35 @@
             </div>
         </form>
 
-        <h3> <br>Nouvel historique</h3>
-        <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
+
+        <h3><br>Parcours</h3>
+        {% for history in userConnected.user.Histories %}
+            <div class="personOfContact">
+                <div class="row">
+                    <div class="col-2">
+                        Description: {{ history.description }}
+                    </div>
+                    <div class="col">
+                        Date : {{ history.refDate |date('d/m/Y') }}
+                    </div>
+                    <div class="col">
+                        Catégorie : {{ history.category.title }}
+                    </div>
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="col">
+                            {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
+                            <a href="{{ path('remove_history',{'id':history.id, 'idUser':app.user.id}) }}">Supprimer
+                                personne de contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <h4><br>Ajouter une nouvelle ligne dans le parcours</h4>
+        <form action="{{ path('profile_edit',{'id':app.user.id}) }}" method="post">
             {{ form_start(historyForm) }}
             <div class="row">
                 <div class="col-md-6">

@@ -61,7 +61,7 @@ class User
     private $registration;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      * Affiche l'historique trié selon refDate
      * @ORM\OrderBy({"refDate" = "ASC"})
      */

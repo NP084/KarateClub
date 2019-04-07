@@ -116,8 +116,9 @@ class MemberController extends AbstractController
         ]);
     }
 
-    public function addHistory(User $user, History $newHistory=null, ObjectManager $manager){
-        if($newHistory){
+    public function addHistory(User $user, History $newHistory=null, ObjectManager $manager)
+    {
+        if ($newHistory) {
             $newHistory->setUser($user);
             $manager->persist($newHistory);
             $manager->flush();
@@ -144,6 +145,23 @@ class MemberController extends AbstractController
                 $manager->persist($history);
                 $manager->flush();
             }
+    }
+
+
+    /**
+     * Supprime une ligne d'historique de contact.
+     * @Route("/member-remove_history-id={id}-idUser={idUser}", name="remove_history", requirements={"idCL"="\d+"})
+     */
+    public function removeHistory($id, $idUser){
+        $entityManager=$this->getDoctrine()->getManager();
+        $history = $entityManager->getRepository(History::class)->find($id);
+        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
+        $user = $userConnected->getUser();
+
+        $user->removeHistory($history);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
     }
 
     /**
