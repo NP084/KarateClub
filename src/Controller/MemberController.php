@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Adress;
 use App\Entity\City;
 use App\Entity\ContactList;
+use App\Entity\History;
 use App\Entity\PersonOfContact;
 use App\Entity\UserConnected;
 use App\Form\AdressType;
@@ -35,13 +36,14 @@ class MemberController extends AbstractController
      */
     public function profileEdit(UserConnected $userConnected, Request $request, ObjectManager $manager){
 //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-
         $user = $userConnected->getUser();
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
 
         if($formUser->isSubmitted() && $formUser->isValid()){
             $manager->persist($user);
+            // si changement de grade, on l'ajoute à l'historique du user
+            $this->addHistory($user, $manager);
             $manager->flush();
             return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
         }
@@ -51,7 +53,6 @@ class MemberController extends AbstractController
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
 
-        // Formulaire d'ajout d'un n° de téléphone a été envoyé :
         if($formPhone->isSubmitted() && $formPhone->isValid()){
             // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
             $this->addUserPhone($userConnected, $phone, $request, $manager);
@@ -99,6 +100,25 @@ class MemberController extends AbstractController
             'ContactListForm'=>$formContactList->createView()
         ]);
     }
+
+    public function addHistory($user, $manager){
+        $repo = $this -> getDoctrine()
+                      -> getRepository(History::class);
+        $histories = $repo->findOneBy([
+            'user'        => $user -> getId(),
+            'description' => $user -> getBelt(),
+        ]);
+
+        if ($histories == null) {
+            $history = new History();
+            $history->setDescription($user->getBelt())
+                    ->setComment('Changement de grade')
+                    ->setRefDate($user->getReceiptDate())
+                    ->setUser($user);
+            $manager->persist($history);
+        };
+    }
+
     /**
      * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}", name="admin_show",  requirements={"id"="\d+"})
