@@ -107,6 +107,15 @@
             "ref": "8eb1cd0962ded6a6d6e1e5a9b6d3e888f9f94ff6"
         }
     },
+    "friendsofsymfony/user-bundle": {
+        "version": "2.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.1",
+            "ref": "55fbe103bb5511f46a3bce047f729a89fc4d5237"
+        }
+    },
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },

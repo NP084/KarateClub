@@ -119,6 +119,7 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
             'Fig\\Link\\' => 9,
             'Faker\\' => 6,
             'Facebook\\WebDriver\\' => 19,
+            'FOS\\UserBundle\\' => 15,
             'FOS\\CKEditorBundle\\' => 19,
         ),
         'E' => 
@@ -447,6 +448,10 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         'Facebook\\WebDriver\\' => 
         array (
             0 => __DIR__ . '/..' . '/facebook/webdriver/lib',
+        ),
+        'FOS\\UserBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/friendsofsymfony/user-bundle',
         ),
         'FOS\\CKEditorBundle\\' => 
         array (
