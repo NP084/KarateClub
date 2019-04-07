@@ -32,6 +32,7 @@ class User
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Adress", inversedBy="users")
+     * @ORM\OrderBy({"type" = "ASC"})
      */
     private $adress;
 
@@ -52,16 +53,18 @@ class User
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="member")
+     * @ORM\OrderBy({"addDate" = "ASC"})
      */
     private $attachedFiles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="user")
+     * @ORM\OrderBy({"registrationDate" = "ASC"})
      */
     private $registration;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      * Affiche l'historique trié selon refDate
      * @ORM\OrderBy({"refDate" = "ASC"})
      */
@@ -74,6 +77,7 @@ class User
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ContactList", mappedBy="user", orphanRemoval=true)
+     * @ORM\OrderBy({"relation" = "ASC"})
      */
     private $contactLists;
 

@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Adress;
+use App\Entity\Category;
 use App\Entity\City;
 use App\Entity\ContactList;
+use App\Entity\History;
 use App\Entity\PersonOfContact;
 use App\Entity\UserConnected;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
+use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
 use App\Form\UserConnectedType;
 use App\Form\UserType;
@@ -35,13 +38,14 @@ class MemberController extends AbstractController
      */
     public function profileEdit(UserConnected $userConnected, Request $request, ObjectManager $manager){
 //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-
         $user = $userConnected->getUser();
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
 
         if($formUser->isSubmitted() && $formUser->isValid()){
             $manager->persist($user);
+            // si changement de grade, on l'ajoute à l'historique du user
+            $this->addHistory($user, null, $manager);
             $manager->flush();
             return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
         }
@@ -51,7 +55,6 @@ class MemberController extends AbstractController
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
 
-        // Formulaire d'ajout d'un n° de téléphone a été envoyé :
         if($formPhone->isSubmitted() && $formPhone->isValid()){
             // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
             $this->addUserPhone($userConnected, $phone, $request, $manager);
@@ -88,6 +91,18 @@ class MemberController extends AbstractController
             return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
         }
 
+        // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
+        $history = new History();
+        $formHistory = $this->createForm(HistoryType::class, $history);
+        $formHistory->handleRequest($request);
+
+        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
+        if($formHistory->isSubmitted()){
+            // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
+            $this->addHistory($user, $history, $manager);
+            return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
+        }
+
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'userConnected'  => $userConnected,
@@ -95,10 +110,60 @@ class MemberController extends AbstractController
             'phoneForm'      => $formPhone->createView(),
             'adressForm'     => $formAdress->createView(),
             'cityForm'       => $formCity->createView(),
+            'historyForm'    => $formHistory->createView(),
             'PoCForm'        => $formPoC->createView(),
             'ContactListForm'=>$formContactList->createView()
         ]);
     }
+
+    public function addHistory(User $user, History $newHistory=null, ObjectManager $manager)
+    {
+        if ($newHistory) {
+            $newHistory->setUser($user);
+            $manager->persist($newHistory);
+            $manager->flush();
+        }
+
+        // dans le cas où il y a un passage de grade :
+        $repo = $this -> getDoctrine()
+                -> getRepository(History::class);
+            $histories = $repo->findOneBy([
+                'user'        => $user -> getId(),
+                'description' => $user -> getBelt(),
+            ]);
+            if ($histories == null) {
+                $history = new History();
+                $repo2 = $this -> getDoctrine()
+                    -> getRepository(Category::class);
+                $category = $repo2->findOneBy([
+                    'title'       => "Passage de grade",
+                ]);
+                $history->setDescription($user->getBelt())
+                    ->setRefDate($user->getReceiptDate())
+                    ->setCategory($category)
+                    ->setUser($user);
+                $manager->persist($history);
+                $manager->flush();
+            }
+    }
+
+
+    /**
+     * Supprime une ligne d'historique de contact.
+     * @Route("/member-remove_history-id={id}-idUser={idUser}", name="remove_history", requirements={"idCL"="\d+"})
+     */
+    public function removeHistory($id, $idUser){
+        $entityManager=$this->getDoctrine()->getManager();
+        $history = $entityManager->getRepository(History::class)->find($id);
+        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
+        $user = $userConnected->getUser();
+
+        $user->removeHistory($history);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('profile_edit',['id'=>$userConnected->getId()]);
+    }
+
     /**
      * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}", name="admin_show",  requirements={"id"="\d+"})

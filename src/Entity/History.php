@@ -17,16 +17,6 @@ class History
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $comment;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="histories")
      */
     private $user;
@@ -36,34 +26,21 @@ class History
      */
     private $refDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="history")
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    public function setComment(?string $comment): self
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -85,6 +62,30 @@ class History
     public function setRefDate(\DateTimeInterface $refDate): self
     {
         $this->refDate = $refDate;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
