@@ -220,10 +220,10 @@
                 <div class="col-2">
                     Relation {{ (form_widget(ContactListForm.relation) ) }}
                 </div>
-                <div class="col-5">
+                <div class="col-11">
                     Info {{ (form_widget(ContactListForm.info) ) }}
                 </div>
-                <div class="col">
+                <div class="col-3">
                     <button type="submit" class="btn btn-link"><br>Ajouter une nouvelle personne de contact</button>
                     {{ form_end(PoCForm) }}
                 </div>
@@ -234,16 +234,18 @@
         <form action="{{path('profile_edit',{'id':app.user.id}) }}" method="post">
             {{ form_start(historyForm) }}
             <div class="row">
-                <div class="col-md-5">
-                    Description {{ form_widget(historyForm.description) }}
+                <div class="col-md-6">
+                    {#attr : nbre de ligne affichée dans le textBox de "Description #}
+                    Description {{ form_widget(historyForm.description,  { 'attr': {
+                        'rows' : '8' }} ) }}
                 </div>
                 <div class="col-md-2">
                     Date {{ form_widget(historyForm.refDate) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     Catégorie {{ form_widget(historyForm.category) }}
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <button type="submit" class="btn btn-link"><br>Ajouter un nouvel historique</button>
                     {{ form_end(historyForm) }}
                 </div>
