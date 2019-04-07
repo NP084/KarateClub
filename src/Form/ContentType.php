@@ -6,7 +6,6 @@ use App\Entity\ContentPage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class ContentType extends AbstractType
 {
@@ -14,12 +13,8 @@ class ContentType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('content', CKEditorType::class, array(
-                'config' => array(
-                    'uiColor' => '#ffffff',
-                    //...
-                ),
-            ));
+            ->add('content')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
