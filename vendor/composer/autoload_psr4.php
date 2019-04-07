@@ -80,6 +80,7 @@ return array(
     'Fig\\Link\\' => array($vendorDir . '/fig/link-util/src'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
     'Facebook\\WebDriver\\' => array($vendorDir . '/facebook/webdriver/lib'),
+    'FOS\\UserBundle\\' => array($vendorDir . '/friendsofsymfony/user-bundle'),
     'FOS\\CKEditorBundle\\' => array($vendorDir . '/friendsofsymfony/ckeditor-bundle/src'),
     'Egulias\\EmailValidator\\' => array($vendorDir . '/egulias/email-validator/EmailValidator'),
     'EasyCorp\\EasyLog\\' => array($vendorDir . '/easycorp/easy-log-handler/src'),
