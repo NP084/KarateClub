@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\History;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -24,7 +25,15 @@ class HistoryType extends AbstractType
             ->add('description')
             ->add('category', EntityType::class,[
                 'class'=> Category::class,
-                'choice_label'=>'title'
+              //  'choices' => $grpup->getCategory()
+                'query_builder' => function(EntityRepository $er){
+                $disc = "Historique";
+                    return $er->createQueryBuilder('u')
+                        -> where('u.description LIKE :Historique')
+                        -> setParameter('Historique', $disc)
+                        -> orderBy('u.title', 'ASC');
+                },
+                'choice_label'=>'title',
             ])
         ;
     }
