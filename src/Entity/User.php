@@ -32,6 +32,7 @@ class User
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Adress", inversedBy="users")
+     * @ORM\OrderBy({"type" = "ASC"})
      */
     private $adress;
 
@@ -52,11 +53,13 @@ class User
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="member")
+     * @ORM\OrderBy({"addDate" = "ASC"})
      */
     private $attachedFiles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="user")
+     * @ORM\OrderBy({"registrationDate" = "ASC"})
      */
     private $registration;
 
@@ -74,6 +77,7 @@ class User
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ContactList", mappedBy="user", orphanRemoval=true)
+     * @ORM\OrderBy({"relation" = "ASC"})
      */
     private $contactLists;
 
