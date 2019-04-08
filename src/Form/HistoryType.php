@@ -29,7 +29,6 @@ class HistoryType extends AbstractType
             ->add('description')
             ->add('category', EntityType::class,[
                 'class'=> Category::class,
-              //  'choices' => $grpup->getCategory()
                 'query_builder' => function(EntityRepository $er){
                 $disc = "Historique";
                     return $er->createQueryBuilder('u')
