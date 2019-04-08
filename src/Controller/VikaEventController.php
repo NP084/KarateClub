@@ -5,69 +5,101 @@ namespace App\Controller;
 use App\Entity\VikaEvent;
 use App\Form\VikaEventType;
 use App\Repository\VikaEventRepository;
-use CalendarBundle\CalendarEvents;
-use CalendarBundle\Event\CalendarEvent;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\Events;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\EventListener\CalendarListener;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @Route("/vika_event")
+ */
 class VikaEventController extends AbstractController
 {
-
     /**
-     * @Route("/vika_event-calendar", name="event_calendar", methods={"GET"})
+     * @Route("-list", name="vika_event_index", methods={"GET"})
      */
-    public function calendar(VikaEventRepository $repo, Request $request): Response
+    public function index(VikaEventRepository $vikaEventRepository): Response
     {
-        $event = $repo -> findAll();
-
-     //   $vikaEvent = new CalendarEvent();
-        $dispatcher = new EventDispatcher();
-
-        $listener = new CalendarListener($repo);
-        $dispatcher->addListener('calendar.set_data', [$listener, 'load']);
-      //  $dispatcher->dispatch('calendar.set_data', $vikaEvent);
-
-        return $this->render('vika_event/calendar.html.twig', [
-            'event' => $event,
+        return $this->render('vika_event/index.html.twig', [
+            'vika_events' => $vikaEventRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/vika_event", name="vika_event")
+     * @Route("-calendar", name="vikaEvent_calendar", methods={"GET"})
      */
-    public function index()
+    public function calendar(): Response
     {
-        return $this->render('vika_event/showContent.html.twig', [
-            'controller_name' => 'VikaEventController',
-        ]);
+        return $this->render('vika_event/calendar.html.twig');
     }
 
+
     /**
-     * @Route("/vika_event-newCalendar", name="event_newCalendar", methods={"GET", "POST"})
+     * @Route("-new", name="vika_event_new", methods={"GET","POST"})
      */
-    public function newcalendar(VikaEvent $vikaEvent=null, Request $request, ObjectManager $manager): Response
+    public function new(Request $request): Response
     {
-        if (!$vikaEvent){
-            $vikaEvent = new VikaEvent();
+        $vikaEvent = new VikaEvent();
+        $form = $this->createForm(VikaEventType::class, $vikaEvent);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($vikaEvent);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('vika_event_index');
         }
-        $formEvent = $this->createForm(VikaEventType::class, $vikaEvent);
-        $formEvent->handleRequest($request);
 
-        if ($formEvent->isSubmitted() && $formEvent->isValid()) {
-            $manager->persist($vikaEvent);
-            $manager->flush();
-            return $this->redirectToRoute('event_calendar');
-        }
-        return $this->render('vika_event/eventCreate.html.twig', [
-            'formEvent' => $formEvent->createView(),
+        return $this->render('vika_event/new.html.twig', [
+            'vika_event' => $vikaEvent,
+            'form' => $form->createView(),
         ]);
     }
 
+    /**
+     * @Route("-{id}", name="vika_event_show", methods={"GET"})
+     */
+    public function show(VikaEvent $vikaEvent): Response
+    {
+        return $this->render('vika_event/show.html.twig', [
+            'vika_event' => $vikaEvent,
+        ]);
+    }
 
+    /**
+     * @Route("-{id}-edit", name="vika_event_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, VikaEvent $vikaEvent): Response
+    {
+        $form = $this->createForm(VikaEventType::class, $vikaEvent);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('vika_event_index', [
+                'id' => $vikaEvent->getId(),
+            ]);
+        }
+
+        return $this->render('vika_event/edit.html.twig', [
+            'vika_event' => $vikaEvent,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("-{id}-delete", name="vika_event_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, VikaEvent $vikaEvent): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$vikaEvent->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($vikaEvent);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('vika_event_index');
+    }
 }

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit VikaEvent{% endblock %}
+
+{% block Body %}
+    <h1>Edit VikaEvent</h1>
+
+    {{ include('vika_event/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('vika_event_index') }}">back to list</a>
+
+    {{ include('vika_event/_delete_form.html.twig') }}
+{% endblock %}
