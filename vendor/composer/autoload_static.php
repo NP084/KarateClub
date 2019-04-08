@@ -143,6 +143,10 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
             'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 36,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
         ),
+        'C' => 
+        array (
+            'CalendarBundle\\' => 15,
+        ),
         'A' => 
         array (
             'App\\Tests\\' => 10,
@@ -519,6 +523,10 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         'Doctrine\\Bundle\\DoctrineBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-bundle',
+        ),
+        'CalendarBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/tattali/calendar-bundle/src',
         ),
         'App\\Tests\\' => 
         array (
