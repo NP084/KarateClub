@@ -29,19 +29,14 @@ class TimePeriod
     private $endDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="timePeriod")
+     * @ORM\ManyToMany(targetEntity="App\Entity\VikaEvent", mappedBy="timePeriod")
      */
-    private $event;
+    private $vikaEvents;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="timePeriod")
-     */
-    private $events;
 
     public function __construct()
     {
-        $this->event = new ArrayCollection();
-        $this->events = new ArrayCollection();
+        $this->vikaEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -74,41 +69,30 @@ class TimePeriod
     }
 
     /**
-     * @return Collection|Event[]
+     * @return Collection|VikaEvent[]
      */
-    public function getEvent(): Collection
+    public function getVikaEvents(): Collection
     {
-        return $this->event;
+        return $this->vikaEvents;
     }
 
-    public function addEvent(Event $event): self
+    public function addVikaEvent(VikaEvent $vikaEvent): self
     {
-        if (!$this->event->contains($event)) {
-            $this->event[] = $event;
-            $event->setTimePeriod($this);
+        if (!$this->vikaEvents->contains($vikaEvent)) {
+            $this->vikaEvents[] = $vikaEvent;
+            $vikaEvent->addTimePeriod($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): self
+    public function removeVikaEvent(VikaEvent $vikaEvent): self
     {
-        if ($this->event->contains($event)) {
-            $this->event->removeElement($event);
-            // set the owning side to null (unless already changed)
-            if ($event->getTimePeriod() === $this) {
-                $event->setTimePeriod(null);
-            }
+        if ($this->vikaEvents->contains($vikaEvent)) {
+            $this->vikaEvents->removeElement($vikaEvent);
+            $vikaEvent->removeTimePeriod($this);
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection|Event[]
-     */
-    public function getEvents(): Collection
-    {
-        return $this->events;
     }
 }

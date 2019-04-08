@@ -5,11 +5,15 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\VikaEventRepository")
+ * @Vich\Uploadable
  */
-class Event
+class VikaEvent
 {
     /**
      * @ORM\Id()
@@ -29,11 +33,6 @@ class Event
     private $title;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $capacity;
@@ -44,23 +43,71 @@ class Event
     private $createdEv;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="event")
-     */
-    private $registrations;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="event")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="vikaEvents")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\TimePeriod", inversedBy="events")
+     * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="vikaEvent")
+     */
+    private $registrations;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\TimePeriod", inversedBy="vikaEvents")
      */
     private $timePeriod;
 
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * @Vich\UploadableField(mapping="article_picture", fileNameProperty="imageName")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $imageName;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    private $updatedImage;
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedImage = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
     public function __construct()
     {
-        $this->media = new ArrayCollection();
         $this->registrations = new ArrayCollection();
         $this->timePeriod = new ArrayCollection();
     }
@@ -94,18 +141,6 @@ class Event
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
     public function getCapacity(): ?int
     {
         return $this->capacity;
@@ -130,6 +165,18 @@ class Event
         return $this;
     }
 
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Registration[]
      */
@@ -142,7 +189,7 @@ class Event
     {
         if (!$this->registrations->contains($registration)) {
             $this->registrations[] = $registration;
-            $registration->setEvent($this);
+            $registration->setVikaEvent($this);
         }
 
         return $this;
@@ -153,22 +200,10 @@ class Event
         if ($this->registrations->contains($registration)) {
             $this->registrations->removeElement($registration);
             // set the owning side to null (unless already changed)
-            if ($registration->getEvent() === $this) {
-                $registration->setEvent(null);
+            if ($registration->getVikaEvent() === $this) {
+                $registration->setVikaEvent(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }
