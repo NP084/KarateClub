@@ -53,10 +53,6 @@ class VikaEvent
      */
     private $registrations;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\TimePeriod", inversedBy="vikaEvents")
-     */
-    private $timePeriod;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -76,6 +72,16 @@ class VikaEvent
      * @var \DateTime
      */
     private $updatedImage;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $startDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $endDate;
 
     /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
@@ -109,7 +115,6 @@ class VikaEvent
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
-        $this->timePeriod = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -208,28 +213,26 @@ class VikaEvent
         return $this;
     }
 
-    /**
-     * @return Collection|TimePeriod[]
-     */
-    public function getTimePeriod(): Collection
+    public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->timePeriod;
+        return $this->startDate;
     }
 
-    public function addTimePeriod(TimePeriod $timePeriod): self
+    public function setStartDate(\DateTimeInterface $startDate): self
     {
-        if (!$this->timePeriod->contains($timePeriod)) {
-            $this->timePeriod[] = $timePeriod;
-        }
+        $this->startDate = $startDate;
 
         return $this;
     }
 
-    public function removeTimePeriod(TimePeriod $timePeriod): self
+    public function getEndDate(): ?\DateTimeInterface
     {
-        if ($this->timePeriod->contains($timePeriod)) {
-            $this->timePeriod->removeElement($timePeriod);
-        }
+        return $this->endDate;
+    }
+
+    public function setEndDate(?\DateTimeInterface $endDate): self
+    {
+        $this->endDate = $endDate;
 
         return $this;
     }

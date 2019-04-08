@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block Body %}
+    {% include '@Calendar/calendar.html' %}
+
+{{ form_start(formEvent) }}
+<button type="submit" class="btn btn-success">
+    Enregister modification(s)
+</button>
+{{ form_end(formEvent) }}
+{#
+    {% include '/event/calendar.html.twig' %}
+#}
+
+{% endblock %}
