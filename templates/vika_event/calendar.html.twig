@@ -2,7 +2,7 @@
 
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN')) %}
-        <a href="{{ path('event_newCalendar') }}">Nouvel événement</a>
+        <a href="{{ path('event_newCalendar') }}" methods="get">Nouvel événement</a>
     {% endif %}
     {% include '@Calendar/calendar.html' %}
 {% endblock %}

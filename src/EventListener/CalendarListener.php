@@ -15,12 +15,12 @@ class CalendarListener
     private $vikaEventRepository;
 
     public function __construct(
-        VikaEventRepository $vikaEventRepository,
-        UrlGeneratorInterface $router
+        VikaEventRepository $vikaEventRepository
+//        UrlGeneratorInterface $router
 
     ) {
         $this->VikaEventRepository = $vikaEventRepository;
-        $this->router = $router;
+  //      $this->router = $router;
     }
 
     public function load(CalendarEvent $calendar): void
