@@ -43,11 +43,24 @@
                         </li> 
                         <li class="nav-item">
                         <a class="nav-link" href="#">Suivi pédagogique</a>
-                        </li>                         
+                        </li>                          
+                        {% if (is_granted('ROLE_ADMIN')) %}
+                        <li class="nav-item dropdown">
+                                <a class="nav-link" data-toggle="dropdown" href="#" role="button">Administration<span class="caret"></span></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Gérer les membres</a> 
+                                    <a class="dropdown-item" href="#">Gérer les préinscriptions</a> 
+                                    <a class="dropdown-item" href="#">Gérer les évènements</a> 
+                                    <a class="dropdown-item" href="#">Gérer les payements/a> 
+                                    <a class="dropdown-item" href="#">Grille tarifaire</a> 
+                                    <a class="dropdown-item" href="#">Matériels</a> 
+                                </div>
+                        </li> 
+                        {% endif %}
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact</a>
-                        </li>  
-
+                        </li> 
 
                     </ul><!-- /.navbar-nav -->
                 </div><!-- /.navbar-collapse -->
@@ -73,38 +86,6 @@
                 {% if not app.user%}
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#seConnecter">Connexion</button>
                     {#<a href="{{ path('security_login') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Connexion</a>#}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 {% else %}
                     <a href="{{ path('security_logout') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Déconnexion</a>
                 {% endif %}

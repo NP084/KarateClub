@@ -52,7 +52,7 @@
                                     <a class="btn btn-primary btn-md" href="{{ path('gallery_show',{'id':gallery.id})}}" role="button">Consulter</a>
                                 </div>
                             </div>
-                            {% if app.user %}
+                            {% if (is_granted('ROLE_ADMIN'))%}
                                 <div class="col-2">
                                     <div class="card-footer-content text-muted">
                                         <a class="btn btn-primary btn-md" href="{{ path('gallery_edit',{'id':gallery.id})}}" role="button">Editer</a>
