@@ -269,57 +269,6 @@
             </div>
         </div>
 
-        {% if (is_granted('ROLE_ADMIN')) %}
-
-            <h3>Parcours</h3>
-            {% for history in userConnected.user.Histories %}
-                <div class="personOfContact">
-                    <div class="row">
-                        <div class="col-2">
-                            Description: {{ history.description }}
-                        </div>
-                        <div class="col">
-                            Date : {{ history.refDate |date('d/m/Y') }}
-                        </div>
-                        <div class="col">
-                            Catégorie : {{ history.category.title }}
-                        </div>
-                    </div>
-                    <div>
-                        <div class="row">
-                            <div class="col">
-                                {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
-                                <a href="{{ path('remove_history_admin',{'id':history.id, 'idUser':userConnected.id}) }}">Supprimer
-                                    la ligne</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-
-            <h4>Ajouter une nouvelle ligne dans le parcours</h4>
-            <form action="{{ path('admin_edit',{'id':userConnected.id}) }}" method="post">
-                {{ form_start(historyForm) }}
-                <div class="row">
-                    <div class="col-md-6">
-                        {#attr : nbre de ligne affichée dans le textBox de "Description #}
-                        Description {{ form_widget(historyForm.description,  { 'attr': {
-                            'rows' : '8' }} ) }}
-                    </div>
-                    <div class="col-md-2" id="datetimepicker">
-                        Date {{ form_widget(historyForm.refDate) }}
-                    </div>
-                    <div class="col-md-3">
-                        Catégorie {{ form_widget(historyForm.category) }}
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-link">Ajouter un nouvel historique</button>
-                        {{ form_end(historyForm) }}
-                    </div>
-                </div>
-            </form>
-        {% endif %}
-
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}

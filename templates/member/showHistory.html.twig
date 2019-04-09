@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
 
     {% if (is_granted('ROLE_ADMIN')) %}
         <a class="btn btn-success" href="{{ path('admin_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
@@ -15,25 +16,35 @@
 
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
         {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-            <h2> Parcours personnels </h2>
+            <h2> Parcours personnel </h2>
         {% else %}
-            <h2>Parcours du membre : userConnected.user.firstName userConnected.user.name </h2>
-     {% endif %}
+            <h2>Parcours du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
+        {% endif %}
 
-        {% for history in userConnected.user.histories %}
-            <div class="row">
-                <div class="col">
-                    {{ history.refDate | date ('d/m/Y') }}
+        {% if userConnected.user.histories %}
+            {% for history in userConnected.user.histories %}
+                <div class="row">
+                    <div class="col">
+                        {{ history.refDate | date ('d/m/Y') }}
+                    </div>
+                    <div class="col">
+                        {{ history.description }}
+                    </div>
+                    <div class="col">
+                        {{ history.category.title }}
+                    </div>
                 </div>
-                <div class="col">
-                    {{ history.description }}
-                </div>
-                <div class="col">
-                    {{ history.category.title }}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <p>Parcours vide </p>
+        {% endif %}
+
     {% endif %}
+
+    {% else %}
+        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
+    {% endif %}
+
 {% endblock %}
 
 
