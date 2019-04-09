@@ -1,5 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{#{% block javascripts %}
+<script type="text/javascript" src="bootstrap-datetimepicker.de.js" charset="UTF-8">
+    $(document).ready(function() {
+        $('#datetimepicker').datetimepicker({
+            format: 'dd-mm-yyyy'
+        });
+    });
+</script>
+{% endblock %}#}
+
+
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
         {% if (is_granted('ROLE_ADMIN')) %}
@@ -295,7 +306,7 @@
                         Description {{ form_widget(historyForm.description,  { 'attr': {
                             'rows' : '8' }} ) }}
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2" id="datetimepicker">
                         Date {{ form_widget(historyForm.refDate) }}
                     </div>
                     <div class="col-md-3">
