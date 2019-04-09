@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block Body %}
+
+    {% if (is_granted('ROLE_ADMIN')) %}
+        <a class="btn btn-success" href="{{ path('admin_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
+            Retour
+        </a>
+    {% else %}
+        <a class="btn btn-success" href="{{ path('profile_show',{'id':userConnected.id}) }}"
+           class="btn-btn-primary">
+            Retour
+        </a>
+    {% endif %}
+
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
+        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
+            <h2> Parcours personnels </h2>
+        {% else %}
+            <h2>Parcours du membre : userConnected.user.firstName userConnected.user.name </h2>
+     {% endif %}
+
+        {% for history in userConnected.user.histories %}
+            <div class="row">
+                <div class="col">
+                    {{ history.refDate | date ('d/m/Y') }}
+                </div>
+                <div class="col">
+                    {{ history.description }}
+                </div>
+                <div class="col">
+                    {{ history.category.title }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+

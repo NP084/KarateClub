@@ -129,24 +129,6 @@
                 </div>
             {% endfor %}
 
-            {#Affichle l'historique du membre#}
-
-            <h4><br> Parcours </h4>
-
-            {% for history in userConnected.user.histories %}
-                <div class="row">
-                    <div class="col">
-                        {{ history.refDate | date ('d/m/Y') }}
-                    </div>
-                    <div class="col">
-                        {{ history.description }}
-                    </div>
-                    <div class="col">
-                        {{ history.category.title }}
-                    </div>
-                </div>
-            {% endfor %}
-
         {% endif %}
 
 

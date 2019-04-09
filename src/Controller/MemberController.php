@@ -33,6 +33,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class MemberController extends AbstractController
 {
+
+    /**
+     * @Route("/member-id={id}-history", name="profile_history", requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-history", name="admin_history",  requirements={"id"="\d+"})
+     */
+    public function showHistory(UserConnected $userConnected)
+    {
+        return $this->render('member/showHistory.html.twig', [
+            'userConnected' => $userConnected
+        ]);
+
+    }
     /**
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-edit", name="admin_edit",  requirements={"id"="\d+"})
