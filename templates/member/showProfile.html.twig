@@ -10,11 +10,11 @@
         {% else %}
             {% if (is_granted('ROLE_ADMIN')) %}
                 <a class="btn btn-success" href="{{ path('admin_edit',{'id':userConnected.id}) }}" class="btn-btn-primary">
-                    </br> Modifier le profile de l'utilisateur</br>
+                    Modifier le profile de l'utilisateur
                 </a>
             {% else %}
                 <a class="btn btn-success" href="{{ path('profile_edit',{'id':userConnected.id}) }}" class="btn-btn-primary">
-                    </br> Modifier son profile </br>
+                    Modifier son profile
                 </a>
             {% endif %}
 
@@ -125,24 +125,6 @@
                     </div>
                     <div class="col">
                         {{ registration.remark }}
-                    </div>
-                </div>
-            {% endfor %}
-
-            {#Affichle l'historique du membre#}
-
-            <h4><br> Parcours </h4>
-
-            {% for history in userConnected.user.histories %}
-                <div class="row">
-                    <div class="col">
-                        {{ history.refDate | date ('d/m/Y') }}
-                    </div>
-                    <div class="col">
-                        {{ history.description }}
-                    </div>
-                    <div class="col">
-                        {{ history.category.title }}
                     </div>
                 </div>
             {% endfor %}

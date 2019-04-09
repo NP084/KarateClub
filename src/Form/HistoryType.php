@@ -22,9 +22,12 @@ class HistoryType extends AbstractType
         $builder
             ->add('refDate', DateType::class, [
                 'required'=> false,
-//                'widget'  => 'single_text',
+       //         'widget'  => 'single_text',
+        //        'html5'   => false,
                 'format'  => 'dd-MM-yyyy',
                 'years'   => range(2018, date('Y')),
+                'attr' => ['class' => 'js-datepicker'],
+
             ])
             ->add('description')
             ->add('category', EntityType::class,[
