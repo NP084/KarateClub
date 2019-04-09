@@ -29,12 +29,6 @@ class Registration
     private $remark;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="registrations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $event;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Status", mappedBy="registration")
      */
     private $status;
@@ -44,6 +38,12 @@ class Registration
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\VikaEvent", inversedBy="registrations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $vikaEvent;
 
 
     public function __construct()
@@ -77,18 +77,6 @@ class Registration
     public function setRemark(?string $remark): self
     {
         $this->remark = $remark;
-
-        return $this;
-    }
-
-    public function getEvent(): ?Event
-    {
-        return $this->event;
-    }
-
-    public function setEvent(?Event $event): self
-    {
-        $this->event = $event;
 
         return $this;
     }
@@ -132,6 +120,18 @@ class Registration
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getVikaEvent(): ?VikaEvent
+    {
+        return $this->vikaEvent;
+    }
+
+    public function setVikaEvent(?VikaEvent $vikaEvent): self
+    {
+        $this->vikaEvent = $vikaEvent;
 
         return $this;
     }

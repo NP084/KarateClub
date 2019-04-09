@@ -11,9 +11,13 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-    App\EventListener\RemovedFileListener:
+#    App\EventListener\RemovedFileListener:
+#        tags:
+#           - { name: kernel.event_listener, event: vich_uploader.post_remove}
+
+    App\EventListener\CalendarListener:
         tags:
-           - { name: kernel.event_listener, event: vich_uploader.post_remove}
+            - { name: 'kernel.event_listener', event: 'calendar.set_data', method: load }
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

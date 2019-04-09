@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}VikaEvent{% endblock %}
+
+{% block Body %}
+    <h1>VikaEvent</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vika_event.id }}</td>
+            </tr>
+            <tr>
+                <th>Owner</th>
+                <td>{{ vika_event.owner }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ vika_event.title }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ vika_event.capacity }}</td>
+            </tr>
+            <tr>
+                <th>CreatedEv</th>
+                <td>{{ vika_event.createdEv ? vika_event.createdEv|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ImageName</th>
+                <td>{{ vika_event.imageName }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedImage</th>
+        {#        <td>{{ vika_event.updatedImage ? vika_event.updatedImage|date('Y-m-d H:i:s') : '' }}</td>#}
+            </tr>
+            <tr>
+                <th>StartDate</th>
+                <td>{{ vika_event.startDate ? vika_event.startDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EndDate</th>
+                <td>{{ vika_event.endDate ? vika_event.endDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('vika_event_index') }}">back to list</a>
+
+    <a href="{{ path('vika_event_edit', {'id': vika_event.id}) }}">edit</a>
+
+    {{ include('vika_event/_delete_form.html.twig') }}
+{% endblock %}

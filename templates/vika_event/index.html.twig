@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}VikaEvent index{% endblock %}
+
+{% block Body %}
+    <h1>VikaEvent index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Owner</th>
+                <th>Title</th>
+                <th>Capacity</th>
+                <th>CreatedEv</th>
+                <th>ImageName</th>
+                <th>UpdatedImage</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vika_event in vika_events %}
+            <tr>
+                <td>{{ vika_event.id }}</td>
+                <td>{{ vika_event.owner }}</td>
+                <td>{{ vika_event.title }}</td>
+                <td>{{ vika_event.capacity }}</td>
+                <td>{{ vika_event.createdEv ? vika_event.createdEv|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ vika_event.imageName }}</td>
+     {#           <td>{{ vika_event.updatedImage ? vika_event.updatedImage|date('Y-m-d H:i:s') : '' }}</td>#}
+                <td>{{ vika_event.startDate ? vika_event.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ vika_event.endDate ? vika_event.endDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('vika_event_show', {'id': vika_event.id}) }}">show</a>
+                    <a href="{{ path('vika_event_edit', {'id': vika_event.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('vika_event_new') }}">Create new</a>
+{% endblock %}

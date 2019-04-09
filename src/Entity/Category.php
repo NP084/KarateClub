@@ -34,11 +34,6 @@ class Category
     private $articles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="category")
-     */
-    private $event;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Equipment", mappedBy="category")
      */
     private $equipment;
@@ -48,13 +43,18 @@ class Category
      */
     private $history;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VikaEvent", mappedBy="category")
+     */
+    private $vikaEvents;
+
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
-        $this->event = new ArrayCollection();
         $this->equipment = new ArrayCollection();
         $this->history = new ArrayCollection();
+        $this->vikaEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,37 +118,6 @@ class Category
     }
 
     /**
-     * @return Collection|Event[]
-     */
-    public function getEvent(): Collection
-    {
-        return $this->event;
-    }
-
-    public function addEvent(Event $event): self
-    {
-        if (!$this->event->contains($event)) {
-            $this->event[] = $event;
-            $event->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Event $event): self
-    {
-        if ($this->event->contains($event)) {
-            $this->event->removeElement($event);
-            // set the owning side to null (unless already changed)
-            if ($event->getCategory() === $this) {
-                $event->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Equipment[]
      */
     public function getEquipment(): Collection
@@ -204,6 +173,37 @@ class Category
             // set the owning side to null (unless already changed)
             if ($history->getCategory() === $this) {
                 $history->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VikaEvent[]
+     */
+    public function getVikaEvents(): Collection
+    {
+        return $this->vikaEvents;
+    }
+
+    public function addVikaEvent(VikaEvent $vikaEvent): self
+    {
+        if (!$this->vikaEvents->contains($vikaEvent)) {
+            $this->vikaEvents[] = $vikaEvent;
+            $vikaEvent->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVikaEvent(VikaEvent $vikaEvent): self
+    {
+        if ($this->vikaEvents->contains($vikaEvent)) {
+            $this->vikaEvents->removeElement($vikaEvent);
+            // set the owning side to null (unless already changed)
+            if ($vikaEvent->getCategory() === $this) {
+                $vikaEvent->setCategory(null);
             }
         }
 

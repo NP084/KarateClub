@@ -3,40 +3,41 @@
 namespace App\Form;
 
 use App\Entity\Category;
-use App\Entity\History;
-use Doctrine\ORM\EntityRepository;
+use App\Entity\VikaEvent;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class HistoryType extends AbstractType
+class VikaEventType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('refDate', DateType::class, [
+            ->add('owner')
+            ->add('title')
+            ->add('capacity')
+            ->add('createdEv')
+            ->add('imageFile', VichImageType::class, [
+                'required'=> false
+            ])
+            ->add('startDate',DateType::class, [
                 'required'=> false,
 //                'widget'  => 'single_text',
                 'format'  => 'dd-MM-yyyy',
-                'years'   => range(2018, date('Y')),
+                'years'   => range(date('Y')-5, date('Y')+5),
             ])
-            ->add('description')
+            ->add('endDate',DateType::class, [
+                'required'=> false,
+//                'widget'  => 'single_text',
+                'format'  => 'dd-MM-yyyy',
+                'years'   => range(date('Y')-5, date('Y')+5),
+            ])
             ->add('category', EntityType::class,[
                 'class'=> Category::class,
-                'query_builder' => function(EntityRepository $er){
-                $disc = "Historique";
-                    return $er->createQueryBuilder('u')
-                        -> where('u.description LIKE :Historique')
-                        -> setParameter('Historique', $disc)
-                        -> orderBy('u.title', 'ASC');
-                },
-                'choice_label'=>'title',
+                'choice_label'=>'title'
             ])
         ;
     }
@@ -44,7 +45,7 @@ class HistoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => History::class,
+            'data_class' => VikaEvent::class,
         ]);
     }
 }
