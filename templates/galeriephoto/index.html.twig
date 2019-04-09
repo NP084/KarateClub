@@ -36,23 +36,15 @@
                     <!-- .card-header -->
                     <div class="card-body">
                         <h5 class="card-title">{{ gallery.name }}</h5>
-                    </div><!-- /.card-body -->
-                    <!-- 16:9 aspect ratio -->
-                   {# <figure class="embed-responsive embed-responsive-16by9 mb-0">
-#}{#                        <img class="embed-responsive-item" src="{{ asset('/upload/galerie/' ~ gallery.media.imageName)}}" alt="Card image">#}{#
-  #}{#                      <img class="embed-responsive-item"
-                             src="https://media.gettyimages.com/photos/illuminated-hashtag-sign-on-table-in-fashion-studio-picture-id909598172"
-                             alt="Card image">#}{#
-                    </figure><!-- /.embed-responsive -->#}
-                    <!-- .card-body -->
+                    </div>
+                    <figure class="embed-responsive embed-responsive-16by9 mb-0">
+                            <img class="embed-responsive-item" src="{{ asset('/upload/galerie/' ~ gallery.avatarName)}}" alt="Card image">
+                    </figure> 
                     <div class="card-body">
                         <p class="card-text">
-
                             {{ gallery.description|raw }}
-
                         </p>
-                    </div><!-- /.card-body -->
-                    <!-- .card-footer -->
+                    </div>
                     <div class="card-footer">
                         <div class="row">
                             <div class="col">
@@ -68,13 +60,13 @@
                                 </div>
                                 <div class="col-2">
                                     <div class="card-footer-content text-muted">
-                                        <a class="btn btn-primary btn-md" href="#" role="button">Supprimer</a>
+                                        <a class="btn btn-primary btn-md" href="{{ path('gallery_delete',{'id':gallery.id})}}" role="button">Supprimer</a>
                                     </div>
                                 </div>
                             {% else %}
                             {% endif %}
                         </div>
-                    </div><!-- /.card-footer -->
+                    </div>
                 </div>
             </div>
             {% endfor %}

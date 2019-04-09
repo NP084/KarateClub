@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-
+use Vich\UploaderBundle\Form\Type\VichImageType;
 class GalleryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -17,6 +17,7 @@ class GalleryType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
+            ->add('imageFile', VichImageType::class)
             ->add('media', CollectionType::class, [
                 'entry_type'    => MediaType::class,
                 'entry_options' => ['label' => false],
@@ -26,7 +27,9 @@ class GalleryType extends AbstractType
                 'attr' => array(
                     'class' => 'my-selector',
                 ),
-            ]);
+            ])
+            
+
         ;
     }
 

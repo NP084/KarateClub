@@ -28,6 +28,20 @@ class GaleriephotoController extends AbstractController
     }
 
     /**
+     * Supprime la galerie photo.
+     * @Route("/gallery-delete-{id}", name="gallery_delete")
+     */
+    public function GalleryDelete($id){
+        $em = $this->getDoctrine()->getEntityManager();
+        $gallery = $em->getRepository(Gallery::class)->find($id);
+        $em->remove($gallery);
+        $em->flush();
+
+        return $this->redirectToRoute('galeriephoto');
+    }
+
+
+    /**
      * @Route("/gallery-new", name="galeriephoto_create")
      * @Route("/gallery-{id}-edit", name="gallery_edit", requirements={"id"="\d+"})
      */

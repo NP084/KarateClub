@@ -4,42 +4,55 @@
     <script src="{{ asset('js/jquery.collection.js') }}"></script>
 {% endblock %}
 
+
 {% block Body %}
 
     {#
         {% form_theme formGaleriephoto 'jquery.collection.html.twig' %}
     #}
 
-    <h1> Création d'une nouvelle galerie photo </h1>
-    {{ form_start(formGaleriephoto) }}
+<h1> Création d'une nouvelle galerie photo </h1>
 
+{{ form_start(formGaleriephoto) }}
 
-    {{ form_start(formGaleriephoto) }}
+    <div class="form-group">
+        <label for="">Titre de la galerie</label>
+        {{ form_widget(formGaleriephoto.name) }}
+    </div>
 
-    {{ form_label(formGaleriephoto.name, 'Titre de la galerie') }}
-    {{ form_widget(formGaleriephoto.name) }}
-    {{ form_label(formGaleriephoto.description, 'Description (optionnel)') }}
-    {{ form_widget(formGaleriephoto.description) }}
+    <div class="form-group">
+        <label for="">Description</label>
+        {{ form_widget(formGaleriephoto.description) }}
+    </div>
 
-    <h3>Photos</h3>
+    <div class="form-group">
+        <label for="">Photo d'avatar</label>
+        {{ form_widget(formGaleriephoto.imageFile) }}                     
+    </div>
+
+    <div class="form-group">
+            {{ form_label(formGaleriephoto.media, 'Ajouter des photos') }}                     
+    </div>
 
     <ul class="medias" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}">
-        {% for media in formGaleriephoto.media %}
-            <li> {{ form_row(media.imageFile) }} </li>
-        {% endfor %}
+            {% for media in formGaleriephoto.media %}
+                <li> 
+                    {{ form_row(media.imageFile) }}
+                    {{ form_label(media.imageFile, 'Nom de la photo') }}                    
+                </li>
+            {% endfor %}
     </ul>
 
-
-    <button type="submit" class="btn btn-success">
-        {% if editMode %}
-            Enregister les modifications
+    <button type="submit" class="btn btn-primary">
+        {%if editMode %}
+            Enregister modification(s)
         {% else %}
-            Ajouter la galerie photo
+            Ajouter l'article
         {% endif %}
     </button>
 
 
-    {{ form_end(formGaleriephoto) }}
+{{ form_end(formGaleriephoto)}}
+
 
 {% endblock %}
-
