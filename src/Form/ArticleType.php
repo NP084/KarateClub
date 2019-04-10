@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class ArticleType extends AbstractType
 {
@@ -20,7 +21,11 @@ class ArticleType extends AbstractType
                 'class'=> Category::class,
                 'choice_label'=>'title'
             ])
-            ->add('content')
+            ->add('content', CKEditorType::class, array(
+                'config' => array(
+                    'uiColor' => '#ffffff',
+                    //...
+                )))
             ->add('imageFile', VichImageType::class, [
                 'required'=> false
             ]);
