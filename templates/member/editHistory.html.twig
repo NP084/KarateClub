@@ -16,41 +16,36 @@
     </script>
 {% endblock %}
 
-
 {% block Body %}
 
     {% if (is_granted('ROLE_ADMIN')) %}
         <h2>Edition du parcours du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
-        {% if (not userConnected.user.histories) %}
-            <h4>Parcours vide</h4>
-        {% else %}
             <h3>Parcours</h3>
+            <table class="table">
+            <thead>
+            <tr>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Categorie</th>
+            </tr>
+            </thead>
+            <tbody>
             {% for history in userConnected.user.Histories %}
-                <div class="personOfContact">
-                    <div class="row">
-                        <div class="col-3">
-                            Description: {{ history.description }}
-                        </div>
-                        <div class="col-3">
-                            Date : {{ history.refDate |date('d/m/Y') }}
-                        </div>
-                        <div class="col-5">
-                            Catégorie : {{ history.category.title }}
-                        </div>
-                    </div>
-                    <div>
-                        <div class="row">
-                            <div class="col">
-                                {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
-                                <a href="{{ path('remove_history_admin',{'id':history.id, 'idUser':userConnected.id}) }}">Supprimer
-                                    la ligne</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <tr>
+                    <td>{{ history.description }}</td>
+                    <td>{{ history.refDate |date('d/m/Y') }}</td>
+                    <td>{{ history.category.title }}</td>
+                    <td>
+                        <a href="{{ path('remove_history_admin',{'id':history.id, 'idUser':userConnected.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">Aucun historique</td>
+                </tr>
             {% endfor %}
-
-        {% endif %}
+            </tbody>
+            </table>
 
         <h4>Ajouter une nouvelle ligne dans le parcours</h4>
         <form action="{{ path('admin_edit',{'id':userConnected.id}) }}" method="post">
@@ -76,6 +71,8 @@
                 </div>
             </div>
         </form>
+    {% else %}
+        <h2>Vous n'êtes pas autorisé à accéder à cette page</h2>
     {% endif %}
 
 {% endblock %}
