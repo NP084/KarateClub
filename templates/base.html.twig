@@ -61,10 +61,7 @@
 
     <!-- Lien LogoSocial Barre de navigation -->
     <link href="LogoSocial.css" rel="stylesheet" type="text/css">
-    {% block stylesheets %}
-        <link rel="stylesheet" href={{ asset('public/css/bootstrap.min.css') }}>
-        <link rel="stylesheet" href="{{asset('public/css/bootstrap-datepicker.min.css')}}">
-    {% endblock %}
+    {% block stylesheets %}{% endblock %}
 </head>
 <body>
 {% include "OutilsTemplates/Header.html.twig" %}
@@ -116,12 +113,7 @@
 <script src="assets/javascript/pages/table-demo.js"></script>
 <!-- END PAGE LEVEL JS -->
 
-{% block javascripts %}
-    <script src="{{asset('public/looper/dist/docs/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('public/looper/dist/assets/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('public/js/bootstrap-datepicker.min.js')}}"></script>
-
-{% endblock %}
+{% block javascripts %}{% endblock %}
 
 </body>
 </html>
