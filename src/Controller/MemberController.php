@@ -34,13 +34,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class MemberController extends AbstractController
 {
     /**
-     * @Route("/admin-id={id}-history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-idHist={idHist}--history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-history-new", name="admin_history_new",  requirements={"id"="\d+"})
      */
-    public function editHistory(UserConnected $userConnected, Request $request, ObjectManager $manager)
+    public function editHistory(UserConnected $userConnected, $idHist=null, Request $request, ObjectManager $manager)
     {
+        if (!$idHist){
+            $history = new History();
+        }
+        else{
+            $entityManager = $this->getDoctrine()->getManager();
+            $history = $entityManager->getRepository(History::class)->find($idHist);
+        }
         $user = $userConnected->getUser();
 
-        $history = new History();
         $formHistory = $this->createForm(HistoryType::class, $history);
         $formHistory->handleRequest($request);
 

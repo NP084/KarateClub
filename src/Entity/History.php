@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\HistoryRepository")
@@ -23,6 +25,7 @@ class History
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotNull
      */
     private $refDate;
 
@@ -35,6 +38,11 @@ class History
      * @ORM\Column(type="text")
      */
     private $description;
+
+    public function __construct()
+    {
+        $this->refDate = new \DateTime();
+    }
 
     public function getId(): ?int
     {
