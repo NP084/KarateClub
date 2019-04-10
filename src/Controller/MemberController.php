@@ -207,7 +207,7 @@ class MemberController extends AbstractController
      * Supprime une ligne d'historique de contact.
      * @Route("/admin-remove_history-id={id}-idUser={idUser}", name="remove_history_admin", requirements={"idCL"="\d+"})
      */
-    public function removeHistory($id, $idUser, AuthorizationCheckerInterface $authChecker)
+    public function removeHistory($id, $idUser)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $history = $entityManager->getRepository(History::class)->find($id);
