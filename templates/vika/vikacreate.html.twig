@@ -29,15 +29,6 @@
             Enregister modification(s)
 
     </button>
-{% else %}
-    <div align="center">
-        <div class="col-lg-4" >
-            <div class="alert alert-success alert-dismissible fade show">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Compte créé !</strong> Vous pouvez maintenant vous connecter ou <a href="{{ path('home_page') }}" class="alert-link">revenir sur la page d'accueil</a>.
-            </div>
-        </div>
-    </div>
 
     {{ form_end(formContent)}}
 
@@ -50,5 +41,14 @@
         <button type="submit">Enregistrer</button>
     </form>
     -->
-
+ {% else %}
+<div align="center">
+     <div class="col-lg-4">
+         <div class="alert alert-danger alert-dismissible fade show">
+             <button type="button" class="close" data-dismiss="alert">&times;</button>
+             <strong>Désolé </strong>, vous n'avez pas accès à cette page. <a href="{{ path('home_page') }}" class="alert-link">Revenir sur la page d'accueil</a>.
+         </div>
+     </div>
+</div>
+ {% endif %}
 {% endblock %}
