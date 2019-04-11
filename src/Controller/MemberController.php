@@ -16,12 +16,14 @@ use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
 use App\Form\UserConnectedType;
 use App\Form\UserType;
+use App\Form\ResetPasswordType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
 use App\Entity\Phone;
 use App\Form\PhoneType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,6 +32,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class MemberController extends AbstractController
 {
@@ -452,5 +455,43 @@ class MemberController extends AbstractController
             'ContactListForm' => $formCL->createView(),
             'personOfContact' => $personOfContact,
         ]);
+    }
+
+
+    /**
+     * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-history", name="admin_reset_password",  requirements={"id"="\d+"})
+     */
+    public function ResetPassword(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+      $user = $this->getUser();
+    	$form = $this->createForm(ResetPasswordType::class, $user);
+
+    	$form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $passwordEncoder = $this->get('security.password_encoder');
+            $oldPassword = $request->request->get('member_reset_password')['oldPassword'];
+
+            // Si l'ancien mot de passe est bon
+            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($newEncodedPassword);
+
+                $em->persist($user);
+                $em->flush();
+
+                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+
+                return $this->redirectToRoute('profile_edit');
+            } else {
+                $form->addError(new FormError('Ancien mot de passe incorrect'));
+            }
+        }
+
+    	return $this->render('member/resetPassword.html.twig', array(
+    		'form' => $form->createView(),
+    	));
     }
 }
