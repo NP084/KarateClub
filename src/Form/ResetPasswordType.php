@@ -19,7 +19,7 @@ class ResetPasswordType extends AbstractType
           ->add('oldPassword', PasswordType::class, array(
               'mapped' => false
           ))
-          ->add('plainPassword', RepeatedType::class, array(
+          ->add('password', RepeatedType::class, array(//plainPassword
               'type' => PasswordType::class,
               'invalid_message' => 'Les deux mots de passe doivent être identiques',
               'options' => array(

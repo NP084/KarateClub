@@ -462,7 +462,7 @@ class MemberController extends AbstractController
      * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history", name="admin_reset_password",  requirements={"id"="\d+"})
      */
-    public function ResetPassword(Request $request)
+    public function resetPassword(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
       $user = $this->getUser();
@@ -476,7 +476,7 @@ class MemberController extends AbstractController
 
             // Si l'ancien mot de passe est bon
             if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
-                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());//getPlainPassword()
                 $user->setPassword($newEncodedPassword);
 
                 $em->persist($user);
