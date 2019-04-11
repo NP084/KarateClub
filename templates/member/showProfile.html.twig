@@ -57,7 +57,8 @@
         {% endfor %}
 
         <h5><br> Adresses </h5>
-        <table class="table">
+        {% for adress in userConnected.user.adress %}
+            <table class="table">
             <thead>
             <tr>
                 <th>Type</th>
@@ -69,31 +70,31 @@
             </tr>
             </thead>
             <tbody>
-            {% for adress in userConnected.user.adress %}
-                <td>{{ adress.type }}</td>
-                <td>{{ adress.num }}
-                    {% if adress.postBox %}
-                        ({{ adress.postBox }})
-                    {% endif %}
-                </td>
-                <td>{{ adress.streetName }}</td>
-                <td>{{ adress.city.cityName }}
-                    {% if adress.city.zip %}
-                        ({{ adress.city.zip }})
-                    {% endif %}
-                </td>
-                <td>{{ adress.city.country.countryName }}</td>
-            {% else %}
-                <tr>
-                    <td colspan="10">Aucune adresse</td>
-                </tr>
-            {% endfor %}
+            <td>{{ adress.type }}</td>
+            <td>{{ adress.num }}
+                {% if adress.postBox %}
+                    ({{ adress.postBox }})
+                {% endif %}
+            </td>
+            <td>{{ adress.streetName }}</td>
+            <td>{{ adress.city.cityName }}
+                {% if adress.city.zip %}
+                    ({{ adress.city.zip }})
+                {% endif %}
+            </td>
+            <td>{{ adress.city.country.countryName }}</td>
+        {% else %}
+            <tr>
+                <td colspan="10">Aucune adresse</td>
+            </tr>
             </tbody>
-        </table>
+            </table>
+        {% endfor %}
+
 
         <h4> </br> Personnes de contact :</h4>
-
-        <table class="table">
+        {% for contactList in userConnected.user.contactLists %}
+            <table class="table">
             <thead>
             <tr>
                 <th>Nom</th>
@@ -101,28 +102,29 @@
                 <th>Numéro</th>
                 <th>Relation</th>
                 <th>Informations</th>
-
             </tr>
             </thead>
+
             <tbody>
-            {% for contactList in userConnected.user.contactLists %}
                 <td>{{ contactList.personOfContact.name }}</td>
                 <td>{{ contactList.personOfContact.firstName }}</td>
                 <td>{{ contactList.personOfContact.num1 }}</td>
                 <td>{{ contactList.relation }}</td>
                 <td>{{ contactList.info }}</td>
-            {% else %}
+        {% else %}
                 <tr>
-                    <td colspan="10">Aucune adresse</td>
+                    <td colspan="10">Aucune personne de contact</td>
                 </tr>
-            {% endfor %}
             </tbody>
-        </table>
+            </table>
+        {% endfor %}
+
 
         {#Affichle les inscriptions du membre#}
 
         <h4><br> Liste des inscriptions </h4>
-        <table class="table">
+        {% for registration in userConnected.user.registration %}
+            <table class="table">
             <thead>
             <tr>
                 <th>Date</th>
@@ -130,16 +132,17 @@
                 <th>Remarque</th>
             </tr>
             </thead>
+
             <tbody>
-            {% for registration in userConnected.user.registration %}
-                <td>{{ registration.registrationDate | date ('d/m/Y') }}</td>
-                <td>{{ registration.event.title }}</td>
-                <td>{{ registration.remark }}</td>
-            {% else %}
-                <p>Aucune inscription</p>
-            {% endfor %}
+            <td>{{ registration.registrationDate | date ('d/m/Y') }}</td>
+            <td>{{ registration.event.title }}</td>
+            <td>{{ registration.remark }}</td>
+        {% else %}
+            <p>Aucune inscription</p>
             </tbody>
-        </table>
+            </table>
+        {% endfor %}
+
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}

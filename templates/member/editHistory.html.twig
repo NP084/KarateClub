@@ -11,7 +11,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
     <script>
         jQuery(document).ready(function () {
-            $('.js-datepicker').datepicker();
+                language:'fr_FR'
+            });
         });
     </script>
 {% endblock %}
@@ -23,19 +24,19 @@
         <form action="{{ path('admin_edit',{'id':userConnected.id}) }}" method="post">
             {{ form_start(historyForm) }}
             <div class="row">
-                <div class="col-7">
+                <div class="col-12">
                     {#attr : nbre de ligne affichée dans le textBox de "Description #}
                     {{ form_label(historyForm.description, 'Description') }}
                     {{ form_widget(historyForm.description,  { 'attr': {
                         'rows' : '4' }} ) }}
                 </div>
-                <div class='"col-5' id='datetimepicker'>
-                    {{ form_label(historyForm.refDate, 'Date') }}
-                    {{ form_widget(historyForm.refDate, { attr:{ class:'js-datepicker' } }) }}
-                </div>
                 <div class="col-7">
                     {{ form_label(historyForm.category, 'Catégorie') }}
                     {{ form_widget(historyForm.category) }}
+                </div>
+                <div class='"col-3' id='datetimepicker'>
+                    {{ form_label(historyForm.refDate, 'Date') }}
+                    {{ form_widget(historyForm.refDate, { attr:{ class:'js-datepicker' } }) }}
                 </div>
                 <div class="col-6">
                     <button type="submit" class="btn btn-outline-success">Ajouter un nouvel historique</button>
