@@ -24,85 +24,280 @@
             </a>
         {% endif %}
 
-        <h2>Profile utilisateur </h2>
-        <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
-        <div class="metadata">Inscrit sur le site depuis : {{ userConnected.createdUser |date('d/m/Y') }}</div>
-
-        <h4> </br> Informations générales :</h4>
-        <p> Nom d'utilisateur : {{ userConnected.username }} </p>
-        <p> Email : {{ userConnected.email }} </p>
-        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
-
-
-
-        {#seuls les admin peuvent modifier les champs
-        sex
-        belt
-        receiptDate
-        image#}
-        {% if (is_granted('ROLE_ADMIN')) %}
-            <h2> Modification des données personnelles </h2>
-            {{ form_start(formUser) }}
-
-            <div class="form-group">
-                <label for="">Genre</label>
-                {{ form_widget(formUser.sex) }}
-            </div>
-
-            <div class="form-group">
-                <label for="">Grade</label>
-                {{ form_widget(formUser.belt) }}
-            </div>
-            <div class="form-group">
-                <label for="">Date d'obtention</label>
-                {{ form_widget(formUser.receiptDate) }}
-            </div>
-
-            <div class="form-group">
-                <label for="">Ajoutez une photo de profil</label>
-                {{ form_widget(formUser.imageFile) }}
-            </div>
-
-            <button type="submit" class="btn btn-success">
-                Enregister modification(s)
-            </button>
-            {{ form_end(formUser) }}
-        {% endif %}
-        {% if (app.user.id == app.request.get("id")) %}
-            <div class="col-4">
-                <button type="submit" class="btn btn-success">Modifier mot de passe</button>
-            </div>
-        {% endif %}
-
-
-
-        <h3>Téléphones</h3>
-        {% if (userConnected.user) %}
-            {% for phone in userConnected.user.phones %}
-                {% if (is_granted('ROLE_ADMIN')) %}
-                    <form action="{{ path('remove_phone_admin',{'idPhone':phone.id, 'idUser':userConnected.id}) }}" method="post">
-                {% else %}
-                    <form action="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':userConnected.id}) }}" method="post">
-                {% endif %}
-
-                <div class="phone">
-                    <div class="row">
-                        <div class="col-2">
-                            {{ phone.type }}
-                        </div>
-                        <div class="col">
-                            {{ phone.num }}
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-link">Supprimer numéro</button>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h2>Edition du profil
+                        {% if (app.user.id == app.request.get("id")) %}
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-success">Modifier mot de passe</button>
+                            </div>
+                        {% endif %}
+                    </h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="user-avatar user-avatar-xl fileinput-button">
+                                        <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
+                                             alt="{{ userConnected.user.imageFile }}" name="avatar" width="150"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
+                                        <div class="metadata">Inscrit sur le site depuis
+                                            : {{ userConnected.createdUser |date('d/m/Y') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h3> Informations générales :</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <p> Nom d'utilisateur : {{ userConnected.username }} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <p> Email : {{ userConnected.email }} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                </form>
-            {% endfor %}
+            </div>
+        </div>
+
+        {% if (is_granted('ROLE_ADMIN')) %}
+            {{ form_start(formUser) }}
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <h2> Modification des données personnelles </h2>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {{ form_widget(formUser.imageFile) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {{ form_widget(formUser.sex) }}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {{ form_label(formUser.belt, 'Grade') }}
+                                            {{ form_widget(formUser.belt) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {{ form_label(formUser.receiptDate, 'Date de réception') }}
+                                            {{ form_widget(formUser.receiptDate) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success">
+                                                Enregister modification(s)
+                                            </button>
+                                            {{ form_end(formUser) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         {% endif %}
 
-        <h4>Nouveau numéro</h4>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h2>Coordonnées</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h3>Téléphones</h3>
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Numéro</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for phone in userConnected.user.phones %}
+                                            <tr>
+                                                <td>{{ phone.type }}</td>
+                                                <td>{{ phone.num }}</td>
+                                                <td>
+                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('remove_phone_admin',{'idPhone':phone.id, 'idUser':userConnected.id}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                    {% else %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':userConnected.id}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucune numéro de téléphone
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h4>Nouveau numéro</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        {{ form_start(phoneForm) }}
+                                        {{ form_label(phoneForm.type, 'Type') }}
+                                        {{ form_widget(phoneForm.type,  {'attr':{
+                                            'placeholder':"Domicile, travail..."
+                                        }}) }}                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        {{ form_label(phoneForm.num, 'Numéro') }}
+                                        {{ form_widget(phoneForm.num,  {'attr':{
+                                            'placeholder':"Votre nouveau numéro..."
+                                        }}) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success">Ajouter numéro</button>
+                                        {{ form_end(phoneForm) }}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h3>Adresses</h3>
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Numéro</th>
+                                                <th>Rue</th>
+                                                <th>Ville</th>
+                                                <th>Pays</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for adress in userConnected.user.adress %}
+                                            <tr>
+                                                <td>{{ adress.type }}</td>
+                                                <td>{{ adress.num }}
+                                                    {% if adress.postBox %}
+                                                        ({{ adress.postBox }})
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ adress.streetName }}</td>
+                                                <td>{{ adress.city.cityName }}
+                                                    {% if adress.city.zip %}
+                                                        ({{ adress.city.zip }})
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ adress.city.country.countryName }}</td>
+                                                <td>
+                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':userConnected.id}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                    {% else %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':userConnected.id}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucune adresse</td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         {#
                     <select name="Type">
                         <option value="Domicile">Domicile</option>
@@ -110,62 +305,7 @@
                         <option value="Travaille">Travail</option>
                     </select>
         #}
-        <div class="phone">
-            <div class="row">
-                <div class="col-2">
-                    {{ form_start(phoneForm) }}
-                    Type
-                    {{ form_widget(phoneForm.type,  {'attr':{
-                        'placeholder':"Domicile, travail..."
-                    }}) }}
-                </div>
-                <div class="col-9">
-                    Numéro
-                    {{ form_widget(phoneForm.num,  {'attr':{
-                        'placeholder':"Votre nouveau numéro..."
-                    }}) }}
-                </div>
-                <div class="col-3">
-                    <button type="submit" class="btn btn-success">Ajouter numéro</button>
-                    {{ form_end(phoneForm) }}
-                </div>
-            </div>
-        </div>
-        {#Affiche adresses#}
-        <h3>Adresses</h3>
-        {% if (userConnected.user) %}
-            {% for adress in userConnected.user.adress %}
-                {% if (is_granted('ROLE_ADMIN')) %}
-                    <form action="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':userConnected.id}) }}" method="post">
-                {% else %}
-                    <form action="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':userConnected.id}) }}" method="post">
-                {% endif %}
-                <div class="adress">
-                    <div class="row">
-                        <div class="col-2">
-                            {{ adress.type }}
-                        </div>
-                        <div class="col">
-                            {{ adress.num }} (BP:{{ adress.postBox }})
-                        </div>
-                        <div class="col">
-                            {{ adress.streetName }}
-                        </div>
-                        <div class="col">
-                            {{ adress.city.cityName }}
-                            ({{ adress.city.zip }})
-                        </div>
-                        <div class="col">
-                            {{ adress.city.country.countryName }}
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-link">Supprimer adresse</button>
-                        </div>
-                    </div>
-                </div>
-                </form>
-            {% endfor %}
-        {% endif %}
+
 
         <h4>Nouvelle adresse</h4>
         <div class="phone">

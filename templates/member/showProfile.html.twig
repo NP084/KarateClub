@@ -3,38 +3,41 @@
 {% block Body %}
 
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
-        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-            <a class="btn btn-success" href="{{ path('admin_edit',{'id':app.user.id}) }}"><font
-                        style="vertical-align: inherit;"><font style="vertical-align: inherit;">Modifier son
-                        profile </font></font></a>
-        {% else %}
-            {% if (is_granted('ROLE_ADMIN')) %}
-                <a class="btn btn-success" href="{{ path('admin_edit',{'id':userConnected.id}) }}"
-                   class="btn-btn-primary">
-                    Modifier le profile de l'utilisateur
-                </a>
-            {% else %}
-                <a class="btn btn-success" href="{{ path('profile_edit',{'id':userConnected.id}) }}"
-                   class="btn-btn-primary">
-                    Modifier son profile
-                </a>
-            {% endif %}
-
-        {% endif %}
-
         {# vérifie si l'id du visiteur correspond à l'id du membre qu'il veut consulter #}
 
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <h1>Profile utilisateur </h1>
+                    <h1>Profile utilisateur
+                        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
+                            <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('admin_edit',{'id':app.user.id}) }}">
+                                <i class="fa fa-pencil">
+                                </i>
+                                <span class="sr-only">Modifier profil</span>
+                            </a>
+                        {% else %}
+                            {% if (is_granted('ROLE_ADMIN')) %}
+                                <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('admin_edit',{'id':userConnected.id}) }}">
+                                    <i class="fa fa-pencil">
+                                    </i>
+                                    <span class="sr-only">Modifier profil</span>
+                                </a>
+                            {% else %}
+                                <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('profile_edit',{'id':userConnected.id}) }}">
+                                    <i class="fa fa-pencil">
+                                    </i>
+                                    <span class="sr-only">Modifier profil</span>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </h1>
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <div class="form-group">
+                                    <div class="user-avatar user-avatar-xl fileinput-button">
                                         <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
-                                             alt="{{ userConnected.user.imageFile }}" width="150"/>
+                                             alt="{{ userConnected.user.imageFile }}" name="avatar" width="150"/>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +117,6 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <h3> Adresses </h3>
-                                        {% for adress in userConnected.user.adress %}
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -126,6 +128,8 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            {% for adress in userConnected.user.adress %}
+
                                             <td>{{ adress.type }}</td>
                                             <td>{{ adress.num }}
                                                 {% if adress.postBox %}
