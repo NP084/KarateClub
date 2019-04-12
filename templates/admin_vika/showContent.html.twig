@@ -6,7 +6,10 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="assets/vendor/datatables/jquery.dataTables.min.js"></script>
+{#
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+#}
 <script>
     $(document).ready( function () {
     $('#usertabel').DataTable();
@@ -17,7 +20,7 @@
 {% block title %}Utilisateurs de VIKA{% endblock %}
 
 {% block Body %}
-    <table id="usertabel" class="display">
+    <table id="usertabel" class="table dataTable no-footer">
         <thead>
         <tr>
             <th>Id</th>
