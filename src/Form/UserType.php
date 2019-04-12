@@ -20,10 +20,13 @@ class UserType extends AbstractType
         $builder
             ->add('belt')
             ->add('receiptDate',DateType::class, [
+                'label'=>'refDate',
                 'required'=> false,
-//                'widget'  => 'single_text',
+                'widget'  => 'single_text',
+                'html5'   => false,
                 'format'  => 'dd-MM-yyyy',
                 'years'   => range(1980, date('Y')),
+                'attr' => ['class' => 'js-datepicker'],
             ])
             ->add('sex', ChoiceType::class,[
                 'choices' => [

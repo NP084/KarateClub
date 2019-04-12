@@ -10,6 +10,24 @@
 </script>
 {% endblock %}#}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css"
+          rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.js-datepicker').datepicker({
+                language: 'fr_FR'
+            });
+        });
+    </script>
+{% endblock %}
+
 
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
@@ -97,14 +115,14 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             {{ form_widget(formUser.imageFile) }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-2">
                                         <div class="form-group">
                                             {{ form_widget(formUser.sex) }}
 
@@ -112,7 +130,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-2">
                                         <div class="form-group">
                                             {{ form_label(formUser.belt, 'Grade') }}
                                             {{ form_widget(formUser.belt) }}
@@ -120,17 +138,17 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             {{ form_label(formUser.receiptDate, 'Date de réception') }}
-                                            {{ form_widget(formUser.receiptDate) }}
+                                            {{ form_widget(formUser.receiptDate, { attr:{ class:'js-datepicker' } }) }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-success">
+                                            <button type="submit" class="btn btn-outline-info">
                                                 Enregister modification(s)
                                             </button>
                                             {{ form_end(formUser) }}
@@ -142,15 +160,16 @@
                     </div>
                 </div>
             </div>
-
         {% endif %}
 
+        {#COORDONNEES #}
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     <h2>Coordonnées</h2>
                     <div class="card">
                         <div class="card-body">
+                            {# TELEPHONES #}
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
@@ -204,17 +223,16 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col-4">
                                     <div class="form-group">
                                         {{ form_start(phoneForm) }}
                                         {{ form_label(phoneForm.type, 'Type') }}
                                         {{ form_widget(phoneForm.type,  {'attr':{
                                             'placeholder':"Domicile, travail..."
-                                        }}) }}                                    </div>
+                                        }}) }}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
+                                <div class="col-5">
                                     <div class="form-group">
                                         {{ form_label(phoneForm.num, 'Numéro') }}
                                         {{ form_widget(phoneForm.num,  {'attr':{
@@ -226,13 +244,12 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-success">Ajouter numéro</button>
+                                        <button type="submit" class="btn btn-outline-info">Ajouter numéro</button>
                                         {{ form_end(phoneForm) }}
                                     </div>
                                 </div>
                             </div>
-
-
+                            {# ADRESSES #}
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
@@ -253,7 +270,7 @@
                                                 <td>{{ adress.type }}</td>
                                                 <td>{{ adress.num }}
                                                     {% if adress.postBox %}
-                                                        ({{ adress.postBox }})
+                                                        (BP:{{ adress.postBox }})
                                                     {% endif %}
                                                 </td>
                                                 <td>{{ adress.streetName }}</td>
@@ -265,19 +282,19 @@
                                                 <td>{{ adress.city.country.countryName }}</td>
                                                 <td>
                                                     {% if (is_granted('ROLE_ADMIN')) %}
-                                                    <a class="btn btn-sm btn-icon btn-secondary"
-                                                       href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':userConnected.id}) }}">
-                                                        <i class="fa fa-trash-o">
-                                                        </i>
-                                                        <span class="sr-only">Supprimer</span>
-                                                    </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':userConnected.id}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
                                                     {% else %}
-                                                    <a class="btn btn-sm btn-icon btn-secondary"
-                                                       href="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':userConnected.id}) }}">
-                                                        <i class="fa fa-trash-o">
-                                                        </i>
-                                                        <span class="sr-only">Supprimer</span>
-                                                    </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':userConnected.id}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
                                                     {% endif %}
                                                 </td>
                                             </tr>
@@ -291,124 +308,208 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h4>Nouvelle adresse</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        {{ form_start(adressForm) }}
+                                        {{ form_label(adressForm.type, 'Type') }}
+                                        {{ form_widget(adressForm.type,  {'attr':{
+                                            'placeholder':"Domicile, travail..."
+                                        }}) }}
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        {{ form_label(adressForm.num, 'Numéro') }}
+                                        {{ form_widget(adressForm.num) }}
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        {{ form_label(adressForm.postBox, 'BP') }}
+                                        {{ form_widget(adressForm.postBox) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        {{ form_label(adressForm.streetName, 'Rue') }}
+                                        {{ form_widget(adressForm.streetName) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        {{ form_label(cityForm.cityName, 'Ville') }}
+                                        {{ form_widget(cityForm.cityName) }}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        {{ form_label(cityForm.zip, 'Code postal') }}
+                                        {{ form_widget(cityForm.zip) }}
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        {{ form_label(cityForm.country, 'Pays') }}
+                                        {{ form_widget(cityForm.country) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-outline-info">Ajouter adresse</button>
+                                        {{ form_end(adressForm) }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {#PERSONNES DE CONTACT #}
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h2>Personnes de contact</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th>Numéro</th>
+                                                <th>Relation</th>
+                                                <th>Informations</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for contactList in userConnected.user.contactLists %}
+                                            <tr>
+                                                <td>{{ contactList.personOfContact.name }}</td>
+                                                <td>{{ contactList.personOfContact.firstName }}</td>
+                                                <td>{{ contactList.personOfContact.num1 }}</td>
+                                                <td>{{ contactList.relation }}</td>
+                                                <td>{{ contactList.info }}</td>
 
-
-        {#
-                    <select name="Type">
-                        <option value="Domicile">Domicile</option>
-                        <option value="Portable">Portable</option>
-                        <option value="Travaille">Travail</option>
-                    </select>
-        #}
-
-
-        <h4>Nouvelle adresse</h4>
-        <div class="phone">
-
-            <div class="row">
-                <div class="col-2">
-                    {{ form_start(adressForm) }}
-                    Type {{ form_widget(adressForm.type) }}
-                </div>
-                <div class="col-2">
-                    Numero {{ form_widget(adressForm.num) }}
-                </div>
-                <div class="col-2">
-                    BP {{ form_widget(adressForm.postBox) }}
-                </div>
-                <div class="col-11">
-                    Rue {{ form_widget(adressForm.streetName) }}
-                </div>
-                <div class="col-2">
-                    CP {{ (form_widget(cityForm.zip) ) }}
-                </div>
-                <div class="col-5">
-                    Ville {{ form_widget(cityForm.cityName) }}
-                </div>
-                <div class="col-4">
-                    Pays {{ form_widget(cityForm.country) }}
-                </div>
-                <div class="col-3">
-                    <button type="submit" class="btn btn-success">Ajouter adresse</button>
-                    {{ form_end(adressForm) }}
-                </div>
-            </div>
-        </div>
-
-        {#Affiche personnes de contact#}
-        <h3>Personnes de contact</h3>
-        {% for contactList in userConnected.user.contactLists %}
-            {% if (is_granted('ROLE_ADMIN')) %}
-                <form action="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':userConnected.id}) }}" method="post">
-            {% else %}
-                <form action="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':userConnected.id}) }}" method="post">
-            {% endif %}
-            <div class="personOfContact">
-                <div class="row">
-                    <div class="col-2">
-                        Nom: {{ contactList.personOfContact.name }}
-                    </div>
-                    <div class="col-2">
-                        Prénom : {{ contactList.personOfContact.firstName }}
-                    </div>
-                    <div class="col-2">
-                        Numéro : {{ contactList.personOfContact.num1 }}
-                    </div>
-                    <div class="col-2">
-                        Relation : {{ contactList.relation }}
-                    </div>
-                    <div class="col-11">
-                        Info : {{ contactList.info }}
-                    </div>
-                    <div class="col-3">
-                        <div class="col">
-                            <button type="submit" class="btn btn-link">Supprimer la personne de contact</button>
+                                                <td class="align-middle">
+                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('edit_PoC_admin',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                        <i class="fa fa-pencil">
+                                                        </i>
+                                                        <span class="sr-only">Modifier</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':userConnected.id}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                    {% else %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('edit_PoC',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                        <i class="fa fa-pencil">
+                                                        </i>
+                                                        <span class="sr-only">Modifier</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':userConnected.id}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucune personne de contact</td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h4>Nouvelle personne de contact</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        {{ form_start(PoCForm) }}
+                                        {{ form_label(PoCForm.name, 'Nom') }}
+                                        {{ form_widget(PoCForm.name) }}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        {{ form_label(PoCForm.firstName, 'Prénom') }}
+                                        {{ form_widget(PoCForm.firstName) }}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        {{ form_label(PoCForm.num1, 'Numéro de téléphone') }}
+                                        {{ form_widget(PoCForm.num1) }}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        {{ form_label(ContactListForm.relation, 'Relation (parent, amis...)') }}
+                                        {{ (form_widget(ContactListForm.relation) ) }}                               </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        {{ (form_label(ContactListForm.info,
+                                            'Information complémentaire') ) }}
+                                        {{ (form_widget(ContactListForm.info,
+                                            { 'attr': {'rows' : '4' }} )) }}                                         </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-outline-info">Ajouter une nouvelle personne
+                                            de contact
+                                        </button>
+                                        {{ form_end(PoCForm) }}
+                                        {{ form_end(ContactListForm) }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-3">
-                        {% if (is_granted('ROLE_ADMIN')) %}
-                            <a href="{{ path('edit_PoC_admin',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
-                                Modifier personne de contact</a>
-                        {% else %}
-                            <a href="{{ path('edit_PoC',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
-                                Modifier personne de contact</a>
-                        {% endif %}
-                    </div>
                 </div>
             </div>
-            </form>
-
-        {% endfor %}
-
-        <h4>Nouvelle personne de contact</h4>
-        <div class="row">
-            <div class="col-3">
-                {{ form_start(PoCForm) }}
-                Nom {{ form_widget(PoCForm.name) }}
-            </div>
-            <div class="col-3">
-                Prénom {{ form_widget(PoCForm.firstName) }}
-            </div>
-            <div class="col-3">
-                Numéro {{ form_widget(PoCForm.num1) }}
-            </div>
-            <div class="col-2">
-                Relation {{ (form_widget(ContactListForm.relation) ) }}
-            </div>
-            <div class="col-11">
-                Info {{ (form_widget(ContactListForm.info) ) }}
-            </div>
-            <div class="col-3">
-                <button type="submit" class="btn btn-success">Ajouter une nouvelle personne de contact</button>
-                {{ form_end(PoCForm) }}
-            </div>
         </div>
-
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}

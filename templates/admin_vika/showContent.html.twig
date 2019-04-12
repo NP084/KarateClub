@@ -1,13 +1,30 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready( function () {
+    $('#usertabel').DataTable();
+    } );
+</script>
+{% endblock %}
 
 {% block title %}Utilisateurs de VIKA{% endblock %}
 
 {% block Body %}
-    <table class="table">
+    <table id="usertabel" class="display">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Nom</th>
+            <th class="sorting_asc" tabindex="0" aria-controls="dt-responsive" rowspan="1" colspan="1"
+                style="width: 144px;" aria-label=" Name : activate to sort column descending" aria-sort="ascending">Nom
+            </th>
+            {#            <th>Nom</th>#}
             <th>Prénom</th>
             <th>Email</th>
         </tr>
