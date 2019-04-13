@@ -30,10 +30,18 @@
 
 
 {% block Body %}
+
+    <div class="container-fluid">
+    <div class="row justify-content-center">
+    <div class="col-md-10">
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
         {% if (is_granted('ROLE_ADMIN')) %}
-            <a class="btn btn-success" href="{{ path('admin_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
-                Retour
+            <a class="btn btn-success" href="{{ path('admin_users') }}" class="btn-btn-primary">
+                Retour à la liste des utilisateurs
+            </a>
+            <a class="btn btn-success" href="{{ path('admin_show',{'id':userConnected.id}) }}"
+            class="btn-btn-primary">
+            Voir le profil
             </a>
         {% else %}
             <a class="btn btn-success" href="{{ path('profile_show',{'id':userConnected.id}) }}"
@@ -41,80 +49,76 @@
                 Retour
             </a>
         {% endif %}
-
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <h2>Edition du profil
-                        {% if (app.user.id == app.request.get("id")) %}
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-success">Modifier mot de passe</button>
-                            </div>
-                        {% endif %}
-                    </h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="user-avatar user-avatar-xl fileinput-button">
-                                        {% if (is_granted('ROLE_ADMIN')) %}
-                                            <a class="btn btn-sm btn-icon btn-secondary"
-                                               href="{{ path('admin_picture_user', {'id':userConnected.id}) }}">
-                                                <div class="fileinput-button-label"> Change photo</div>
-                                                <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
-                                                     alt="{{ userConnected.user.imageFile }}" name="avatar"
-                                                     width="150"/>
-                                            </a>
-                                        {% else %}
-                                            <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
-                                                 alt="{{ userConnected.user.imageFile }}" name="avatar"
-                                                 width="150"/>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
-                                        <div class="metadata">Inscrit sur le site depuis
-                                            : {{ userConnected.createdUser |date('d/m/Y') }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <h3> Informations générales :</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <p> Nom d'utilisateur : {{ userConnected.username }} </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <p> Email : {{ userConnected.email }} </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
-                                    </div>
-                                </div>
+        <h2>Edition du profil
+            {% if (app.user.id == app.request.get("id")) %}
+                <div class="col-4">
+                    <button type="submit" class="btn btn-success">Modifier mot de passe</button>
+                </div>
+            {% endif %}
+        </h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="user-avatar user-avatar-xl fileinput-button">
+                            {% if (is_granted('ROLE_ADMIN')) %}
+                                <a class="btn btn-sm btn-icon btn-secondary"
+                                   href="{{ path('admin_picture_user', {'id':userConnected.id}) }}">
+                                    <div class="fileinput-button-label"> Change photo</div>
+                                    <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
+                                         alt="{{ userConnected.user.imageFile }}" name="avatar"
+                                         width="150"/>
+                                </a>
+                            {% else %}
+                                <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
+                                     alt="{{ userConnected.user.imageFile }}" name="avatar"
+                                     width="150"/>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
+                            <div class="metadata">Inscrit sur le site depuis
+                                : {{ userConnected.createdUser |date('d/m/Y') }}
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <h3> Informations générales :</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <p> Nom d'utilisateur : {{ userConnected.username }} </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <p> Email : {{ userConnected.email }} </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        </div>
+        </div>
         </div>
 
         {% if (is_granted('ROLE_ADMIN')) %}
