@@ -14,11 +14,14 @@ class AdminVikaController extends AbstractController
 {
     /**
      * LISTE DE TOUS LES UTILISATEURS DU SITE
-     * @Route("/admin-vikaUsers", name="admin_users")
+     * @Route("/admin-vikaUsers-{orderby}", name="admin_users")
      */
-    public function index(UserConnectedRepository $repo)
+    public function index(UserConnectedRepository $repo, $orderby)
     {
-        $users = $repo->findAll();
+        $users = $repo->findBy(
+            [ ],
+            ['name'=>$orderby]
+        );
         return $this->render('admin_vika/showContent.html.twig', [
             'controller_name' => 'Administration des utilisateurs',
             'users' => $users,
