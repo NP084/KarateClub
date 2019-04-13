@@ -1,0 +1,30 @@
+{% extends 'base.html.twig'%}
+
+{% block Body %}
+
+    <h1>
+        {%if editMode %}
+            Modification de la photo de profil
+        {% else %}
+            Ajouter d'une photo de profil
+        {% endif %}
+    </h1>
+
+    {{ form_start(formPicture) }}
+
+    <div class="form-group">
+        {{ form_widget(formPicture.imageFile) }}
+    </div>
+
+
+    <button type="submit" class="btn btn-success">
+        {%if editMode %}
+            Enregister modification(s)
+        {% else %}
+            Ajouter l'article
+        {% endif %}
+    </button>
+
+    {{ form_end(formPicture) }}
+
+{% endblock %}

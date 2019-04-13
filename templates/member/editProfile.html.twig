@@ -57,8 +57,19 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="user-avatar user-avatar-xl fileinput-button">
-                                        <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
-                                             alt="{{ userConnected.user.imageFile }}" name="avatar" width="150"/>
+                                        {% if (is_granted('ROLE_ADMIN')) %}
+                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                               href="{{ path('admin_picture_user', {'id':userConnected.id}) }}">
+                                                <div class="fileinput-button-label"> Change photo</div>
+                                                <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
+                                                     alt="{{ userConnected.user.imageFile }}" name="avatar"
+                                                     width="150"/>
+                                            </a>
+                                        {% else %}
+                                            <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
+                                                 alt="{{ userConnected.user.imageFile }}" name="avatar"
+                                                 width="150"/>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -114,13 +125,15 @@
                         <h2> Modification des données personnelles </h2>
                         <div class="card">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            {{ form_widget(formUser.imageFile) }}
-                                        </div>
-                                    </div>
-                                </div>
+                                {#
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <div class="form-group">
+                                                                            {{ form_widget(formUser.imageFile) }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                #}
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="form-group">
