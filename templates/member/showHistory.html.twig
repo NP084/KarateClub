@@ -3,48 +3,67 @@
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
 
-    {% if (is_granted('ROLE_ADMIN')) %}
-        <a class="btn btn-cancel" href="{{ path('admin_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
-            Retour
-        </a>
-        <a class="btn btn-success" href="{{ path('admin_history_edit',{'id': userConnected.id}) }}" class="btn-btn-primary">
-            Modifier
-        </a>
-
-    {% else %}
-        <a class="btn btn-success" href="{{ path('profile_show',{'id':userConnected.id}) }}"
-           class="btn-btn-primary">
-            Retour
-        </a>
-    {% endif %}
-
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
-        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-            <h2> Parcours personnel </h2>
+        {% if (is_granted('ROLE_ADMIN')) %}
+            <a class="btn btn-cancel" href="{{ path('admin_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
+                Retour
+            </a>
         {% else %}
-            <h2>Parcours du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
+            <a class="btn btn-success" href="{{ path('profile_show',{'id':userConnected.id}) }}"
+               class="btn-btn-primary">
+                Retour
+            </a>
         {% endif %}
 
-        {% if userConnected.user.histories %}
-            {% for history in userConnected.user.histories %}
-                <div class="row">
-                    <div class="col">
-                        {{ history.refDate | date ('d/m/Y') }}
-                    </div>
-                    <div class="col">
-                        {{ history.description }}
-                    </div>
-                    <div class="col">
-                        {{ history.category.title }}
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>Parcours vide </p>
+        {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
+            {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
+                <h2> Parcours personnel </h2>
+            {% else %}
+                <h2>Parcours du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
+            {% endif %}
+
+            <h3>Parcours</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Categorie</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for history in userConnected.user.Histories %}
+                    <tr>
+                        <td>{{ history.description }}</td>
+                        <td>{{ history.refDate |date('d/m/Y') }}</td>
+                        <td>{{ history.category.title }}</td>
+                        {% if (is_granted('ROLE_ADMIN')) %}
+                            <td>
+                                <a class="btn btn-success"
+                                   href="{{ path('admin_history_edit',{'id': userConnected.id, 'idHist':history.id}) }}"
+                                   class="btn-btn-primary">Modifier
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('remove_history_admin',{'id':history.id, 'idUser':userConnected.id}) }}">
+                                    Supprimer</a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="10">Aucun historique</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
         {% endif %}
-
-    {% endif %}
-
+        {% if (is_granted('ROLE_ADMIN')) %}
+            <a class="btn btn-success" href="{{ path('admin_history_new',{'id': userConnected.id }) }}"
+               class="btn-btn-primary">
+                Nouvel élément
+            </a>
+        {% endif %}
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}

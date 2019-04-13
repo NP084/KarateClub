@@ -25,7 +25,7 @@ class HistoryType extends AbstractType
                 'required'=> false,
                 'widget'  => 'single_text',
                 'html5'   => false,
-              //  'format'  => 'dd-MM-yyyy',
+                'format'  => 'dd-MM-yyyy',
                 'years'   => range(2018, date('Y')),
                 'attr' => ['class' => 'js-datepicker'],
 

@@ -11,64 +11,33 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
     <script>
         jQuery(document).ready(function () {
-            $('.js-datepicker').datepicker();
+            $('.js-datepicker').datepicker({
+                language:'fr_FR'
+            });
         });
     </script>
 {% endblock %}
 
-
 {% block Body %}
 
     {% if (is_granted('ROLE_ADMIN')) %}
-        <h2>Edition du parcours du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
-        {% if (not userConnected.user.histories) %}
-            <h4>Parcours vide</h4>
-        {% else %}
-            <h3>Parcours</h3>
-            {% for history in userConnected.user.Histories %}
-                <div class="personOfContact">
-                    <div class="row">
-                        <div class="col-3">
-                            Description: {{ history.description }}
-                        </div>
-                        <div class="col-3">
-                            Date : {{ history.refDate |date('d/m/Y') }}
-                        </div>
-                        <div class="col-5">
-                            Catégorie : {{ history.category.title }}
-                        </div>
-                    </div>
-                    <div>
-                        <div class="row">
-                            <div class="col">
-                                {#<button type="submit" class="btn btn-link">Supprimer personne de contact</button>#}
-                                <a href="{{ path('remove_history_admin',{'id':history.id, 'idUser':userConnected.id}) }}">Supprimer
-                                    la ligne</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-
-        {% endif %}
-
         <h4>Ajouter une nouvelle ligne dans le parcours</h4>
         <form action="{{ path('admin_edit',{'id':userConnected.id}) }}" method="post">
             {{ form_start(historyForm) }}
             <div class="row">
-                <div class="col-7">
+                <div class="col-12">
                     {#attr : nbre de ligne affichée dans le textBox de "Description #}
                     {{ form_label(historyForm.description, 'Description') }}
                     {{ form_widget(historyForm.description,  { 'attr': {
                         'rows' : '4' }} ) }}
                 </div>
-                <div class='"col-5' id='datetimepicker'>
-                    {{ form_label(historyForm.refDate, 'Date') }}
-                    {{ form_widget(historyForm.refDate, { attr:{ class:'js-datepicker' } }) }}
-                </div>
                 <div class="col-7">
                     {{ form_label(historyForm.category, 'Catégorie') }}
                     {{ form_widget(historyForm.category) }}
+                </div>
+                <div class='"col-3' id='datetimepicker'>
+                    {{ form_label(historyForm.refDate, 'Date') }}
+                    {{ form_widget(historyForm.refDate, { attr:{ class:'js-datepicker' } }) }}
                 </div>
                 <div class="col-6">
                     <button type="submit" class="btn btn-outline-success">Ajouter un nouvel historique</button>
@@ -76,6 +45,8 @@
                 </div>
             </div>
         </form>
+    {% else %}
+        <h2>Vous n'êtes pas autorisé à accéder à cette page</h2>
     {% endif %}
 
 {% endblock %}
