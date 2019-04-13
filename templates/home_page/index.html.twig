@@ -37,9 +37,11 @@
                     <time datetime="2018-02-12">Feb 12, 2018 at 08:19pm</time>
                 </p>
                 </div><!-- /.card-body -->
+            <div align="right">
             {% if (is_granted('ROLE_ADMIN')) %}
                 <a class="btn btn-primary btn-md" href="{{ path('home_pageedit', {'path':'accueil'}) }}" role="button">Editer</a>
             {% endif %}
+            </div>
         </div>
     </div>
     <!-- Actuatlités-->
@@ -124,23 +126,23 @@
                         </div><!-- /.board -->
                         </div><!-- /.page-inner -->
                         <!-- .page-sidebar -->
-                        <div class="page-sidebar page-sidebar-fixed">
-                        <!-- .sidebar-header -->
-                        <header class="sidebar-header d-sm-none">
-                            <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item active">
-                                <a href="#" onclick="Looper.toggleSidebar()"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>
-                                </li>
-                            </ol>
-                            </nav>
-                        </header><!-- /.sidebar-header -->
-                        <!-- .sidebar-section-fill -->
-                        <div class="sidebar-section-fill">
-                            <!-- .calendar-list -->
-                            <div id="calendar-list"></div><!-- /.calendar-list -->
-                        </div><!-- /.sidebar-section-fill -->
-                        </div><!-- /.page-sidebar -->
+{#                        <div class="page-sidebar page-sidebar-fixed">#}
+{#                        <!-- .sidebar-header -->#}
+{#                        <header class="sidebar-header d-sm-none">#}
+{#                            <nav aria-label="breadcrumb">#}
+{#                            <ol class="breadcrumb">#}
+{#                                <li class="breadcrumb-item active">#}
+{#                                <a href="#" onclick="Looper.toggleSidebar()"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>#}
+{#                                </li>#}
+{#                            </ol>#}
+{#                            </nav>#}
+{#                        </header><!-- /.sidebar-header -->#}
+{#                        <!-- .sidebar-section-fill -->#}
+{#                        <div class="sidebar-section-fill">#}
+{#                            <!-- .calendar-list -->#}
+{#                            <div id="calendar-list"></div><!-- /.calendar-list -->#}
+{#                        </div><!-- /.sidebar-section-fill -->#}
+{#                        </div><!-- /.page-sidebar -->#}
                 </div><!-- /.page -->  
             </div>
     </div>
