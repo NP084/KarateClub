@@ -3,126 +3,213 @@
 {% block Body %}
 
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
-        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-            <a class="btn btn-success" href="{{ path('admin_edit',{'id':app.user.id}) }}"><font
-                        style="vertical-align: inherit;"><font style="vertical-align: inherit;">Modifier son
-                        profile </font></font></a>
-        {% else %}
-            {% if (is_granted('ROLE_ADMIN')) %}
-                <a class="btn btn-success" href="{{ path('admin_edit',{'id':userConnected.id}) }}"
-                   class="btn-btn-primary">
-                    Modifier le profile de l'utilisateur
-                </a>
-            {% else %}
-                <a class="btn btn-success" href="{{ path('profile_edit',{'id':userConnected.id}) }}"
-                   class="btn-btn-primary">
-                    Modifier son profile
-                </a>
-            {% endif %}
-
-        {% endif %}
-
         {# vérifie si l'id du visiteur correspond à l'id du membre qu'il veut consulter #}
-        <h2>Profile utilisateur </h2>
-        <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
-        <div class="metadata">Inscrit sur le site depuis : {{ userConnected.createdUser |date('d/m/Y') }}</div>
 
-        <h4> </br> Informations générales :</h4>
-        <div class="content">
-        <p> Nom d'utilisateur : {{ userConnected.username }} </p>
-        <p> Email : {{ userConnected.email }} </p>
-        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
-        <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}" alt="{{ userConnected.user.imageFile }}"
-             width="300"/>
-
-        {% if (userConnected.user.belt) %}
-            <h5> Grade</h5>
-            <p> Grade : {{ userConnected.user.belt }} reçu
-                le {{ userConnected.user.receiptDate |date('d/m/Y') }}</p>
-        {% endif %}
-
-        <h4> </br> Coordonnées :</h4>
-        <h5> Téléphone </h5>
-        {% for phone in userConnected.user.phones %}
-            <div class="phone">
-                <div class="row">
-                    <div class="col-2">
-                        {{ phone.type }}
-                    </div>
-                    <div class="col">
-                        {{ phone.num }}
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h1>Profile utilisateur
+                        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
+                            <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('admin_edit',{'id':app.user.id}) }}">
+                                <i class="fa fa-pencil">
+                                </i>
+                                <span class="sr-only">Modifier profil</span>
+                            </a>
+                        {% else %}
+                            {% if (is_granted('ROLE_ADMIN')) %}
+                                <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('admin_edit',{'id':userConnected.id}) }}">
+                                    <i class="fa fa-pencil">
+                                    </i>
+                                    <span class="sr-only">Modifier profil</span>
+                                </a>
+                            {% else %}
+                                <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('profile_edit',{'id':userConnected.id}) }}">
+                                    <i class="fa fa-pencil">
+                                    </i>
+                                    <span class="sr-only">Modifier profil</span>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </h1>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="user-avatar user-avatar-xl fileinput-button">
+                                        <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
+                                             alt="{{ userConnected.user.imageFile }}" name="avatar" width="150"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
+                                        <div class="metadata">Inscrit sur le site depuis
+                                            : {{ userConnected.createdUser |date('d/m/Y') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h3> Informations générales :</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <p> Nom d'utilisateur : {{ userConnected.username }} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <p> Email : {{ userConnected.email }} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        {% if (userConnected.user.belt) %}
+                                            <h4> Grade</h4>
+                                            <p> Grade : {{ userConnected.user.belt }} reçu
+                                                le {{ userConnected.user.receiptDate |date('d/m/Y') }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        {% endfor %}
+        </div>
 
-        <h5><br> Adresses </h5>
-        {% for adress in userConnected.user.adress %}
-            <table class="table">
-            <thead>
-            <tr>
-                <th>Type</th>
-                <th>Numéro</th>
-                <th>Rue</th>
-                <th>Ville</th>
-                <th>Pays</th>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h2>Coordonnées </h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h3> Téléphones </h3>
+                                        {% for phone in userConnected.user.phones %}
+                                            {{ phone.type }}
+                                            {{ phone.num }}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h3> Adresses </h3>
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Numéro</th>
+                                                <th>Rue</th>
+                                                <th>Ville</th>
+                                                <th>Pays</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for adress in userConnected.user.adress %}
 
-            </tr>
-            </thead>
-            <tbody>
-            <td>{{ adress.type }}</td>
-            <td>{{ adress.num }}
-                {% if adress.postBox %}
-                    ({{ adress.postBox }})
-                {% endif %}
-            </td>
-            <td>{{ adress.streetName }}</td>
-            <td>{{ adress.city.cityName }}
-                {% if adress.city.zip %}
-                    ({{ adress.city.zip }})
-                {% endif %}
-            </td>
-            <td>{{ adress.city.country.countryName }}</td>
-        {% else %}
-            <tr>
-                <td colspan="10">Aucune adresse</td>
-            </tr>
-            </tbody>
-            </table>
-        {% endfor %}
+                                            <td>{{ adress.type }}</td>
+                                            <td>{{ adress.num }}
+                                                {% if adress.postBox %}
+                                                    ({{ adress.postBox }})
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ adress.streetName }}</td>
+                                            <td>{{ adress.city.cityName }}
+                                                {% if adress.city.zip %}
+                                                    ({{ adress.city.zip }})
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ adress.city.country.countryName }}</td>
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucune adresse</td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h2>Personne de contact </h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th>Numéro</th>
+                                                <th>Relation</th>
+                                                <th>Informations</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for contactList in userConnected.user.contactLists %}
+                                            <td>{{ contactList.personOfContact.name }}</td>
+                                            <td>{{ contactList.personOfContact.firstName }}</td>
+                                            <td>{{ contactList.personOfContact.num1 }}</td>
+                                            <td>{{ contactList.relation }}</td>
+                                            <td>{{ contactList.info }}</td>
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucune personne de contact</td>
+                                            </tr>
+                                            </tbody>
+                                        {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <h4> </br> Personnes de contact :</h4>
-        {% for contactList in userConnected.user.contactLists %}
-            <table class="table">
-            <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Numéro</th>
-                <th>Relation</th>
-                <th>Informations</th>
-            </tr>
-            </thead>
+    {% else %}
+        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
+    {% endif %}
 
-            <tbody>
-                <td>{{ contactList.personOfContact.name }}</td>
-                <td>{{ contactList.personOfContact.firstName }}</td>
-                <td>{{ contactList.personOfContact.num1 }}</td>
-                <td>{{ contactList.relation }}</td>
-                <td>{{ contactList.info }}</td>
-        {% else %}
-                <tr>
-                    <td colspan="10">Aucune personne de contact</td>
-                </tr>
-            </tbody>
-            </table>
-        {% endfor %}
-
+{% endblock %}
 
         {#Affichle les inscriptions du membre#}
 
-        <h4><br> Liste des inscriptions </h4>
+{#        <h4><br> Liste des inscriptions </h4>
         {% for registration in userConnected.user.registration %}
             <table class="table">
             <thead>
@@ -141,10 +228,4 @@
             <p>Aucune inscription</p>
             </tbody>
             </table>
-        {% endfor %}
-
-    {% else %}
-        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
-    {% endif %}
-
-{% endblock %}
+        {% endfor %}#}
