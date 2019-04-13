@@ -472,11 +472,13 @@ class MemberController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $passwordEncoder = $this->get('security.password_encoder');
-            $oldPassword = $request->request->get('member_reset_password')['oldPassword'];
+            //dump($request->request);die();
+            //echo "<script>alert(\"Je suis ici\")</script>";
+            $oldPassword = $request->request->get('member_reset_password')['ancienMotDePasse'];
 
             // Si l'ancien mot de passe est bon
             if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
-                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());//getPlainPassword()
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($newEncodedPassword);
 
                 $em->persist($user);
