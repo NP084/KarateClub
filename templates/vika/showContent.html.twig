@@ -11,7 +11,7 @@
             {{ contentPage.content | raw }}
         </div>
         {% if (is_granted('ROLE_ADMIN')) %}
-        <a class="btn btn-primary btn-md" href="{{ path('VikaContentEdit', {'path':'philosophie'}) }}" role="button">Editer</a>
+                <div align="right"> <a class="btn btn-primary btn-md" href="{{ path('VikaContentEdit', {'path':'philosophie'}) }}" role="button">Editer</a></div>
         {% endif %}
                 </div>
         </div>

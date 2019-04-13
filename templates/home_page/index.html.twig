@@ -28,13 +28,14 @@
                         {{ contentPage.content| raw }}
                     <time datetime="2018-02-12">Feb 12, 2018 at 08:19pm</time>
                 </p>
+                        {% if (is_granted('ROLE_ADMIN')) %}
+                            <div align="right" > <a class="btn btn-primary btn-md" href="{{ path('home_pageedit', {'path':'accueil'}) }}" role="button">Editer</a></div>
+                        {% endif %}
                     </div>
                 </div><!-- /.card-body -->
-            <div align="right" >
-            {% if (is_granted('ROLE_ADMIN')) %}
-                <a class="btn btn-primary btn-md" href="{{ path('home_pageedit', {'path':'accueil'}) }}" role="button">Editer</a>
-            {% endif %}
-            </div>
+
+
+
         </div>
     </div>
     <!-- Actuatlités-->
