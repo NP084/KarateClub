@@ -37,6 +37,9 @@
                     <time datetime="2018-02-12">Feb 12, 2018 at 08:19pm</time>
                 </p>
                 </div><!-- /.card-body -->
+            {% if (is_granted('ROLE_ADMIN')) %}
+                <a class="btn btn-primary btn-md" href="{{ path('home_pageedit', {'path':'accueil'}) }}" role="button">Editer</a>
+            {% endif %}
         </div>
     </div>
     <!-- Actuatlités-->

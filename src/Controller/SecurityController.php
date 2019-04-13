@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
 
             $manager->persist($user);
             $manager->flush($user);
-            return $this->redirectToRoute('security_login');
+            return $this->redirectToRoute('validation');
         }
 
             return $this->render('security/registration.html.twig', [
@@ -47,13 +47,21 @@ class SecurityController extends AbstractController
         return $this->render('security/registered.html.twig');
 
     }
+    /**
+     * @Route("/validation", name="validation")
+     */
+    public function validate(){
+        return $this->render('security/succeedregistration.html.twig');
+
+    }
+
 
 
     /**
     * @Route("/deconnexion", name="security_logout")
     */
     public function logout(){
-
+        return $this->redirectToRoute();
     }
 
 

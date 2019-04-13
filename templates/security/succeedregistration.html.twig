@@ -1,0 +1,14 @@
+{% extends 'base.html.twig'%}
+
+{% block Body %}
+    {% if not app.user%}
+<div align="center">
+    <div class="col-lg-4" >
+        <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Compte créé !</strong> Vous pouvez maintenant vous connecter ou <a class="alert-link" href="{{ path('home_page', {'path':'accueil'}) }}" >revenir sur la page d'accueil</a>.
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

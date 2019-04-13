@@ -2,14 +2,6 @@
 
 {% block Body %}
     {% if not app.user%}
-    <div align="center">
-    <div class="col-lg-4" >
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Compte créé !</strong> Vous pouvez maintenant vous connecter ou <a href="{{ path('home_page') }}" class="alert-link">revenir sur la page d'accueil</a>.
-        </div>
-    </div>
-    </div>
 
            <h1>Se connecter</h1>
 
@@ -44,6 +36,7 @@
 
                         <div class="form_group">
                             <button type="submit" class="btn btn-secondary">Connexion</button>
+
                             <a href="/inscription" target="_self"><input type="button" class="btn btn-light" value="Créer un compte"></a>
 
 
@@ -59,7 +52,8 @@
             <div class="col-lg-4" >
                 <div class="alert alert-success alert-dismissible fade show">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    Vous êtes déjà connecté.  <a href="{{ path('home_page') }}" class="alert-link">Revenir sur la page d'accueil</a>.
+{#                    Vous êtes déjà connecté.  <a href="{{ path('home_page'), {'path':'accueil'} }}" class="alert-link">Revenir sur la page d'accueil</a>.#}
+                    Vous êtes déjà connecté.   <a class="alert-link" href="{{ path('home_page', {'path':'accueil'}) }}" > Revenir sur la page d'accueil</a>.
                 </div>
             </div>
         </div>
