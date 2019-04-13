@@ -457,11 +457,11 @@ class MemberController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history", name="admin_reset_password",  requirements={"id"="\d+"})
      */
+     /*
     public function resetPassword(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
@@ -497,4 +497,5 @@ class MemberController extends AbstractController
     		'form' => $form->createView(),
     	));
     }
+    */
 }
