@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190407194503 extends AbstractMigration
+final class Version20190413155533 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,9 +22,7 @@ final class Version20190407194503 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE app_user ADD user_connected_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE app_user ADD CONSTRAINT FK_88BDF3E9F2063BA5 FOREIGN KEY (user_connected_id) REFERENCES userConnected (id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_88BDF3E9F2063BA5 ON app_user (user_connected_id)');
+        $this->addSql('DROP TABLE booking');
     }
 
     public function down(Schema $schema) : void
@@ -32,8 +30,6 @@ final class Version20190407194503 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE app_user DROP FOREIGN KEY FK_88BDF3E9F2063BA5');
-        $this->addSql('DROP INDEX UNIQ_88BDF3E9F2063BA5 ON app_user');
-        $this->addSql('ALTER TABLE app_user DROP user_connected_id');
+        $this->addSql('CREATE TABLE booking (id INT AUTO_INCREMENT NOT NULL, begin_at DATETIME NOT NULL, end_at DATETIME DEFAULT NULL, title VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
     }
 }
