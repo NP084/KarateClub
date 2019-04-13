@@ -467,6 +467,7 @@ class MemberController extends AbstractController
     	$em = $this->getDoctrine()->getManager();
       $user = $this->getUser();
     	$form = $this->createForm(ResetPasswordType::class, $user);
+      //dump($request->request);die();
 
     	$form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

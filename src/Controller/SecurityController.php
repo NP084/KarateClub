@@ -80,7 +80,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('home');
             }
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
-            $message = (new \Swift_Message('Mot de passe oublié VIKA'))
+            $message = (new \Swift_Message('Mot de passe VIKA'))
                 ->setFrom('vi.ka.59@hotmail.fr')
                 ->setTo($user->getEmail())
                 ->setBody("Voici le lien pour entrer votre nouveau mot de passe : " . $url, 'text/html');

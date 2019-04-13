@@ -70,7 +70,7 @@
         {% endif %}
         {% if (app.user.id == app.request.get("id")) %}
             <div class="col-3">
-                <a class="btn btn-success" href="{{ path('member_reset_password',{'id':userConnected.id}) }}" class="btn-btn-primary">Modifier mot de passe</a>
+                <a class="btn btn-success" href="{{ path('app_forgotten_password') }}" target="_self" class="btn-btn-primary">Modifier mot de passe</a>
             </div>
         {% endif %}
 
