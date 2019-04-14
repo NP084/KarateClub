@@ -83,10 +83,11 @@ class MemberController extends AbstractController
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-edit", name="admin_edit",  requirements={"id"="\d+"})
      */
-    public function profileEdit(UserConnected $userConnected, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function profileEdit(User $user, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
 //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        $user = $userConnected->getUser();
+        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
+        $userConnected = $user->getUserConnected();
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
 
@@ -173,7 +174,7 @@ class MemberController extends AbstractController
 
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
-            'userConnected' => $userConnected,
+            'user' => $user,
             'formUser' => $formUser->createView(),
             'phoneForm' => $formPhone->createView(),
             'adressForm' => $formAdress->createView(),
@@ -238,10 +239,10 @@ class MemberController extends AbstractController
      * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}", name="admin_show",  requirements={"id"="\d+"})
      */
-    public function profileShow(UserConnected $user, Request $request)
+    public function profileShow(User $user, Request $request)
     {
         return $this->render('member/showProfile.html.twig', [
-            'userConnected' => $user
+            'user' => $user
         ]);
     }
 
@@ -361,7 +362,6 @@ class MemberController extends AbstractController
      * Supprime une adresse d'un user. (l'adresse reste dans la DB)
      * @Route("/member-removeAdress-idAdress={idAdress}-idUser={idUser}", name="remove_adress", requirements={"id"="\d+"})
      * @Route("/admin-removeAdress-idAdress={idAdress}-idUser={idUser}", name="remove_adress_admin", requirements={"id"="\d+"})
-
      */
     public function removeUserAdress($idAdress, $idUser, AuthorizationCheckerInterface $authChecker)
     {
@@ -379,7 +379,6 @@ class MemberController extends AbstractController
             return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
         }
     }
-
 
     /**
      * AJOUTE NOUVELLE ADRESSE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
@@ -432,6 +431,7 @@ class MemberController extends AbstractController
      * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      * @Route("/admin-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC_admin", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
+     * @Security("has_role('ROLE_ADMIN') or user.getUser().getId() == contactList.getUser().getId()")
      */
     public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {

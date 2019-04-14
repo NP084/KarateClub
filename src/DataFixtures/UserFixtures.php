@@ -79,11 +79,12 @@ class UserFixtures extends Fixture
                   ->setFirstname($faker->firstName())
                   ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))
                   ->setCreatedUser($faker->dateTimeBetween('-6 months'))
-                  ->setUser($user);
+                  ->addUser($user);
             $manager-> persist($userC);
 
             $user->setSex('Male')
-                 ->setBelt($faker->safeColorName());
+                 ->setBelt($faker->safeColorName())
+                ->setOwnerUser($userC);
             $manager-> persist($user);
 
             $manager->flush();
