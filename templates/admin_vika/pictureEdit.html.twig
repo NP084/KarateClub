@@ -1,30 +1,53 @@
 {% extends 'base.html.twig'%}
 
 {% block Body %}
+    {% if (is_granted('ROLE_ADMIN')) %}
 
-    <h1>
-        {%if editMode %}
-            Modification de la photo de profil
-        {% else %}
-            Ajouter d'une photo de profil
-        {% endif %}
-    </h1>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>
+                    {%if editMode %}
+                        Modification de la photo de profil
+                    {% else %}
+                        Ajouter d'une photo de profil
+                    {% endif %}
+                </h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ form_start(formPicture) }}
 
-    {{ form_start(formPicture) }}
-
-    <div class="form-group">
-        {{ form_widget(formPicture.imageFile) }}
+                                    <div class="form-group">
+                                        {{ form_widget(formPicture.imageFile) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-outline-info">
+                                        {%if editMode %}
+                                            Enregister modification
+                                        {% else %}
+                                            Ajouter la photo
+                                        {% endif %}
+                                    </button>
+                                    {{ form_end(formPicture) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-
-    <button type="submit" class="btn btn-success">
-        {%if editMode %}
-            Enregister modification
-        {% else %}
-            Ajouter la photo
-        {% endif %}
-    </button>
-
-    {{ form_end(formPicture) }}
+    {% else %}
+    <p>Vous n'êtes pas autorisé à accéder à cette page</p>
+    {% endif %}
 
 {% endblock %}
