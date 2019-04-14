@@ -114,7 +114,7 @@
                     <div class="col">
                         <div class="form-group">
                             {% if (app.user.id == app.request.get("id")) %}
-                                <a class="btn btn-success" href="{{ path('app_forgotten_password') }}" target="_self"
+                                <a class="btn btn-link" href="{{ path('app_forgotten_password') }}" target="_self"
                                    class="btn-btn-primary">Modifier mot de passe</a>
                             {% endif %}
                         </div>
