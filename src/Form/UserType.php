@@ -18,7 +18,25 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('belt')
+          //  ->add('belt')
+            ->add('belt', ChoiceType::class,[
+                'choices' => [
+                    'Ceinture blanche' => 'Ceinture blanche',
+                    'Ceinture jaune' => 'Ceinture jaune',
+                    'Ceinture orange' => 'Ceinture orange',
+                    'Ceinture verte' => 'Ceinture verte',
+                    'Ceinture bleue' => 'Ceinture bleue',
+                    'Ceinture marron' => 'Ceinture marron',
+                    'Ceinture noir 1er dan' => 'Ceinture noir 1er dan',
+                    'Ceinture noir 2e dan' => 'Ceinture noir 2e dan',
+                    'Ceinture noir 3e dan' => 'Ceinture noir 3e dan',
+                    'Ceinture noir 4e dan' => 'Ceinture noir 4e dan',
+                    'Ceinture noir 5e dan' => 'Ceinture noir 5e dan',
+                    'Ceinture blanche et rouge 6e dan' => 'Ceinture noir 6e dan',
+                    'Ceinture blanche et rouge 7e dan' => 'Ceinture blanche et rouge 7e dan',
+                    'Ceinture blanche et rouge 8e dan' => 'Ceinture blanche et rouge 8e dan',
+                ],
+            ])
             ->add('receiptDate',DateType::class, [
                 'label'=>'refDate',
                 'required'=> false,
