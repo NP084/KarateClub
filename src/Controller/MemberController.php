@@ -453,8 +453,6 @@ class MemberController extends AbstractController
         ]);
     }
 
-
-
     /**
      * @Route("/admin-id={id}-idReg={idReg}-registration-edit", name="admin_registration_edit",  requirements={"id"="\d+"})
      */
@@ -519,6 +517,30 @@ class MemberController extends AbstractController
         return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
 
     }
+
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/member-family-{id}", name="view_family")
+     * @Route("/admin-family-{id}", name="admin_family")
+     */
+    public function indexFamily(UserConnected $userConnected)
+    {
+        $users = $userConnected->getUsers();
+        return $this->render('member/showFamily.html.twig', [
+            'controller_name' => 'Vue des membres de sa famille',
+            'users' => $users,
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="assets/vendor/datatables/jquery.dataTables.min.js"></script>
+{#
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+#}
+<script>
+    $(document).ready( function () {
+    $('#usertabel').DataTable();
+    } );
+</script>
+{% endblock %}
+
+{% block title %}Utilisateurs de VIKA{% endblock %}
+
+
+{% block Body %}
+    <table id="usertabel" class="table dataTable no-footer">
+        <thead>
+        <tr>
+            <th>Id</th>
+  {#          <th class="sorting_asc" tabindex="0" aria-controls="dt-responsive" rowspan="1" colspan="1"
+                style="width: 144px;" aria-label=" Name : activate to sort column descending" aria-sort="ascending">Nom
+            </th>#}
+            {% if (app.request.get("orderby")=='ASC') %}
+                    <th>
+                        <a href="{{ path('admin_users', {orderby:'DESC'}) }}">
+                            Noms</a></th>
+            {% else %}
+                    <th>
+                        <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
+                            Noms</a></th>
+            {% endif %}
+            <th>Prénom</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for user in users %}
+            {% if (app.user.user.id != user.id) %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                </td>
+                <td>{{ user.firstName }}</td>
+                <td>
+                    <a href="{{ path('admin_show', {'id': user.id}) }}">Montrer</a>
+                    <a href="{{ path('admin_edit', {'id': user.id}) }}">Editer</a>
+                </td>
+            </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="10">Aucun utilisateur enregistré sur le site</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
