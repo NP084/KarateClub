@@ -16,12 +16,12 @@
                 <h1 class="card-title"> 
 
                     <div class="tile tile-img tile-lg">
-                            <img src="Logo_Vika.png" alt="" style="height: 35px;width: auto;">
-                        <h2>{{ contentPage.title }}</h2>
+                            <img src="Logo_Vika.png" alt="" style="height: 35px;width: auto;" >
+
                     </div>
-                    Information 
+                    <h2>{{ contentPage.title }}</h2>
                 </h1>
-                <h6 class="card-subtitle mb-2 text-muted"> Support card subtitle </h6>
+                <h6 class="card-subtitle mb-2 text-muted"> {{ contentPage.subtitle }} </h6>
                     <div class="content">
                 <p class="card-text">
 
@@ -29,7 +29,7 @@
                     <time datetime="2018-02-12">Feb 12, 2018 at 08:19pm</time>
                 </p>
                         {% if (is_granted('ROLE_ADMIN')) %}
-                            <div align="right" > <a class="btn btn-primary btn-md" href="{{ path('home_pageedit', {'path':'accueil'}) }}" role="button">Editer</a></div>
+                            <div align="right" > <a class="btn btn-primary btn-md" href="{{ path('home_pageedit', {'path':contentPage.path}) }}" role="button">Editer</a></div>
                         {% endif %}
                     </div>
                 </div><!-- /.card-body -->

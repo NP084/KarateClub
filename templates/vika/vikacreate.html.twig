@@ -10,7 +10,10 @@
         <label for="">Titre</label>
         {{ form_widget(formContent.title) }}
     </div>
-
+        <div class="form-group">
+            <label for="">Sous-titre (pas obligatoire)</label>
+            {{ form_widget(formContent.subtitle) }}
+        </div>
     <div class="form-group">
         {{ form_label(formContent.content,'Contenu de la page') }}
 
