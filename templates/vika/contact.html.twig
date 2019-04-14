@@ -2,7 +2,7 @@
 
 
 {% block Body %}
-<div class="container-fluid">
+    <div class="container-fluid">
     <div class="card">
         <!-- .card-body -->
         <div class="card-body">
@@ -11,9 +11,9 @@
                 {{ contentPage.content | raw }}
             </div>
             {% if (is_granted('ROLE_ADMIN')) %}
-            <div align="right"><a class="btn btn-primary btn-md"
-                                  href="{{ path('VikaContentEdit', {'path':contentPage.path}) }}" role="button">Editer</a>
-            </div>
+                <div align="right"><a class="btn btn-primary btn-md"
+                                      href="{{ path('VikaContentEdit', {'path':'contact'}) }}" role="button">Editer</a>
+                </div>
             {% endif %}
         </div>
     </div>
