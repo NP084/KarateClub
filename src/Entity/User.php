@@ -131,10 +131,6 @@ class User
      */
     private $firstName;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\UserConnected", cascade={"persist", "remove"})
-     */
-    private $owner;
 
 
     public function __construct()
@@ -508,15 +504,4 @@ class User
         return $this;
     }
 
-    public function getOwner(): ?UserConnected
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(?UserConnected $owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
 }

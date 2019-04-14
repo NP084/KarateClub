@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}
+
     {#Affiche personnes de contact#}
     <div class="container-fluid">
     <div class="row justify-content-center">
@@ -61,15 +63,16 @@
             </div>
         </div>
     </div>
-    {% if is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id") %}
+    {% endif %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}
         {% if (is_granted('ROLE_ADMIN')) %}
             <a class="btn btn-warning"
-               href="{{ path('admin_edit',{'id':contactList.user.userConnected.id}) }}">
+               href="{{ path('admin_edit',{'id':contactList.user.id}) }}">
                 <b>Retour</b>
             </a>
         {% else %}
             <a class="btn btn-warning"
-               href="{{ path('profile_edit',{'id':contactList.user.userConnected.id}) }}">
+               href="{{ path('profile_edit',{'id':contactList.user.id}) }}">
                 <b>Retour</b>
             </a>
         {% endif %}
