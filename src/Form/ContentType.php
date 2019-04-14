@@ -18,8 +18,7 @@ class ContentType extends AbstractType
                 'config' => array(
                     'uiColor' => '#ffffff',
                     //...
-                ),
-            ));
+                )));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -18,8 +18,8 @@ use App\Repository\EncadrementRepository;
 class VikaController extends AbstractController
 {
     /**
-     * @Route("/vika-encadrement-new", name="encadrement_create")
-     * @Route("/vika-encadrement-{id}-edit", name="encadrement_edit")
+     * @Route("/admin-vika-encadrement-new", name="encadrement_create")
+     * @Route("/admin-vika-encadrement-{id}-edit", name="encadrement_edit", requirements={"id"="\d+"})
      */
     public function form(Encadrement $personne=null, Request $request, ObjectManager $manager ){
 
@@ -47,7 +47,7 @@ class VikaController extends AbstractController
 
     /**
      * Supprime l'entraineur.
-     * @Route("/vika-encadrement-delete-{id}", name="encadrement_delete")
+     * @Route("/admin-vika-encadrement-delete-{id}", name="encadrement_delete", requirements={"id"="\d+"})
      */
     public function EncadrementDelete($id){
         $em = $this->getDoctrine()->getEntityManager();
@@ -74,7 +74,7 @@ class VikaController extends AbstractController
     }
 
     /**
-     * @Route("/vika-{path}-edit", name="VikaContentEdit")
+     * @Route("/admin-vika-{path}-edit", name="VikaContentEdit")
      *
      */
     public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager ){
@@ -86,7 +86,7 @@ class VikaController extends AbstractController
 
             $manager->persist($content);
             $manager->flush();
-            return $this->redirectToRoute('VikaContentEdit',['path'=>$content->getPath()]);
+            return $this->redirectToRoute('VikaContent',['path'=>$content->getPath()]);
         }
 
         return $this->render('vika/vikacreate.html.twig', [

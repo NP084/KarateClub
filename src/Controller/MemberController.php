@@ -16,12 +16,14 @@ use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
 use App\Form\UserConnectedType;
 use App\Form\UserType;
+use App\Form\ResetPasswordType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
 use App\Entity\Phone;
 use App\Form\PhoneType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,8 +33,49 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+
 class MemberController extends AbstractController
 {
+    /**
+     * @Route("/admin-id={id}-idHist={idHist}--history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-history-new", name="admin_history_new",  requirements={"id"="\d+"})
+     */
+    public function editHistory(UserConnected $userConnected, $idHist=null, Request $request, ObjectManager $manager)
+    {
+        if (!$idHist){
+            $history = new History();
+        }
+        else{
+            $entityManager = $this->getDoctrine()->getManager();
+            $history = $entityManager->getRepository(History::class)->find($idHist);
+        }
+        $user = $userConnected->getUser();
+
+        $formHistory = $this->createForm(HistoryType::class, $history);
+        $formHistory->handleRequest($request);
+
+        if ($formHistory->isSubmitted() and $formHistory->isValid()) {
+            // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
+            $this->addHistory($user, $history, $manager);
+            return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+        }
+        return $this->render('member/editHistory.html.twig', [
+            'userConnected' => $userConnected,
+            'historyForm' => $formHistory->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/member-id={id}-history", name="profile_history", requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-history", name="admin_history",  requirements={"id"="\d+"})
+     */
+    public function showHistory(UserConnected $userConnected)
+    {
+        return $this->render('member/showHistory.html.twig', [
+            'userConnected' => $userConnected
+        ]);
+
+    }
     /**
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-edit", name="admin_edit",  requirements={"id"="\d+"})
@@ -174,7 +217,7 @@ class MemberController extends AbstractController
      * Supprime une ligne d'historique de contact.
      * @Route("/admin-remove_history-id={id}-idUser={idUser}", name="remove_history_admin", requirements={"idCL"="\d+"})
      */
-    public function removeHistory($id, $idUser, AuthorizationCheckerInterface $authChecker)
+    public function removeHistory($id, $idUser)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $history = $entityManager->getRepository(History::class)->find($id);
@@ -413,4 +456,46 @@ class MemberController extends AbstractController
             'personOfContact' => $personOfContact,
         ]);
     }
+
+    /**
+     * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-history", name="admin_reset_password",  requirements={"id"="\d+"})
+     */
+     /*
+    public function resetPassword(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+      $user = $this->getUser();
+    	$form = $this->createForm(ResetPasswordType::class, $user);
+      //dump($request->request);die();
+
+    	$form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $passwordEncoder = $this->get('security.password_encoder');
+            //dump($request->request);die();
+            //echo "<script>alert(\"Je suis ici\")</script>";
+            $oldPassword = $request->request->get('member_reset_password')['ancienMotDePasse'];
+
+            // Si l'ancien mot de passe est bon
+            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($newEncodedPassword);
+
+                $em->persist($user);
+                $em->flush();
+
+                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+
+                return $this->redirectToRoute('profile_edit');
+            } else {
+                $form->addError(new FormError('Ancien mot de passe incorrect'));
+            }
+        }
+
+    	return $this->render('member/resetPassword.html.twig', array(
+    		'form' => $form->createView(),
+    	));
+    }
+    */
 }

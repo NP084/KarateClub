@@ -22,9 +22,10 @@ security:
             form_login:
                 login_path: security_login
                 check_path: security_login
+                default_target_path: /home-accueil
             logout:
                 path: security_logout
-                target: home
+                target: /home-accueil
 
             remember_me:
                 secret: '%kernel.secret%'

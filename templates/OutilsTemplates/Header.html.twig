@@ -5,19 +5,19 @@
             <!-- .top-bar-brand -->
             <div class="top-bar-brand bg-transparent">
                 <!-- toggle menu -->
-                <a href="{{ path('home') }}"><img src="Logo_Vika.png" alt="" style="height: 52px;width: auto;"></a>
+                <a href="{{ path('home_page', {'path':'accueil'}) }}"><img src="Logo_Vika.png" alt="" style="height: 52px;width: auto;"></a>
             </div><!-- /.top-bar-list -->
 
             <!-- .navbar -->
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a class="navbar-brand" href="{{ path('home') }}">Accueil</a> <!-- toggle menu -->
+                <a class="navbar-brand" href="{{ path('home_page', {'path':'accueil'}) }}">Accueil</a> <!-- toggle menu -->
                 <button class="hamburger hamburger hamburger-squeeze hamburger-toggle d-lg-none" type="button" data-toggle="collapse" data-target="#navbarColor2" aria-controls="navbarColor2" aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>
                 <!-- .navbar-collapse -->
                 <div class="collapse navbar-collapse" id="navbarColor2">
                     <!-- .navbar-nav -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link" data-toggle="dropdown" href="{{ path('home') }}" role="button">Vika<span class="caret"></span></a>
+                            <a class="nav-link" data-toggle="dropdown" href="#" role="button">Vika<span class="caret"></span></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ path('VikaContent',{'path':'Philosophie'}) }}">La philosophie</a>
                                 <a class="dropdown-item" href="{{ path('VikaContent',{'path':'Bureau'}) }}">Membres du bureau</a>
@@ -60,7 +60,13 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact</a>
-                        </li> 
+                        </li>
+                        {% if (is_granted('ROLE_ADMIN')) %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin_users', {orderby:'ASC'}) }}">Administration</a>
+                        </li>
+                        {% endif %}
+
 
                     </ul><!-- /.navbar-nav -->
                 </div><!-- /.navbar-collapse -->
@@ -86,6 +92,9 @@
                 {% if not app.user%}
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#seConnecter">Connexion</button>
                     {#<a href="{{ path('security_login') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Connexion</a>#}
+
+
+
                 {% else %}
                     <a href="{{ path('security_logout') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Déconnexion</a>
                 {% endif %}

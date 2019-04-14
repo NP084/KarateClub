@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
 
             $manager->persist($user);
             $manager->flush($user);
-            return $this->redirectToRoute('security_login');
+            return $this->redirectToRoute('validation');
         }
 
             return $this->render('security/registration.html.twig', [
@@ -47,13 +47,21 @@ class SecurityController extends AbstractController
         return $this->render('security/registered.html.twig');
 
     }
+    /**
+     * @Route("/validation", name="validation")
+     */
+    public function validate(){
+        return $this->render('security/succeedregistration.html.twig');
+
+    }
+
 
 
     /**
     * @Route("/deconnexion", name="security_logout")
     */
     public function logout(){
-
+        return $this->redirectToRoute();
     }
 
 
@@ -80,7 +88,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('home');
             }
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
-            $message = (new \Swift_Message('Mot de passe oublié VIKA'))
+            $message = (new \Swift_Message('Mot de passe VIKA'))
                 ->setFrom('vi.ka.59@hotmail.fr')
                 ->setTo($user->getEmail())
                 ->setBody("Voici le lien pour entrer votre nouveau mot de passe : " . $url, 'text/html');
