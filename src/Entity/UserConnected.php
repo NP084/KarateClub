@@ -99,6 +99,7 @@ class UserConnected implements UserInterface, \Serializable
     {
         $user = new User();
         $this->setUser($user);
+        $user->setUserConnected($this);
     }
 
     /** @see \Serializable::serialize() */
