@@ -58,7 +58,7 @@ class User
     private $attachedFiles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"registrationDate" = "ASC"})
      */
     private $registration;

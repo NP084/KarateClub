@@ -207,25 +207,4 @@
 
 {% endblock %}
 
-        {#Affichle les inscriptions du membre#}
 
-{#        <h4><br> Liste des inscriptions </h4>
-        {% for registration in userConnected.user.registration %}
-            <table class="table">
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Evénements</th>
-                <th>Remarque</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <td>{{ registration.registrationDate | date ('d/m/Y') }}</td>
-            <td>{{ registration.event.title }}</td>
-            <td>{{ registration.remark }}</td>
-        {% else %}
-            <p>Aucune inscription</p>
-            </tbody>
-            </table>
-        {% endfor %}#}

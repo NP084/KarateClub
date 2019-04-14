@@ -8,12 +8,15 @@ use App\Entity\City;
 use App\Entity\ContactList;
 use App\Entity\History;
 use App\Entity\PersonOfContact;
+use App\Entity\Registration;
 use App\Entity\UserConnected;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
 use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
+use App\Form\RegistrationRemarkType;
+use App\Form\RegistrationType;
 use App\Form\UserConnectedType;
 use App\Form\UserType;
 use App\Form\ResetPasswordType;
@@ -456,6 +459,82 @@ class MemberController extends AbstractController
             'personOfContact' => $personOfContact,
         ]);
     }
+
+
+
+    /**
+     * @Route("/admin-id={id}-idReg={idReg}-registration-edit", name="admin_registration_edit",  requirements={"id"="\d+"})
+     */
+    public function editRegistration(UserConnected $userConnected, $idReg, Request $request, ObjectManager $manager)
+    {
+        if (!$idReg){
+            $registration = new Registration();
+        }
+        else{
+            $entityManager = $this->getDoctrine()->getManager();
+            $registration = $entityManager->getRepository(Registration::class)->find($idReg);
+        }
+        $user = $userConnected->getUser();
+
+        $formRegistration = $this->createForm(
+            RegistrationRemarkType::class, $registration);
+        $formRegistration->handleRequest($request);
+
+        if ($formRegistration->isSubmitted() and $formRegistration->isValid()) {
+            // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
+            $this->addRegistration($user, $registration, $manager);
+            return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+        }
+        return $this->render('member/editRegistration.html.twig', [
+            'userConnected' => $userConnected,
+            'registrationForm' => $formRegistration->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/member-id={id}-registration", name="member_registration", requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-registration", name="admin_registration",  requirements={"id"="\d+"})
+     */
+    public function showRegistration(UserConnected $userConnected)
+    {
+        return $this->render('member/showRegistrations.html.twig', [
+            'userConnected' => $userConnected
+        ]);
+    }
+
+    public function addRegistration(User $user, Registration $newRegistration, ObjectManager $manager)
+    {
+        if ($newRegistration) {
+            $newRegistration->setUser($user);
+            $manager->persist($newRegistration);
+            $manager->flush();
+        }
+
+    }
+
+    /**
+     * Supprime une ligne des inscriptions de contact.
+     * @Route("/admin-remove_registration-id={id}-idUser={idUser}", name="remove_registration_admin", requirements={"idCL"="\d+"})
+     */
+    public function removeRegistration($id, $idUser)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $registration = $entityManager->getRepository(Registration::class)->find($id);
+        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
+        $user = $userConnected->getUser();
+
+        $user->removeRegistration($registration);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+
+    }
+
+
+
+
+
+
 
     /**
      * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})
