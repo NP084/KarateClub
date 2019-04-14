@@ -13,7 +13,7 @@
             </div>
             {% if (is_granted('ROLE_ADMIN')) %}
             <div align="right"><a class="btn btn-primary btn-md"
-                                  href="{{ path('VikaContentEdit', {'path':'philosophie'}) }}" role="button">Editer</a>
+                                  href="{{ path('VikaContentEdit', {'path':contentPage.path}) }}" role="button">Editer</a>
             </div>
             {% endif %}
         </div>
