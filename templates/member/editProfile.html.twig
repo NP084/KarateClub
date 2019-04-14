@@ -40,8 +40,8 @@
                 Retour à la liste des utilisateurs
             </a>
             <a class="btn btn-success" href="{{ path('admin_show',{'id':userConnected.id}) }}"
-            class="btn-btn-primary">
-            Voir le profil
+               class="btn-btn-primary">
+                Voir le profil
             </a>
         {% else %}
             <a class="btn btn-success" href="{{ path('profile_show',{'id':userConnected.id}) }}"
@@ -49,13 +49,8 @@
                 Retour
             </a>
         {% endif %}
-        <h2>Edition du profil
-            {% if (app.user.id == app.request.get("id")) %}
-                <div class="col-4">
-                    <button type="submit" class="btn btn-success">Modifier mot de passe</button>
-                </div>
-            {% endif %}
-        </h2>
+        <h2>Edition du profil</h2>
+
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -115,12 +110,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {% if (app.user.id == app.request.get("id")) %}
+                                <a class="btn btn-success" href="{{ path('app_forgotten_password') }}" target="_self"
+                                   class="btn-btn-primary">Modifier mot de passe</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
         </div>
         </div>
-        </div>
-
         {% if (is_granted('ROLE_ADMIN')) %}
             {{ form_start(formUser) }}
             <div class="container-fluid">

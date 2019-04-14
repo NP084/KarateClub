@@ -13,7 +13,7 @@ class HomePageController extends AbstractController
 {
 
     /**
-     * @Route("/admin-{path}-edit", name="home_pageedit")
+     * @Route("/admin-edit-{path}", name="home_pageedit")
      *
      */
     public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager)
