@@ -2,18 +2,6 @@
 
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
-
-        {% if (is_granted('ROLE_ADMIN')) %}
-            <a class="btn btn-cancel" href="{{ path('admin_show',{'id':userConnected.id}) }}" class="btn-btn-primary">
-                Retour
-            </a>
-        {% else %}
-            <a class="btn btn-success" href="{{ path('profile_show',{'id':userConnected.id}) }}"
-               class="btn-btn-primary">
-                Retour
-            </a>
-        {% endif %}
-
         {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
             {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
                 <h2> Parcours personnel </h2>
@@ -65,11 +53,23 @@
 
         {% endif %}
         {% if (is_granted('ROLE_ADMIN')) %}
-            <a class="btn btn-success" href="{{ path('admin_history_new',{'id': userConnected.id }) }}"
+            <a class="btn btn-primary" href="{{ path('admin_history_new',{'id': userConnected.id }) }}"
                class="btn-btn-primary">
-                Nouvel élément
+                <b>Nouvel élément dans le parcours</b>
+            </a>
+            <a class="btn btn-warning"
+               href="{{ path('admin_show',{'id':userConnected.id}) }}"
+               class="btn-btn-primary">
+                <b>Retour</b>
+            </a>
+        {% else %}
+            <a class="btn btn-warning"
+               href="{{ path('profile_show',{'id':userConnected.id}) }}"
+               class="btn-btn-primary">
+                <b>Retour</b>
             </a>
         {% endif %}
+
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}
