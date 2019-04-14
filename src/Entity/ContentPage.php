@@ -31,6 +31,11 @@ class ContentPage
      */
     private $path;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $subtitle;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class ContentPage
     public function setPath(string $path): self
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    public function setSubtitle(?string $subtitle): self
+    {
+        $this->subtitle = $subtitle;
 
         return $this;
     }

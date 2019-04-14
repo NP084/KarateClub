@@ -40,7 +40,7 @@ class BlogController extends Controller//AbstractController
     * @Route("/", name="home")
     */
     public function home(){
-        return $this->render('home_page/index.html.twig');
+        return $this->redirectToRoute('home_page',['path'=>'accueil']);
     }
 
     /**
