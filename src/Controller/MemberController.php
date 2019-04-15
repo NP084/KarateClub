@@ -457,7 +457,7 @@ class MemberController extends AbstractController
         if ($formRegistration->isSubmitted() and $formRegistration->isValid()) {
             // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
             $this->addRegistration($user, $registration, $manager);
-            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+            return $this->redirectToRoute('admin_registration', ['id' => $user->getId()]);
         }
         return $this->render('member/editRegistration.html.twig', [
             'user' => $user,
@@ -498,7 +498,7 @@ class MemberController extends AbstractController
         $user->removeRegistration($registration);
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+        return $this->redirectToRoute('admin_registration', ['id' => $user->getId()]);
 
     }
 

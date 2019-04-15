@@ -22,9 +22,6 @@
 {% block Body %}
 
     {% if (is_granted('ROLE_ADMIN')) %}
-
-        <form action="{{ path('admin_edit',{'id':user.id}) }}" method="post">
-
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
@@ -71,7 +68,6 @@
                     </div>
                 </div>
             </div>
-        </form>
     {% else %}
         <h2>Vous n'êtes pas autorisé à accéder à cette page</h2>
     {% endif %}
