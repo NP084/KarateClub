@@ -45,7 +45,9 @@
             <tbody>
 
             {% for user in users %}
-                {% if (app.user.user.id != user.id) %}
+                {# Si l'id dans l'URS != de l'id du user qui s'affiche
+                (pr ne pas afficher son propre profil dans le liste) #}
+                {% if (app.request.get('id') != user.id) %}
                     <tr>
                         <td>{{ user.id }}</td>
                         <td>{{ user.name }}</td>

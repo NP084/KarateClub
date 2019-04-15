@@ -94,6 +94,25 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
+                                                <p> Date de naissance : {{ user.birthDate |date('d/m/Y') }} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {% if (user.belt) %}
+                                                <h4> Grade</h4>
+                                                <p> Grade : {{ user.belt }} reçu
+                                                    le {{ user.receiptDate |date('d/m/Y') }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
                                             <h3> Informations sur le "tuteur"</h3>
                                         </div>
                                     </div>

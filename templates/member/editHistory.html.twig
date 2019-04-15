@@ -22,7 +22,6 @@
 {% block Body %}
 
     {% if (is_granted('ROLE_ADMIN')) %}
-        {{ form_start(historyForm) }}
 
         <form action="{{ path('admin_edit',{'id':user.id}) }}" method="post">
 
@@ -35,6 +34,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
+                                            {{ form_start(historyForm) }}
                                             {{ form_label(historyForm.description, 'Description') }}
                                             {{ form_widget(historyForm.description,  { 'attr': {
                                                 'rows' : '4' }} ) }}

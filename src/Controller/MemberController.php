@@ -269,7 +269,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin-id={id}-idHist={idHist}--history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-idHist={idHist}-history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history-new", name="admin_history_new",  requirements={"id"="\d+"})
      */
     public function editHistory(User $user, $idHist=null, Request $request, ObjectManager $manager)
@@ -329,9 +329,9 @@ class MemberController extends AbstractController
                 'title' => "Passage de grade",
             ]);
             $history->setDescription($user->getBelt())
-                ->setRefDate($user->getReceiptDate())
-                ->setCategory($category)
-                ->setUser($user);
+                    ->setRefDate($user->getReceiptDate())
+                    ->setCategory($category)
+                    ->setUser($user);
             $manager->persist($history);
             $manager->flush();
         }
