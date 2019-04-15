@@ -13,6 +13,7 @@ use App\Entity\UserConnected;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
+use App\Form\DocumentType;
 use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
 use App\Form\RegistrationRemarkType;
@@ -550,7 +551,7 @@ class MemberController extends AbstractController
     public function form(UserConnected $userConnected, Request $request, ObjectManager $manager){
 
         $user = $userConnected->getUser();
-        $form = $this->createForm(UserPictureType::class, $user);
+        $form = $this->createForm(DocumentType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
@@ -559,7 +560,7 @@ class MemberController extends AbstractController
             return $this->redirectToRoute('admin_edit',['id'=>$userConnected->getId()]);
         }
 
-        return $this->render('admin_vika/pictureEdit.html.twig', [
+        return $this->render('member/documentEdit.html.twig', [
             'formPicture'=>$form->createView(),
             'editMode'=> $user->getImageName()!==null
         ]);
