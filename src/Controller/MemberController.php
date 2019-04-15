@@ -533,6 +533,18 @@ class MemberController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/member-id={id}-document", name="member_document", requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
+     */
+    public function showDocument(User $user)
+    {
+        return $this->render('member/showDocument.html.twig', [
+            'user' => $user
+        ]);
+
+    }
+
 
 
     /**
