@@ -123,7 +123,7 @@ class MemberController extends AbstractController
         $formHistory->handleRequest($request);
 
         // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-        if ($formHistory->isSubmitted()) {
+        if ($formHistory->isSubmitted() and $formHistory->isValid()) {
             // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
             $this->addHistory($user, $history, $manager);
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
@@ -287,7 +287,7 @@ class MemberController extends AbstractController
         if ($formHistory->isSubmitted() and $formHistory->isValid()) {
             // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
             $this->addHistory($user, $history, $manager);
-            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+            return $this->redirectToRoute('admin_history', ['id' => $user->getId()]);
         }
         return $this->render('member/editHistory.html.twig', [
             'user' => $user,
@@ -309,8 +309,8 @@ class MemberController extends AbstractController
     public function addHistory(User $user, History $newHistory = null, ObjectManager $manager)
     {
         if ($newHistory) {
-            $newHistory->setUser($user);
             $manager->persist($newHistory);
+            $newHistory->setUser($user);
             $manager->flush();
         }
 
@@ -350,7 +350,7 @@ class MemberController extends AbstractController
         $user->removeHistory($history);
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+        return $this->redirectToRoute('admin_history', ['id' => $user->getId()]);
 
     }
 
@@ -529,16 +529,9 @@ class MemberController extends AbstractController
         return $this->render('member/showFamily.html.twig', [
             'controller_name' => 'Vue des membres de sa famille',
             'users' => $users,
+            'userConnected'=>$userConnected,
         ]);
     }
-
-
-
-
-
-
-
-
 
 
 

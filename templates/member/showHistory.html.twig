@@ -2,7 +2,7 @@
 
 {% block Body %}
 {#    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}#}
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
 
         {% if (is_granted('ROLE_USER') or (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id"))) %}
             <h2> Parcours personnel </h2>

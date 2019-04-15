@@ -84,6 +84,7 @@ class UserFixtures extends Fixture
 
             $user->setSex('Male')
                  ->setBelt($faker->safeColorName())
+                ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
                 ->setOwnerUser($userC);
             $manager-> persist($user);
 
