@@ -18,6 +18,7 @@ use App\Form\PersonOfContactType;
 use App\Form\RegistrationRemarkType;
 use App\Form\RegistrationType;
 use App\Form\UserConnectedType;
+use App\Form\UserPictureType;
 use App\Form\UserType;
 use App\Form\ResetPasswordType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -544,10 +545,11 @@ class MemberController extends AbstractController
         ]);
     }
 
+
     /**
      * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
-     * @Route("/member-document-{id}", name="member_document")
-     * @Route("/admin-document-{id}", name="admin_document")
+     * @Route("/member-document-{id}", name="load_member_document")
+     * @Route("/admin-document-{id}", name="load_admin_document")
      */
     public function form(User $user, Request $request, ObjectManager $manager){
 
@@ -565,6 +567,7 @@ class MemberController extends AbstractController
             'editMode'=> $user->getImageName()!==null
         ]);
     }
+
 
 
 

@@ -8,9 +8,9 @@
             <div class="col-md-6">
                 <h2>
                     {%if editMode %}
-                        Modification de la photo de profil
+                        Modification d'un document
                     {% else %}
-                        Ajouter d'une photo de profil
+                        Ajouter un document
                     {% endif %}
                 </h2>
                 <div class="card">
@@ -33,7 +33,7 @@
                                         {%if editMode %}
                                             Enregister modification
                                         {% else %}
-                                            Ajouter la photo
+                                            Ajouter le document
                                         {% endif %}
                                     </button>
                                     {{ form_end(formPicture) }}

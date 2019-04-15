@@ -12,12 +12,13 @@
 
         <h3>Documents</h3>
 
+        <!--
         <div class="row">
             <div class="col">
                 <div class="user-avatar user-avatar-xl fileinput-button">
                     {% if (is_granted('ROLE_ADMIN')) %}
                         <a class="btn btn-sm btn-icon btn-secondary"
-                           href="{{ path('admin_picture_user', {'id':user.id}) }}">
+                           href="{{ path('load_admin_document', {'id':user.id}) }}">
                             <div class="fileinput-button-label">Ajouter un document</div>
                             <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
                                  alt="{{ user.imageFile }}" name="avatar"
@@ -26,7 +27,7 @@
                     {% else %}
                         {% if (user.ownerUser.id == app.user.id ) %}
                             <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('admin_picture_user', {'id':user.id}) }}">
+                               href="{{ path('load_member_document', {'id':user.id}) }}">
                                 <div class="fileinput-button-label">Ajouter un document</div>
                                 <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
                                      alt="{{ user.imageFile }}" name="avatar"
@@ -37,6 +38,7 @@
                 </div>
             </div>
         </div>
+        -->
 
         <table class="table">
             <thead>
@@ -76,18 +78,22 @@
         </table>
 
         {% if (is_granted('ROLE_ADMIN')) %}
-            <!-- <a class="btn btn-primary" href="{{ path('admin_history_new',{'id': user.id }) }}"
+            <a class="btn btn-primary" href="{{ path('load_admin_document', {'id':user.id}) }}"
                class="btn-btn-primary">
-                <b>Nouvel élément dans le parcours</b>
-            </a> -->
+                <b>Nouveau document</b>
+            </a>
             <a class="btn btn-warning"
                href="{{ path('admin_show',{'id':user.id}) }}"
                class="btn-btn-primary">
                 <b>Retour</b>
             </a>
         {% else %}
+            <a class="btn btn-primary" href="{{ path('load_member_document', {'id':user.id}) }}"
+               class="btn-btn-primary">
+                <b>Nouveau document</b>
+            </a>
             <a class="btn btn-warning"
-               href="{{ path('profile_show',{'id':user.id}) }}"
+               href="{{ path('admin_show',{'id':user.id}) }}"
                class="btn-btn-primary">
                 <b>Retour</b>
             </a>
