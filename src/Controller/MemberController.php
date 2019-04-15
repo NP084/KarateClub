@@ -530,6 +530,41 @@ class MemberController extends AbstractController
 
     }
 
+    /**
+     * @Route("/member-id={id}-document", name="member_document", requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
+     */
+    public function showDocument(UserConnected $userConnected)
+    {
+        return $this->render('member/showDocument.html.twig', [
+            'userConnected' => $userConnected
+        ]);
+
+    }
+
+    /**
+     * AJOUT/MODIFICATION DE DOCUMENT
+     * @Route("/member-document-{id}", name="member_document")
+     * @Route("/admin-document-{id}", name="admin_document")
+     */
+    public function form(UserConnected $userConnected, Request $request, ObjectManager $manager){
+
+        $user = $userConnected->getUser();
+        $form = $this->createForm(UserPictureType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('admin_edit',['id'=>$userConnected->getId()]);
+        }
+
+        return $this->render('admin_vika/pictureEdit.html.twig', [
+            'formPicture'=>$form->createView(),
+            'editMode'=> $user->getImageName()!==null
+        ]);
+    }
+
 
 
 

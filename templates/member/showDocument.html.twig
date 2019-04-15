@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block Body %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
+        {% if (is_granted('ROLE_USER') or (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id"))) %}
+            <h2> Document personnel </h2>
+        {% else %}
+            <h2>Documents du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
+        {% endif %}
+
+
+
+        <div class="row">
+            <div class="col">
+                <div class="user-avatar user-avatar-xl fileinput-button">
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <a class="btn btn-sm btn-icon btn-secondary"
+                           href="{{ path('admin_document', {'id':userConnected.id}) }}">
+                            <div class="fileinput-button-label"> Change doc admin</div>
+                            <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
+                                 alt="{{ userConnected.user.imageFile }}" name="avatar"
+                                 width="150"/>
+                        </a>
+                    {% else %}
+                        <a class="btn btn-sm btn-icon btn-secondary"
+                           href="{{ path('member_document', {'id':userConnected.id}) }}">
+                            <div class="fileinput-button-label"> Change doc user</div>
+                            <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
+                                 alt="{{ userConnected.user.imageFile }}" name="avatar"
+                                 width="150"/>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+
+        <h3>Documents</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Categorie</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for history in userConnected.user.Histories %}
+                <tr>
+                    <td>{{ history.description }}</td>
+                    <td>{{ history.refDate |date('d/m/Y') }}</td>
+                    <td>{{ history.category.title }}</td>
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <td class="align-middle">
+                            <a class="btn btn-sm btn-icon btn-secondary"
+                               href="{{ path('admin_history_edit',{'id': userConnected.id, 'idHist':history.id}) }}">
+                                <i class="fa fa-pencil">
+                                </i>
+                                <span class="sr-only">Modifier</span>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-icon btn-secondary"
+                               href="{{ path('remove_history_admin',{'id':history.id, 'idUser':userConnected.id}) }}">
+                                <i class="fa fa-trash-o">
+                                </i>
+                                <span class="sr-only">Supprimer</span>
+                            </a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">Aucun historique</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% if (is_granted('ROLE_ADMIN')) %}
+            <a class="btn btn-primary" href="{{ path('admin_history_new',{'id': userConnected.id }) }}"
+               class="btn-btn-primary">
+                <b>Nouvel élément dans le parcours</b>
+            </a>
+            <a class="btn btn-warning"
+               href="{{ path('admin_show',{'id':userConnected.id}) }}"
+               class="btn-btn-primary">
+                <b>Retour</b>
+            </a>
+        {% else %}
+            <a class="btn btn-warning"
+               href="{{ path('profile_show',{'id':userConnected.id}) }}"
+               class="btn-btn-primary">
+                <b>Retour</b>
+            </a>
+        {% endif %}
+
+    {% else %}
+        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
+    {% endif %}
+
+{% endblock %}
