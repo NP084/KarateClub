@@ -67,7 +67,7 @@ class UserConnected implements UserInterface, \Serializable
     private $birthday;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdUser;
 
@@ -108,8 +108,10 @@ class UserConnected implements UserInterface, \Serializable
     public function __construct()
     {
         $user = new User();
-        $this -> setUser($user);
         $user -> setUserConnected($this);
+        $this -> setUser($user);
+        $this->createdUser = new \DateTime();
+
         $this->users = new ArrayCollection();
     }
 

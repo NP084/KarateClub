@@ -21,7 +21,7 @@
 
 
 {% block Body %}
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
 
         <table id="usertabel" class="table dataTable no-footer">
             <thead>

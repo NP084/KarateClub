@@ -82,14 +82,13 @@
                             </div>
                         </div>
                     </div>
-                    {% if (user.ownerUser.id == app.user.id ) %}
-
+                    {% if (user.ownerUser and user.ownerUser.id == app.user.id) %}
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <h3>{{ user.ownerUser.name }} {{ user.ownerUser.firstName }} </h3>
+                                    <h3>{{ user.userConnected.name }} {{ user.userConnected.firstName }} </h3>
                                     <div class="metadata">Inscrit sur le site depuis
-                                        : {{ user.ownerUser.createdUser |date('d/m/Y') }}
+                                        : {{ user.userConnected.createdUser |date('d/m/Y') }}
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +103,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <p> Nom d'utilisateur : {{ user.ownerUser.username }} </p>
+                                    <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
                                 </div>
                             </div>
                         </div>
@@ -112,29 +111,108 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <p> Email : {{ user.ownerUser.email }} </p>
+                                    <p> Email : {{ user.userConnected.email }} </p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <p> Date de naissance : {{ user.ownerUser.birthday |date('d/m/Y') }} </p>
+                                    <p> Date de naissance : {{ user.userConnected.birthday |date('d/m/Y') }} </p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    {% if (user.ownerUser.id == app.user.id ) %}
-                                        <a class="btn btn-link" href="{{ path('app_forgotten_password') }}"
-                                           target="_self"
-                                           class="btn-btn-primary">Modifier mot de passe</a>
+                                    <a class="btn btn-link" href="{{ path('app_forgotten_password') }}"
+                                       target="_self"
+                                       class="btn-btn-primary">Modifier mot de passe</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h3>{{ user.name }} {{ user.firstName }} </h3>
+                                    <div class="metadata">Inscrit sur le site depuis
+                                        : {{ user.createdUs |date('d/m/Y') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Date de naissance : {{ user.birthdate |date('d/m/Y') }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {% if (user.belt) %}
+                                        <h4> Grade</h4>
+                                        <p> Grade : {{ user.belt }} reçu
+                                            le {{ user.receiptDate |date('d/m/Y') }}</p>
                                     {% endif %}
                                 </div>
                             </div>
-
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h3> Informations sur le "tuteur"</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                        <a class="btn btn-link" href="{{ path('admin_show',{'id':user.userConnected.user.id}) }}">
+                                            <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                            <span class="sr-only">Voir le profil</span>
+                                        </a>
+                                    {% else %}
+                                        <a class="btn btn-link"
+                                           href="{{ path('profile_show',{'id':user.userConnected.user.id}) }}">
+                                            <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                            <span class="sr-only">Voir le profil</span>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Email : {{ user.userConnected.email }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {% for phone in user.userConnected.user.phones %}
+                                        <p>  {{ phone.type }}
+                                            {{ phone.num }}
+                                        </p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+
                     {% endif %}
                 </div>
             </div>

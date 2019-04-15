@@ -529,7 +529,7 @@ class MemberController extends AbstractController
         return $this->render('member/showFamily.html.twig', [
             'controller_name' => 'Vue des membres de sa famille',
             'users' => $users,
-            'userConnected'=>$userConnected,
+            'user'=>$userConnected,
         ]);
     }
 

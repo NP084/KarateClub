@@ -131,6 +131,11 @@ class User
      */
     private $firstName;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $birthdate;
+
 
 
     public function __construct()
@@ -143,7 +148,6 @@ class User
         $this->registration = new ArrayCollection();
         $this->histories = new ArrayCollection();
         $this->contactLists = new ArrayCollection();
-        $this->updatedImage = new \DateTime();
         $this->isActive = false;
         $this->createdUs = new \DateTime();
     }
@@ -500,6 +504,18 @@ class User
     public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getBirthdate(): ?\DateTimeInterface
+    {
+        return $this->birthdate;
+    }
+
+    public function setBirthdate(\DateTimeInterface $birthdate): self
+    {
+        $this->birthdate = $birthdate;
 
         return $this;
     }
