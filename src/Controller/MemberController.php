@@ -542,7 +542,28 @@ class MemberController extends AbstractController
         return $this->render('member/showDocument.html.twig', [
             'user' => $user
         ]);
+    }
 
+    /**
+     * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
+     * @Route("/member-document-{id}", name="member_document")
+     * @Route("/admin-document-{id}", name="admin_document")
+     */
+    public function form(User $user, Request $request, ObjectManager $manager){
+
+        $form = $this->createForm(UserPictureType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
+        }
+
+        return $this->render('member/documentEdit.html.twig', [
+            'formPicture'=>$form->createView(),
+            'editMode'=> $user->getImageName()!==null
+        ]);
     }
 
 
