@@ -79,6 +79,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {% if (user.belt) %}
+                                                <h4> Grade</h4>
+                                                <p> Grade : {{ user.belt }} reçu
+                                                    le {{ user.receiptDate |date('d/m/Y') }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
                             {# parent ou admin qui consulte un User "enfant"     #}
                             {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser.id != user.userConnected.id)) %}
                                 <div class="row">

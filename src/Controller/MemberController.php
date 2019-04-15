@@ -117,29 +117,12 @@ class MemberController extends AbstractController
             }
         }
 
-        // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
-        $history = new History();
-        $formHistory = $this->createForm(HistoryType::class, $history);
-        $formHistory->handleRequest($request);
-
-        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-        if ($formHistory->isSubmitted() and $formHistory->isValid()) {
-            // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
-            $this->addHistory($user, $history, $manager);
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
-            } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
-            }
-        }
-        // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'user' => $user,
             'formUser' => $formUser->createView(),
             'phoneForm' => $formPhone->createView(),
             'adressForm' => $formAdress->createView(),
             'cityForm' => $formCity->createView(),
-            'historyForm' => $formHistory->createView(),
             'PoCForm' => $formPoC->createView(),
             'ContactListForm' => $formContactList->createView()
         ]);
@@ -309,31 +292,32 @@ class MemberController extends AbstractController
     public function addHistory(User $user, History $newHistory = null, ObjectManager $manager)
     {
         if ($newHistory) {
-            $manager->persist($newHistory);
             $newHistory->setUser($user);
+            $manager->persist($newHistory);
             $manager->flush();
         }
-
-        // dans le cas où il y a un passage de grade :
-        $repo = $this->getDoctrine()
-            ->getRepository(History::class);
-        $histories = $repo->findOneBy([
-            'user' => $user->getId(),
-            'description' => $user->getBelt(),
-        ]);
-        if ($histories == null) {
-            $history = new History();
-            $repo2 = $this->getDoctrine()
-                ->getRepository(Category::class);
-            $category = $repo2->findOneBy([
-                'title' => "Passage de grade",
+        else {
+            // dans le cas où il y a un passage de grade :
+            $repo = $this->getDoctrine()
+                ->getRepository(History::class);
+            $histories = $repo->findOneBy([
+                'user' => $user->getId(),
+                'description' => $user->getBelt(),
             ]);
-            $history->setDescription($user->getBelt())
+            if ($histories == null) {
+                $history = new History();
+                $repo2 = $this->getDoctrine()
+                    ->getRepository(Category::class);
+                $category = $repo2->findOneBy([
+                    'title' => "Passage de grade",
+                ]);
+                $history->setDescription($user->getBelt())
                     ->setRefDate($user->getReceiptDate())
                     ->setCategory($category)
                     ->setUser($user);
-            $manager->persist($history);
-            $manager->flush();
+                $manager->persist($history);
+                $manager->flush();
+            }
         }
     }
 
