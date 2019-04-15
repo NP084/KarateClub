@@ -36,8 +36,10 @@
                                     </div>
                                 </div>
                             </div>
-                            {#Parent (qui peut être admin admin) qui visite son propre profil#}
-                            {% if (user.ownerUser and user.ownerUser.id == app.user.id ) %}
+                            {#Parent (qui peut être admin admin) qui visite son propre profil
+                             ou un admin qui consulte un parent#}
+                            {% if ((user.ownerUser and (user.ownerUser.id == app.user.id))
+                                or (is_granted('ROLE_ADMIN') and (user.userConnected.id == user.ownerUser.id)) ) %}
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -141,7 +143,7 @@
                                     </div>
                                 </div>
                             {#  ADMIN qui consulte un parent #}
-                            {% elseif( is_granted('ROLE_ADMIN') and (user.userConnected.id == user.ownerUser.id)) %}
+                        {#    {% elseif( is_granted('ROLE_ADMIN') and (user.userConnected.id == user.ownerUser.id)) %}
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -176,51 +178,7 @@
                                             {% endif %}
                                         </div>
                                     </div>
-                                </div>
-                            {% else %}
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <h3> Informations sur le "tuteur"</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <a class="btn btn-link"
-                                               href="{{ path('admin_show',{'id':user.id}) }}">
-                                                <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
-                                                <span class="sr-only">Voir le profil</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <p> Email : {{ user.userConnected.email }} </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            {% for phone in user.userConnected.user.phones %}
-                                                <p>  {{ phone.type }}
-                                                    {{ phone.num }}
-                                                </p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>#}
                             {% endif %}
                         </div>
                     </div>
