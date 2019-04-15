@@ -22,11 +22,6 @@ class AttachedFile
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $pathway;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $addDate;
@@ -55,18 +50,6 @@ class AttachedFile
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getPathway(): ?string
-    {
-        return $this->pathway;
-    }
-
-    public function setPathway(string $pathway): self
-    {
-        $this->pathway = $pathway;
 
         return $this;
     }
