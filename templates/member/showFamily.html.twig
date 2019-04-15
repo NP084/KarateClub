@@ -23,22 +23,31 @@
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
 
+        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
+            <h2>Ma famille</h2>
+        {% else %}
+            {% if(is_granted('ROLE_ADMIN')) %}
+                {# User est un parent  #}
+                {% if (userConnected.user.ownerUser.id == userConnected.user.userConnected.id) %}
+                    <h2>Famille du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
+                {% else %}
+                    <h2>Famille du membre : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
+                {% endif %}
+            {% else %}
+                {# le userConnected consulte son propre profil #}
+                {% if(app.user.id == app.request.get("id")) %}
+                    <h2>Ma famille</h2>
+                {% else %}
+                    <h2>Famille du membre : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
         <table id="usertabel" class="table dataTable no-footer">
             <thead>
             <tr>
                 <th>Id</th>
-                {#          <th class="sorting_asc" tabindex="0" aria-controls="dt-responsive" rowspan="1" colspan="1"
-                              style="width: 144px;" aria-label=" Name : activate to sort column descending" aria-sort="ascending">Nom
-                          </th>#}
-                {% if (app.request.get("orderby")=='ASC') %}
-                    <th>
-                        <a href="{{ path('admin_users', {orderby:'DESC'}) }}">
-                            Noms</a></th>
-                {% else %}
-                    <th>
-                        <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
-                            Noms</a></th>
-                {% endif %}
+                <th>Noms</th>
                 <th>Prénom</th>
             </tr>
             </thead>
@@ -49,7 +58,7 @@
                 (pr ne pas afficher son propre profil dans le liste) #}
                 {% if (app.request.get('id') != user.id) %}
                     <tr>
-                        <td>{{ user.id }}</td>
+                        <td>{{ userConnected.id }}</td>
                         <td>{{ user.name }}</td>
                         </td>
                         <td>{{ user.firstName }}</td>

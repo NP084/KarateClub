@@ -275,6 +275,8 @@ class MemberController extends AbstractController
         return $this->render('member/editHistory.html.twig', [
             'user' => $user,
             'historyForm' => $formHistory->createView(),
+            'editMode'=> $history->getId()!==null
+
         ]);
     }
 
@@ -513,7 +515,7 @@ class MemberController extends AbstractController
         return $this->render('member/showFamily.html.twig', [
             'controller_name' => 'Vue des membres de sa famille',
             'users' => $users,
-            'user'=>$userConnected,
+            'userConnected'=>$userConnected,
         ]);
     }
 
