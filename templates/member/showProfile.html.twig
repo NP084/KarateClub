@@ -77,8 +77,18 @@
                                         </div>
                                     </div>
                                 </div>
-                            {# parent qui consulte un User "enfant"     #}
-                            {% elseif(is_granted('ROLE_USER') and (user.ownerUser.id != user.userConnected.id)) %}
+                            {# parent ou admin qui consulte un User "enfant"     #}
+                            {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser.id != user.userConnected.id)) %}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <h3>{{ user.name }} {{ user.firstname }} </h3>
+                                            <div class="metadata">Inscrit sur le site depuis
+                                                : {{ user.createdUs |date('d/m/Y') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -89,11 +99,19 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <a class="btn btn-link"
-                                               href="{{ path('profile_show',{'id':user.userConnected.id}) }}">
-                                                <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
-                                                <span class="sr-only">Voir le profil</span>
-                                            </a>
+                                            {% if (is_granted('ROLE_ADMIN')) %}
+                                                <a class="btn btn-link"
+                                                   href="{{ path('admin_show',{'id':user.userConnected.id}) }}">
+                                                    <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                                    <span class="sr-only">Voir le profil</span>
+                                                </a>
+                                            {% else %}
+                                                <a class="btn btn-link"
+                                                   href="{{ path('profile_show',{'id':user.userConnected.id}) }}">
+                                                    <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                                    <span class="sr-only">Voir le profil</span>
+                                                </a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -122,13 +140,14 @@
                                         </div>
                                     </div>
                                 </div>
-                            {% elseif(user.ownerUser.id != user.userConnected.id) %}
+                            {#  ADMIN qui consulte un parent #}
+                            {% elseif( is_granted('ROLE_ADMIN') and (user.userConnected.id == user.ownerUser.id)) %}
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <h3>{{ user.name }} {{ user.firstname }} </h3>
+                                            <h3>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h3>
                                             <div class="metadata">Inscrit sur le site depuis
-                                                : {{ user.createdUs |date('d/m/Y') }}
+                                                : {{ user.userConnected.createdUser |date('d/m/Y') }}
                                             </div>
                                         </div>
                                     </div>
@@ -136,7 +155,14 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <p> Date de naissance : {{ user.birthdate |date('d/m/Y') }} </p>
+                                            <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <p> Date de naissance : {{ user.userConnected.birthday |date('d/m/Y') }} </p>
                                         </div>
                                     </div>
                                 </div>
