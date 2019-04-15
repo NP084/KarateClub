@@ -11,7 +11,8 @@
                 <div class="col-md-10">
                     <h1>Profil utilisateur
                         {% if (is_granted('ROLE_ADMIN')) %}
-                            <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('admin_edit',{'id':user.id}) }}">
+                            <a class="btn btn-sm btn-icon btn-secondary"
+                               href="{{ path('admin_edit',{'id':user.id}) }}">
                                 <i class="fa fa-pencil">
                                 </i>
                                 <span class="sr-only">Modifier son profil</span>
@@ -76,6 +77,54 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                
+
+
+                                {% if(is_granted('ROLE_ADMIN')) %}
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <h3> Informations personnelles"</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <a class="btn btn-link" href="{{ path('admin_show',{'id':user.id}) }}">
+                                                    <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                                    <span class="sr-only">Voir le profil</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <p> Email : {{ user.userConnected.email }} </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                {% for phone in user.userConnected.user.phones %}
+                                                    <p>  {{ phone.type }}
+                                                        {{ phone.num }}
+                                                    </p>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
                             {% else %}
                                 <div class="row">
                                     <div class="col">
@@ -105,7 +154,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -116,19 +164,11 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            {% if (is_granted('ROLE_ADMIN')) %}
-
-                                                <a class="btn btn-link" href="{{ path('admin_show',{'id':user.id}) }}">
-                                                    <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
-                                                    <span class="sr-only">Voir le profil</span>
-                                                </a>
-                                            {% else %}
-                                                <a class="btn btn-link"
-                                                   href="{{ path('profile_show',{'id':user.id}) }}">
-                                                    <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
-                                                    <span class="sr-only">Voir le profil</span>
-                                                </a>
-                                            {% endif %}
+                                            <a class="btn btn-link"
+                                               href="{{ path('profile_show',{'id':user.id}) }}">
+                                                <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                                <span class="sr-only">Voir le profil</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -163,6 +203,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <div class="container-fluid">
             <div class="row justify-content-center">
