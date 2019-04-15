@@ -36,7 +36,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {#Parent qui visite son propre profil#}
+                            {#Parent (qui peut être admin admin) qui visite son propre profil#}
                             {% if (user.ownerUser and user.ownerUser.id == app.user.id ) %}
                                 <div class="row">
                                     <div class="col">
@@ -77,55 +77,52 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                
-
-
-                                {% if(is_granted('ROLE_ADMIN')) %}
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <h3> Informations personnelles"</h3>
-                                            </div>
+                            {# parent qui consulte un User "enfant"     #}
+                            {% elseif(is_granted('ROLE_USER') and (user.ownerUser.id != user.userConnected.id)) %}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <h3> Informations sur le "tuteur"</h3>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <a class="btn btn-link" href="{{ path('admin_show',{'id':user.id}) }}">
-                                                    <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
-                                                    <span class="sr-only">Voir le profil</span>
-                                                </a>
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <a class="btn btn-link"
+                                               href="{{ path('profile_show',{'id':user.userConnected.id}) }}">
+                                                <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                                <span class="sr-only">Voir le profil</span>
+                                            </a>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <p> Email : {{ user.userConnected.email }} </p>
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <p> Email : {{ user.userConnected.email }} </p>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                {% for phone in user.userConnected.user.phones %}
-                                                    <p>  {{ phone.type }}
-                                                        {{ phone.num }}
-                                                    </p>
-                                                {% endfor %}
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {% for phone in user.userConnected.user.phones %}
+                                                <p>  {{ phone.type }}
+                                                    {{ phone.num }}
+                                                </p>
+                                            {% endfor %}
                                         </div>
                                     </div>
-                                    {% endif %}
-                            {% else %}
+                                </div>
+                            {% elseif(user.ownerUser.id != user.userConnected.id) %}
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -154,6 +151,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            {% else %}
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -165,7 +163,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <a class="btn btn-link"
-                                               href="{{ path('profile_show',{'id':user.id}) }}">
+                                               href="{{ path('admin_show',{'id':user.id}) }}">
                                                 <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
                                                 <span class="sr-only">Voir le profil</span>
                                             </a>
