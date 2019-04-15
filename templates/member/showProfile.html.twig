@@ -2,28 +2,31 @@
 
 {% block Body %}
 
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
+{#    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}#}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
         {# vérifie si l'id du visiteur correspond à l'id du membre qu'il veut consulter #}
 
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     <h1>Profil utilisateur
-                        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-                            <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('admin_edit',{'id':app.user.id}) }}">
+                        {% if (is_granted('ROLE_ADMIN') and app.user.id == user.userConnected.id) %}
+                            <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('admin_edit',{'id':user.id}) }}">
                                 <i class="fa fa-pencil">
                                 </i>
                                 <span class="sr-only">Modifier profil</span>
                             </a>
                         {% else %}
                             {% if (is_granted('ROLE_ADMIN')) %}
-                                <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('admin_edit',{'id':userConnected.id}) }}">
+                                <a class="btn btn-sm btn-icon btn-secondary"
+                                   href="{{ path('admin_edit',{'id':user.id}) }}">
                                     <i class="fa fa-pencil">
                                     </i>
                                     <span class="sr-only">Modifier profil</span>
                                 </a>
                             {% else %}
-                                <a class="btn btn-sm btn-icon btn-secondary" href="{{ path('profile_edit',{'id':userConnected.id}) }}">
+                                <a class="btn btn-sm btn-icon btn-secondary"
+                                   href="{{ path('profile_edit',{'id':user.id}) }}">
                                     <i class="fa fa-pencil">
                                     </i>
                                     <span class="sr-only">Modifier profil</span>
@@ -36,17 +39,17 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="user-avatar user-avatar-xl fileinput-button">
-                                        <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
-                                             alt="{{ userConnected.user.imageFile }}" name="avatar" width="150"/>
+                                        <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
+                                             alt="{{ user.imageFile }}" name="avatar" width="150"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
+                                        <h3>{{ user.name }} {{ user.Name }} </h3>
                                         <div class="metadata">Inscrit sur le site depuis
-                                            : {{ userConnected.createdUser |date('d/m/Y') }}
+                                            : {{ user.createdUs |date('d/m/Y') }}
                                         </div>
                                     </div>
                                 </div>
@@ -58,34 +61,36 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <p> Nom d'utilisateur : {{ userConnected.username }} </p>
+                            {% if (user.ownerUser and user.ownerUser.id == app.user.id ) %}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <p> Nom d'utilisateur : {{ user.ownerUser.username }} </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <p> Email : {{ userConnected.email }} </p>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <p> Email : {{ user.ownerUser.email }} </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <p> Date de naissance : {{ user.ownerUser.birthday |date('d/m/Y') }} </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endif %}
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        {% if (userConnected.user.belt) %}
+                                        {% if (user.belt) %}
                                             <h4> Grade</h4>
-                                            <p> Grade : {{ userConnected.user.belt }} reçu
-                                                le {{ userConnected.user.receiptDate |date('d/m/Y') }}</p>
+                                            <p> Grade : {{ user.belt }} reçu
+                                                le {{ user.receiptDate |date('d/m/Y') }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -106,7 +111,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <h3> Téléphones </h3>
-                                        {% for phone in userConnected.user.phones %}
+                                        {% for phone in user.phones %}
                                             {{ phone.type }}
                                             {{ phone.num }}
                                         {% endfor %}
@@ -128,7 +133,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for adress in userConnected.user.adress %}
+                                            {% for adress in user.adress %}
 
                                             <td>{{ adress.type }}</td>
                                             <td>{{ adress.num }}
@@ -179,7 +184,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for contactList in userConnected.user.contactLists %}
+                                            {% for contactList in user.contactLists %}
                                             <td>{{ contactList.personOfContact.name }}</td>
                                             <td>{{ contactList.personOfContact.firstName }}</td>
                                             <td>{{ contactList.personOfContact.num1 }}</td>
@@ -190,7 +195,7 @@
                                                 <td colspan="10">Aucune personne de contact</td>
                                             </tr>
                                             </tbody>
-                                        {% endfor %}
+                                            {% endfor %}
                                         </table>
                                     </div>
                                 </div>

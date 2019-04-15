@@ -68,7 +68,18 @@
                     <div class="dropdown-arrow dropdown-arrow-left">
                     </div><!-- .dropdown-menu -->
                     <div class="dropdown-menu">
-                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{ app.user.firstname }} {{ app.user.name }} </h6><a class="dropdown-item" href="looper/dist/user-profile.html"><span class="dropdown-icon oi oi-person"></span> Profile</a> <a class="dropdown-item" href="looper/dist/auth-signin-v1.html"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{ app.user.firstname }} {{ app.user.name }} </h6>
+                        {% if (is_granted('ROLE_ADMIN')) %}
+                            <a class="dropdown-item"
+                               href="{{ path('admin_show',{'id':app.user.getUser().id}) }}">
+                                <span class="dropdown-icon oi oi-person"></span> Mon profil</a>
+                        {% else %}
+                            <a class="dropdown-item"
+                               href="{{ path('profile_show',{'id':app.user.getUser().id}) }}">
+                                <span class="dropdown-icon oi oi-person"></span> Mon profil</a>
+                        {% endif %}
+
+                        <a class="dropdown-item" href="{{ path('security_logout') }}"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
                         <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
                     </div><!-- /.dropdown-menu -->
                 </div><!-- /.btn-account -->
@@ -78,11 +89,8 @@
                 {% if not app.user%}
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#seConnecter">Connexion</button>
                     {#<a href="{{ path('security_login') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Connexion</a>#}
-
-
-
-                {% else %}
-                    <a href="{{ path('security_logout') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Déconnexion</a>
+                {#{% else %}
+                    <a href="{{ path('security_logout') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Déconnexion</a>#}
                 {% endif %}
 
 
