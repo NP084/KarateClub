@@ -9,7 +9,7 @@
         {% else %}
             {% if(is_granted('ROLE_ADMIN')) %}
                 {# User est un parent  #}
-                {% if (user.ownerUser.id == user.userConnected.id) %}
+                {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
                     <h2>Parcours du membre : {{ user.ownerUser.firstName }} {{ user.ownerUser.name }}</h2>
                 {% else %}
                     <h2>Parcours du membre : {{ user.firstName }} {{ user.name }}</h2>

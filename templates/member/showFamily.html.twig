@@ -28,7 +28,7 @@
         {% else %}
             {% if(is_granted('ROLE_ADMIN')) %}
                 {# User est un parent  #}
-                {% if (userConnected.user.ownerUser.id == userConnected.user.userConnected.id) %}
+                {% if (userConnected.user.ownerUser and userConnected.user.ownerUser.id == userConnected.user.userConnected.id) %}
                     <h2>Famille du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
                 {% else %}
                     <h2>Famille du membre : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
@@ -46,7 +46,9 @@
         <table id="usertabel" class="table dataTable no-footer">
             <thead>
             <tr>
-                <th>Id</th>
+                {% if (is_granted('ROLE_ADMIN')) %}
+                    <th>Id</th>
+                {% endif %}
                 <th>Noms</th>
                 <th>Prénom</th>
             </tr>
@@ -58,7 +60,9 @@
                 (pr ne pas afficher son propre profil dans le liste) #}
                 {% if (app.request.get('id') != user.id) %}
                     <tr>
-                        <td>{{ userConnected.id }}</td>
+                        {% if (is_granted('ROLE_ADMIN')) %}
+                            <td>{{ userConnected.id }}</td>
+                        {% endif %}
                         <td>{{ user.name }}</td>
                         </td>
                         <td>{{ user.firstName }}</td>

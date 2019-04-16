@@ -91,7 +91,7 @@
                                     </div>
                                 </div>
                             {# parent ou admin qui consulte un User "enfant"     #}
-                            {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser.id != user.userConnected.id)) %}
+                            {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser and user.ownerUser.id != user.userConnected.id)) %}
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -120,7 +120,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -172,51 +171,12 @@
                                         </div>
                                     </div>
                                 </div>
-                            {#  ADMIN qui consulte un parent #}
-                        {#    {% elseif( is_granted('ROLE_ADMIN') and (user.userConnected.id == user.ownerUser.id)) %}
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <h3>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h3>
-                                            <div class="metadata">Inscrit sur le site depuis
-                                                : {{ user.userConnected.createdUser |date('d/m/Y') }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <p> Date de naissance : {{ user.userConnected.birthday |date('d/m/Y') }} </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            {% if (user.belt) %}
-                                                <h4> Grade</h4>
-                                                <p> Grade : {{ user.belt }} reçu
-                                                    le {{ user.receiptDate |date('d/m/Y') }}</p>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>#}
                             {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
 
         <div class="container-fluid">
             <div class="row justify-content-center">
