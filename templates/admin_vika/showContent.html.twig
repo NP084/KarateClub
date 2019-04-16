@@ -52,22 +52,37 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            {# user = userconnected #}
                                             {% for user in users %}
                                                 <tr>
                                                     <td>{{ user.id }}</td>
                                                     <td>{{ user.name }}</td>
                                                     <td>{{ user.firstName }}</td>
                                                     <td>{{ user.email }}</td>
-                                                    <td>
+                                                    <td class="align-middle text-right">
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_show', {'id': user.id}) }}"><i
+                                                           href="{{ path('admin_show', {'id': user.user.id}) }}"><i
                                                                     class="oi oi-person"></i></a>
                                                         <span class="sr-only">Voir profil</span>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_edit', {'id': user.id}) }}">
+                                                           href="{{ path('admin_edit', {'id': user.user.id}) }}">
                                                             <i class="fa fa-pencil">
                                                             </i>
                                                             <span class="sr-only">Modifier</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('admin_history', {'id': user.user.id}) }}"><i
+                                                                    class="oi oi-badge"></i></a>
+                                                        <span class="sr-only">Parcours</span>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('admin_registration', {'id': user.user.id}) }}"><i
+                                                                    class="oi oi-cart"></i>
+                                                            <span class="sr-only">Activités</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('admin_document', {'id': user.user.id}) }}"><i
+                                                                    class="oi oi-document"></i>
+                                                            <span class="sr-only">Documents</span>
                                                         </a>
                                                     </td>
                                                 </tr>
