@@ -72,7 +72,7 @@
                     {#Parent (qui peut être admin admin) qui visite son propre profil
                      ou un admin qui consulte un parent#}
                     {% if ((user.ownerUser and (user.ownerUser.id == app.user.id))
-                        or (is_granted('ROLE_ADMIN') and (user.userConnected.id == user.ownerUser.id)) ) %}
+                        or (is_granted('ROLE_ADMIN') and (user.ownerUser and user.userConnected.id == user.ownerUser.id)) ) %}
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                         {# parent ou admin qui consulte un User "enfant"     #}
-                    {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser.id != user.userConnected.id)) %}
+                    {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser and user.ownerUser.id != user.userConnected.id)) %}
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
