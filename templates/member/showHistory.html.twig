@@ -70,30 +70,29 @@
                                             {% endfor %}
                                             </tbody>
                                         </table>
-
-                                        {% if (is_granted('ROLE_ADMIN')) %}
-                                            <a class="btn btn-primary"
-                                               href="{{ path('admin_history_new',{'id': user.id }) }}"
-                                               class="btn-btn-primary">
-                                                <b>Nouvel élément dans le parcours</b>
-                                            </a>
-                                            <a class="btn btn-warning"
-                                               href="{{ path('admin_show',{'id':user.id}) }}"
-                                               class="btn-btn-primary">
-                                                <b>Retour</b>
-                                            </a>
-                                        {% else %}
-                                            <a class="btn btn-warning"
-                                               href="{{ path('profile_show',{'id':user.id}) }}"
-                                               class="btn-btn-primary">
-                                                <b>Retour</b>
-                                            </a>
-                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <a class="btn btn-primary"
+                           href="{{ path('admin_history_new',{'id': user.id }) }}"
+                           class="btn-btn-primary">
+                            <b>Nouvel élément dans le parcours</b>
+                        </a>
+                        <a class="btn btn-warning"
+                           href="{{ path('admin_show',{'id':user.id}) }}"
+                           class="btn-btn-primary">
+                            <b>Retour</b>
+                        </a>
+                    {% else %}
+                        <a class="btn btn-warning"
+                           href="{{ path('profile_show',{'id':user.id}) }}"
+                           class="btn-btn-primary">
+                            <b>Retour</b>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
