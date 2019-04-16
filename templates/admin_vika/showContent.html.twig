@@ -22,45 +22,85 @@
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN')) %}
 
-        <table id="usertabel" class="table dataTable no-footer">
-            <thead>
-            <tr>
-                <th>Id</th>
-                {#          <th class="sorting_asc" tabindex="0" aria-controls="dt-responsive" rowspan="1" colspan="1"
-                              style="width: 144px;" aria-label=" Name : activate to sort column descending" aria-sort="ascending">Nom
-                          </th>#}
-                {% if (app.request.get("orderby")=='ASC') %}
-                    <th>
-                        <a href="{{ path('admin_users', {orderby:'DESC'}) }}">
-                            Noms</a></th>
-                {% else %}
-                    <th>
-                        <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
-                            Noms</a></th>
-                {% endif %}
-                <th>Prénom</th>
-                <th>Email</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.name }}</td>
-                    </td>
-                    <td>{{ user.firstName }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>
-                        <a href="{{ path('admin_show', {'id': user.id}) }}">Montrer</a>
-                        <a href="{{ path('admin_edit', {'id': user.id}) }}">Editer</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="10">Aucun utilisateur enregistré sur le site</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <table id="usertabel" class="table dataTable no-footer">
+                                            <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                {#          <th class="sorting_asc" tabindex="0" aria-controls="dt-responsive" rowspan="1" colspan="1"
+                                                              style="width: 144px;" aria-label=" Name : activate to sort column descending" aria-sort="ascending">Nom
+                                                          </th>#}
+                                                {% if (app.request.get("orderby")=='ASC') %}
+                                                    <th>
+                                                        <a href="{{ path('admin_users', {orderby:'DESC'}) }}">
+                                                            Noms</a></th>
+                                                {% else %}
+                                                    <th>
+                                                        <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
+                                                            Noms</a></th>
+                                                {% endif %}
+                                                <th>Prénom</th>
+                                                <th>Email</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {# user = userconnected #}
+                                            {% for user in users %}
+                                                <tr>
+                                                    <td>{{ user.id }}</td>
+                                                    <td>{{ user.name }}</td>
+                                                    <td>{{ user.firstName }}</td>
+                                                    <td>{{ user.email }}</td>
+                                                    <td class="align-middle text-right">
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('admin_show', {'id': user.user.id}) }}"><i
+                                                                    class="oi oi-person"></i></a>
+                                                        <span class="sr-only">Voir profil</span>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('admin_edit', {'id': user.user.id}) }}">
+                                                            <i class="fa fa-pencil">
+                                                            </i>
+                                                            <span class="sr-only">Modifier</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('admin_history', {'id': user.user.id}) }}"><i
+                                                                    class="oi oi-badge"></i></a>
+                                                        <span class="sr-only">Parcours</span>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('admin_registration', {'id': user.user.id}) }}"><i
+                                                                    class="oi oi-cart"></i>
+                                                            <span class="sr-only">Activités</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('admin_document', {'id': user.user.id}) }}"><i
+                                                                    class="oi oi-document"></i>
+                                                            <span class="sr-only">Documents</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun utilisateur enregistré sur le site</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}
