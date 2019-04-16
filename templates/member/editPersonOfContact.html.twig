@@ -1,80 +1,82 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
-    {#Affiche personnes de contact#}
-    <div class="container-fluid">
-    <div class="row justify-content-center">
-    <div class="col-md-10">
-    <h2> Modification d'une personne de contact </h2>
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        Nom: {{ contactList.personOfContact.name }}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
+
+        {#Affiche personnes de contact#}
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h2> Modification d'une personne de contact </h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        Nom: {{ contactList.personOfContact.name }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        Prénom : {{ contactList.personOfContact.firstName }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        Numéro : {{ contactList.personOfContact.num1 }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        {{ form_start(ContactListForm) }}
+                                        {{ (form_label(ContactListForm.relation,
+                                            'Relation (parent, amis,...)') ) }}
+                                        {{ (form_widget(ContactListForm.relation) ) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        {{ (form_label(ContactListForm.info,
+                                            'Information complémentaire') ) }}
+                                        {{ (form_widget(ContactListForm.info,
+                                            { 'attr': {'rows' : '4' }} ) ) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-outline-info">
+                                            Enregister modification(s)
+                                        </button>
+                                        {{ form_end(ContactListForm) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <a class="btn btn-warning"
+                           href="{{ path('admin_edit',{'id':contactList.user.id}) }}">
+                            <b>Retour</b>
+                        </a>
+                    {% else %}
+                        <a class="btn btn-warning"
+                           href="{{ path('profile_edit',{'id':contactList.user.id}) }}">
+                            <b>Retour</b>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        Prénom : {{ contactList.personOfContact.firstName }}
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        Numéro : {{ contactList.personOfContact.num1 }}
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        {{ form_start(ContactListForm) }}
-                        {{ (form_label(ContactListForm.relation,
-                            'Relation (parent, amis,...)') ) }}
-                        {{ (form_widget(ContactListForm.relation) ) }}
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        {{ (form_label(ContactListForm.info,
-                            'Information complémentaire') ) }}
-                        {{ (form_widget(ContactListForm.info,
-                            { 'attr': {'rows' : '4' }} ) ) }}
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-outline-info">
-                            Enregister modification(s)
-                        </button>
-                        {{ form_end(ContactListForm) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% if is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id") %}
-        {% if (is_granted('ROLE_ADMIN')) %}
-            <a class="btn btn-warning"
-               href="{{ path('admin_edit',{'id':contactList.user.userConnected.id}) }}">
-                <b>Retour</b>
-            </a>
-        {% else %}
-            <a class="btn btn-warning"
-               href="{{ path('profile_edit',{'id':contactList.user.userConnected.id}) }}">
-                <b>Retour</b>
-            </a>
-        {% endif %}
-        </div>
-        </div>
         </div>
 
     {% else %}

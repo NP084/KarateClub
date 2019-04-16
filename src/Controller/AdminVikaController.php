@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\UserConnected;
 use App\Form\UserPictureType;
 use App\Repository\UserConnectedRepository;
@@ -32,16 +33,15 @@ class AdminVikaController extends AbstractController
      * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
      * @Route("/admin-picture_member-{id}", name="admin_picture_user")
      */
-    public function form(UserConnected $userConnected, Request $request, ObjectManager $manager){
+    public function form(User $user, Request $request, ObjectManager $manager){
 
-        $user = $userConnected->getUser();
         $form = $this->createForm(UserPictureType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
             $manager->persist($user);
             $manager->flush();
-            return $this->redirectToRoute('admin_edit',['id'=>$userConnected->getId()]);
+            return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
         }
 
         return $this->render('admin_vika/pictureEdit.html.twig', [

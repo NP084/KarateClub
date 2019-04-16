@@ -48,8 +48,8 @@ class UserFixtures extends Fixture
         // créer 25 utilisateurs fakés
         for ($k=1; $k<=25; $k++){
 
-            $user = new User();
             $userC = new UserConnected();
+            $user = $userC->getUser();
 
             $userAdress = new Adress();
             $userAdress->setType("Domicile")
@@ -79,14 +79,59 @@ class UserFixtures extends Fixture
                   ->setFirstname($faker->firstName())
                   ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))
                   ->setCreatedUser($faker->dateTimeBetween('-6 months'))
-                  ->setUser($user);
+                  ->addUser($user);
             $manager-> persist($userC);
 
             $user->setSex('Male')
-                 ->setBelt($faker->safeColorName());
+                 ->setBelt($faker->safeColorName())
+                 ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
+                 ->setOwnerUser($userC)
+                 ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
+
             $manager-> persist($user);
 
             $manager->flush();
         }
+        // création d'un admin
+        $userC = new UserConnected();
+        $user = $userC->getUser();
+        $userAdress = new Adress();
+        $userAdress->setType("Domicile")
+            ->setNum($faker->buildingNumber())
+            ->setStreetName($faker->streetName())
+            ->setPostBox($faker->randomDigitNotNull())
+            ->addUser($user);
+        $manager->persist($userAdress);
+
+        $phoneType='Domicile';
+        $userPhone=new Phone();
+        $userPhone->setType($phoneType)
+            ->setNum($faker->phoneNumber())
+            ->addUser($user);
+        $manager->persist($userPhone);
+
+        $city->setCityName($faker->city())
+            ->setZip($faker->postcode())
+            ->addAdress($userAdress)
+            ->setCountry($country);
+        $manager->persist($city);
+
+        $userC->setPassword($this->passwordEncoder->encodePassword($userC,'testtest'))
+            ->setEmail('admin@admin.com')
+            ->setUsername($faker->userName)
+            ->setName($faker->lastName())
+            ->setFirstname($faker->firstName())
+            ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))
+            ->setCreatedUser($faker->dateTimeBetween('-6 months'))
+            ->addUser($user);
+        $manager-> persist($userC);
+
+        $user->setSex('Male')
+             ->setBelt($faker->safeColorName())
+             ->setOwnerUser($userC)
+             ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
+        $manager-> persist($user);
+
+        $manager->flush();
     }
 }

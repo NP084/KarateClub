@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
         {% if (is_granted('ROLE_USER') or (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id"))) %}
             <h2>Activités personnels </h2>
         {% else %}
-            <h2>Activités du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
+            <h2>Activités du membre : {{ user.firstName }} {{ user.name }}</h2>
         {% endif %}
 
         <h3>Liste des activités</h3>
@@ -18,7 +18,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for registration in userConnected.user.registration %}
+            {% for registration in user.registration %}
                 <tr>
                     <td>{{ registration.registrationDate | date ('d/m/Y') }}</td>
                     <td>{{ registration.vikaEvent.title }}</td>
@@ -26,7 +26,7 @@
                     {% if (is_granted('ROLE_ADMIN')) %}
                         <td class="align-middle">
                             <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('admin_registration_edit',{'id': userConnected.id, 'idReg':registration.id}) }}">
+                               href="{{ path('admin_registration_edit',{'id': user.id, 'idReg':registration.id}) }}">
                                 <i class="fa fa-pencil">
                                 </i>
                                 <span class="sr-only">Modifier</span>
@@ -34,7 +34,7 @@
                         </td>
                         <td>
                             <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('remove_registration_admin',{'id':registration.id, 'idUser':userConnected.id}) }}">
+                               href="{{ path('remove_registration_admin',{'id':registration.id, 'idUser':user.id}) }}">
                                 <i class="fa fa-trash-o">
                                 </i>
                                 <span class="sr-only">Supprimer</span>
@@ -52,13 +52,13 @@
 
         {% if (is_granted('ROLE_ADMIN')) %}
             <a class="btn btn-warning"
-               href="{{ path('admin_show',{'id':userConnected.id}) }}"
+               href="{{ path('admin_show',{'id':user.id}) }}"
                class="btn-btn-primary">
                 <b>Retour</b>
             </a>
         {% else %}
             <a class="btn btn-warning"
-               href="{{ path('profile_show',{'id':userConnected.id}) }}"
+               href="{{ path('profile_show',{'id':user.id}) }}"
                class="btn-btn-primary">
                 <b>Retour</b>
             </a>

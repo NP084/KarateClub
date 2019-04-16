@@ -106,9 +106,37 @@ class User
     private $isActive;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\UserConnected", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserConnected", inversedBy="users")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $userConnected;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserConnected", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $ownerUser;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdUs;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $birthdate;
+
+
 
     public function __construct()
     {
@@ -120,8 +148,8 @@ class User
         $this->registration = new ArrayCollection();
         $this->histories = new ArrayCollection();
         $this->contactLists = new ArrayCollection();
-        $this->updatedImage = new \DateTime();
         $this->isActive = false;
+        $this->createdUs = new \DateTime();
     }
 
     public function setImageName(?string $imageName): void
@@ -423,6 +451,71 @@ class User
     public function setUserConnected(?UserConnected $userConnected): self
     {
         $this->userConnected = $userConnected;
+
+        return $this;
+    }
+
+    public function getOwnerUser(): ?UserConnected
+    {
+        return $this->ownerUser;
+    }
+
+    public function setOwnerUser(UserConnected $ownerUser): self
+    {
+        $this->ownerUser = $ownerUser;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $ownerUser->getUser()) {
+            $ownerUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getCreatedUs(): ?\DateTimeInterface
+    {
+        return $this->createdUs;
+    }
+
+    public function setCreatedUs(\DateTimeInterface $createdUs): self
+    {
+        $this->createdUs = $createdUs;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getBirthdate(): ?\DateTimeInterface
+    {
+        return $this->birthdate;
+    }
+
+    public function setBirthdate(\DateTimeInterface $birthdate): self
+    {
+        $this->birthdate = $birthdate;
 
         return $this;
     }

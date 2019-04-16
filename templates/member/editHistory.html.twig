@@ -24,7 +24,7 @@
     {% if (is_granted('ROLE_ADMIN')) %}
         {{ form_start(historyForm) }}
 
-        <form action="{{ path('admin_edit',{'id':userConnected.id}) }}" method="post">
+        <form action="{{ path('admin_edit',{'id':user.id}) }}" method="post">
 
             <div class="container-fluid">
                 <div class="row justify-content-center">
