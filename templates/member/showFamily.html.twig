@@ -67,8 +67,8 @@
                             <td><b>{{ user.ownerUser.name }}</b></td>
                             <td><b>{{ user.ownerUser.firstName }}</b></td>
                             <td>
-                                <a href="{{ path('admin_show', {'id': user.ownerUser.id}) }}">Montrer</a>
-                                <a href="{{ path('admin_edit', {'id': user.ownerUser.id}) }}">Editer</a>
+                                <a href="{{ path('admin_show', {'id': user.id}) }}">Montrer</a>
+                                <a href="{{ path('admin_edit', {'id': user.id}) }}">Editer</a>
                             </td>
                         </tr>
                     {% endif %}
