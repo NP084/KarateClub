@@ -8,13 +8,18 @@ use App\Entity\City;
 use App\Entity\ContactList;
 use App\Entity\History;
 use App\Entity\PersonOfContact;
+use App\Entity\Registration;
 use App\Entity\UserConnected;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
+use App\Form\DocumentType;
 use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
+use App\Form\RegistrationRemarkType;
+use App\Form\RegistrationType;
 use App\Form\UserConnectedType;
+use App\Form\UserPictureType;
 use App\Form\UserType;
 use App\Form\ResetPasswordType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -36,54 +41,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class MemberController extends AbstractController
 {
-    /**
-     * @Route("/admin-id={id}-idHist={idHist}--history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
-     * @Route("/admin-id={id}-history-new", name="admin_history_new",  requirements={"id"="\d+"})
-     */
-    public function editHistory(UserConnected $userConnected, $idHist=null, Request $request, ObjectManager $manager)
-    {
-        if (!$idHist){
-            $history = new History();
-        }
-        else{
-            $entityManager = $this->getDoctrine()->getManager();
-            $history = $entityManager->getRepository(History::class)->find($idHist);
-        }
-        $user = $userConnected->getUser();
 
-        $formHistory = $this->createForm(HistoryType::class, $history);
-        $formHistory->handleRequest($request);
-
-        if ($formHistory->isSubmitted() and $formHistory->isValid()) {
-            // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
-            $this->addHistory($user, $history, $manager);
-            return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
-        }
-        return $this->render('member/editHistory.html.twig', [
-            'userConnected' => $userConnected,
-            'historyForm' => $formHistory->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/member-id={id}-history", name="profile_history", requirements={"id"="\d+"})
-     * @Route("/admin-id={id}-history", name="admin_history",  requirements={"id"="\d+"})
-     */
-    public function showHistory(UserConnected $userConnected)
-    {
-        return $this->render('member/showHistory.html.twig', [
-            'userConnected' => $userConnected
-        ]);
-
-    }
     /**
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-edit", name="admin_edit",  requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == user.getId()")
      */
-    public function profileEdit(UserConnected $userConnected, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function profileEdit(User $user, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
 //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        $user = $userConnected->getUser();
+        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
 
@@ -93,9 +60,9 @@ class MemberController extends AbstractController
             $this->addHistory($user, null, $manager);
             $manager->flush();
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
             }
         }
 
@@ -106,11 +73,11 @@ class MemberController extends AbstractController
 
         if ($formPhone->isSubmitted() && $formPhone->isValid()) {
             // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
-            $this->addUserPhone($userConnected, $phone, $request, $manager);
+            $this->addUserPhone($user, $phone, $manager);
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
             }
         }
 
@@ -125,11 +92,11 @@ class MemberController extends AbstractController
         // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
         if ($formAdress->isSubmitted() && $formAdress->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->addUserAdress($userConnected, $adress, $city, $request, $manager);
+            $this->addUserAdress($user, $adress, $city, $manager);
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
             }
         }
 
@@ -144,11 +111,11 @@ class MemberController extends AbstractController
         // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
         if ($formPoC->isSubmitted() && $formPoC->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->addUserPoC($userConnected, $contactList, $PoC, $request, $manager);
+            $this->addUserPoC($user, $contactList, $PoC, $manager);
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
             }
         }
 
@@ -158,19 +125,18 @@ class MemberController extends AbstractController
         $formHistory->handleRequest($request);
 
         // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-        if ($formHistory->isSubmitted()) {
+        if ($formHistory->isSubmitted() and $formHistory->isValid()) {
             // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
             $this->addHistory($user, $history, $manager);
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
             }
         }
-
         // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
-            'userConnected' => $userConnected,
+            'user' => $user,
             'formUser' => $formUser->createView(),
             'phoneForm' => $formPhone->createView(),
             'adressForm' => $formAdress->createView(),
@@ -181,137 +147,21 @@ class MemberController extends AbstractController
         ]);
     }
 
-    public function addHistory(User $user, History $newHistory = null, ObjectManager $manager)
-    {
-        if ($newHistory) {
-            $newHistory->setUser($user);
-            $manager->persist($newHistory);
-            $manager->flush();
-        }
-
-        // dans le cas où il y a un passage de grade :
-        $repo = $this->getDoctrine()
-            ->getRepository(History::class);
-        $histories = $repo->findOneBy([
-            'user' => $user->getId(),
-            'description' => $user->getBelt(),
-        ]);
-        if ($histories == null) {
-            $history = new History();
-            $repo2 = $this->getDoctrine()
-                ->getRepository(Category::class);
-            $category = $repo2->findOneBy([
-                'title' => "Passage de grade",
-            ]);
-            $history->setDescription($user->getBelt())
-                ->setRefDate($user->getReceiptDate())
-                ->setCategory($category)
-                ->setUser($user);
-            $manager->persist($history);
-            $manager->flush();
-        }
-    }
-
-
-    /**
-     * Supprime une ligne d'historique de contact.
-     * @Route("/admin-remove_history-id={id}-idUser={idUser}", name="remove_history_admin", requirements={"idCL"="\d+"})
-     */
-    public function removeHistory($id, $idUser)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $history = $entityManager->getRepository(History::class)->find($id);
-        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
-        $user = $userConnected->getUser();
-
-        $user->removeHistory($history);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
-
-    }
-
     /**
      * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}", name="admin_show",  requirements={"id"="\d+"})
      */
-    public function profileShow(UserConnected $user, Request $request)
+    public function profileShow(User $user, Request $request)
     {
         return $this->render('member/showProfile.html.twig', [
-            'userConnected' => $user
+            'user' => $user
         ]);
-    }
-
-    /**
-     * Supprime une personne de contact.
-     * @Route("/member-removePoC-idCL={idCL}-idUser={idUser}", name="remove_PoC", requirements={"idCL"="\d+"})
-     * @Route("/admin-removePoC-idCL={idCL}-idUser={idUser}", name="remove_PoC_admin", requirements={"idCL"="\d+"})
-     */
-    public function removePoC($idCL, $idUser, AuthorizationCheckerInterface $authChecker)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
-        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
-        $user = $userConnected->getUser();
-
-        $user->removeContactList($contactList);
-        $entityManager->flush();
-
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
-        } else {
-            return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
-        }
-    }
-
-    /**
-     * AJOUTE NOUVELLE PERSONNE DE CONTACT à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
-     */
-    public function addUserPoC(UserConnected $userConnected, ContactList $contactList, PersonOfContact $PoC, Request $request, ObjectManager $manager)
-    {
-        $repo = $this->getDoctrine()
-            ->getRepository(PersonOfContact::class);
-        $PoCTest = $repo->findOneBy([
-            'name' => $PoC->getName(),
-            'firstName' => $PoC->getFirstName(),
-            'num1' => $PoC->getNum1(),
-        ]);
-        // si personne de contact n'existe pas : on crée une nouvelle personne dans la DB
-        if (!$PoCTest) {
-            // enregistre le nouveau numéro dans la DB
-            $manager->persist($PoC);
-            $manager->flush();
-        }
-
-        $repoCL = $this->getDoctrine()
-            ->getRepository(ContactList::class);
-        $contactListTest = $repoCL->findOneBy([
-            'relation' => $contactList->getRelation(),
-            'info' => $contactList->getInfo(),
-        ]);
-        // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
-        if (!$contactListTest) {
-            $manager->persist($contactList);
-            if (!$PoCTest) {
-                // si personne de contact n'existait pas => associe la personne qui vient d'être créée ($PoC)
-                $contactList->setPersonOfContact($PoC);
-            } else {
-                // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
-                $contactList->setPersonOfContact($PoCTest);
-            }
-            $userConnected->getUser()->addContactList($contactList);
-            $manager->flush();
-        } else {
-            // associe l'adresse existante à cet user
-            $userConnected->getUser()->addContactList($contactListTest);
-            $manager->flush();
-        }
     }
 
     /**
      * AJOUTE NOUVEAU PHONE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public function addUserPhone(UserConnected $userConnected, Phone $phone, Request $request, ObjectManager $manager)
+    public function addUserPhone(User $user, Phone $phone, ObjectManager $manager)
     {
         $repo = $this->getDoctrine()
             ->getRepository(Phone::class);
@@ -322,15 +172,14 @@ class MemberController extends AbstractController
         if (!$phoneTest) {
             // enregistre le nouveau numéro dans la DB
             $manager->persist($phone);
-            $userConnected->getUser()->addPhone($phone);
+            $user->addPhone($phone);
             $manager->flush();
         } else {
             // associe le n° existant à cet user
-            $userConnected->getUser()->addPhone($phoneTest);
+            $user->addPhone($phoneTest);
             $manager->flush();
         }
     }
-
 
     /**
      * Supprime un numéro de téléphone d'un user. (le numéro reste dans la DB)
@@ -341,16 +190,15 @@ class MemberController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $phone = $entityManager->getRepository(Phone::class)->find($idPhone);
-        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
-        $user = $userConnected->getUser();
+        $user = $entityManager->getRepository(User::class)->find($idUser);
 
         $phone->removeUser($user);
         $entityManager->flush();
 
         if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
         } else {
-            return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+            return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
         }
     }
 
@@ -358,30 +206,28 @@ class MemberController extends AbstractController
      * Supprime une adresse d'un user. (l'adresse reste dans la DB)
      * @Route("/member-removeAdress-idAdress={idAdress}-idUser={idUser}", name="remove_adress", requirements={"id"="\d+"})
      * @Route("/admin-removeAdress-idAdress={idAdress}-idUser={idUser}", name="remove_adress_admin", requirements={"id"="\d+"})
-
      */
     public function removeUserAdress($idAdress, $idUser, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $userConnected = $entityManager->getRepository(UserConnected::class)->find($idUser);
-        $user = $userConnected->getUser();
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
         $adress = $entityManager->getRepository(Adress::class)->find($idAdress);
 
         $user->removeAdress($adress);
         $entityManager->flush();
 
         if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
         } else {
-            return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+            return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
         }
     }
-
 
     /**
      * AJOUTE NOUVELLE ADRESSE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public function addUserAdress(UserConnected $userConnected, Adress $adress, City $city, Request $request, ObjectManager $manager)
+    public function addUserAdress(User $user, Adress $adress, City $city, ObjectManager $manager)
     {
         $repoCity = $this->getDoctrine()
             ->getRepository(City::class);
@@ -415,11 +261,162 @@ class MemberController extends AbstractController
                 // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
                 $adress->setCity($cityTest);
             }
-            $userConnected->getUser()->addAdress($adress);
+            $user->addAdress($adress);
             $manager->flush();
         } else {
             // associe l'adresse existante à cet user
-            $userConnected->getUser()->addAdress($adressTest);
+            $user->addAdress($adressTest);
+            $manager->flush();
+        }
+    }
+
+    /**
+     * @Route("/admin-id={id}-idHist={idHist}--history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-history-new", name="admin_history_new",  requirements={"id"="\d+"})
+     */
+    public function editHistory(User $user, $idHist=null, Request $request, ObjectManager $manager)
+    {
+        if (!$idHist){
+            $history = new History();
+        }
+        else{
+            $entityManager = $this->getDoctrine()->getManager();
+            $history = $entityManager->getRepository(History::class)->find($idHist);
+        }
+        $formHistory = $this->createForm(HistoryType::class, $history);
+        $formHistory->handleRequest($request);
+
+        if ($formHistory->isSubmitted() and $formHistory->isValid()) {
+            // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
+            $this->addHistory($user, $history, $manager);
+            return $this->redirectToRoute('admin_history', ['id' => $user->getId()]);
+        }
+        return $this->render('member/editHistory.html.twig', [
+            'user' => $user,
+            'historyForm' => $formHistory->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/member-id={id}-history", name="profile_history", requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-history", name="admin_history",  requirements={"id"="\d+"})
+     */
+    public function showHistory(User $user)
+    {
+        return $this->render('member/showHistory.html.twig', [
+            'user' => $user
+        ]);
+
+    }
+    public function addHistory(User $user, History $newHistory = null, ObjectManager $manager)
+    {
+        if ($newHistory) {
+            $manager->persist($newHistory);
+            $newHistory->setUser($user);
+            $manager->flush();
+        }
+
+        // dans le cas où il y a un passage de grade :
+        $repo = $this->getDoctrine()
+            ->getRepository(History::class);
+        $histories = $repo->findOneBy([
+            'user' => $user->getId(),
+            'description' => $user->getBelt(),
+        ]);
+        if ($histories == null) {
+            $history = new History();
+            $repo2 = $this->getDoctrine()
+                ->getRepository(Category::class);
+            $category = $repo2->findOneBy([
+                'title' => "Passage de grade",
+            ]);
+            $history->setDescription($user->getBelt())
+                ->setRefDate($user->getReceiptDate())
+                ->setCategory($category)
+                ->setUser($user);
+            $manager->persist($history);
+            $manager->flush();
+        }
+    }
+
+    /**
+     * Supprime une ligne d'historique de contact.
+     * @Route("/admin-remove_history-id={id}-idUser={idUser}", name="remove_history_admin", requirements={"idCL"="\d+"})
+     */
+    public function removeHistory($id, $idUser)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $history = $entityManager->getRepository(History::class)->find($id);
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $user->removeHistory($history);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_history', ['id' => $user->getId()]);
+
+    }
+
+    /**
+     * Supprime une personne de contact.
+     * @Route("/member-removePoC-idCL={idCL}-idUser={idUser}", name="remove_PoC", requirements={"idCL"="\d+"})
+     * @Route("/admin-removePoC-idCL={idCL}-idUser={idUser}", name="remove_PoC_admin", requirements={"idCL"="\d+"})
+     */
+    public function removePoC($idCL, $idUser, AuthorizationCheckerInterface $authChecker)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $user->removeContactList($contactList);
+        $entityManager->flush();
+
+        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+        } else {
+            return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+        }
+    }
+
+    /**
+     * AJOUTE NOUVELLE PERSONNE DE CONTACT à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
+    public function addUserPoC(User $user, ContactList $contactList, PersonOfContact $PoC, ObjectManager $manager)
+    {
+        $repo = $this->getDoctrine()
+            ->getRepository(PersonOfContact::class);
+        $PoCTest = $repo->findOneBy([
+            'name' => $PoC->getName(),
+            'firstName' => $PoC->getFirstName(),
+            'num1' => $PoC->getNum1(),
+        ]);
+        // si personne de contact n'existe pas : on crée une nouvelle personne dans la DB
+        if (!$PoCTest) {
+            // enregistre le nouveau numéro dans la DB
+            $manager->persist($PoC);
+            $manager->flush();
+        }
+
+        $repoCL = $this->getDoctrine()
+            ->getRepository(ContactList::class);
+        $contactListTest = $repoCL->findOneBy([
+            'relation' => $contactList->getRelation(),
+            'info' => $contactList->getInfo(),
+        ]);
+        // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
+        if (!$contactListTest) {
+            $manager->persist($contactList);
+            if (!$PoCTest) {
+                // si personne de contact n'existait pas => associe la personne qui vient d'être créée ($PoC)
+                $contactList->setPersonOfContact($PoC);
+            } else {
+                // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
+                $contactList->setPersonOfContact($PoCTest);
+            }
+            $user->addContactList($contactList);
+            $manager->flush();
+        } else {
+            // associe l'adresse existante à cet user
+            $user->addContactList($contactListTest);
             $manager->flush();
         }
     }
@@ -429,13 +426,14 @@ class MemberController extends AbstractController
      * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      * @Route("/admin-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC_admin", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
+     * @Security("has_role('ROLE_ADMIN') or user.getUser().getId() == contactList.getUser().getId()")
      */
     public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         //* @Security("user.getUser().getId() == contactList.getUser().getId()")
 
         $entityManager = $this->getDoctrine()->getManager();
-        $userConnected = $entityManager->getRepository(UserConnected::class)->find($id);
+        $user = $entityManager->getRepository(User::class)->find($id);
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
 
         $formCL = $this->createForm(ContactListType::class, $contactList);
@@ -445,9 +443,9 @@ class MemberController extends AbstractController
             $manager->persist($contactList);
             $manager->flush();
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $userConnected->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
             }        }
 
         return $this->render('member/editPersonOfContact.html.twig', [
@@ -456,6 +454,123 @@ class MemberController extends AbstractController
             'personOfContact' => $personOfContact,
         ]);
     }
+
+    /**
+     * @Route("/admin-id={id}-idReg={idReg}-registration-edit", name="admin_registration_edit",  requirements={"id"="\d+"})
+     */
+    public function editRegistration(User $user, $idReg, Request $request, ObjectManager $manager)
+    {
+        if (!$idReg){
+            $registration = new Registration();
+        }
+        else{
+            $entityManager = $this->getDoctrine()->getManager();
+            $registration = $entityManager->getRepository(Registration::class)->find($idReg);
+        }
+
+        $formRegistration = $this->createForm(
+            RegistrationRemarkType::class, $registration);
+        $formRegistration->handleRequest($request);
+
+        if ($formRegistration->isSubmitted() and $formRegistration->isValid()) {
+            // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
+            $this->addRegistration($user, $registration, $manager);
+            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+        }
+        return $this->render('member/editRegistration.html.twig', [
+            'user' => $user,
+            'registrationForm' => $formRegistration->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/member-id={id}-registration", name="member_registration", requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-registration", name="admin_registration",  requirements={"id"="\d+"})
+     */
+    public function showRegistration(User $user)
+    {
+        return $this->render('member/showRegistrations.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    public function addRegistration(User $user, Registration $newRegistration, ObjectManager $manager)
+    {
+        if ($newRegistration) {
+            $newRegistration->setUser($user);
+            $manager->persist($newRegistration);
+            $manager->flush();
+        }
+    }
+
+    /**
+     * Supprime une ligne des inscriptions de contact.
+     * @Route("/admin-remove_registration-id={id}-idUser={idUser}", name="remove_registration_admin", requirements={"idCL"="\d+"})
+     */
+    public function removeRegistration($id, $idUser)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $registration = $entityManager->getRepository(Registration::class)->find($id);
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $user->removeRegistration($registration);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+
+    }
+
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/member-family-{id}", name="view_family")
+     * @Route("/admin-family-{id}", name="admin_family")
+     */
+    public function indexFamily(UserConnected $userConnected)
+    {
+        $users = $userConnected->getUsers();
+        return $this->render('member/showFamily.html.twig', [
+            'controller_name' => 'Vue des membres de sa famille',
+            'users' => $users,
+            'user'=>$userConnected,
+        ]);
+    }
+
+    /**
+     * @Route("/member-id={id}-document", name="member_document", requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
+     */
+    public function showDocument(User $user)
+    {
+        return $this->render('member/showDocument.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+
+    /**
+     * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
+     * @Route("/member-document-{id}", name="load_member_document")
+     * @Route("/admin-document-{id}", name="load_admin_document")
+     */
+    public function form(User $user, Request $request, ObjectManager $manager){
+
+        $form = $this->createForm(DocumentType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
+        }
+
+        return $this->render('member/documentEdit.html.twig', [
+            'formPicture'=>$form->createView(),
+            'editMode'=> $user->getImageName()!==null
+        ]);
+    }
+
+
+
 
     /**
      * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})

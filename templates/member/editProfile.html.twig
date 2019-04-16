@@ -22,7 +22,8 @@
     <script>
         jQuery(document).ready(function () {
             $('.js-datepicker').datepicker({
-                language: 'fr_FR'
+                language: 'fr_FR',
+                format: 'dd/mm/yyyy'
             });
         });
     </script>
@@ -34,7 +35,7 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
+            {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
             <div class="form-check-label">
                 <div class="row">
                     <div class="col-3">
@@ -43,7 +44,7 @@
                 </div>
                 <div class="row">
                     {% if (is_granted('ROLE_ADMIN')) %}
-                        <a href="{{ path('admin_show',{'id':userConnected.id}) }}"
+                        <a href="{{ path('admin_show',{'id':user.id}) }}"
                            class="btn-btn-primary">
                             <span class="badge badge-pill badge-warning">Retour</span>
                         </a>
@@ -51,14 +52,13 @@
                             <span class="badge badge-pill badge-warning">Retour à la liste des utilisateurs</span>
                         </a>
                     {% else %}
-                        <a href="{{ path('profile_show',{'id':userConnected.id}) }}"
+                        <a href="{{ path('profile_show',{'id':user.id}) }}"
                            class="btn-btn-primary">
                             <span class="badge badge-pill badge-warning">Retour</span>
                         </a>
                     {% endif %}
                 </div>
             </div>
-
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -66,69 +66,154 @@
                             <div class="user-avatar user-avatar-xl fileinput-button">
                                 {% if (is_granted('ROLE_ADMIN')) %}
                                     <a class="btn btn-sm btn-icon btn-secondary"
-                                       href="{{ path('admin_picture_user', {'id':userConnected.id}) }}">
+                                       href="{{ path('admin_picture_user', {'id':user.id}) }}">
                                         <div class="fileinput-button-label"> Change photo</div>
-                                        <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
-                                             alt="{{ userConnected.user.imageFile }}" name="avatar"
+                                        <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
+                                             alt="{{ user.imageFile }}" name="avatar"
                                              width="150"/>
                                     </a>
                                 {% else %}
-                                    <img src="{{ vich_uploader_asset(userConnected.user, 'imageFile') }}"
-                                         alt="{{ userConnected.user.imageFile }}" name="avatar"
-                                         width="150"/>
+                                    {% if (user.ownerUser.id == app.user.id ) %}
+                                        <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
+                                             alt="{{ user.imageFile }}" name="avatar"
+                                             width="150"/>
+                                    {% endif %}
                                 {% endif %}
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <h3>{{ userConnected.name }} {{ userConnected.firstName }} </h3>
-                                <div class="metadata">Inscrit sur le site depuis
-                                    : {{ userConnected.createdUser |date('d/m/Y') }}
+                    {% if (user.ownerUser and user.ownerUser.id == app.user.id) %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h3>{{ user.userConnected.name }} {{ user.userConnected.firstName }} </h3>
+                                    <div class="metadata">Inscrit sur le site depuis
+                                        : {{ user.userConnected.createdUser |date('d/m/Y') }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <h3> Informations générales :</h3>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h3> Informations générales :</h3>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <p> Nom d'utilisateur : {{ userConnected.username }} </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <p> Email : {{ userConnected.email }} </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <p> Date de naissance : {{ userConnected.birthday |date('d/m/Y') }} </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                {% if (app.user.id == app.request.get("id")) %}
-                                    <a class="btn btn-link" href="{{ path('app_forgotten_password') }}" target="_self"
-                                       class="btn-btn-primary">Modifier mot de passe</a>
-                                {% endif %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
+                                </div>
                             </div>
                         </div>
 
-                    </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Email : {{ user.userConnected.email }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Date de naissance : {{ user.userConnected.birthday |date('d/m/Y') }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <a class="btn btn-link" href="{{ path('app_forgotten_password') }}"
+                                       target="_self"
+                                       class="btn-btn-primary">Modifier mot de passe</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h3>{{ user.name }} {{ user.firstName }} </h3>
+                                    <div class="metadata">Inscrit sur le site depuis
+                                        : {{ user.createdUs |date('d/m/Y') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Date de naissance : {{ user.birthdate |date('d/m/Y') }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {% if (user.belt) %}
+                                        <h4> Grade</h4>
+                                        <p> Grade : {{ user.belt }} reçu
+                                            le {{ user.receiptDate |date('d/m/Y') }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h3> Informations sur le "tuteur"</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                        <a class="btn btn-link" href="{{ path('admin_show',{'id':user.userConnected.user.id}) }}">
+                                            <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                            <span class="sr-only">Voir le profil</span>
+                                        </a>
+                                    {% else %}
+                                        <a class="btn btn-link"
+                                           href="{{ path('profile_show',{'id':user.userConnected.user.id}) }}">
+                                            <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                            <span class="sr-only">Voir le profil</span>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Email : {{ user.userConnected.email }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {% for phone in user.userConnected.user.phones %}
+                                        <p>  {{ phone.type }}
+                                            {{ phone.num }}
+                                        </p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -211,21 +296,21 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for phone in userConnected.user.phones %}
+                                        {% for phone in user.phones %}
                                         <tr>
                                             <td>{{ phone.type }}</td>
                                             <td>{{ phone.num }}</td>
                                             <td>
                                                 {% if (is_granted('ROLE_ADMIN')) %}
                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('remove_phone_admin',{'idPhone':phone.id, 'idUser':userConnected.id}) }}">
+                                                   href="{{ path('remove_phone_admin',{'idPhone':phone.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>
                                                     <span class="sr-only">Supprimer</span>
                                                 </a>
                                                 {% else %}
                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':userConnected.id}) }}">
+                                                   href="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>
                                                     <span class="sr-only">Supprimer</span>
@@ -294,7 +379,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for adress in userConnected.user.adress %}
+                                        {% for adress in user.adress %}
                                         <tr>
                                             <td>{{ adress.type }}</td>
                                             <td>{{ adress.num }}
@@ -312,14 +397,14 @@
                                             <td>
                                                 {% if (is_granted('ROLE_ADMIN')) %}
                                                     <a class="btn btn-sm btn-icon btn-secondary"
-                                                       href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':userConnected.id}) }}">
+                                                       href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
                                                         <span class="sr-only">Supprimer</span>
                                                     </a>
                                                 {% else %}
                                                     <a class="btn btn-sm btn-icon btn-secondary"
-                                                       href="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':userConnected.id}) }}">
+                                                       href="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
                                                         <span class="sr-only">Supprimer</span>
@@ -429,7 +514,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for contactList in userConnected.user.contactLists %}
+                                        {% for contactList in user.contactLists %}
                                         <tr>
                                             <td>{{ contactList.personOfContact.name }}</td>
                                             <td>{{ contactList.personOfContact.firstName }}</td>
@@ -440,7 +525,7 @@
                                             <td class="align-middle">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('edit_PoC_admin',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                   href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
                                                     <i class="fa fa-pencil">
                                                     </i>
                                                     <span class="sr-only">Modifier</span>
@@ -448,14 +533,14 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':userConnected.id}) }}">
+                                                   href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>
                                                     <span class="sr-only">Supprimer</span>
                                                 </a>
                                                 {% else %}
                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('edit_PoC',{'id':userConnected.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                   href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
                                                     <i class="fa fa-pencil">
                                                     </i>
                                                     <span class="sr-only">Modifier</span>
@@ -463,7 +548,7 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':userConnected.id}) }}">
+                                                   href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>
                                                     <span class="sr-only">Supprimer</span>

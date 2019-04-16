@@ -70,6 +70,35 @@ class VikaFixtures extends Fixture implements FixtureGroupInterface
         $manager->persist($bureau);
 
         $manager->flush();
+
+        $bureau = new ContentPage();
+        $bureauContent ='<h2>accueil</h2>
+<p>VIKA est le nouveau club de Karaté de Villeneuve d\'Ascq. Il vous propose au DOJO de Valmy :</p>';
+
+        $bureau ->setTitle('Accueil')
+            ->setContent($bureauContent)
+            ->setPath('accueil');
+        $manager->persist($bureau);
+
+        $bureau = new ContentPage();
+        $bureauContent ='<h2>Encadrement</h2>
+<p>VIKA est le nouveau club de Karaté de Villeneuve d\'Ascq. Il vous propose au DOJO de Valmy :</p>';
+
+        $bureau ->setTitle('Encadrement')
+            ->setContent($bureauContent)
+            ->setPath('encadrement');
+        $manager->persist($bureau);
+
+        $bureau = new ContentPage();
+        $bureauContent ='<h2>Contact</h2>
+<p>VIKA est le nouveau club de Karaté de Villeneuve d\'Ascq. Il vous propose au DOJO de Valmy :</p>';
+
+        $bureau ->setTitle('Contact')
+            ->setContent($bureauContent)
+            ->setPath('contact');
+        $manager->persist($bureau);
+
+        $manager->flush();
     }
 
     public static function getGroups(): array

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,10 +31,6 @@ class UserConnected implements UserInterface, \Serializable
      */
     private $name;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
-     */
-    private $user;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -69,7 +67,7 @@ class UserConnected implements UserInterface, \Serializable
     private $birthday;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdUser;
 
@@ -78,6 +76,18 @@ class UserConnected implements UserInterface, \Serializable
     * @ORM\Column(type="string", length=255, nullable=true)
     */
     protected $resetToken;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="userConnected")
+     */
+    private $users;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="ownerUser", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+
 
     /**
     * @return string
@@ -98,8 +108,11 @@ class UserConnected implements UserInterface, \Serializable
     public function __construct()
     {
         $user = new User();
-        $this->setUser($user);
-        $user->setUserConnected($this);
+        $user -> setUserConnected($this);
+        $this -> setUser($user);
+        $this->createdUser = new \DateTime();
+
+        $this->users = new ArrayCollection();
     }
 
     /** @see \Serializable::serialize() */
@@ -156,18 +169,6 @@ class UserConnected implements UserInterface, \Serializable
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }
@@ -240,6 +241,49 @@ class UserConnected implements UserInterface, \Serializable
     public function setCreatedUser(\DateTimeInterface $createdUser): self
     {
         $this->createdUser = $createdUser;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setUserConnected($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getUserConnected() === $this) {
+                $user->setUserConnected(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

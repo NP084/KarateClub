@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\ContentPage;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
@@ -14,6 +15,8 @@ class ContentType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('subtitle',TextareaType::class, [
+                'required'   => false,])
             ->add('content', CKEditorType::class, array(
                 'config' => array(
                     'uiColor' => '#ffffff',

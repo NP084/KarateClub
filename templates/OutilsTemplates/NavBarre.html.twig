@@ -6,25 +6,29 @@
             <!-- .nav -->
             <div class="nav nav-tabs">
                 {% if (is_granted('ROLE_ADMIN')) %}
-                    <a class="nav-link" href="{{ path('admin_show',{'id':app.user.id}) }}"><font
+                  {#  <a class="nav-link" href="{{ path('admin_show',{'id':app.user.getUser().id}) }}"><font
                                 style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mon
-                                profil </font></font></a>
-                    <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font
+                                profil </font></font></a>#}
+                    <a class="nav-link" href="{{ path('admin_registration',{'id':app.user.getUser().id}) }}"><font style="vertical-align: inherit;"><font
                                     style="vertical-align: inherit;">Mes activités</font></font></a>
-                    <a class="nav-link" href="{{ path('admin_history',{'id':app.user.id}) }}"><font style="vertical-align: inherit;"><font
+                    <a class="nav-link" href="{{ path('admin_history',{'id':app.user.getUser().id}) }}"><font style="vertical-align: inherit;"><font
                                     style="vertical-align: inherit;">Mon parcours</font></font></a>
-                    <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font
+                    <a class="nav-link" href="{{ path('admin_document',{'id':app.user.getUser().id}) }}"><font style="vertical-align: inherit;"><font
                                     style="vertical-align: inherit;">Mes documents</font></font></a>
+                    <a class="nav-link" href="{{ path('admin_family',{'id':app.user.id}) }}"><font style="vertical-align: inherit;"><font
+                                    style="vertical-align: inherit;">Ma famille</font></font></a>
                 {% else %}
-                    <a class="nav-link" href="{{ path('profile_show',{'id':app.user.id}) }}"><font
+         {#           <a class="nav-link" href="{{ path('profile_show',{'id':app.user.getUser().getId()}) }}"><font
                                 style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mon
-                                profil </font></font></a>
-                    <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font
+                                profil </font></font></a>#}
+                    <a class="nav-link" href="{{ path('member_registration',{'id':app.user.getUser().getId()})  }}"><font style="vertical-align: inherit;"><font
                                     style="vertical-align: inherit;">Mes activités</font></font></a>
-                    <a class="nav-link" href="{{ path('profile_history',{'id':app.user.id}) }}"><font style="vertical-align: inherit;"><font
+                    <a class="nav-link" href="{{ path('profile_history',{'id':app.user.getUser().getId()}) }}"><font style="vertical-align: inherit;"><font
                                     style="vertical-align: inherit;">Mon parcours</font></font></a>
-                    <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font
+                    <a class="nav-link" href="{{ path('member_document',{'id':app.user.getUser().id}) }}"><font style="vertical-align: inherit;"><font
                                     style="vertical-align: inherit;">Mes documents</font></font></a>
+                    <a class="nav-link" href="{{ path('view_family',{'id':app.user.id}) }}"><font style="vertical-align: inherit;"><font
+                                    style="vertical-align: inherit;">Ma famille</font></font></a>
                 {% endif %}
             </div><!-- /.nav -->
         </div><!-- /.nav-scroller -->
