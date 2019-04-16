@@ -65,8 +65,15 @@
                     <div class="row">
                         <div class="col">
                             <div class="user-avatar user-avatar-xl fileinput-button">
+                                <div class="fileinput-button-label">
+                                    <a href="{{ path('admin_picture_user',
+                                        {'id':user.id}) }}">Modifier la photo</a>
+                                </div>
+
                                 <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
-                                     alt="{{ user.imageFile }}" name="avatar" width="150"/>
+                                     alt="{{ user.imageFile }}"
+                                     name="avatar" width="150"/>
+
                             </div>
                         </div>
                     </div>
