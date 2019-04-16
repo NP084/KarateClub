@@ -40,6 +40,7 @@
                 {% endif %}
                 <th>Prénom</th>
                 <th>Email</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -47,12 +48,19 @@
                 <tr>
                     <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
-                    </td>
                     <td>{{ user.firstName }}</td>
                     <td>{{ user.email }}</td>
                     <td>
-                        <a href="{{ path('admin_show', {'id': user.id}) }}">Montrer</a>
-                        <a href="{{ path('admin_edit', {'id': user.id}) }}">Editer</a>
+                        <a class="btn btn-sm btn-icon btn-secondary"
+                           href="{{ path('admin_show', {'id': user.id}) }}"><i
+                                    class="oi oi-person"></i></a>
+                        <span class="sr-only">Voir profil</span>
+                        <a class="btn btn-sm btn-icon btn-secondary"
+                           href="{{ path('admin_edit', {'id': user.id}) }}">
+                            <i class="fa fa-pencil">
+                            </i>
+                            <span class="sr-only">Modifier</span>
+                        </a>
                     </td>
                 </tr>
             {% else %}
