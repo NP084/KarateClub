@@ -24,8 +24,7 @@ class History
     private $user;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotNull
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $refDate;
 

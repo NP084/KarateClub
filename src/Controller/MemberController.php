@@ -13,13 +13,11 @@ use App\Entity\UserConnected;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
-use App\Form\DocumentType;
 use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
 use App\Form\RegistrationRemarkType;
 use App\Form\RegistrationType;
 use App\Form\UserConnectedType;
-use App\Form\UserPictureType;
 use App\Form\UserType;
 use App\Form\ResetPasswordType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -119,29 +117,12 @@ class MemberController extends AbstractController
             }
         }
 
-        // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
-        $history = new History();
-        $formHistory = $this->createForm(HistoryType::class, $history);
-        $formHistory->handleRequest($request);
-
-        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-        if ($formHistory->isSubmitted() and $formHistory->isValid()) {
-            // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
-            $this->addHistory($user, $history, $manager);
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
-            } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
-            }
-        }
-        // retourne la page html avec les infos à afficher (des instances + form)
         return $this->render('member/editProfile.html.twig', [
             'user' => $user,
             'formUser' => $formUser->createView(),
             'phoneForm' => $formPhone->createView(),
             'adressForm' => $formAdress->createView(),
             'cityForm' => $formCity->createView(),
-            'historyForm' => $formHistory->createView(),
             'PoCForm' => $formPoC->createView(),
             'ContactListForm' => $formContactList->createView()
         ]);
@@ -271,15 +252,14 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin-id={id}-idHist={idHist}--history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-idHist={idHist}-history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history-new", name="admin_history_new",  requirements={"id"="\d+"})
      */
-    public function editHistory(User $user, $idHist=null, Request $request, ObjectManager $manager)
+    public function editHistory(User $user, $idHist = null, Request $request, ObjectManager $manager)
     {
-        if (!$idHist){
+        if (!$idHist) {
             $history = new History();
-        }
-        else{
+        } else {
             $entityManager = $this->getDoctrine()->getManager();
             $history = $entityManager->getRepository(History::class)->find($idHist);
         }
@@ -294,6 +274,8 @@ class MemberController extends AbstractController
         return $this->render('member/editHistory.html.twig', [
             'user' => $user,
             'historyForm' => $formHistory->createView(),
+            'editMode' => $history->getId() !== null
+
         ]);
     }
 
@@ -308,34 +290,35 @@ class MemberController extends AbstractController
         ]);
 
     }
+
     public function addHistory(User $user, History $newHistory = null, ObjectManager $manager)
     {
         if ($newHistory) {
-            $manager->persist($newHistory);
             $newHistory->setUser($user);
+            $manager->persist($newHistory);
             $manager->flush();
-        }
-
-        // dans le cas où il y a un passage de grade :
-        $repo = $this->getDoctrine()
-            ->getRepository(History::class);
-        $histories = $repo->findOneBy([
-            'user' => $user->getId(),
-            'description' => $user->getBelt(),
-        ]);
-        if ($histories == null) {
-            $history = new History();
-            $repo2 = $this->getDoctrine()
-                ->getRepository(Category::class);
-            $category = $repo2->findOneBy([
-                'title' => "Passage de grade",
+        } else {
+            // dans le cas où il y a un passage de grade :
+            $repo = $this->getDoctrine()
+                ->getRepository(History::class);
+            $histories = $repo->findOneBy([
+                'user' => $user->getId(),
+                'description' => $user->getBelt(),
             ]);
-            $history->setDescription($user->getBelt())
-                ->setRefDate($user->getReceiptDate())
-                ->setCategory($category)
-                ->setUser($user);
-            $manager->persist($history);
-            $manager->flush();
+            if ($histories == null) {
+                $history = new History();
+                $repo2 = $this->getDoctrine()
+                    ->getRepository(Category::class);
+                $category = $repo2->findOneBy([
+                    'title' => "Passage de grade",
+                ]);
+                $history->setDescription($user->getBelt())
+                    ->setRefDate($user->getReceiptDate())
+                    ->setCategory($category)
+                    ->setUser($user);
+                $manager->persist($history);
+                $manager->flush();
+            }
         }
     }
 
@@ -446,7 +429,8 @@ class MemberController extends AbstractController
                 return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
             } else {
                 return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
-            }        }
+            }
+        }
 
         return $this->render('member/editPersonOfContact.html.twig', [
             'contactList' => $contactList,
@@ -460,13 +444,8 @@ class MemberController extends AbstractController
      */
     public function editRegistration(User $user, $idReg, Request $request, ObjectManager $manager)
     {
-        if (!$idReg){
-            $registration = new Registration();
-        }
-        else{
-            $entityManager = $this->getDoctrine()->getManager();
-            $registration = $entityManager->getRepository(Registration::class)->find($idReg);
-        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $registration = $entityManager->getRepository(Registration::class)->find($idReg);
 
         $formRegistration = $this->createForm(
             RegistrationRemarkType::class, $registration);
@@ -475,7 +454,7 @@ class MemberController extends AbstractController
         if ($formRegistration->isSubmitted() and $formRegistration->isValid()) {
             // appel à la fonction qui insère nouvel historique dans la DB et l'associe au user
             $this->addRegistration($user, $registration, $manager);
-            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+            return $this->redirectToRoute('admin_registration', ['id' => $user->getId()]);
         }
         return $this->render('member/editRegistration.html.twig', [
             'user' => $user,
@@ -516,7 +495,7 @@ class MemberController extends AbstractController
         $user->removeRegistration($registration);
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+        return $this->redirectToRoute('admin_registration', ['id' => $user->getId()]);
 
     }
 
@@ -531,44 +510,9 @@ class MemberController extends AbstractController
         return $this->render('member/showFamily.html.twig', [
             'controller_name' => 'Vue des membres de sa famille',
             'users' => $users,
-            'user'=>$userConnected,
+            'userConnected' => $userConnected,
         ]);
     }
-
-    /**
-     * @Route("/member-id={id}-document", name="member_document", requirements={"id"="\d+"})
-     * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
-     */
-    public function showDocument(User $user)
-    {
-        return $this->render('member/showDocument.html.twig', [
-            'user' => $user
-        ]);
-    }
-
-
-    /**
-     * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
-     * @Route("/member-document-{id}", name="load_member_document")
-     * @Route("/admin-document-{id}", name="load_admin_document")
-     */
-    public function form(User $user, Request $request, ObjectManager $manager){
-
-        $form = $this->createForm(DocumentType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()){
-            $manager->persist($user);
-            $manager->flush();
-            return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
-        }
-
-        return $this->render('member/documentEdit.html.twig', [
-            'formPicture'=>$form->createView(),
-            'editMode'=> $user->getImageName()!==null
-        ]);
-    }
-
 
 
 
@@ -576,41 +520,41 @@ class MemberController extends AbstractController
      * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history", name="admin_reset_password",  requirements={"id"="\d+"})
      */
-     /*
-    public function resetPassword(Request $request)
-    {
-    	$em = $this->getDoctrine()->getManager();
-      $user = $this->getUser();
-    	$form = $this->createForm(ResetPasswordType::class, $user);
-      //dump($request->request);die();
+    /*
+   public function resetPassword(Request $request)
+   {
+       $em = $this->getDoctrine()->getManager();
+     $user = $this->getUser();
+       $form = $this->createForm(ResetPasswordType::class, $user);
+     //dump($request->request);die();
 
-    	$form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+       $form->handleRequest($request);
+       if ($form->isSubmitted() && $form->isValid()) {
 
-            $passwordEncoder = $this->get('security.password_encoder');
-            //dump($request->request);die();
-            //echo "<script>alert(\"Je suis ici\")</script>";
-            $oldPassword = $request->request->get('member_reset_password')['ancienMotDePasse'];
+           $passwordEncoder = $this->get('security.password_encoder');
+           //dump($request->request);die();
+           //echo "<script>alert(\"Je suis ici\")</script>";
+           $oldPassword = $request->request->get('member_reset_password')['ancienMotDePasse'];
 
-            // Si l'ancien mot de passe est bon
-            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
-                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
-                $user->setPassword($newEncodedPassword);
+           // Si l'ancien mot de passe est bon
+           if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+               $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
+               $user->setPassword($newEncodedPassword);
 
-                $em->persist($user);
-                $em->flush();
+               $em->persist($user);
+               $em->flush();
 
-                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+               $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
 
-                return $this->redirectToRoute('profile_edit');
-            } else {
-                $form->addError(new FormError('Ancien mot de passe incorrect'));
-            }
-        }
+               return $this->redirectToRoute('profile_edit');
+           } else {
+               $form->addError(new FormError('Ancien mot de passe incorrect'));
+           }
+       }
 
-    	return $this->render('member/resetPassword.html.twig', array(
-    		'form' => $form->createView(),
-    	));
-    }
-    */
+       return $this->render('member/resetPassword.html.twig', array(
+           'form' => $form->createView(),
+       ));
+   }
+   */
 }
