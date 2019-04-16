@@ -132,13 +132,13 @@
                                         <div class="form-group">
                                             {% if (is_granted('ROLE_ADMIN')) %}
                                                 <a class="btn btn-link"
-                                                   href="{{ path('admin_show',{'id':user.userConnected.id}) }}">
+                                                   href="{{ path('admin_show',{'id':user.userConnected.user.id}) }}">
                                                     <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
                                                     <span class="sr-only">Voir le profil</span>
                                                 </a>
                                             {% else %}
                                                 <a class="btn btn-link"
-                                                   href="{{ path('profile_show',{'id':user.userConnected.id}) }}">
+                                                   href="{{ path('profile_show',{'id':user.userConnected.user.id}) }}">
                                                     <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
                                                     <span class="sr-only">Voir le profil</span>
                                                 </a>
