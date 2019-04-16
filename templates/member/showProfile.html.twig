@@ -91,7 +91,7 @@
                                     </div>
                                 </div>
                             {# parent ou admin qui consulte un User "enfant"     #}
-                            {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser and user.ownerUser.id != user.userConnected.id)) %}
+                            {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">

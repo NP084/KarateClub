@@ -56,15 +56,27 @@
             <tbody>
 
             {% for user in users %}
-                {# Si l'id dans l'URS != de l'id du user qui s'affiche
+                {# Si l'id dans l'URL != de l'id du user qui s'affiche
                 (pr ne pas afficher son propre profil dans le liste) #}
-                {% if (app.request.get('id') != user.id) %}
+                {#                {% if (user.ownerUser and app.request.get('id') != user.ownerUser.id) %}#}
+                {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <tr>
+                            <td><b>{{ user.ownerUser.id }}</b></td>
+                            <td><b>{{ user.ownerUser.name }}</b></td>
+                            <td><b>{{ user.ownerUser.firstName }}</b></td>
+                            <td>
+                                <a href="{{ path('admin_show', {'id': user.ownerUser.id}) }}">Montrer</a>
+                                <a href="{{ path('admin_edit', {'id': user.ownerUser.id}) }}">Editer</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% else %}
                     <tr>
                         {% if (is_granted('ROLE_ADMIN')) %}
-                            <td>{{ userConnected.id }}</td>
+                            <td>{{ user.id }}</td>
                         {% endif %}
                         <td>{{ user.name }}</td>
-                        </td>
                         <td>{{ user.firstName }}</td>
                         <td>
                             {% if (is_granted('ROLE_ADMIN')) %}
@@ -77,9 +89,10 @@
                         </td>
                     </tr>
                 {% endif %}
+                {#{% endif %}#}
             {% else %}
                 <tr>
-                    <td colspan="10">Aucun</td>
+                    <td colspan="10">Aucun membre de famille enregistré</td>
                 </tr>
             {% endfor %}
             </tbody>

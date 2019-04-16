@@ -92,6 +92,8 @@ class UserFixtures extends Fixture
 
             $childUser = new User();
             $childUser->setSex('Female')
+                ->setName($faker->lastName())
+                ->setFirstname($faker->firstName())
                 ->setBelt($faker->safeColorName())
                 ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
                 ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
@@ -100,6 +102,8 @@ class UserFixtures extends Fixture
 
             $childUser = new User();
             $childUser->setSex('Male')
+                ->setName($faker->lastName())
+                ->setFirstname($faker->firstName())
                 ->setBelt($faker->safeColorName())
                 ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
                 ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
@@ -152,6 +156,8 @@ class UserFixtures extends Fixture
 
         $childUser = new User();
         $childUser->setSex('Female')
+            ->setName($faker->lastName())
+            ->setFirstname($faker->firstName())
             ->setBelt($faker->safeColorName())
             ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
             ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
@@ -160,6 +166,8 @@ class UserFixtures extends Fixture
 
         $childUser = new User();
         $childUser->setSex('Male')
+            ->setName($faker->lastName())
+            ->setFirstname($faker->firstName())
             ->setBelt($faker->safeColorName())
             ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
             ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
