@@ -13,11 +13,13 @@ use App\Entity\UserConnected;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
+use App\Form\DocumentType;
 use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
 use App\Form\RegistrationRemarkType;
 use App\Form\RegistrationType;
 use App\Form\UserConnectedType;
+use App\Form\UserPictureType;
 use App\Form\UserType;
 use App\Form\ResetPasswordType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -513,6 +515,41 @@ class MemberController extends AbstractController
             'userConnected' => $userConnected,
         ]);
     }
+
+    /**
+     * @Route("/member-id={id}-document", name="member_document", requirements={"id"="\d+"})
+     * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
+     */
+    public function showDocument(User $user)
+    {
+        return $this->render('member/showDocument.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+
+    /**
+     * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
+     * @Route("/member-document-{id}", name="load_member_document")
+     * @Route("/admin-document-{id}", name="load_admin_document")
+     */
+    public function form(User $user, Request $request, ObjectManager $manager){
+
+        $form = $this->createForm(DocumentType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
+        }
+
+        return $this->render('member/documentEdit.html.twig', [
+            'formPicture'=>$form->createView(),
+            'editMode'=> $user->getImageName()!==null
+        ]);
+    }
+
 
 
 
