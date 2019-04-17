@@ -529,7 +529,7 @@ class MemberController extends AbstractController
 
 
     /**
-     * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
+     * AJOUT/MODIFICATION DE DOCUMENTATION
      * @Route("/member-document-{id}", name="load_member_document")
      * @Route("/admin-document-{id}", name="load_admin_document")
      */
