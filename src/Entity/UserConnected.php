@@ -67,7 +67,7 @@ class UserConnected implements UserInterface, \Serializable
     private $birthday;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $createdUser;
 

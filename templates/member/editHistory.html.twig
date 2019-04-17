@@ -22,10 +22,6 @@
 {% block Body %}
 
     {% if (is_granted('ROLE_ADMIN')) %}
-        {{ form_start(historyForm) }}
-
-        <form action="{{ path('admin_edit',{'id':user.id}) }}" method="post">
-
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
@@ -35,6 +31,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
+                                            {{ form_start(historyForm) }}
                                             {{ form_label(historyForm.description, 'Description') }}
                                             {{ form_widget(historyForm.description,  { 'attr': {
                                                 'rows' : '4' }} ) }}
@@ -60,8 +57,13 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-outline-success">Ajouter un nouvel historique
-                                            </button>
+                                            {% if(editMode) %}
+                                                <button type="submit" class="btn btn-outline-success">
+                                                    Modifier l'historique</button>
+                                            {% else %}
+                                                <button type="submit" class="btn btn-outline-success">
+                                                    Ajouter un nouvel historique</button>
+                                            {% endif %}
                                             {{ form_end(historyForm) }}
                                         </div>
                                     </div>
@@ -71,7 +73,6 @@
                     </div>
                 </div>
             </div>
-        </form>
     {% else %}
         <h2>Vous n'êtes pas autorisé à accéder à cette page</h2>
     {% endif %}

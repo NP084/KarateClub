@@ -23,52 +23,195 @@
 {% block Body %}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
 
-        <table id="usertabel" class="table dataTable no-footer">
-            <thead>
-            <tr>
-                <th>Id</th>
-                {#          <th class="sorting_asc" tabindex="0" aria-controls="dt-responsive" rowspan="1" colspan="1"
-                              style="width: 144px;" aria-label=" Name : activate to sort column descending" aria-sort="ascending">Nom
-                          </th>#}
-                {% if (app.request.get("orderby")=='ASC') %}
-                    <th>
-                        <a href="{{ path('admin_users', {orderby:'DESC'}) }}">
-                            Noms</a></th>
-                {% else %}
-                    <th>
-                        <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
-                            Noms</a></th>
-                {% endif %}
-                <th>Prénom</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
 
-            {% for user in users %}
-                {% if (app.user.user.id != user.id) %}
-                    <tr>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.name }}</td>
-                        </td>
-                        <td>{{ user.firstName }}</td>
-                        <td>
-                            {% if (is_granted('ROLE_ADMIN')) %}
-                                <a href="{{ path('admin_show', {'id': user.id}) }}">Montrer</a>
-                                <a href="{{ path('admin_edit', {'id': user.id}) }}">Editer</a>
+                    {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
+                        <h2>Ma famille</h2>
+                    {% else %}
+                        {% if(is_granted('ROLE_ADMIN')) %}
+                            {# User est un parent  #}
+                            {% if (userConnected.user.ownerUser
+                                and userConnected.user.ownerUser.id == userConnected.user.userConnected.id) %}
+                                <h2>Famille du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
                             {% else %}
-                                <a href="{{ path('profile_show', {'id': user.id}) }}">Montrer</a>
-                                <a href="{{ path('profile_edit', {'id': user.id}) }}">Editer</a>
+                                <h2>Famille du membre
+                                    : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
                             {% endif %}
-                        </td>
-                    </tr>
-                {% endif %}
-            {% else %}
-                <tr>
-                    <td colspan="10">Aucun</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                        {% else %}
+                            {# le userConnected consulte son propre profil #}
+                            {% if(app.user.id == app.request.get("id")) %}
+                                <h2>Ma famille</h2>
+                            {% else %}
+                                <h2>Famille du membre
+                                    : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <table id="usertabel" class="table dataTable no-footer">
+                                            <thead>
+                                            <tr>
+                                                {% if (is_granted('ROLE_ADMIN')) %}
+                                                    <th>Id</th>
+                                                {% endif %}
+                                                <th>Noms</th>
+                                                <th>Prénom</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for user in users %}
+                                                {# Si l'id dans l'URL != de l'id du user qui s'affiche
+                                                (pr ne pas afficher son propre profil dans le liste) #}
+                                                {#                {% if (user.ownerUser and app.request.get('id') != user.ownerUser.id) %}#}
+                                                {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
+                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                        <tr>
+                                                        <td><b>{{ user.ownerUser.id }}</b></td>
+                                                        <td><b>{{ user.ownerUser.name }}</b></td>
+                                                        <td><b>{{ user.ownerUser.firstName }}</b></td>
+                                                        <td class="align-middle text-right">
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('admin_show', {'id': user.id}) }}"><i
+                                                                        class="oi oi-person"></i></a>
+                                                            <span class="sr-only">Voir profil</span>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('admin_edit', {'id': user.id}) }}">
+                                                                <i class="fa fa-pencil">
+                                                                </i>
+                                                                <span class="sr-only">Modifier</span>
+                                                            </a>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('admin_history', {'id': user.id}) }}"><i
+                                                                        class="oi oi-badge"></i></a>
+                                                            <span class="sr-only">Parcours</span>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('admin_registration', {'id': user.id}) }}"><i
+                                                                        class="oi oi-cart"></i>
+                                                                <span class="sr-only">Activités</span>
+                                                            </a>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('admin_document', {'id': user.id}) }}"><i
+                                                                        class="oi oi-document"></i>
+                                                                <span class="sr-only">Documents</span>
+                                                            </a>
+                                                        </td>
+                                                    {% else %}
+                                                        <td><b>{{ user.ownerUser.name }}</b></td>
+                                                        <td><b>{{ user.ownerUser.firstName }}</b></td>
+                                                        <td class="align-middle text-right">
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('profile_show', {'id': user.id}) }}"><i
+                                                                        class="oi oi-person"></i></a>
+                                                            <span class="sr-only">Voir profil</span>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('profile_edit', {'id': user.id}) }}">
+                                                                <i class="fa fa-pencil">
+                                                                </i>
+                                                                <span class="sr-only">Modifier</span>
+                                                            </a>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('profile_history', {'id': user.id}) }}"><i
+                                                                        class="oi oi-badge"></i></a>
+                                                            <span class="sr-only">Parcours</span>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('member_registration', {'id': user.id}) }}"><i
+                                                                        class="oi oi-cart"></i>
+                                                                <span class="sr-only">Activités</span>
+                                                            </a>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('member_document', {'id': user.id}) }}"><i
+                                                                        class="oi oi-document"></i>
+                                                                <span class="sr-only">Documents</span>
+                                                            </a>
+                                                        </td>
+                                                    {% endif %}
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        {% if (is_granted('ROLE_ADMIN')) %}
+                                                            <td>{{ user.id }}</td>
+                                                        {% endif %}
+                                                        <td>{{ user.name }}</td>
+                                                        <td>{{ user.firstName }}</td>
+                                                        {% if (is_granted('ROLE_ADMIN')) %}
+                                                            <td class="align-middle text-right">
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('admin_show', {'id': user.id}) }}"><i
+                                                                            class="oi oi-person"></i></a>
+                                                                <span class="sr-only">Voir profil</span>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('admin_edit', {'id': user.id}) }}">
+                                                                    <i class="fa fa-pencil">
+                                                                    </i>
+                                                                    <span class="sr-only">Modifier</span>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('admin_history', {'id': user.id}) }}"><i
+                                                                            class="oi oi-badge"></i></a>
+                                                                <span class="sr-only">Parcours</span>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('admin_registration', {'id': user.id}) }}"><i
+                                                                            class="oi oi-cart"></i>
+                                                                    <span class="sr-only">Activités</span>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('admin_document', {'id': user.id}) }}"><i
+                                                                            class="oi oi-document"></i>
+                                                                    <span class="sr-only">Documents</span>
+                                                                </a>
+                                                            </td>
+                                                        {% else %}
+                                                            <td class="align-middle text-right">
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('profile_show', {'id': user.id}) }}"><i
+                                                                            class="oi oi-person"></i></a>
+                                                                <span class="sr-only">Voir profil</span>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('profile_edit', {'id': user.id}) }}">
+                                                                    <i class="fa fa-pencil">
+                                                                    </i>
+                                                                    <span class="sr-only">Modifier</span>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('profile_history', {'id': user.id}) }}"><i
+                                                                            class="oi oi-badge"></i></a>
+                                                                <span class="sr-only">Parcours</span>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('member_registration', {'id': user.id}) }}"><i
+                                                                            class="oi oi-cart"></i>
+                                                                    <span class="sr-only">Activités</span>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('member_document', {'id': user.id}) }}"><i
+                                                                            class="oi oi-document"></i>
+                                                                    <span class="sr-only">Documents</span>
+                                                                </a>
+                                                            </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endif %}
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun membre de famille enregistré</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}

@@ -27,3 +27,4 @@
 .idea/php.xml
 .idea/vcs.xml
 .DS_Store
+src/Migrations/Version20190416171247.php

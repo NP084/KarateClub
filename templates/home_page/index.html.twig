@@ -11,22 +11,15 @@
 
     <div class="container-fluid">
         <div class="card">
+            <div class="card-header"> <h4>{{ contentPage.title }}</h4></div>
                 <!-- .card-body -->
                 <div class="card-body">
-                <h1 class="card-title"> 
 
-                    <div class="tile tile-img tile-lg">
-                            <img src="Logo_Vika.png" alt="" style="height: 35px;width: auto;" >
 
-                    </div>
-                    <h2>{{ contentPage.title }}</h2>
-                </h1>
                 <h6 class="card-subtitle mb-2 text-muted"> {{ contentPage.subtitle }} </h6>
                     <div class="content">
                 <p class="card-text">
-
                         {{ contentPage.content| raw }}
-                    <time datetime="2018-02-12">Feb 12, 2018 at 08:19pm</time>
                 </p>
                         {% if (is_granted('ROLE_ADMIN')) %}
                             <div align="right" > <a class="btn btn-primary btn-md" href="{{ path('home_pageedit', {'path':contentPage.path}) }}" role="button">Editer</a></div>

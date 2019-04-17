@@ -107,7 +107,6 @@ class User
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\UserConnected", inversedBy="users")
-     * @ORM\JoinColumn(nullable=true)
      */
     private $userConnected;
 
