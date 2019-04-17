@@ -17,8 +17,9 @@
                                 <h2>Parcours du membre : {{ user.firstName }} {{ user.name }}</h2>
                             {% endif %}
                         {% else %}
-                            {# le userConnected consulte son propre profil #}
-                            {% if(app.user.id == app.request.get("id")) %}
+                            {# le userConnected consulte son propre profil.
+                            app.user = userConnected #}
+                            {% if(app.user.user.id == app.request.get("id")) %}
                                 <h2>Parcours personnel </h2>
                             {% else %}
                                 <h2>Parcours du membre : {{ user.firstName }} {{ user.name }}</h2>

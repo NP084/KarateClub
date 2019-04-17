@@ -18,7 +18,7 @@
                             {% endif %}
                         {% else %}
                             {# le userConnected consulte son propre profil #}
-                            {% if(app.user.id == app.request.get("id")) %}
+                            {% if(app.user.user.id == app.request.get("id")) %}
                                 <h2>Activités personnelles </h2>
                             {% else %}
                                 <h2>Activités du membre : {{ user.firstName }} {{ user.name }}</h2>
