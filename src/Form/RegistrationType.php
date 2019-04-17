@@ -20,7 +20,7 @@ class RegistrationType extends AbstractType
             ->add('firstname')
             ->add('email')
             ->add('birthday', DateType::class, [
-                'years' => range(1900, date('Y')-4),
+                'years' => range(1900, date('Y')-14),
                 'format' => 'dd-MM-yyyy',
             ])
             ->add('password', PasswordType::class)

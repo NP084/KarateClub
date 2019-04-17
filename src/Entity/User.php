@@ -135,6 +135,10 @@ class User
      */
     private $birthdate;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Notification", mappedBy="user")
+     */
+    private $notifications;
 
 
     public function __construct()
@@ -149,6 +153,7 @@ class User
         $this->contactLists = new ArrayCollection();
         $this->isActive = false;
         $this->createdUs = new \DateTime();
+        $this->notifications = new ArrayCollection();
     }
 
     public function setImageName(?string $imageName): void
@@ -515,6 +520,34 @@ class User
     public function setBirthdate(\DateTimeInterface $birthdate): self
     {
         $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            $notification->removeUser($this);
+        }
 
         return $this;
     }

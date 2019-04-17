@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
-
     {#    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}#}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
         {# vérifie si l'id du visiteur correspond à l'id du membre qu'il veut consulter #}
