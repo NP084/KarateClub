@@ -8,6 +8,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AttachedFileRepository")
+ * @Vich\Uploadable
  */
 class AttachedFile
 {
@@ -24,16 +25,28 @@ class AttachedFile
     private $title;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="text")
      */
-    private $addDate;
+    private $description;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    private $datecreat;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * @Vich\UploadableField(mapping="document_picture", fileNameProperty="title")
+     * @Vich\UploadableField(mapping="document_picture", fileNameProperty="docname")
      * @var File
      */
     private $docFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $docname;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="attachedFiles")
@@ -59,18 +72,6 @@ class AttachedFile
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getAddDate(): ?\DateTimeInterface
-    {
-        return $this->addDate;
-    }
-
-    public function setAddDate(\DateTimeInterface $addDate): self
-    {
-        $this->addDate = $addDate;
 
         return $this;
     }
@@ -116,6 +117,40 @@ class AttachedFile
     public function getDocFile(): ?File
     {
         return $this->docFile;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDocname(): ?string
+    {
+        return $this->docname;
+    }
+
+    public function setDocname(?string $docname): void
+    {
+        $this->docname = $docname;
+    }
+
+    public function getDatecreat(): ?\DateTimeInterface
+    {
+        return $this->datecreat;
+    }
+
+    public function setDatecreat(\DateTimeInterface $datecreat): self
+    {
+        $this->datecreat = $datecreat;
+
+        return $this;
     }
 
 }
