@@ -80,6 +80,11 @@
                                                             <span class="sr-only">Activités</span>
                                                         </a>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('admin_family',{'id': user.id}) }}">
+                                                            <i class="oi oi-people"></i>
+                                                            <span class="sr-only">Famille</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
                                                            href="{{ path('admin_document', {'id': user.user.id}) }}"><i
                                                                     class="oi oi-document"></i>
                                                             <span class="sr-only">Documents</span>

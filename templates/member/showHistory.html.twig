@@ -46,15 +46,13 @@
                                                     <td>{{ history.refDate |date('d/m/Y') }}</td>
                                                     <td>{{ history.category.title }}</td>
                                                     {% if (is_granted('ROLE_ADMIN')) %}
-                                                        <td class="align-middle">
+                                                        <td class="align-middle text-right">
                                                             <a class="btn btn-sm btn-icon btn-secondary"
                                                                href="{{ path('admin_history_edit',{'id': user.id, 'idHist':history.id}) }}">
                                                                 <i class="fa fa-pencil">
                                                                 </i>
                                                                 <span class="sr-only">Modifier</span>
                                                             </a>
-                                                        </td>
-                                                        <td>
                                                             <a class="btn btn-sm btn-icon btn-secondary"
                                                                href="{{ path('remove_history_admin',{'id':history.id, 'idUser':user.id}) }}">
                                                                 <i class="fa fa-trash-o">
