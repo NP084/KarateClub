@@ -26,7 +26,7 @@ class LoadSiteController extends AbstractController
         // $this->loadContent($entityManager);
         $this->loadGallery($entityManager);
 
-        return $this->redirectToRoute('home_page',['path'=>'accueil']);
+        return $this->redirectToRoute('home_page', ['path' => 'accueil']);
     }
 
     public function loadCountry(ObjectManager $entityManager)
@@ -49,18 +49,111 @@ class LoadSiteController extends AbstractController
     public function loadGallery(ObjectManager $manager)
     {
         $gallery = new Gallery();
+        $gallery->setName('Rencontre 2014 Aikido, Tai Jitsu')
+            ->setDescription('');
+
+        for ($k = 1; $k <= 5; $k++) {
+            $media = new Media();
+            $media->setImageName("c{$k}.jpg");
+            $media->setUpdatedImage(new \DateTime());
+            $gallery->addMedium($media);
+            $manager->persist($media);
+        }
+        $manager->persist($gallery);
+
+        $gallery = new Gallery();
+        $gallery->setName('Stage 2014 de Christian Claus organisé par Vika')
+            ->setDescription('');
+
+        for ($k = 1; $k <= 7; $k++) {
+            $media = new Media();
+            $media->setImageName("b{$k}.jpg");
+            $media->setUpdatedImage(new \DateTime());
+            $gallery->addMedium($media);
+            $manager->persist($media);
+        }
+        $manager->persist($gallery);
+
+        $gallery = new Gallery();
+        $gallery->setName('Assemblée générale du 25 novembre 2015 et remise de ceintures')
+            ->setDescription('');
+
+        for ($k = 1; $k <= 3; $k++) {
+            $media = new Media();
+            $media->setImageName("d{$k}.jpg");
+            $media->setUpdatedImage(new \DateTime());
+            $gallery->addMedium($media);
+            $manager->persist($media);
+        }
+        $manager->persist($gallery);
+
+        $gallery = new Gallery();
+        $gallery->setName('Coupe d\'honneur de la ligue (22/02)')
+            ->setDescription('');
+
+        for ($k = 1; $k <= 2; $k++) {
+            $media = new Media();
+            $media->setImageName("e{$k}.jpg");
+            $media->setUpdatedImage(new \DateTime());
+            $gallery->addMedium($media);
+            $manager->persist($media);
+        }
+        $manager->persist($gallery);
+
+        $gallery = new Gallery();
+        $gallery->setName('Stage Pierre Blot 04/04/2015')
+            ->setDescription('');
+
+        for ($k = 1; $k <= 9; $k++) {
+            $media = new Media();
+            $media->setImageName("_photo {$k}.jpg");
+            $media->setUpdatedImage(new \DateTime());
+            $gallery->addMedium($media);
+            $manager->persist($media);
+        }
+        $manager->persist($gallery);
+
+        $gallery = new Gallery();
+        $gallery->setName('Passage Ceintures Noires de Juin 2016')
+            ->setDescription('');
+
+        for ($k = 1; $k <= 4; $k++) {
+            $media = new Media();
+            $media->setImageName("photos {$k}.jpg");
+            $media->setUpdatedImage(new \DateTime());
+            $gallery->addMedium($media);
+            $manager->persist($media);
+        }
+        $manager->persist($gallery);
+
+        $gallery = new Gallery();
+        $gallery->setName('Stage H.Delage 2017')
+            ->setDescription('');
+
+        for ($k = 1; $k <= 32; $k++) {
+            $media = new Media();
+//            pas de photo 27
+            if ($k != 27) {
+                $media->setImageName("photo {$k}.jpg");
+                $media->setUpdatedImage(new \DateTime());
+                $gallery->addMedium($media);
+                $manager->persist($media);
+            }
+        }
+
+        $gallery = new Gallery();
         $gallery->setName('Rentrée Baby 2017/2018')
             ->setDescription('');
 
-        for ($k=1; $k<=6; $k++){
+        for ($k = 1; $k <= 6; $k++) {
             $media = new Media();
             $media->setImageName("{$k}.png");
             $media->setUpdatedImage(new \DateTime());
             $gallery->addMedium($media);
-
             $manager->persist($media);
         }
         $manager->persist($gallery);
+
         $manager->flush();
     }
 

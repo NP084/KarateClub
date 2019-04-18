@@ -39,9 +39,15 @@ class Gallery
      */
     private $media;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdGal;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
+        $this->createdGal = new \DateTime();
     }
 
     public function getId(): ?int
@@ -100,6 +106,18 @@ class Gallery
                 $medium->setGallery(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedGal(): ?\DateTimeInterface
+    {
+        return $this->createdGal;
+    }
+
+    public function setCreatedGal(\DateTimeInterface $createdGal): self
+    {
+        $this->createdGal = $createdGal;
 
         return $this;
     }

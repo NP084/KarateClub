@@ -411,7 +411,7 @@ class MemberController extends AbstractController
      * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
      * @Route("/admin-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC_admin", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
-     * @Security("has_role('ROLE_ADMIN') or user.getUser().getId() == contactList.getUser().getId()")
+     * @Security("has_role('ROLE_ADMIN') or user.getUser().getId() == contactList.getUser().getuserConnected().getUser().getId()")
      */
     public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
@@ -443,6 +443,7 @@ class MemberController extends AbstractController
 
     /**
      * @Route("/admin-id={id}-idReg={idReg}-registration-edit", name="admin_registration_edit",  requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editRegistration(User $user, $idReg, Request $request, ObjectManager $manager)
     {
@@ -487,6 +488,7 @@ class MemberController extends AbstractController
     /**
      * Supprime une ligne des inscriptions de contact.
      * @Route("/admin-remove_registration-id={id}-idUser={idUser}", name="remove_registration_admin", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function removeRegistration($id, $idUser)
     {
@@ -505,6 +507,7 @@ class MemberController extends AbstractController
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/member-family-{id}", name="view_family")
      * @Route("/admin-family-{id}", name="admin_family")
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
     public function indexFamily(UserConnected $userConnected)
     {
@@ -526,7 +529,6 @@ class MemberController extends AbstractController
             'user' => $user
         ]);
     }
-
 
     /**
      * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
@@ -551,9 +553,7 @@ class MemberController extends AbstractController
     }
 
 
-
-
-    /**
+/*    /**
      * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history", name="admin_reset_password",  requirements={"id"="\d+"})
      */

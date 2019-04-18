@@ -21,7 +21,12 @@ class GaleriephotoController extends AbstractController
      */
     public function index(GalleryRepository $repo)
     {
-        $galleries = $repo->findAll();
+        //Affiche les galeries dans l'ordre décroissant de leur création (nouveaux en haut)
+        $galleries = $repo->findBy(
+            [ ],
+            ['createdGal'=>'DESC']
+        );
+       // $galleries = $repo->findAll();
         return $this->render('galeriephoto/index.html.twig', [
             'galleries'=>$galleries,
         ]);
