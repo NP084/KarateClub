@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GalleryRepository")
@@ -14,7 +16,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *  fields={"name"},
  *  message="Cette galerie existe déjà !"
  * )
+ * @Vich\Uploadable
  */
+
 class Gallery
 {
     /**
@@ -40,9 +44,52 @@ class Gallery
     private $media;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
      */
-    private $createdGal;
+    private $avatarName;
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * @Vich\UploadableField(mapping="avatar_galerie_picture", fileNameProperty="avatarName")
+     * @var File
+     */
+    private $imageFile;
+
+
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    private $dateCreat;
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->dateCreat = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+
 
     public function __construct()
     {
@@ -110,14 +157,25 @@ class Gallery
         return $this;
     }
 
-    public function getCreatedGal(): ?\DateTimeInterface
+    public function getAvatarName(): ?string
     {
-        return $this->createdGal;
+        return $this->avatarName;
     }
 
-    public function setCreatedGal(\DateTimeInterface $createdGal): self
+    public function setAvatarName(?string $avatarName): void
     {
-        $this->createdGal = $createdGal;
+        $this->avatarName = $avatarName;
+
+    }
+
+    public function getDateCreat(): ?\DateTimeInterface
+    {
+        return $this->dateCreat;
+    }
+
+    public function setDateCreat(?\DateTimeInterface $dateCreat): self
+    {
+        $this->dateCreat = $dateCreat;
 
         return $this;
     }
