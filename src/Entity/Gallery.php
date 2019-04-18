@@ -65,6 +65,11 @@ class Gallery
     private $dateCreat;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdGal;
+
+    /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -176,6 +181,18 @@ class Gallery
     public function setDateCreat(?\DateTimeInterface $dateCreat): self
     {
         $this->dateCreat = $dateCreat;
+
+        return $this;
+    }
+
+    public function getCreatedGal(): ?\DateTimeInterface
+    {
+        return $this->createdGal;
+    }
+
+    public function setCreatedGal(\DateTimeInterface $createdGal): self
+    {
+        $this->createdGal = $createdGal;
 
         return $this;
     }
