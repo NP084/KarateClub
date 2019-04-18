@@ -26,7 +26,7 @@ class LoadSiteController extends AbstractController
         // $this->loadContent($entityManager);
         $this->loadGallery($entityManager);
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('home_page',['path'=>'accueil']);
     }
 
     public function loadCountry(ObjectManager $entityManager)
@@ -49,22 +49,18 @@ class LoadSiteController extends AbstractController
     public function loadGallery(ObjectManager $manager)
     {
         $gallery = new Gallery();
-        $gallery->setName('Rentrèe Baby 2017/2018')
+        $gallery->setName('Rentrée Baby 2017/2018')
             ->setDescription('');
-        $manager->persist($gallery);
-        $media = new Media();
-        $media->setImageName('1.png');
-        $media->setUpdatedImage(new \DateTime());
-        $media->setGallery($gallery);
 
-/*        for ($k=1; $k=6; $k++){
+        for ($k=1; $k<=6; $k++){
             $media = new Media();
-            $i = "$k. 'png'";
-            $media->setImageName($i);
+            $media->setImageName("{$k}.png");
             $media->setUpdatedImage(new \DateTime());
-            $media->getGallery($gallery);
-        }*/
-        $manager->persist($media);
+            $gallery->addMedium($media);
+
+            $manager->persist($media);
+        }
+        $manager->persist($gallery);
         $manager->flush();
     }
 
