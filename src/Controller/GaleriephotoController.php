@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class GaleriephotoController extends AbstractController
@@ -34,7 +35,8 @@ class GaleriephotoController extends AbstractController
 
     /**
      * Supprime la galerie photo.
-     * @Route("/gallery-delete-{id}", name="gallery_delete")
+     * @Route("/gallery-delete-{id}", name="gallery_delete", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function GalleryDelete($id){
         $em = $this->getDoctrine()->getEntityManager();
@@ -49,6 +51,7 @@ class GaleriephotoController extends AbstractController
     /**
      * @Route("/gallery-new", name="galeriephoto_create")
      * @Route("/gallery-{id}-edit", name="gallery_edit", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function form(Gallery $galerie = null, Request $request, ObjectManager $manager)
     {
@@ -89,7 +92,7 @@ class GaleriephotoController extends AbstractController
     }
 
     /**
-     * @Route("/gallery-view-{id}", name="gallery_show")
+     * @Route("/gallery-view-{id}", name="gallery_show", requirements={"idCL"="\d+"})
      */
     public function galerieShow(Gallery $galerie,Request $request){
 

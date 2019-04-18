@@ -8,13 +8,15 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class HomePageController extends AbstractController
 {
 
     /**
      * @Route("/admin-edit-{path}", name="home_pageedit")
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager)
     {

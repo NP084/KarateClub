@@ -12,14 +12,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\EncadrementType;
 use App\Entity\Encadrement;
 use App\Repository\EncadrementRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 
 class VikaController extends AbstractController
 {
     /**
-     * @Route("/admin-vika-encadrement-new", name="encadrement_create")
-     * @Route("/admin-vika-encadrement-{id}-edit", name="encadrement_edit", requirements={"id"="\d+"})
+     * @Route("/vika-encadrement-new", name="encadrement_create")
+     * @Route("/vika-encadrement-{id}-edit", name="encadrement_edit", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function form(Encadrement $personne=null, Request $request, ObjectManager $manager ){
 
@@ -47,7 +49,8 @@ class VikaController extends AbstractController
 
     /**
      * Supprime l'entraineur.
-     * @Route("/admin-vika-encadrement-delete-{id}", name="encadrement_delete", requirements={"id"="\d+"})
+     * @Route("/vika-encadrement-delete-{id}", name="encadrement_delete", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function EncadrementDelete($id){
         $em = $this->getDoctrine()->getEntityManager();
@@ -61,7 +64,7 @@ class VikaController extends AbstractController
 
 
     /**
-     * @Route("/vika-page-{path}", name="encadrement_index")
+     * @Route("/vika%page-{path}", name="encadrement_index")
      */
     public function vikaEncadrement(EncadrementRepository $repo, ContentPage $contentPage){
 
@@ -74,8 +77,8 @@ class VikaController extends AbstractController
     }
 
     /**
-     * @Route("/admin-vika-{path}-edit", name="VikaContentEdit")
-     *
+     * @Route("/vika-{path}-edit", name="VikaContentEdit")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager ){
 

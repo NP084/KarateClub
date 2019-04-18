@@ -10,12 +10,15 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class AdminVikaController extends AbstractController
 {
     /**
      * LISTE DE TOUS LES UTILISATEURS DU SITE
-     * @Route("/admin-vikaUsers-{orderby}", name="admin_users")
+     * @Route("/vikaUsers-{orderby}", name="admin_users")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function index(UserConnectedRepository $repo, $orderby)
     {
@@ -31,7 +34,8 @@ class AdminVikaController extends AbstractController
 
     /**
      * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
-     * @Route("/admin-picture_member-{id}", name="admin_picture_user")
+     * @Route("/picture%member-{id}", name="admin_picture_user", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function form(User $user, Request $request, ObjectManager $manager){
 

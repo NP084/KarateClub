@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use App\Repository\ArticleRepository;
 use App\Form\ArticleType;
@@ -45,7 +46,8 @@ class BlogController extends Controller//AbstractController
 
     /**
     * @Route("/blog-new", name="blog_create")
-    * @Route("/blog-{id}-edit", name="blog_edit")
+    * @Route("/blog-{id}-edit", name="blog_edit", requirements={"id"="\d+"})
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function form(Article $article=null, Request $request, ObjectManager $manager){
 
@@ -74,7 +76,8 @@ class BlogController extends Controller//AbstractController
 
     /**
      * Supprime l'article.
-     * @Route("/blog-delete-{id}", name="blog_delete")
+     * @Route("/blog-delete-{id}", name="blog_delete", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function EncadrementDelete($id){
         $em = $this->getDoctrine()->getEntityManager();
@@ -86,7 +89,7 @@ class BlogController extends Controller//AbstractController
     }
 
     /**
-    * @Route("/blog-{id}", name="blog_show")
+    * @Route("/blog-{id}", name="blog_show", requirements={"id"="\d+"})
     */
     public function show(Article $article, Request $request, ObjectManager $manager){
 

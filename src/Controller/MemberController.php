@@ -45,7 +45,6 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-edit", name="admin_edit",  requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == user.getId()")
      */
     public function profileEdit(User $user, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
@@ -118,7 +117,6 @@ class MemberController extends AbstractController
                 return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
             }
         }
-
         return $this->render('member/editProfile.html.twig', [
             'user' => $user,
             'formUser' => $formUser->createView(),
@@ -175,13 +173,23 @@ class MemberController extends AbstractController
         $phone = $entityManager->getRepository(Phone::class)->find($idPhone);
         $user = $entityManager->getRepository(User::class)->find($idUser);
 
-        $phone->removeUser($user);
-        $entityManager->flush();
+        $usr=$this->getUser();
+    //la personne connectée = l'id du parent du user pour lequel on supprime le téléphone
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
+            or $usr->getId() == $user->getUserConnected()->getId()){
 
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
-        } else {
-            return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+            $phone->removeUser($user);
+            $entityManager->flush();
+
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+            } else {
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+            }
+        }
+        else{
+            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+
         }
     }
 
@@ -197,13 +205,22 @@ class MemberController extends AbstractController
 
         $adress = $entityManager->getRepository(Adress::class)->find($idAdress);
 
-        $user->removeAdress($adress);
-        $entityManager->flush();
+        $usr=$this->getUser();
+        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
+            or $usr->getId() == $user->getUserConnected()->getId()){
 
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
-        } else {
-            return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+            $user->removeAdress($adress);
+            $entityManager->flush();
+
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+            } else {
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+            }
+        }
+        else{
+            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
         }
     }
 
@@ -256,6 +273,7 @@ class MemberController extends AbstractController
     /**
      * @Route("/admin-id={id}-idHist={idHist}-history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history-new", name="admin_history_new",  requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editHistory(User $user, $idHist = null, Request $request, ObjectManager $manager)
     {
@@ -285,12 +303,19 @@ class MemberController extends AbstractController
      * @Route("/member-id={id}-history", name="profile_history", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history", name="admin_history",  requirements={"id"="\d+"})
      */
-    public function showHistory(User $user)
+    public function showHistory(User $user, AuthorizationCheckerInterface $authChecker)
     {
-        return $this->render('member/showHistory.html.twig', [
-            'user' => $user
-        ]);
-
+        $usr=$this->getUser();
+        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
+            or $usr->getId() == $user->getUserConnected()->getId()){
+            return $this->render('member/showHistory.html.twig', [
+                'user' => $user
+            ]);
+        }
+        else{
+            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        }
     }
 
     public function addHistory(User $user, History $newHistory = null, ObjectManager $manager)
@@ -327,6 +352,7 @@ class MemberController extends AbstractController
     /**
      * Supprime une ligne d'historique de contact.
      * @Route("/admin-remove_history-id={id}-idUser={idUser}", name="remove_history_admin", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function removeHistory($id, $idUser)
     {
@@ -338,7 +364,6 @@ class MemberController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('admin_history', ['id' => $user->getId()]);
-
     }
 
     /**
@@ -352,13 +377,22 @@ class MemberController extends AbstractController
         $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
         $user = $entityManager->getRepository(User::class)->find($idUser);
 
-        $user->removeContactList($contactList);
-        $entityManager->flush();
+        $usr=$this->getUser();
+        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
+            or $usr->getId() == $user->getUserConnected()->getId()){
 
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
-        } else {
-            return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+            $user->removeContactList($contactList);
+            $entityManager->flush();
+
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+            } else {
+                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+            }
+        }
+        else{
+            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
         }
     }
 
@@ -415,8 +449,6 @@ class MemberController extends AbstractController
      */
     public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
-        //* @Security("user.getUser().getId() == contactList.getUser().getId()")
-
         $entityManager = $this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->find($id);
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
@@ -433,7 +465,6 @@ class MemberController extends AbstractController
                 return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
             }
         }
-
         return $this->render('member/editPersonOfContact.html.twig', [
             'contactList' => $contactList,
             'ContactListForm' => $formCL->createView(),
@@ -469,11 +500,20 @@ class MemberController extends AbstractController
      * @Route("/member-id={id}-registration", name="member_registration", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-registration", name="admin_registration",  requirements={"id"="\d+"})
      */
-    public function showRegistration(User $user)
+    public function showRegistration(User $user, AuthorizationCheckerInterface $authChecker)
     {
-        return $this->render('member/showRegistrations.html.twig', [
-            'user' => $user
-        ]);
+        $usr=$this->getUser();
+        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
+            or $usr->getId() == $user->getUserConnected()->getId()){
+
+            return $this->render('member/showRegistrations.html.twig', [
+                'user' => $user
+            ]);
+        }
+        else{
+            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        }
     }
 
     public function addRegistration(User $user, Registration $newRegistration, ObjectManager $manager)
@@ -505,8 +545,8 @@ class MemberController extends AbstractController
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/member-family-{id}", name="view_family")
-     * @Route("/admin-family-{id}", name="admin_family")
+     * @Route("/member-family-{id}", name="view_family", requirements={"idCL"="\d+"})
+     * @Route("/admin-family-{id}", name="admin_family", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
     public function indexFamily(UserConnected $userConnected)
@@ -523,33 +563,51 @@ class MemberController extends AbstractController
      * @Route("/member-id={id}-document", name="member_document", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
      */
-    public function showDocument(User $user)
+    public function showDocument(User $user, AuthorizationCheckerInterface $authChecker)
     {
-        return $this->render('member/showDocument.html.twig', [
-            'user' => $user
-        ]);
+        $usr=$this->getUser();
+        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
+            or $usr->getId() == $user->getUserConnected()->getId()){
+
+            return $this->render('member/showDocument.html.twig', [
+                'user' => $user
+            ]);
+        }
+        else{
+            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        }
     }
 
     /**
      * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
-     * @Route("/member-document-{id}", name="load_member_document")
-     * @Route("/admin-document-{id}", name="load_admin_document")
+     * @Route("/member-document-{id}", name="load_member_document", requirements={"idCL"="\d+"})
+     * @Route("/admin-document-{id}", name="load_admin_document", requirements={"idCL"="\d+"})
      */
-    public function form(User $user, Request $request, ObjectManager $manager){
+    public function form(User $user, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker){
 
-        $form = $this->createForm(DocumentType::class, $user);
-        $form->handleRequest($request);
+        $usr=$this->getUser();
+        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
+            or $usr->getId() == $user->getUserConnected()->getId()){
 
-        if ($form->isSubmitted() && $form->isValid()){
-            $manager->persist($user);
-            $manager->flush();
-            return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
+            $form = $this->createForm(DocumentType::class, $user);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()){
+                $manager->persist($user);
+                $manager->flush();
+                return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
+            }
+
+            return $this->render('member/documentEdit.html.twig', [
+                'formPicture'=>$form->createView(),
+                'editMode'=> $user->getImageName()!==null
+            ]);
         }
-
-        return $this->render('member/documentEdit.html.twig', [
-            'formPicture'=>$form->createView(),
-            'editMode'=> $user->getImageName()!==null
-        ]);
+        else{
+            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        }
     }
 
 
