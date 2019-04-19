@@ -140,6 +140,11 @@ class User
      */
     private $notifications;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $fedNum;
+
 
     public function __construct()
     {
@@ -548,6 +553,18 @@ class User
             $this->notifications->removeElement($notification);
             $notification->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getFedNum(): ?string
+    {
+        return $this->fedNum;
+    }
+
+    public function setFedNum(?string $fedNum): self
+    {
+        $this->fedNum = $fedNum;
 
         return $this;
     }

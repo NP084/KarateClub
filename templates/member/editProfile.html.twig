@@ -128,9 +128,17 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
+                                    <p> Numéro de fédération
+                                        : {{ user.fedNum }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
                                     {% if (user.belt) %}
                                         <h4> Grade</h4>
-                                        <p> Grade : {{ user.belt }} reçu
+                                        <p>{{ user.belt }} reçu
                                             le {{ user.receiptDate |date('d/m/Y') }}</p>
                                     {% endif %}
                                 </div>
@@ -158,9 +166,16 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
+                                    <p>Numéro de fédération  : {{ user.fedNum }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
                                     {% if (user.belt) %}
                                         <h4> Grade</h4>
-                                        <p> Grade : {{ user.belt }} reçu
+                                        <p>{{ user.belt }} reçu
                                             le {{ user.receiptDate |date('d/m/Y') }}</p>
                                     {% endif %}
                                 </div>
@@ -178,7 +193,7 @@
                                 <div class="form-group">
                                     {% if (is_granted('ROLE_ADMIN')) %}
                                         <a class="btn btn-link"
-                                           href="{{ path('admin_show',{'id':user.userConnected.user.id}) }}">
+                                           href="{{ path('admin_show', {'id':user.userConnected.user.id}) }}">
                                             <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
                                             <span class="sr-only">Voir le profil</span>
                                         </a>
@@ -196,6 +211,13 @@
                             <div class="col">
                                 <div class="form-group">
                                     <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Email : {{ user.userConnected.user.fedNum }} </p>
                                 </div>
                             </div>
                         </div>
@@ -220,169 +242,11 @@
                     {% endif %}
                 </div>
             </div>
-
-
-            {#
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="user-avatar user-avatar-xl fileinput-button">
-                                            {% if (is_granted('ROLE_ADMIN')) %}
-                                                <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('admin_picture_user', {'id':user.id}) }}">
-                                                    <div class="fileinput-button-label"> Change photo</div>
-                                                    <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
-                                                         alt="{{ user.imageFile }}" name="avatar"
-                                                         width="150"/>
-                                                </a>
-                                            {% else %}
-                                                {% if (user.ownerUser.id == app.user.id ) %}
-                                                    <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
-                                                         alt="{{ user.imageFile }}" name="avatar"
-                                                         width="150"/>
-                                                {% endif %}
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                {% if (user.ownerUser and user.ownerUser.id == app.user.id) %}
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <h3>{{ user.userConnected.name }} {{ user.userConnected.firstName }} </h3>
-                                                <div class="metadata">Inscrit sur le site depuis
-                                                    : {{ user.userConnected.createdUser |date('d/m/Y') }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <h3> Informations générales :</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <p> Email : {{ user.userConnected.email }} </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <p> Date de naissance : {{ user.userConnected.birthday |date('d/m/Y') }} </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <a class="btn btn-link" href="{{ path('app_forgotten_password') }}"
-                                                   target="_self"
-                                                   class="btn-btn-primary">Modifier mot de passe</a>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                {% else %}
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <h3>{{ user.name }} {{ user.firstName }} </h3>
-                                                <div class="metadata">Inscrit sur le site depuis
-                                                    : {{ user.createdUs |date('d/m/Y') }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <p> Date de naissance : {{ user.birthdate |date('d/m/Y') }} </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                {% if (user.belt) %}
-                                                    <h4> Grade</h4>
-                                                    <p> Grade : {{ user.belt }} reçu
-                                                        le {{ user.receiptDate |date('d/m/Y') }}</p>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <h3> Informations sur le "tuteur"</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                {% if (is_granted('ROLE_ADMIN')) %}
-                                                    <a class="btn btn-link" href="{{ path('admin_show',{'id':user.userConnected.user.id}) }}">
-                                                        <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
-                                                        <span class="sr-only">Voir le profil</span>
-                                                    </a>
-                                                {% else %}
-                                                    <a class="btn btn-link"
-                                                       href="{{ path('profile_show',{'id':user.userConnected.user.id}) }}">
-                                                        <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
-                                                        <span class="sr-only">Voir le profil</span>
-                                                    </a>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <p> Email : {{ user.userConnected.email }} </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                {% for phone in user.userConnected.user.phones %}
-                                                    <p>  {{ phone.type }}
-                                                        {{ phone.num }}
-                                                    </p>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                {% endif %}
-                            </div>
-                        </div>
-            #}
         </div>
     </div>
+
+
+
     {% if (is_granted('ROLE_ADMIN')) %}
         {{ form_start(formUser) }}
         <div class="container-fluid">
@@ -391,25 +255,24 @@
                     <h2> Modification des données personnelles </h2>
                     <div class="card">
                         <div class="card-body">
-                            {#
-                                                            <div class="row">
-                                                                <div class="col-4">
-                                                                    <div class="form-group">
-                                                                        {{ form_widget(formUser.imageFile) }}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                            #}
                             <div class="row">
-                                <div class="col-2">
+                                <div class="col-4">
                                     <div class="form-group">
+                                        {{ form_label(formUser.sex, 'Genre') }}
                                         {{ form_widget(formUser.sex) }}
-
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-2">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        {{ form_label(formUser.fedNum, 'Numéro de fédération') }}
+                                        {{ form_widget(formUser.fedNum) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
                                     <div class="form-group">
                                         {{ form_label(formUser.belt, 'Grade') }}
                                         {{ form_widget(formUser.belt) }}
@@ -417,7 +280,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-4">
                                     <div class="form-group">
                                         {{ form_label(formUser.receiptDate, 'Date de réception') }}
                                         {{ form_widget(formUser.receiptDate, { attr:{ class:'js-datepicker' } }) }}
@@ -425,7 +288,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-outline-info">
                                             Enregister modification(s)
