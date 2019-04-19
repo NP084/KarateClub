@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adress;
+use App\Entity\AttachedFile;
 use App\Entity\Category;
 use App\Entity\City;
 use App\Entity\ContactList;
@@ -533,15 +534,18 @@ class MemberController extends AbstractController
      * @Route("/member-document-{id}", name="load_member_document")
      * @Route("/admin-document-{id}", name="load_admin_document")
      */
-    public function form(User $user, Request $request, ObjectManager $manager){
+    public function form(User $user, AttachedFile $attachedFiles, Request $request, ObjectManager $manager){
 
-        $form = $this->createForm(DocumentType::class, $user);
+        $form = $this->createForm(DocumentType::class, $attachedFiles);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
             $manager->persist($user);
             $manager->flush();
-            return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
+            return $this->redirectToRoute('admin_edit', [
+              'id'=>$user->getId(),
+              'doc'=>$attachedFiles->getId()
+            ]);
         }
 
         return $this->render('member/documentEdit.html.twig', [
