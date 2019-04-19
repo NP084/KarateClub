@@ -45,6 +45,47 @@ class Registration
      */
     private $vikaEvent;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $minor;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $medical_care;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $image_diffusion;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $gdpr;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $condition_registration;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $tarif_profil;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PriceList", cascade={"persist", "remove"})
+     */
+    private $profil_tarif;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserConnected", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userconnected_id;
+
 
     public function __construct()
     {
@@ -132,6 +173,102 @@ class Registration
     public function setVikaEvent(?VikaEvent $vikaEvent): self
     {
         $this->vikaEvent = $vikaEvent;
+
+        return $this;
+    }
+
+    public function getMinor(): ?bool
+    {
+        return $this->minor;
+    }
+
+    public function setMinor(?bool $minor): self
+    {
+        $this->minor = $minor;
+
+        return $this;
+    }
+
+    public function getMedicalCare(): ?bool
+    {
+        return $this->medical_care;
+    }
+
+    public function setMedicalCare(?bool $medical_care): self
+    {
+        $this->medical_care = $medical_care;
+
+        return $this;
+    }
+
+    public function getImageDiffusion(): ?bool
+    {
+        return $this->image_diffusion;
+    }
+
+    public function setImageDiffusion(?bool $image_diffusion): self
+    {
+        $this->image_diffusion = $image_diffusion;
+
+        return $this;
+    }
+
+    public function getGdpr(): ?bool
+    {
+        return $this->gdpr;
+    }
+
+    public function setGdpr(?bool $gdpr): self
+    {
+        $this->gdpr = $gdpr;
+
+        return $this;
+    }
+
+    public function getConditionRegistration(): ?bool
+    {
+        return $this->condition_registration;
+    }
+
+    public function setConditionRegistration(bool $condition_registration): self
+    {
+        $this->condition_registration = $condition_registration;
+
+        return $this;
+    }
+
+    public function getTarifProfil(): ?int
+    {
+        return $this->tarif_profil;
+    }
+
+    public function setTarifProfil(int $tarif_profil): self
+    {
+        $this->tarif_profil = $tarif_profil;
+
+        return $this;
+    }
+
+    public function getProfilTarif(): ?PriceList
+    {
+        return $this->profil_tarif;
+    }
+
+    public function setProfilTarif(?PriceList $profil_tarif): self
+    {
+        $this->profil_tarif = $profil_tarif;
+
+        return $this;
+    }
+
+    public function getUserconnectedId(): ?UserConnected
+    {
+        return $this->userconnected_id;
+    }
+
+    public function setUserconnectedId(UserConnected $userconnected_id): self
+    {
+        $this->userconnected_id = $userconnected_id;
 
         return $this;
     }
