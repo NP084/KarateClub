@@ -39,7 +39,7 @@ class Encadrement
      */
     private $datecreat;
 
-        /**
+    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * @Vich\UploadableField(mapping="encadrement_picture", fileNameProperty="imagename")
      * @var File

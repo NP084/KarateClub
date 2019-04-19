@@ -53,7 +53,7 @@ class User
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="member")
-     * @ORM\OrderBy({"addDate" = "ASC"})
+     * @ORM\OrderBy({"datecreat" = "ASC"})
      */
     private $attachedFiles;
 
