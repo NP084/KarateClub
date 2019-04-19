@@ -48,6 +48,16 @@ class Status
      */
     private $registration;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $statut;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $remark;
+
     public function __construct()
     {
         $this->attachedFile = new ArrayCollection();
@@ -145,6 +155,30 @@ class Status
     public function setRegistration(?Registration $registration): self
     {
         $this->registration = $registration;
+
+        return $this;
+    }
+
+    public function getStatut(): ?int
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(int $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getRemark(): ?string
+    {
+        return $this->remark;
+    }
+
+    public function setRemark(?string $remark): self
+    {
+        $this->remark = $remark;
 
         return $this;
     }
