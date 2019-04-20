@@ -131,7 +131,7 @@ class User
     private $firstName;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $birthdate;
 
