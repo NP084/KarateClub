@@ -1,7 +1,7 @@
 {% extends 'base.html.twig'%}
 
 {% block Body %}
-    {% if (is_granted('ROLE_ADMIN')) %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
 
     <div class="container-fluid">
         <div class="row justify-content-center">
