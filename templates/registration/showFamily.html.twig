@@ -75,9 +75,19 @@
                                                         <td><b>{{ user.ownerUser.id }}</b></td>
                                                         <td><b>{{ user.ownerUser.name }}</b></td>
                                                         <td><b>{{ user.ownerUser.firstName }}</b></td>
+                                                        <td class="align-middle text-right">
+                                                            <a class="btn btn-outline-info" href="#">
+                                                                Inscrire
+                                                            </a>
+                                                        </td>
                                                     {% else %}
                                                         <td><b>{{ user.ownerUser.name }}</b></td>
                                                         <td><b>{{ user.ownerUser.firstName }}</b></td>
+                                                        <td class="align-middle text-right">
+                                                            <a class="btn btn-outline-info" href="#">
+                                                                Inscrire
+                                                            </a>
+                                                        </td>
                                                     {% endif %}
                                                     </tr>
                                                 {% else %}
@@ -87,6 +97,11 @@
                                                         {% endif %}
                                                         <td>{{ user.name }}</td>
                                                         <td>{{ user.firstName }}</td>
+                                                        <td class="align-middle text-right">
+                                                            <a class="btn btn-outline-info" href="#">
+                                                                Inscrire
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                 {% endif %}
                                             {% else %}
@@ -101,6 +116,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row justify-content-end">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-success" href="#">Ajouter un nouveau membre</button>
+                            </div>
+                     </div>
+            
                 </div>
             </div>
         </div>
