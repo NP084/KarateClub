@@ -18,7 +18,7 @@
                 <div class="user-avatar user-avatar-xl fileinput-button">
                     {% if (is_granted('ROLE_ADMIN')) %}
                         <a class="btn btn-sm btn-icon btn-secondary"
-                           href="{{ path('load_admin_document', {'id':user.id}) }}">
+                           href="{{ path('load_admin_document', {'idUser':user.id}) }}">
                             <div class="fileinput-button-label">Ajouter un document</div>
                             <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
                                  alt="{{ user.imageFile }}" name="avatar"
@@ -27,7 +27,7 @@
                     {% else %}
                         {% if (user.ownerUser.id == app.user.id ) %}
                             <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('load_member_document', {'id':user.id}) }}">
+                               href="{{ path('load_member_document', {'idUser':user.id}) }}">
                                 <div class="fileinput-button-label">Ajouter un document</div>
                                 <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
                                      alt="{{ user.imageFile }}" name="avatar"
@@ -78,7 +78,7 @@
         </table>
 
         {% if (is_granted('ROLE_ADMIN')) %}
-            <a class="btn btn-primary" href="{{ path('load_admin_document', {'id':user.id}) }}"
+            <a class="btn btn-primary" href="{{ path('load_admin_document', {'idUser':user.id}) }}"
                class="btn-btn-primary">
                 <b>Nouveau document</b>
             </a>
@@ -88,7 +88,7 @@
                 <b>Retour</b>
             </a>
         {% else %}
-            <a class="btn btn-primary" href="{{ path('load_member_document', {'id':user.id}) }}"
+            <a class="btn btn-primary" href="{{ path('load_member_document', {'idUser':user.id}) }}"
                class="btn-btn-primary">
                 <b>Nouveau document</b>
             </a>

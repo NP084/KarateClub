@@ -7,7 +7,7 @@ use App\Entity\AttachedFile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class DocumentType extends AbstractType
 {
@@ -16,8 +16,9 @@ class DocumentType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('docFile', VichImageType::class, [
-                'required'=> false
+            ->add('docFile', VichFileType::class, [
+                'required'=> false,
+                'allow_delete' => true,
             ]);
         ;
     }

@@ -576,29 +576,29 @@ class MemberController extends AbstractController
 
     /**
      * AJOUT/MODIFICATION DE DOCUMENTATION
-     * @Route("/member-id={id}-document-new", name="load_member_document")
-     * @Route("/admin-id={id}-document-new", name="load_admin_document")
-     * @Route("/member-id={id}-document-{idDoc}-edit", name="edit_member_document")
-     * @Route("/admin-id={id}-document-{idDoc}-edit", name="edit_admin_document")
+     * @Route("/member-idUser={idUser}-document-new", name="load_member_document")
+     * @Route("/admin-idUser={idUser}-document-new", name="load_admin_document")
+     * @Route("/member-idUser={idUser}-document-{id}-edit", name="edit_member_document")
+     * @Route("/admin-idUser={idUser}-document-{id}-edit", name="edit_admin_document")
      */
-    public function form(User $user, $idDoc = null, Request $request, AuthorizationCheckerInterface $authChecker)
+    public function form(AttachedFile $attachedFile = null, $idUser, Request $request, AuthorizationCheckerInterface $authChecker)
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
         $usr = $this->getUser();
         //la personne connectée = l'id du parent du user pour lequel on crée ou édite un doc
-       if (true === $authChecker->isGranted('ROLE_ADMIN')
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
             or $usr->getId() == $user->getUserConnected()->getId()) {
-            if (!$idDoc) {
-                $attachedFiles = new AttachedFile();
-            } else {
-                $entityManager = $this->getDoctrine()->getManager();
-                $attachedFiles = $entityManager->getRepository(AttachedFile::class)->find($idDoc);
-            }
 
-            $form = $this->createForm(DocumentType::class, $attachedFiles);
+            if (!$attachedFile) {
+                $attachedFile = new AttachedFile();
+            }
+            $form = $this->createForm(DocumentType::class, $attachedFile);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($attachedFiles);
+                $entityManager->persist($attachedFile);
                 $entityManager->flush();
 
                 if (true === $authChecker->isGranted('ROLE_ADMIN')) {
