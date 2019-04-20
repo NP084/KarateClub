@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adress;
+use App\Entity\AttachedFile;
 use App\Entity\Category;
 use App\Entity\City;
 use App\Entity\ContactList;
@@ -579,36 +580,30 @@ class MemberController extends AbstractController
         }
     }
 
-    /**
-     * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
-     * @Route("/member-document-{id}", name="load_member_document", requirements={"idCL"="\d+"})
-     * @Route("/admin-document-{id}", name="load_admin_document", requirements={"idCL"="\d+"})
-     */
-    public function form(User $user, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker){
+  /**
+ * AJOUT/MODIFICATION DE DOCUMENTATION
+ * @Route("/member-document-{id}", name="load_member_document")
+ * @Route("/admin-document-{id}", name="load_admin_document")
+ */
+public function form(User $user, AttachedFile $attachedFiles, Request $request, ObjectManager $manager){
 
-        $usr=$this->getUser();
-        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $user->getUserConnected()->getId()){
+    $form = $this->createForm(DocumentType::class, $attachedFiles);
+    $form->handleRequest($request);
 
-            $form = $this->createForm(DocumentType::class, $user);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()){
-                $manager->persist($user);
-                $manager->flush();
-                return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
-            }
-
-            return $this->render('member/documentEdit.html.twig', [
-                'formPicture'=>$form->createView(),
-                'editMode'=> $user->getImageName()!==null
-            ]);
-        }
-        else{
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
-        }
+    if ($form->isSubmitted() && $form->isValid()){
+        $manager->persist($user);
+        $manager->flush();
+        return $this->redirectToRoute('admin_edit', [
+          'id'=>$user->getId(),
+          'doc'=>$attachedFiles->getId()
+        ]);
     }
+
+    return $this->render('member/documentEdit.html.twig', [
+        'formPicture'=>$form->createView(),
+        'editMode'=> $user->getImageName()!==null
+    ]);
+}
 
 
 /*    /**

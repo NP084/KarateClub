@@ -53,7 +53,7 @@ class User
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="member")
-     * @ORM\OrderBy({"addDate" = "ASC"})
+     * @ORM\OrderBy({"datecreat" = "ASC"})
      */
     private $attachedFiles;
 
@@ -131,7 +131,7 @@ class User
     private $firstName;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $birthdate;
 
@@ -139,6 +139,11 @@ class User
      * @ORM\ManyToMany(targetEntity="App\Entity\Notification", mappedBy="user")
      */
     private $notifications;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $fedNum;
 
 
     public function __construct()
@@ -548,6 +553,18 @@ class User
             $this->notifications->removeElement($notification);
             $notification->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getFedNum(): ?string
+    {
+        return $this->fedNum;
+    }
+
+    public function setFedNum(?string $fedNum): self
+    {
+        $this->fedNum = $fedNum;
 
         return $this;
     }

@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -53,9 +54,10 @@ class UserType extends AbstractType
                     'Femme' => 'Femme',
                 ],
             ])
-           /* ->add('imageFile', VichImageType::class, [
-                'required'=> false
-            ])*/
+            ->add('fedNum', TextType::class)
+            /* ->add('imageFile', VichImageType::class, [
+                 'required'=> false
+             ])*/
            ;
     }
 

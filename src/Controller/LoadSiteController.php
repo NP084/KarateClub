@@ -21,9 +21,9 @@ class LoadSiteController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        // $this -> loadCategory($entityManager);
-        // $this -> loadCountry($entityManager);
-        // $this->loadContent($entityManager);
+         $this -> loadCategory($entityManager);
+         $this -> loadCountry($entityManager);
+        $this->loadContent($entityManager);
         $this->loadGallery($entityManager);
 
         return $this->redirectToRoute('home_page', ['path' => 'accueil']);
@@ -50,7 +50,9 @@ class LoadSiteController extends AbstractController
     {
         $gallery = new Gallery();
         $gallery->setName('Rencontre 2014 Aikido, Tai Jitsu')
-            ->setDescription('');
+            ->setDescription('')
+            ->setAvatarName('c1.jpg');
+
 
         for ($k = 1; $k <= 5; $k++) {
             $media = new Media();
@@ -63,7 +65,8 @@ class LoadSiteController extends AbstractController
 
         $gallery = new Gallery();
         $gallery->setName('Stage 2014 de Christian Claus organisé par Vika')
-            ->setDescription('');
+                ->setDescription('')
+                ->setAvatarName('b1.jpg');
 
         for ($k = 1; $k <= 7; $k++) {
             $media = new Media();
@@ -76,7 +79,8 @@ class LoadSiteController extends AbstractController
 
         $gallery = new Gallery();
         $gallery->setName('Assemblée générale du 25 novembre 2015 et remise de ceintures')
-            ->setDescription('');
+            ->setDescription('')
+            ->setAvatarName('d1.jpg');
 
         for ($k = 1; $k <= 3; $k++) {
             $media = new Media();
@@ -89,7 +93,8 @@ class LoadSiteController extends AbstractController
 
         $gallery = new Gallery();
         $gallery->setName('Coupe d\'honneur de la ligue (22/02)')
-            ->setDescription('');
+            ->setDescription('')
+            ->setAvatarName('e1.jpg');
 
         for ($k = 1; $k <= 2; $k++) {
             $media = new Media();
@@ -102,7 +107,9 @@ class LoadSiteController extends AbstractController
 
         $gallery = new Gallery();
         $gallery->setName('Stage Pierre Blot 04/04/2015')
-            ->setDescription('');
+            ->setDescription('')
+            ->setAvatarName('_photo 1.jpg');
+
 
         for ($k = 1; $k <= 9; $k++) {
             $media = new Media();
@@ -115,7 +122,9 @@ class LoadSiteController extends AbstractController
 
         $gallery = new Gallery();
         $gallery->setName('Passage Ceintures Noires de Juin 2016')
-            ->setDescription('');
+            ->setDescription('')
+            ->setAvatarName('photos 1.jpg');
+
 
         for ($k = 1; $k <= 4; $k++) {
             $media = new Media();
@@ -128,7 +137,9 @@ class LoadSiteController extends AbstractController
 
         $gallery = new Gallery();
         $gallery->setName('Stage H.Delage 2017')
-            ->setDescription('');
+            ->setDescription('')
+            ->setAvatarName('photo 1.jpg');
+
 
         for ($k = 1; $k <= 32; $k++) {
             $media = new Media();
@@ -143,7 +154,8 @@ class LoadSiteController extends AbstractController
 
         $gallery = new Gallery();
         $gallery->setName('Rentrée Baby 2017/2018')
-            ->setDescription('');
+            ->setDescription('')
+            ->setAvatarName('1.png');
 
         for ($k = 1; $k <= 6; $k++) {
             $media = new Media();

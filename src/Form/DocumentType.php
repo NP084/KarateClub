@@ -14,6 +14,8 @@ class DocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('title')
+            ->add('description')
             ->add('docFile', VichImageType::class, [
                 'required'=> false
             ]);
@@ -23,7 +25,7 @@ class DocumentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => AttachedFile::class,
         ]);
     }
 }
