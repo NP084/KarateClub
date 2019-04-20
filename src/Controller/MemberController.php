@@ -14,6 +14,7 @@ use App\Entity\UserConnected;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
+use App\Form\DocType;
 use App\Form\DocumentType;
 use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
@@ -599,6 +600,7 @@ class MemberController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($attachedFile);
+                $attachedFile->setMember($user);
                 $entityManager->flush();
 
                 if (true === $authChecker->isGranted('ROLE_ADMIN')) {
