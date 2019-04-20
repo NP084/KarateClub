@@ -30,6 +30,7 @@ use App\Form\PersonOfContactType;
 use App\Form\ContactListType;
 
 
+
 class RegistrationController extends AbstractController
 {
     /**
@@ -82,13 +83,13 @@ class RegistrationController extends AbstractController
         $PoC = new PersonOfContact();
         $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
         $formPoC->handleRequest($request);
-        $contactList = new ContactList();
-        $formContactList = $this->createForm(ContactListType::class, $contactList);
-        $formContactList->handleRequest($request);
+        //$contactList = new ContactList();
+        //$formContactList = $this->createForm(ContactListType::class, $contactList);
+        //$formContactList->handleRequest($request);
 
         if ($formUser->isSubmitted() && $formUser->isValid()) {
             $user->setUserConnected($userConnected);
-            $manager->persist($user, $adress, $city, $phone, $PoC, $contactList, $manager);
+            $manager->persist($user, $adress, $city, $phone, $PoC, $manager);
             $manager->flush();
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('registration_admin_family', ['id' => $user->getId()]);
@@ -104,7 +105,7 @@ class RegistrationController extends AbstractController
             'adressForm' => $formAdress->createView(),
             'cityForm' => $formCity->createView(),
             'PoCForm' => $formPoC->createView(),
-            'ContactListForm' => $formContactList->createView()
+            //'ContactListForm' => $formContactList->createView()
         ]);
     }
 
