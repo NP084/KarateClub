@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Adress;
+use App\Entity\City;
 use App\Entity\User;
+use App\Form\AdressType;
+use App\Form\CityType;
 use App\Form\RegistrationType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -38,7 +42,7 @@ class RegistrationController extends AbstractController
      */
     public function new_registration(Request $request, ObjectManager $manager){
         $user = new User();
-        $user->setName('Write a blog post');
+        $user->setName('Write a blog post'); //si user_connected alors aller chercher le nom et prénom (if à mettre)
         $user->setFirstName('tomorrow');
 
         $form = $this->createFormBuilder($user)
@@ -50,8 +54,20 @@ class RegistrationController extends AbstractController
             ->add('receiptdate', DateType::class)
             ->getForm();
 
+
+        $adress = new Adress();
+        $adressForm = $this->createForm(AdressType::class,$adress);
+           $adressForm->handleRequest($request);
+        $city = new City();
+        $formCity = $this->createForm(CityType::class, $city);
+        $formCity->handleRequest($request);
+
+
+
         return $this->render('registration/registration.html.twig', [
             'form' => $form->createView(),
+            'adressForm' => $adressForm->createView(),
+            'cityForm' => $formCity->createView()
         ]);
     }
 
