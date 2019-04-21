@@ -15,9 +15,16 @@
     {{ form_row(form.sex, {'label': 'Sexe', 'attr': {'placeholder':'Sexe'}}) }}
     {{ form_row(form.belt, {'label': 'Ceinture', 'attr': {'placeholder':'Ceinture...'}}) }}
     {{ form_row(form.receiptdate, {'label': 'Date obtention', 'attr': {'placeholder':'Date obtention...'}}) }}
+    {{ form_row(formadress.streetname, {'label': 'adresse', 'attr': {'placeholder':'Rue...'}}) }}
+    {{ form_row(formadress.num, {'label': 'num', 'attr': {'placeholder':'Numéro...'}}) }}
+    {{ form_row(formadress.postbox, {'label': 'BP', 'attr': {'placeholder':'Boîte Postale...'}}) }}
+    {{ form_row(formcity.zip, {'label': 'CP', 'attr': {'placeholder':'Code Postal...'}}) }}
+    {{ form_row(formcity.cityname, {'label': 'ville', 'attr': {'placeholder':'Ville...'}}) }}
 
-       <button type="submit" class="btn btn-success">Inscription!</button>
+    <button type="submit" class="btn btn-success">Inscription!</button>
     {{ form_end(form) }}
+    {{ form_end(formadress) }}
+    {{ form_end(formcity) }}
     {% endif %}
 
 {% endblock %}
