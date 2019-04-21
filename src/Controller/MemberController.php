@@ -623,6 +623,23 @@ class MemberController extends AbstractController
         }
     }
 
+    /**
+     * Supprime un document.
+     * @Route("/admin-remove_document-id={id}-idUser={idUser}", name="remove_document_admin", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function removeDoc($id, $idUser)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $doc = $entityManager->getRepository(AttachedFile::class)->find($id);
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $user->removeDoc($doc);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_document', ['id' => $user->getId()]);
+    }
+
 
     /*    /**
          * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})

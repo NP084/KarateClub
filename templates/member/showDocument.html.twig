@@ -44,22 +44,25 @@
                                                     <td>{{ attachedFile.title }}</td>
                                                     <td>{{ attachedFile.description }}</td>
                                                     {% if (is_granted('ROLE_ADMIN')) %}
+                                                        <!--
                                                         <td class="align-middle">
                                                             <a class="btn btn-sm btn-icon btn-secondary"
-                                                               href="{{ path('admin_history_edit',{'id': user.id, 'idHist':history.id}) }}">
+                                                               href="{{ path('edit_admin_document',{'idUser': user.id, 'id':attachedFile.id}) }}">
                                                                 <i class="fa fa-pencil">
                                                                 </i>
                                                                 <span class="sr-only">Modifier</span>
                                                             </a>
                                                         </td>
+
                                                         <td>
                                                             <a class="btn btn-sm btn-icon btn-secondary"
-                                                               href="{{ path('remove_history_admin',{'id':history.id, 'idUser':user.id}) }}">
+                                                               href="{{ path('remove_document_admin',{'idUser': user.id, 'id':attachedFile.id}) }}">
                                                                 <i class="fa fa-trash-o">
                                                                 </i>
                                                                 <span class="sr-only">Supprimer</span>
                                                             </a>
                                                         </td>
+                                                        -->
                                                     {% endif %}
                                                 </tr>
                                             {% else %}
