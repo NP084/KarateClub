@@ -2,7 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Adress;
+use App\Entity\User;
+use App\Entity\Phone;
+use App\Form\AdressType;
+use App\Form\PhoneType;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\UserConnected;
 use Symfony\Component\Form\Form;
@@ -26,6 +33,20 @@ class RegistrationController extends AbstractController
             'controller_name' => 'RegistrationController',
         ]);
     }
+
+    /**
+     * @Route("/new_registration", name="new_registration")
+     */
+    public function preregistration(FormBuilderInterface $builder, array $option)
+    {
+        $user = new User;
+        $adress = new Adress();
+        $phone = new Phone();
+
+
+
+    }
+
 
 /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
