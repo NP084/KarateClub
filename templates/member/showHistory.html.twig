@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
-    {#    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}#}
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
+    {# Admin ou si la personne connectée est le parent du profil consulté #}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-6">
+                    {#Si admin qui consulte son propre profil#}
                     {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
                         <h2> Parcours personnel </h2>
                     {% else %}
@@ -22,7 +23,7 @@
                             {% if(app.user.user.id == app.request.get("id")) %}
                                 <h2>Parcours personnel </h2>
                             {% else %}
-                                <h2>Parcours du membre : {{ user.firstName }} {{ user.name }}</h2>
+                                <h2>Parcours de  {{ user.firstName }} {{ user.name }}</h2>
                             {% endif %}
                         {% endif %}
                     {% endif %}
@@ -76,19 +77,18 @@
                     </div>
                     {% if (is_granted('ROLE_ADMIN')) %}
                         <a class="btn btn-primary"
-                           href="{{ path('admin_history_new',{'id': user.id }) }}"
-                           class="btn-btn-primary">
+                           href="{{ path('admin_history_new',{'id': user.id }) }}">
                             <b>Nouvel élément dans le parcours</b>
                         </a>
                         <a class="btn btn-warning"
-                           href="{{ path('admin_show',{'id':user.id}) }}"
-                           class="btn-btn-primary">
+                           href="{{ path('admin_show',{'id':user.id}) }}">
                             <b>Retour</b>
                         </a>
-                    {% else %}
+                        {# le profil consulté est un enfant et la personne connectée est son parent:
+                        le retour se fait vers "Ma famille", sinon pas de btn retour#}
+                    {% elseif(user.ownerUser == false and app.user.id == user.userConnected.id) %}
                         <a class="btn btn-warning"
-                           href="{{ path('profile_show',{'id':user.id}) }}"
-                           class="btn-btn-primary">
+                           href="{{ path('view_family',{'id':user.userConnected.id}) }}">
                             <b>Retour</b>
                         </a>
                     {% endif %}

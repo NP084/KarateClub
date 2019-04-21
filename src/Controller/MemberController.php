@@ -467,6 +467,7 @@ class MemberController extends AbstractController
             }
         }
         return $this->render('member/editPersonOfContact.html.twig', [
+            'user'=>$user,
             'contactList' => $contactList,
             'ContactListForm' => $formCL->createView(),
             'personOfContact' => $personOfContact,

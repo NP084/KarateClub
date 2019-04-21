@@ -35,7 +35,8 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
+            {# Admin ou si la personne connectée est le parent du profil consulté #}
+            {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}
             <div class="form-check-label">
                 <div class="row">
                     <div class="col-3">
@@ -51,12 +52,20 @@
                         <a href="{{ path('admin_users', {'orderby':'ASC'}) }}" class="btn-btn-primary">
                             <span class="badge badge-pill badge-warning">Retour à la liste des utilisateurs</span>
                         </a>
+                        {# le profil consulté est un enfant et la personne connectée est son parent:
+             le retour se fait vers "Ma famille", sinon pas de btn retour#}
+                    {% elseif(user.ownerUser == false and app.user.id == user.userConnected.id) %}
+                        <a class="btn-btn-primary"
+                           href="{{ path('view_family',{'id':user.userConnected.id}) }}">
+                        <span class="badge badge-pill badge-warning">Retour</span>
+                        </a>
                     {% else %}
                         <a href="{{ path('profile_show',{'id':user.id}) }}"
                            class="btn-btn-primary">
                             <span class="badge badge-pill badge-warning">Retour</span>
                         </a>
                     {% endif %}
+
                 </div>
             </div>
 
