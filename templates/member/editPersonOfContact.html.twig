@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
+    {# Admin ou si la personne connectée est le parent du profil consulté #}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}
 
         {#Affiche personnes de contact#}
         <div class="container-fluid">

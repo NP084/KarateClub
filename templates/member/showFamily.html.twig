@@ -21,6 +21,9 @@
 
 
 {% block Body %}
+    {# Admin ou si la personne connectée possède l'id du UserConnected pr lequel on affiche la famille.
+     Attention ici, l'id affiché dans l'URL est celui de la table userConnected,
+     et non pas de la table user  comme c'est le cas pour toutes les autres pages de members#}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
 
         <div class="container-fluid">
