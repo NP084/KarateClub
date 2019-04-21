@@ -2,12 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Adress;
 use App\Entity\User;
-use App\Entity\City;
 use App\Form\RegistrationType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -42,69 +38,20 @@ class RegistrationController extends AbstractController
      */
     public function new_registration(Request $request, ObjectManager $manager){
         $user = new User();
-        $adress = new Adress();
-        $city = new City();
-
+        $user->setName('Write a blog post');
+        $user->setFirstName('tomorrow');
 
         $form = $this->createFormBuilder($user)
             ->add('name', TextType::class)
             ->add('firstname', TextType::class)
             ->add('birthdate', DateType::class)
-            ->add('sex', ChoiceType::class,[
-                'choices' => [
-                    'Sélectionner' => 'Indéfini',
-                    'Homme' => 'Homme',
-                    'Femme' => 'Femme',
-                ],
-            ])
-            ->add('belt', ChoiceType::class,[
-                'choices' => [
-                    'Ceinture blanche' => 'Ceinture blanche',
-                    'Ceinture jaune' => 'Ceinture jaune',
-                    'Ceinture orange' => 'Ceinture orange',
-                    'Ceinture verte' => 'Ceinture verte',
-                    'Ceinture bleue' => 'Ceinture bleue',
-                    'Ceinture marron' => 'Ceinture marron',
-                    'Ceinture noir 1er dan' => 'Ceinture noir 1er dan',
-                    'Ceinture noir 2e dan' => 'Ceinture noir 2e dan',
-                    'Ceinture noir 3e dan' => 'Ceinture noir 3e dan',
-                    'Ceinture noir 4e dan' => 'Ceinture noir 4e dan',
-                    'Ceinture noir 5e dan' => 'Ceinture noir 5e dan',
-                    'Ceinture blanche et rouge 6e dan' => 'Ceinture noir 6e dan',
-                    'Ceinture blanche et rouge 7e dan' => 'Ceinture blanche et rouge 7e dan',
-                    'Ceinture blanche et rouge 8e dan' => 'Ceinture blanche et rouge 8e dan',
-                ],
-            ])
+            ->add('sex', TextType::class)
+            ->add('belt', TextType::class)
             ->add('receiptdate', DateType::class)
             ->getForm();
-        $form->handleRequest($request);
-
-        $formadress=$this->createFormBuilder($adress)
-            ->add('streetname',TextType::class)
-            ->add('num',NumberType::class )
-            ->add('postbox',NumberType::class)
-            ->getForm();
-        $formadress->handleRequest($request);
-
-        $formcity=$this->createFormBuilder($city)
-            ->add('zip',NumberType::class)
-            ->add('cityname',TextType::class )
-            ->getForm();
-        $formcity->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid() && $formadress->isSubmitted() && $formadress->isValid() && $formcity->isSubmitted() && $formcity->isValid()) {
-
-            $manager->persist($user);
-            $manager->persist($adress);
-            $manager->persist($city);
-            $manager->flush();
-//            return $this->redirectToRoute('home_page', ['path' => $content->getPath()]);
-        }
 
         return $this->render('registration/registration.html.twig', [
             'form' => $form->createView(),
-            'formadress' => $formadress -> createView(),
-            'formcity' => $formcity -> CreateView()
         ]);
     }
 
