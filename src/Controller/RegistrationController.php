@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Adress;
+use App\Entity\City;
 use App\Entity\User;
 use App\Form\AdressType;
-use App\Form\ContentType;
+use App\Form\CityType;
 use App\Form\RegistrationType;
-use App\Form\UserType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -42,44 +42,33 @@ class RegistrationController extends AbstractController
      */
     public function new_registration(Request $request, ObjectManager $manager){
         $user = new User();
+        $user->setName('Write a blog post'); //si user_connected alors aller chercher le nom et prénom (if à mettre)
+        $user->setFirstName('tomorrow');
+
+        $form = $this->createFormBuilder($user)
+            ->add('name', TextType::class)
+            ->add('firstname', TextType::class)
+            ->add('birthdate', DateType::class)
+            ->add('sex', TextType::class)
+            ->add('belt', TextType::class)
+            ->add('receiptdate', DateType::class)
+            ->getForm();
+
+
         $adress = new Adress();
-        $form = $this->createForm(UserType::class,$user);
-        $form->handleRequest($request);
-        $formadress = $this->createForm(AdressType::class,$adress);
-           $formadress -> handleRequest($request);
+        $adressForm = $this->createForm(AdressType::class,$adress);
+           $adressForm->handleRequest($request);
+        $city = new City();
+        $formCity = $this->createForm(CityType::class, $city);
+        $formCity->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
 
-            $manager->persist($user);
-            $manager->flush();
-
-        }
 
         return $this->render('registration/registration.html.twig', [
             'form' => $form->createView(),
-            'adressForm'=> $formadress->createView()
-
+            'adressForm' => $adressForm->createView(),
+            'cityForm' => $formCity->createView()
         ]);
-//            ->add('name', TextType::class)
-//            ->add('firstname', TextType::class)
-//            ->add('birthdate', DateType::class)
-//            ->add('sex', TextType::class)
-//            ->add('belt', TextType::class)
-//            ->add('receiptdate', DateType::class)
-//            ->getForm();
-
-
-//        $adress = new Adress();
-//        $formadress = $this->createForm(AdressType::class,$adress)
-//           $formadress -> handleRequest($request);
-//            ->add('num',NumberType::class)
-
-
-
-//        return $this->render('registration/registration.html.twig', [
-//            'form' => $form->createView(),
-////            'formadress' => $formadress->createView()
-//        ]);
     }
 
 

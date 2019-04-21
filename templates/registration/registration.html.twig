@@ -9,18 +9,72 @@
     <h1>Inscription sur le site</h1>
 
     {{form_start(form)}}
-{#    {{ form_row(form.name, {'label': 'Prénom', 'attr': {'placeholder':'Prénom...'}}) }}#}
-{#    {{ form_row(form.firstname, {'label': 'Nom', 'attr': {'placeholder':'Nom...'}}) }}#}
-{#    {{ form_row(form.birthdate, {'label': 'Date de naissance', 'attr': {'placeholder':'Date de naissance...'}}) }}#}
-{#    {{ form_row(form.sex, {'label': 'Sexe', 'attr': {'placeholder':'Sexe'}}) }}#}
-{#    {{ form_row(form.belt, {'label': 'Ceinture', 'attr': {'placeholder':'Ceinture...'}}) }}#}
-{#    {{ form_row(form.receiptdate, {'label': 'Date obtention', 'attr': {'placeholder':'Date obtention...'}}) }}#}
+    {{ form_row(form.name, {'label': 'Prénom', 'attr': {'placeholder':'Prénom...'}}) }}
+    {{ form_row(form.firstname, {'label': 'Nom', 'attr': {'placeholder':'Nom...'}}) }}
+    {{ form_row(form.birthdate, {'label': 'Date de naissance', 'attr': {'placeholder':'Date de naissance...'}}) }}
+    {{ form_row(form.sex, {'label': 'Sexe', 'attr': {'placeholder':'Sexe'}}) }}
+    {{ form_row(form.belt, {'label': 'Ceinture', 'attr': {'placeholder':'Ceinture...'}}) }}
+    {{ form_row(form.receiptdate, {'label': 'Date obtention', 'attr': {'placeholder':'Date obtention...'}}) }}
 
 
        <button type="submit" class="btn btn-success">Inscription!</button>
     {{ form_end(form) }}
-    {{form_start(adressForm) }}
-    {{ form_end(adressForm) }}
+<div class="row">
+    <div class="col-4">
+        <div class="form-group">
+            {{ form_start(adressForm) }}
+            {{ form_label(adressForm.type, 'Type') }}
+            {{ form_widget(adressForm.type,  {'attr':{
+                'placeholder':"Domicile, travail..."
+            }}) }}
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-group">
+            {{ form_label(adressForm.num, 'Numéro') }}
+            {{ form_widget(adressForm.num) }}
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-group">
+            {{ form_label(adressForm.postBox, 'BP') }}
+            {{ form_widget(adressForm.postBox) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            {{ form_label(adressForm.streetName, 'Rue') }}
+            {{ form_widget(adressForm.streetName) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-5">
+        <div class="form-group">
+            {{ form_label(cityForm.cityName, 'Ville') }}
+            {{ form_widget(cityForm.cityName) }}
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            {{ form_label(cityForm.zip, 'Code postal') }}
+            {{ form_widget(cityForm.zip) }}
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group">
+            {{ form_label(cityForm.country, 'Pays') }}
+            {{ form_widget(cityForm.country) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-info">Ajouter adresse</button>
+            {{ form_end(adressForm) }}
 {#    {% endif %}#}
 
 {% endblock %}
