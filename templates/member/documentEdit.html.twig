@@ -19,10 +19,26 @@
                             <div class="col">
                                 <div class="form-group">
                                     {{ form_start(formPicture) }}
-
                                     <div class="form-group">
                                         {{ form_widget(formPicture.docname) }}
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ form_label(formPicture.title, 'Titre') }}
+                                    {{ form_widget(formPicture.title) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ form_label(formPicture.description, 'Description') }}
+                                    {{ form_widget(formPicture.description,  { 'attr': {
+                                        'rows' : '4' }} ) }}
                                 </div>
                             </div>
                         </div>
