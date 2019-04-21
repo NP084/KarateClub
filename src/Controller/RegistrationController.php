@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\PreRegistrationType;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\UserConnected;
@@ -24,6 +26,21 @@ class RegistrationController extends AbstractController
     {
         return $this->render('registration/showContent.html.twig', [
             'controller_name' => 'RegistrationController',
+        ]);
+    }
+
+    /**
+     * @Route("/preregistration", name="preregistration")
+     */
+    public function preregistration(Request $request)
+    {
+        $prereg = new Entity();
+
+        $form = $this->createForm(PreRegistrationType::class);
+        $form->handleRequest($request);
+
+        return $this->render('registration/preRegistration.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
