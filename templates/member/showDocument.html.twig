@@ -1,106 +1,107 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
-{#    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}#}
+    {#    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}#}
     {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    {% if (is_granted('ROLE_USER') or (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id"))) %}
+                        <h2> Documents personnel </h2>
+                    {% else %}
+                        {% if(is_granted('ROLE_ADMIN')) %}
+                            {# User est un parent  #}
+                            {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
+                                <h2>Documents du membre : {{ user.ownerUser.firstName }} {{ user.ownerUser.name }}</h2>
+                            {% else %}
+                                <h2>Documents du membre : {{ user.firstName }} {{ user.name }}</h2>
+                            {% endif %}
+                        {% else %}
+                            {# le userConnected consulte son propre profil.
+                            app.user = userConnected #}
+                            {% if(app.user.user.id == app.request.get("id")) %}
+                                <h2>Documents personnel </h2>
+                            {% else %}
+                                <h2>Documents du membre : {{ user.firstName }} {{ user.name }}</h2>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Titre</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for attachedFile in user.attachedFiles %}
+                                                <tr>
+                                                    <td>{{ attachedFile.title }}</td>
+                                                    <td>{{ attachedFile.description }}</td>
+                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                        <!--
+                                                        <td class="align-middle">
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('edit_admin_document',{'idUser': user.id, 'id':attachedFile.id}) }}">
+                                                                <i class="fa fa-pencil">
+                                                                </i>
+                                                                <span class="sr-only">Modifier</span>
+                                                            </a>
+                                                        </td>
 
-        {% if (is_granted('ROLE_USER') or (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id"))) %}
-            <h2> Documents personnel </h2>
-        {% else %}
-            <h2>Documents du membre : {{ user.firstName }} {{ user.name }}</h2>
-        {% endif %}
-
-        <h3>Documents</h3>
-
-        <!--
-        <div class="row">
-            <div class="col">
-                <div class="user-avatar user-avatar-xl fileinput-button">
+                                                        <td>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('remove_document_admin',{'idUser': user.id, 'id':attachedFile.id}) }}">
+                                                                <i class="fa fa-trash-o">
+                                                                </i>
+                                                                <span class="sr-only">Supprimer</span>
+                                                            </a>
+                                                        </td>
+                                                        -->
+                                                    {% endif %}
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun document</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {% if (is_granted('ROLE_ADMIN')) %}
-                        <a class="btn btn-sm btn-icon btn-secondary"
-                           href="{{ path('load_admin_document', {'id':user.id}) }}">
-                            <div class="fileinput-button-label">Ajouter un document</div>
-                            <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
-                                 alt="{{ user.imageFile }}" name="avatar"
-                                 width="150"/>
+                        <a class="btn btn-primary" href="{{ path('load_admin_document', {'idUser':user.id}) }}"
+                           class="btn-btn-primary">
+                            <b>Nouveau document</b>
+                        </a>
+                        <a class="btn btn-warning"
+                           href="{{ path('admin_show',{'id':user.id}) }}"
+                           class="btn-btn-primary">
+                            <b>Retour</b>
                         </a>
                     {% else %}
-                        {% if (user.ownerUser.id == app.user.id ) %}
-                            <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('load_member_document', {'id':user.id}) }}">
-                                <div class="fileinput-button-label">Ajouter un document</div>
-                                <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
-                                     alt="{{ user.imageFile }}" name="avatar"
-                                     width="150"/>
-                            </a>
-                        {% endif %}
+                        <a class="btn btn-primary" href="{{ path('load_member_document', {'idUser':user.id}) }}"
+                           class="btn-btn-primary">
+                            <b>Nouveau document</b>
+                        </a>
+                        <a class="btn btn-warning"
+                           href="{{ path('admin_show',{'id':user.id}) }}"
+                           class="btn-btn-primary">
+                            <b>Retour</b>
+                        </a>
                     {% endif %}
                 </div>
             </div>
         </div>
-        -->
-
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Title</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for attachedFile in user.attachedFiles %}
-                <tr>
-                    <td>{{ attachedFile.title }}</td>
-                    {% if (is_granted('ROLE_ADMIN')) %}
-                        <td class="align-middle">
-                            <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('admin_history_edit',{'id': user.id, 'idHist':history.id}) }}">
-                                <i class="fa fa-pencil">
-                                </i>
-                                <span class="sr-only">Modifier</span>
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('remove_history_admin',{'id':history.id, 'idUser':user.id}) }}">
-                                <i class="fa fa-trash-o">
-                                </i>
-                                <span class="sr-only">Supprimer</span>
-                            </a>
-                        </td>
-                    {% endif %}
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="10">Aucun document</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        {% if (is_granted('ROLE_ADMIN')) %}
-            <a class="btn btn-primary" href="{{ path('load_admin_document', {'id':user.id}) }}"
-               class="btn-btn-primary">
-                <b>Nouveau document</b>
-            </a>
-            <a class="btn btn-warning"
-               href="{{ path('admin_show',{'id':user.id}) }}"
-               class="btn-btn-primary">
-                <b>Retour</b>
-            </a>
-        {% else %}
-            <a class="btn btn-primary" href="{{ path('load_member_document', {'id':user.id}) }}"
-               class="btn-btn-primary">
-                <b>Nouveau document</b>
-            </a>
-            <a class="btn btn-warning"
-               href="{{ path('admin_show',{'id':user.id}) }}"
-               class="btn-btn-primary">
-                <b>Retour</b>
-            </a>
-        {% endif %}
-
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}
-
 {% endblock %}

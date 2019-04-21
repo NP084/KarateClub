@@ -5,9 +5,10 @@ namespace App\Form;
 use App\Entity\User;
 use App\Entity\AttachedFile;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class DocumentType extends AbstractType
 {
@@ -16,9 +17,7 @@ class DocumentType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('docFile', VichImageType::class, [
-                'required'=> false
-            ]);
+            ->add('docname', FileType::class);
         ;
     }
 
