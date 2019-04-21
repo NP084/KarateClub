@@ -22,6 +22,7 @@ class AdressType extends AbstractType
                     'Travail' => 'Travail',
                     'Autre' => 'Autre',
                 ],
+
             ])
             ->add('num')
             ->add('postBox')
