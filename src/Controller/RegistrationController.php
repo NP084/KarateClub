@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\PreRegistrationType;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +35,7 @@ class RegistrationController extends AbstractController
      */
     public function preregistration(Request $request)
     {
-        $prereg = new Entity();
+        $user = new Preregistration();
 
         $form = $this->createForm(PreRegistrationType::class);
         $form->handleRequest($request);
