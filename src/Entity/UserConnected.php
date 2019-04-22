@@ -38,10 +38,6 @@ class UserConnected implements UserInterface, \Serializable
      */
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -120,7 +116,7 @@ class UserConnected implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->username,
+            $this->email,
             $this->password,
             // $this->salt,
         ));
@@ -131,7 +127,7 @@ class UserConnected implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->username,
+            $this->email,
             $this->password,
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
@@ -187,15 +183,9 @@ class UserConnected implements UserInterface, \Serializable
 
     public function getUsername(): ?string
     {
-        return $this->username;
+        return $this->email;
     }
 
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     public function getPassword(): ?string
     {
