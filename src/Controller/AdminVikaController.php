@@ -32,6 +32,7 @@ class AdminVikaController extends AbstractController
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
                 'isActiveMode' => false,
+                'isTrialMode'      => false,
             ]);
         }
         elseif($orderby =='isActive'){
@@ -43,8 +44,22 @@ class AdminVikaController extends AbstractController
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
                 'isActiveMode' => true,
+                'isTrialMode'      => false,
             ]);
             }
+        elseif($orderby =='isTrial'){
+            $users = $repo->findBy(
+                ['isActive' => false,
+                    'isTrial' => true],
+                ['name' => 'ASC']
+            );
+            return $this->render('admin_vika/showContent.html.twig', [
+                'controller_name' => 'Administration des utilisateurs',
+                'users' => $users,
+                'isActiveMode' => false,
+                'isTrialMode'      => true,
+            ]);
+        }
         elseif ($request->query->get('searchName')) {
             $searchName = $request->query->get('searchName');
             $users = $repo->findBy(
@@ -55,6 +70,7 @@ class AdminVikaController extends AbstractController
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
                 'isActiveMode' => false,
+                'isTrialMode'      => false,
             ]);
         }
         else{
@@ -66,6 +82,7 @@ class AdminVikaController extends AbstractController
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
                 'isActiveMode' => false,
+                'isTrialMode'      => false,
             ]);
             }
     }

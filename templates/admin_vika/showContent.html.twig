@@ -36,18 +36,32 @@
                             </div>
                         </div>
                         {% if (isActiveMode==true) %}
-                            <div class="col-5">
+                            <div class="col-2">
                                 <a id="isActive" name="isActive" class="btn btn-secondary" methods="GET"
                                    href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Tous?</label>
                                 </a>
                             </div>
                         {% else %}
-                            <div class="col-5">
+                            <div class="col-2">
                                 <a id="isActive" name="isActive" class="btn btn-secondary" methods="GET"
                                    href="{{ path('admin_users', {orderby:'isActive'}) }}"><label>Actifs?</label>
                                 </a>
                             </div>
                         {% endif %}
+                        {% if (isTrialMode==true) %}
+                            <div class="col-2">
+                                <a id="isActive" name="isActive" class="btn btn-secondary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Tous?</label>
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-2">
+                                <a id="isActive" name="isActive" class="btn btn-secondary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'isTrial'}) }}"><label>Cours d'essai?</label>
+                                </a>
+                            </div>
+                        {% endif %}
+
                     </div>
                     <div class="card">
                         <div class="card-body">
