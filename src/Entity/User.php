@@ -145,6 +145,11 @@ class User
      */
     private $fedNum;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Preregistration", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $preregistration;
+
 
     public function __construct()
     {
@@ -565,6 +570,24 @@ class User
     public function setFedNum(?string $fedNum): self
     {
         $this->fedNum = $fedNum;
+
+        return $this;
+    }
+
+    public function getPreregistration(): ?Preregistration
+    {
+        return $this->preregistration;
+    }
+
+    public function setPreregistration(?Preregistration $preregistration): self
+    {
+        $this->preregistration = $preregistration;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = $preregistration === null ? null : $this;
+        if ($newUser !== $preregistration->getUser()) {
+            $preregistration->setUser($newUser);
+        }
 
         return $this;
     }

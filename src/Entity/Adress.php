@@ -49,6 +49,11 @@ class Adress
      */
     private $city;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Preregistration", mappedBy="adress", cascade={"persist", "remove"})
+     */
+    private $preregistration;
+
 
     public function __construct()
     {
@@ -144,6 +149,24 @@ class Adress
     public function setCity(?City $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getPreregistration(): ?Preregistration
+    {
+        return $this->preregistration;
+    }
+
+    public function setPreregistration(?Preregistration $preregistration): self
+    {
+        $this->preregistration = $preregistration;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newAdress = $preregistration === null ? null : $this;
+        if ($newAdress !== $preregistration->getAdress()) {
+            $preregistration->setAdress($newAdress);
+        }
 
         return $this;
     }

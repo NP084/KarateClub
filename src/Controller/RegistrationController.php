@@ -26,7 +26,15 @@ class RegistrationController extends AbstractController
             'controller_name' => 'RegistrationController',
         ]);
     }
-
+    /**
+     * @Route("/preregistration", name="preregistration")
+     */
+    public function preregistration()
+    {
+        return $this->render('registration/showContent.html.twig', [
+            'controller_name' => 'RegistrationController',
+        ]);
+    }
 /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/registration-member-family-{id}", name="registration_view_family", requirements={"idCL"="\d+"})
