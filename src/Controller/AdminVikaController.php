@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\UserConnected;
 use App\Form\UserPictureType;
 use App\Repository\UserConnectedRepository;
+use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,25 +21,53 @@ class AdminVikaController extends AbstractController
      * @Route("/vikaUsers-{orderby}", name="admin_users")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function index(UserConnectedRepository $repo, $orderby=null, Request $request)
+    public function index(UserRepository $repo, $orderby=null, Request $request)
     {
         if ($orderby =='ASC' or $orderby == 'DESC'){
             $users = $repo->findBy(
                 [ ],
                 ['name'=>$orderby]
             );
+            return $this->render('admin_vika/showContent.html.twig', [
+                'controller_name' => 'Administration des utilisateurs',
+                'users' => $users,
+                'isActiveMode' => false,
+            ]);
+        }
+        elseif($orderby =='isActive'){
+                $users = $repo->findBy(
+                    ['isActive' => true ],
+                    ['name' => 'ASC']
+                );
+            return $this->render('admin_vika/showContent.html.twig', [
+                'controller_name' => 'Administration des utilisateurs',
+                'users' => $users,
+                'isActiveMode' => true,
+            ]);
+            }
+        elseif ($request->query->get('searchName')) {
+            $searchName = $request->query->get('searchName');
+            $users = $repo->findBy(
+                ['name' => $searchName],
+                ['firstName' => 'ASC']
+            );
+            return $this->render('admin_vika/showContent.html.twig', [
+                'controller_name' => 'Administration des utilisateurs',
+                'users' => $users,
+                'isActiveMode' => false,
+            ]);
         }
         else{
-            $orderby = $request->query->get('searchName');
             $users = $repo->findBy(
-                ['name' => $orderby ]
+                [ ],
+                ['name'=>'ASC']
             );
-        }
-
-        return $this->render('admin_vika/showContent.html.twig', [
-            'controller_name' => 'Administration des utilisateurs',
-            'users' => $users,
-        ]);
+            return $this->render('admin_vika/showContent.html.twig', [
+                'controller_name' => 'Administration des utilisateurs',
+                'users' => $users,
+                'isActiveMode' => false,
+            ]);
+            }
     }
 
     /**

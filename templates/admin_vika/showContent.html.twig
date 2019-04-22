@@ -26,13 +26,28 @@
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     <div class="row">
-
-                        <form action="{{ path('admin_users', {orderby:'search'}) }}"
-                              method="GET">
-                            <input id="searchName" name="searchName"/>
-                            <input type="submit" value="Rechercher"/>
-                        </form>
-
+                        <div class="col5">
+                            <div class="form-group">
+                                <form action="{{ path('admin_users', {orderby:'search'}) }}"
+                                      method="GET">
+                                    <input id="searchName" name="searchName"/>
+                                    <input type="submit" value="Rechercher"/>
+                                </form>
+                            </div>
+                        </div>
+                        {% if (isActiveMode==true) %}
+                            <div class="col-5">
+                                <a id="isActive" name="isActive" class="btn btn-secondary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Tous?</label>
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-5">
+                                <a id="isActive" name="isActive" class="btn btn-secondary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'isActive'}) }}"><label>Actifs?</label>
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="card">
                         <div class="card-body">
@@ -63,40 +78,40 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {# user = userconnected #}
+                                            {# user = user #}
                                             {% for user in users %}
                                                 <tr>
                                                     <td>{{ user.id }}</td>
                                                     <td>{{ user.name }}</td>
                                                     <td>{{ user.firstName }}</td>
-                                                    <td>{{ user.email }}</td>
+                                                    <td>{{ user.userConnected.email }}</td>
                                                     <td class="align-middle text-right">
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_show', {'id': user.user.id}) }}"><i
+                                                           href="{{ path('admin_show', {'id': user.id}) }}"><i
                                                                     class="oi oi-person"></i></a>
                                                         <span class="sr-only">Voir profil</span>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_edit', {'id': user.user.id}) }}">
+                                                           href="{{ path('admin_edit', {'id': user.id}) }}">
                                                             <i class="fa fa-pencil">
                                                             </i>
                                                             <span class="sr-only">Modifier</span>
                                                         </a>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_history', {'id': user.user.id}) }}"><i
+                                                           href="{{ path('admin_history', {'id': user.id}) }}"><i
                                                                     class="oi oi-badge"></i></a>
                                                         <span class="sr-only">Parcours</span>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_registration', {'id': user.user.id}) }}"><i
+                                                           href="{{ path('admin_registration', {'id': user.id}) }}"><i
                                                                     class="oi oi-cart"></i>
                                                             <span class="sr-only">Activités</span>
                                                         </a>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_family',{'id': user.id}) }}">
+                                                           href="{{ path('admin_family',{'id': user.userConnected.id}) }}">
                                                             <i class="oi oi-people"></i>
                                                             <span class="sr-only">Famille</span>
                                                         </a>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_document', {'id': user.user.id}) }}"><i
+                                                           href="{{ path('admin_document', {'id': user.id}) }}"><i
                                                                     class="oi oi-document"></i>
                                                             <span class="sr-only">Documents</span>
                                                         </a>
