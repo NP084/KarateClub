@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190420091319 extends AbstractMigration
+final class Version20190422121946 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,7 @@ final class Version20190420091319 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE app_user ADD fed_num VARCHAR(255) DEFAULT NULL, CHANGE birthdate birthdate DATE DEFAULT NULL');
-        $this->addSql('ALTER TABLE attached_file ADD description LONGTEXT NOT NULL, ADD datecreat DATETIME DEFAULT NULL, ADD docname VARCHAR(255) DEFAULT NULL, DROP add_date');
+        $this->addSql('DROP TABLE preregistration');
     }
 
     public function down(Schema $schema) : void
@@ -31,7 +30,7 @@ final class Version20190420091319 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE app_user DROP fed_num, CHANGE birthdate birthdate DATE NOT NULL');
-        $this->addSql('ALTER TABLE attached_file ADD add_date DATETIME NOT NULL, DROP description, DROP datecreat, DROP docname');
+        $this->addSql('CREATE TABLE preregistration (id INT AUTO_INCREMENT NOT NULL, name_id INT NOT NULL, UNIQUE INDEX UNIQ_D02FA62671179CD6 (name_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('ALTER TABLE preregistration ADD CONSTRAINT FK_D02FA62671179CD6 FOREIGN KEY (name_id) REFERENCES app_user (id)');
     }
 }
