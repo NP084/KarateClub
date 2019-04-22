@@ -6,6 +6,7 @@ use App\Entity\Preregistration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class PreregistrationType extends AbstractType
 {
@@ -14,7 +15,8 @@ class PreregistrationType extends AbstractType
         $builder
             ->add('user',UserType::class)
             ->add('adress',AdressType::class)
-            ->add('phone',PhoneType::class)
+//            ->add('phone',CollectionType::class, array(
+//                'entry_type' => PhoneType::class))
         ;
     }
 

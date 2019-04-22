@@ -29,7 +29,7 @@ class Preregistration
     private $adress;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\phone", inversedBy="preregistrations")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Phone", inversedBy="preregistrations")
      */
     private $phone;
 

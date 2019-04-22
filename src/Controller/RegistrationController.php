@@ -2,6 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\ContentPage;
+use App\Entity\Preregistration;
+use App\Form\ContentType;
+use App\Form\PreregistrationType;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\UserConnected;
@@ -29,11 +34,22 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/preregistration", name="preregistration")
      */
-    public function preregistration()
+    public function preregistration(Request $request, ObjectManager $manager)
     {
-        return $this->render('registration/showContent.html.twig', [
-            'controller_name' => 'RegistrationController',
-        ]);
+        $prereg = new Preregistration();
+        $form = $this->createForm(PreregistrationType::class, $prereg);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+
+            $manager->persist($prereg);
+            $manager->flush();
+//            return $this->redirectToRoute('VikaContent',['path'=>$content->getPath()]);
+        }
+
+        return $this->render('registration/preregistration.html.twig', [
+            'form'=>$form->createView(),]
+        );
     }
 /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
