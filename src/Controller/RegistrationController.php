@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
      */
     public function preregistration(Request $request)
     {
-        $prereg = new Pre();
+        $prereg = new Entity();
 
         $form = $this->createForm(PreRegistrationType::class);
         $form->handleRequest($request);
