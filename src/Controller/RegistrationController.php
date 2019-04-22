@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Adress;
+use App\Entity\City;
 use App\Entity\ContentPage;
+use App\Entity\Phone;
 use App\Entity\Preregistration;
+use App\Entity\User;
+use App\Form\ChildType;
 use App\Form\ContentType;
 use App\Form\PreregistrationType;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -36,15 +41,20 @@ class RegistrationController extends AbstractController
      */
     public function preregistration(Request $request, ObjectManager $manager)
     {
-        $prereg = new Preregistration();
-        $form = $this->createForm(PreregistrationType::class, $prereg);
+//
+        $user = new User();
+//
+//
+        $form = $this->createForm(ChildType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            $phone = $user->getPhones();
 
-            $manager->persist($prereg);
+            $manager->persist($phone);
+            $manager->persist($user);
             $manager->flush();
-//            return $this->redirectToRoute('VikaContent',['path'=>$content->getPath()]);
+          return $this->redirectToRoute('vika/Encadrementindex.html.twig');
         }
 
         return $this->render('registration/preregistration.html.twig', [
@@ -66,5 +76,46 @@ class RegistrationController extends AbstractController
             'userConnected' => $userConnected,
         ]);
     }
+    public function addUserAdress(User $user, Adress $adress, City $city, ObjectManager $manager)
+    {
+        $repoCity = $this->getDoctrine()
+            ->getRepository(City::class);
+        $cityTest = $repoCity->findOneBy([
+            'cityName' => $city->getCityName(),
+            'zip' => $city->getZip(),
+            'country' => $city->getCountry()
+        ]);
+        // si citytest existe pas : on crée une nouvelle ville dans la DB
+        if (!$cityTest) {
+            $manager->persist($city); // le pays est automatiquement associé
+            $manager->flush();
+        }
 
+        $repo = $this->getDoctrine()
+            ->getRepository(Adress::class);
+        $adressTest = $repo->findOneBy([
+            'type' => $adress->getType(),
+            'streetName' => $adress->getStreetName(),
+            'num' => $adress->getNum(),
+            'postBox' => $adress->getPostBox()
+            // 'city'      =>$adress->getCity() // commenté car sinon bug
+        ]);
+        // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
+        if (!$adressTest) {
+            $manager->persist($adress);
+            if (!$cityTest) {
+                // si la ville n'existait pas => associe la ville qui vient d'être créée ($city)
+                $adress->setCity($city);
+            } else {
+                // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
+                $adress->setCity($cityTest);
+            }
+            $user->addAdress($adress);
+            $manager->flush();
+        } else {
+            // associe l'adresse existante à cet user
+            $user->addAdress($adressTest);
+            $manager->flush();
+        }
+    }
 }
