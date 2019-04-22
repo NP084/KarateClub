@@ -145,6 +145,11 @@ class User
      */
     private $fedNum;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Preregistration", mappedBy="name", cascade={"persist", "remove"})
+     */
+    private $Firstname;
+
 
     public function __construct()
     {

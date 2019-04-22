@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190420091319 extends AbstractMigration
+final class Version20190422082827 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,9 @@ final class Version20190420091319 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE app_user ADD fed_num VARCHAR(255) DEFAULT NULL, CHANGE birthdate birthdate DATE DEFAULT NULL');
-        $this->addSql('ALTER TABLE attached_file ADD description LONGTEXT NOT NULL, ADD datecreat DATETIME DEFAULT NULL, ADD docname VARCHAR(255) DEFAULT NULL, DROP add_date');
+        $this->addSql('ALTER TABLE preregistration ADD name_id INT NOT NULL, DROP name');
+        $this->addSql('ALTER TABLE preregistration ADD CONSTRAINT FK_D02FA62671179CD6 FOREIGN KEY (name_id) REFERENCES app_user (id)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_D02FA62671179CD6 ON preregistration (name_id)');
     }
 
     public function down(Schema $schema) : void
@@ -31,7 +32,8 @@ final class Version20190420091319 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE app_user DROP fed_num, CHANGE birthdate birthdate DATE NOT NULL');
-        $this->addSql('ALTER TABLE attached_file ADD add_date DATETIME NOT NULL, DROP description, DROP datecreat, DROP docname');
+        $this->addSql('ALTER TABLE preregistration DROP FOREIGN KEY FK_D02FA62671179CD6');
+        $this->addSql('DROP INDEX UNIQ_D02FA62671179CD6 ON preregistration');
+        $this->addSql('ALTER TABLE preregistration ADD name VARCHAR(50) NOT NULL COLLATE utf8mb4_unicode_ci, DROP name_id');
     }
 }
