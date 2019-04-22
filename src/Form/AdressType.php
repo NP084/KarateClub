@@ -27,9 +27,9 @@ class AdressType extends AbstractType
             ->add('postBox')
             ->add('streetName')
 /*            ->add('city', EntityType::class,[
-    'class'=> City::class,
-    'choice_label'=>'cityName',
-])*/
+                'class'=> City::class,
+                'choice_label'=>'cityName',
+            ])*/
         ;
     }
 

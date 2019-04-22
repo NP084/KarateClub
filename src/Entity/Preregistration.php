@@ -33,18 +33,6 @@ class Preregistration
      */
     private $phone;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="preregistrations",cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $City;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Country")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Country;
-
     public function __construct()
     {
         $this->phone = new ArrayCollection();
@@ -101,30 +89,6 @@ class Preregistration
         if ($this->phone->contains($phone)) {
             $this->phone->removeElement($phone);
         }
-
-        return $this;
-    }
-
-    public function getCity(): ?City
-    {
-        return $this->City;
-    }
-
-    public function setCity(?City $City): self
-    {
-        $this->City = $City;
-
-        return $this;
-    }
-
-    public function getCountry(): ?Country
-    {
-        return $this->Country;
-    }
-
-    public function setCountry(?Country $Country): self
-    {
-        $this->Country = $Country;
 
         return $this;
     }

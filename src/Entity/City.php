@@ -43,15 +43,9 @@ class City
      */
     private $adresses;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Preregistration", mappedBy="City")
-     */
-    private $preregistrations;
-
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
-        $this->preregistrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -120,37 +114,6 @@ class City
             // set the owning side to null (unless already changed)
             if ($adress->getCity() === $this) {
                 $adress->setCity(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Preregistration[]
-     */
-    public function getPreregistrations(): Collection
-    {
-        return $this->preregistrations;
-    }
-
-    public function addPreregistration(Preregistration $preregistration): self
-    {
-        if (!$this->preregistrations->contains($preregistration)) {
-            $this->preregistrations[] = $preregistration;
-            $preregistration->setCity($this);
-        }
-
-        return $this;
-    }
-
-    public function removePreregistration(Preregistration $preregistration): self
-    {
-        if ($this->preregistrations->contains($preregistration)) {
-            $this->preregistrations->removeElement($preregistration);
-            // set the owning side to null (unless already changed)
-            if ($preregistration->getCity() === $this) {
-                $preregistration->setCity(null);
             }
         }
 
