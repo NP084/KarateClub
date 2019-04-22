@@ -34,15 +34,9 @@ class Phone
      */
     private $user;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Preregistration", mappedBy="phone")
-     */
-    private $preregistrations;
-
     public function __construct()
     {
         $this->user = new ArrayCollection();
-        $this->preregistrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,34 +89,6 @@ class Phone
     {
         if ($this->user->contains($user)) {
             $this->user->removeElement($user);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Preregistration[]
-     */
-    public function getPreregistrations(): Collection
-    {
-        return $this->preregistrations;
-    }
-
-    public function addPreregistration(Preregistration $preregistration): self
-    {
-        if (!$this->preregistrations->contains($preregistration)) {
-            $this->preregistrations[] = $preregistration;
-            $preregistration->addPhone($this);
-        }
-
-        return $this;
-    }
-
-    public function removePreregistration(Preregistration $preregistration): self
-    {
-        if ($this->preregistrations->contains($preregistration)) {
-            $this->preregistrations->removeElement($preregistration);
-            $preregistration->removePhone($this);
         }
 
         return $this;
