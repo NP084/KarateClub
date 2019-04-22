@@ -145,21 +145,6 @@ class User
      */
     private $fedNum;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $Email;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $Tutorname;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $Tutorfirstname;
-
 
     public function __construct()
     {
@@ -580,42 +565,6 @@ class User
     public function setFedNum(?string $fedNum): self
     {
         $this->fedNum = $fedNum;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->Email;
-    }
-
-    public function setEmail(?string $Email): self
-    {
-        $this->Email = $Email;
-
-        return $this;
-    }
-
-    public function getTutorname(): ?string
-    {
-        return $this->Tutorname;
-    }
-
-    public function setTutorname(?string $Tutorname): self
-    {
-        $this->Tutorname = $Tutorname;
-
-        return $this;
-    }
-
-    public function getTutorfirstname(): ?string
-    {
-        return $this->Tutorfirstname;
-    }
-
-    public function setTutorfirstname(?string $Tutorfirstname): self
-    {
-        $this->Tutorfirstname = $Tutorfirstname;
 
         return $this;
     }
