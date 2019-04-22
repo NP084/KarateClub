@@ -76,10 +76,6 @@ final class EntityRegenerator
             $embeddedClasses = [];
 
             foreach ($classMetadata->embeddedClasses as $fieldName => $mapping) {
-                if (false !== strpos($fieldName, '.')) {
-                    continue;
-                }
-
                 $className = $mapping['class'];
 
                 $embeddedClasses[$fieldName] = $this->getPathOfClass($className);

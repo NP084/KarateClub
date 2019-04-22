@@ -466,21 +466,17 @@ final class MakeEntity extends AbstractMaker implements InputAwareMakerInterface
         while (null === $targetEntityClass) {
             $question = $this->createEntityClassQuestion('What class should this entity be related to?');
 
-            $answeredEntityClass = $io->askQuestion($question);
+            $targetEntityClass = $io->askQuestion($question);
 
-            // find the correct class name - but give priority over looking
-            // in the Entity namespace versus just checking the full class
-            // name to avoid issues with classes like "Directory" that exist
-            // in PHP's core.
-            if (class_exists($this->getEntityNamespace().'\\'.$answeredEntityClass)) {
-                $targetEntityClass = $this->getEntityNamespace().'\\'.$answeredEntityClass;
-            } elseif (class_exists($answeredEntityClass)) {
-                $targetEntityClass = $answeredEntityClass;
-            } else {
-                $io->error(sprintf('Unknown class "%s"', $targetEntityClass));
-                $targetEntityClass = null;
+            if (!class_exists($targetEntityClass)) {
+                if (!class_exists($this->getEntityNamespace().'\\'.$targetEntityClass)) {
+                    $io->error(sprintf('Unknown class "%s"', $targetEntityClass));
+                    $targetEntityClass = null;
 
-                continue;
+                    continue;
+                }
+
+                $targetEntityClass = $this->getEntityNamespace().'\\'.$targetEntityClass;
             }
         }
 
