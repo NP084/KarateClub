@@ -28,12 +28,6 @@ class UserConnected implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-
-    /**
-     * @ORM\Column(type="string", length=255)
      * @Assert\Email()
      */
     private $email;
@@ -52,20 +46,6 @@ class UserConnected implements UserInterface, \Serializable
 
     public $confirm_password;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $firstname;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $birthday;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdUser;
 
     /**
     * @var string le token qui servira lors de l'oubli de mot de passe
@@ -106,7 +86,6 @@ class UserConnected implements UserInterface, \Serializable
         $user = new User();
         $user -> setUserConnected($this);
         $this -> setUser($user);
-        $this->createdUser = new \DateTime();
 
         $this->users = new ArrayCollection();
     }
@@ -157,18 +136,6 @@ class UserConnected implements UserInterface, \Serializable
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -181,6 +148,9 @@ class UserConnected implements UserInterface, \Serializable
         return $this;
     }
 
+    /** La fonction getUsername est obligatoire pr implémenter l'interface
+     * elle retourne l'email qui fait office de username dans le login
+    */
     public function getUsername(): ?string
     {
         return $this->email;
@@ -195,42 +165,6 @@ class UserConnected implements UserInterface, \Serializable
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): self
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getBirthday(): ?\DateTimeInterface
-    {
-        return $this->birthday;
-    }
-
-    public function setBirthday(\DateTimeInterface $birthday): self
-    {
-        $this->birthday = $birthday;
-
-        return $this;
-    }
-
-    public function getCreatedUser(): ?\DateTimeInterface
-    {
-        return $this->createdUser;
-    }
-
-    public function setCreatedUser(\DateTimeInterface $createdUser): self
-    {
-        $this->createdUser = $createdUser;
 
         return $this;
     }
