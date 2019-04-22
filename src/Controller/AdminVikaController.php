@@ -20,12 +20,21 @@ class AdminVikaController extends AbstractController
      * @Route("/vikaUsers-{orderby}", name="admin_users")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function index(UserConnectedRepository $repo, $orderby)
+    public function index(UserConnectedRepository $repo, $orderby=null, Request $request)
     {
-        $users = $repo->findBy(
-            [ ],
-            ['name'=>$orderby]
-        );
+        if ($orderby =='ASC' or $orderby == 'DESC'){
+            $users = $repo->findBy(
+                [ ],
+                ['name'=>$orderby]
+            );
+        }
+        else{
+            $orderby = $request->query->get('searchName');
+            $users = $repo->findBy(
+                ['name' => $orderby ]
+            );
+        }
+
         return $this->render('admin_vika/showContent.html.twig', [
             'controller_name' => 'Administration des utilisateurs',
             'users' => $users,

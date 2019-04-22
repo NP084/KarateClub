@@ -25,6 +25,15 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-10">
+                    <div class="row">
+
+                        <form action="{{ path('admin_users', {orderby:'search'}) }}"
+                              method="GET">
+                            <input id="searchName" name="searchName"/>
+                            <input type="submit" value="Rechercher"/>
+                        </form>
+
+                    </div>
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -41,10 +50,12 @@
                                                     <th>
                                                         <a href="{{ path('admin_users', {orderby:'DESC'}) }}">
                                                             Noms</a></th>
-                                                {% else %}
+                                                {% elseif (app.request.get("orderby")=='DESC') %}
                                                     <th>
                                                         <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
                                                             Noms</a></th>
+                                                {% else %}
+                                                    <th>Noms</th>
                                                 {% endif %}
                                                 <th>Prénom</th>
                                                 <th>Email</th>
