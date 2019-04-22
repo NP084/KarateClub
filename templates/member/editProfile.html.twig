@@ -238,14 +238,30 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-4">
                                 <div class="form-group">
-                                    {% for phone in user.userConnected.user.phones %}
-                                        <p>  {{ phone.type }}
-                                            {{ phone.num }}
-                                        </p>
-                                    {% endfor %}
+                                    <h3> Numéro(s) de téléphone </h3>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Numéro</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for phone in user.userConnected.user.phones %}
+
+                                        <td>{{ phone.type }}</td>
+                                        <td>{{ phone.num }}
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucun numéro de téléphone</td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
                                 </div>
+
                             </div>
                         </div>
                     {% endif %}
@@ -322,7 +338,7 @@
                     <div class="card-body">
                         {# TELEPHONES #}
                         <div class="row">
-                            <div class="col">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <h3>Téléphones</h3>
                                     <table class="table">
@@ -330,6 +346,7 @@
                                         <tr>
                                             <th>Type</th>
                                             <th>Numéro</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -337,7 +354,7 @@
                                         <tr>
                                             <td>{{ phone.type }}</td>
                                             <td>{{ phone.num }}</td>
-                                            <td>
+                                            <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                    href="{{ path('remove_phone_admin',{'idPhone':phone.id, 'idUser':user.id}) }}">
@@ -413,6 +430,7 @@
                                             <th>Rue</th>
                                             <th>Ville</th>
                                             <th>Pays</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -431,7 +449,7 @@
                                                 {% endif %}
                                             </td>
                                             <td>{{ adress.city.country.countryName }}</td>
-                                            <td>
+                                            <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
                                                     <a class="btn btn-sm btn-icon btn-secondary"
                                                        href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':user.id}) }}">
@@ -548,6 +566,7 @@
                                             <th>Numéro</th>
                                             <th>Relation</th>
                                             <th>Informations</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -559,7 +578,7 @@
                                             <td>{{ contactList.relation }}</td>
                                             <td>{{ contactList.info }}</td>
 
-                                            <td class="align-middle">
+                                            <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                    href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
@@ -567,8 +586,6 @@
                                                     </i>
                                                     <span class="sr-only">Modifier</span>
                                                 </a>
-                                            </td>
-                                            <td>
                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                    href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
@@ -582,9 +599,7 @@
                                                     </i>
                                                     <span class="sr-only">Modifier</span>
                                                 </a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
                                                    href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>

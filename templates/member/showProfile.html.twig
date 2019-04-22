@@ -187,13 +187,28 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-4">
                                         <div class="form-group">
-                                            {% for phone in user.userConnected.user.phones %}
-                                                <p>  {{ phone.type }}
-                                                    {{ phone.num }}
-                                                </p>
-                                            {% endfor %}
+                                            <h3> Numéro(s) de téléphone </h3>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Numéro</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for phone in user.userConnected.user.phones %}
+
+                                                <td>{{ phone.type }}</td>
+                                                <td>{{ phone.num }}
+                                                {% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun numéro de téléphone</td>
+                                                </tr>
+                                                </tbody>
+                                                {% endfor %}
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -211,13 +226,29 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-4">
                                     <div class="form-group">
-                                        <h3> Téléphones </h3>
-                                        {% for phone in user.phones %}
-                                            {{ phone.type }}
-                                            {{ phone.num }}
-                                        {% endfor %}
+                                        <div class="form-group">
+                                            <h3> Numéro(s) de téléphone </h3>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Numéro</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for phone in user.userConnected.user.phones %}
+                                                <td>{{ phone.type }}</td>
+                                                <td>{{ phone.num }}
+                                                    {% else %}
+                                                    <tr>
+                                                        <td colspan="10">Aucun numéro de téléphone</td>
+                                                    </tr>
+                                                </tbody>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
