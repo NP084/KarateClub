@@ -38,6 +38,13 @@ class UserType extends AbstractType
                     'Ceinture blanche et rouge 8e dan' => 'Ceinture blanche et rouge 8e dan',
                 ],
             ])
+            ->add('bars', ChoiceType::class,[
+                'choices' => [
+                    'Une barrette' => '1',
+                    'Deux barrettes' => '2',
+                    'Trois barrettes' => '3',
+                ],
+            ])
             ->add('receiptDate',DateType::class, [
                 'label'=>'refDate',
                 'required'=> false,
@@ -54,7 +61,9 @@ class UserType extends AbstractType
                     'Femme' => 'Femme',
                 ],
             ])
-            ->add('fedNum', TextType::class)
+            ->add('fedNum', TextType::class, [
+                'required'=> false
+            ])
             /* ->add('imageFile', VichImageType::class, [
                  'required'=> false
              ])*/

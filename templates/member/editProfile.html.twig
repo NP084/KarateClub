@@ -57,7 +57,7 @@
                     {% elseif(user.ownerUser == false and app.user.id == user.userConnected.id) %}
                         <a class="btn-btn-primary"
                            href="{{ path('view_family',{'id':user.userConnected.id}) }}">
-                        <span class="badge badge-pill badge-warning">Retour</span>
+                            <span class="badge badge-pill badge-warning">Retour</span>
                         </a>
                     {% else %}
                         <a href="{{ path('profile_show',{'id':user.id}) }}"
@@ -75,13 +75,13 @@
                         <div class="col">
                             <div class="user-avatar user-avatar-xl fileinput-button">
                                 {% if (is_granted('ROLE_ADMIN')) %}
-                                <div class="fileinput-button-label">
+                                    <div class="fileinput-button-label">
                                         <a href="{{ path('admin_picture_user',
                                             {'id':user.id}) }}">Modifier la photo</a>
-                                </div>
-                                <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
-                                     alt="{{ user.imageFile }}"
-                                     name="avatar" width="150"/>
+                                    </div>
+                                    <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
+                                         alt="{{ user.imageFile }}"
+                                         name="avatar" width="150"/>
                                 {% else %}
                                     <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
                                          alt="{{ user.imageFile }}"
@@ -93,60 +93,61 @@
                     </div>
                     {#Parent (qui peut être admin admin) qui visite son propre profil
                      ou un admin qui consulte un parent#}
-                {#    {% if ((user.ownerUser and (user.ownerUser.id == app.user.id))
-                        or (is_granted('ROLE_ADMIN') and (user.ownerUser and user.userConnected.id == user.ownerUser.id)) ) %}
-#}                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <h3>{{ user.name }} {{ user.firstname }} </h3>
-                                    <div class="metadata">Inscrit sur le site depuis
-                                        : {{ user.createdUs |date('d/m/Y') }}
-                                    </div>
+                    {#    {% if ((user.ownerUser and (user.ownerUser.id == app.user.id))
+                            or (is_granted('ROLE_ADMIN') and (user.ownerUser and user.userConnected.id == user.ownerUser.id)) ) %}
+    #}
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <h3>{{ user.name }} {{ user.firstname }} </h3>
+                                <div class="metadata">Inscrit sur le site depuis
+                                    : {{ user.createdUs |date('d/m/Y') }}
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <h3> Informations générales :</h3>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <h3> Informations générales :</h3>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <p> Email : {{ user.userConnected.email }} </p>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <p> Email : {{ user.userConnected.email }} </p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <p> Date de naissance
-                                        : {{ user.birthdate |date('d/m/Y') }} </p>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <p> Date de naissance
+                                    : {{ user.birthdate |date('d/m/Y') }} </p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <p> Numéro de fédération
-                                        : {{ user.fedNum }} </p>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <p> Numéro de fédération
+                                    : {{ user.fedNum }} </p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    {% if (user.belt) %}
-                                        <h4> Grade</h4>
-                                        <p>{{ user.belt }} reçu
-                                            le {{ user.receiptDate |date('d/m/Y') }}</p>
-                                    {% endif %}
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                {% if (user.belt) %}
+                                    <h4> Grade</h4>
+                                    <p>{{ user.belt }} reçu
+                                        le {{ user.receiptDate |date('d/m/Y') }}</p>
+                                {% endif %}
                             </div>
                         </div>
-                        {# parent ou admin qui consulte un User "enfant"     #}
+                    </div>
+                    {# parent ou admin qui consulte un User "enfant"     #}
                     {% if( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
                         <div class="row">
                             <div class="col">
@@ -222,7 +223,6 @@
     </div>
 
 
-
     {% if (is_granted('ROLE_ADMIN')) %}
         {{ form_start(formUser) }}
         <div class="container-fluid">
@@ -248,15 +248,34 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-5">
                                     <div class="form-group">
                                         {{ form_label(formUser.belt, 'Grade') }}
                                         {{ form_widget(formUser.belt) }}
                                     </div>
                                 </div>
+                                {#les barrettes ne s'affichent que pour les membres de moins de 12 ans (12 ans compris)#}
+                                {% set diff = date("now").diff(user.birthdate) %}
+                                {% set age = diff.days/365 %}
+                                {% if (age<13) %}
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            {{ form_label(formUser.bars, 'Barrettes') }}
+                                            {{ form_widget(formUser.bars) }}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    {# si plus de 12 ans, les barrettes sont cachées grâce à style#}
+                                    <div class="col-2" style="visibility:hidden">
+                                        <div class="form-group">
+                                            {{ form_label(formUser.bars, 'Barrettes') }}
+                                            {{ form_widget(formUser.bars) }}
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-5">
                                     <div class="form-group">
                                         {{ form_label(formUser.receiptDate, 'Date de réception') }}
                                         {{ form_widget(formUser.receiptDate, { attr:{ class:'js-datepicker' } }) }}
@@ -531,31 +550,31 @@
 
                                             <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
-                                                <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
-                                                    <i class="fa fa-pencil">
-                                                    </i>
-                                                    <span class="sr-only">Modifier</span>
-                                                </a>
-                                                <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':user.id}) }}">
-                                                    <i class="fa fa-trash-o">
-                                                    </i>
-                                                    <span class="sr-only">Supprimer</span>
-                                                </a>
-                                                {% else %}
-                                                <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
-                                                    <i class="fa fa-pencil">
-                                                    </i>
-                                                    <span class="sr-only">Modifier</span>
-                                                </a>
                                                     <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}">
-                                                    <i class="fa fa-trash-o">
-                                                    </i>
-                                                    <span class="sr-only">Supprimer</span>
-                                                </a>
+                                                       href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                        <i class="fa fa-pencil">
+                                                        </i>
+                                                        <span class="sr-only">Modifier</span>
+                                                    </a>
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':user.id}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                {% else %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                        <i class="fa fa-pencil">
+                                                        </i>
+                                                        <span class="sr-only">Modifier</span>
+                                                    </a>
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
                                                 {% endif %}
                                             </td>
                                         </tr>

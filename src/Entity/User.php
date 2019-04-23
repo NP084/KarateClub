@@ -150,6 +150,11 @@ class User
      */
     private $isTrial;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $bars;
+
 
     public function __construct()
     {
@@ -582,6 +587,18 @@ class User
     public function setIsTrial(?bool $isTrial): self
     {
         $this->isTrial = $isTrial;
+
+        return $this;
+    }
+
+    public function getBars(): ?int
+    {
+        return $this->bars;
+    }
+
+    public function setBars(?int $bars): self
+    {
+        $this->bars = $bars;
 
         return $this;
     }
