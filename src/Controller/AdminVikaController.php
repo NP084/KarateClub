@@ -21,7 +21,7 @@ class AdminVikaController extends AbstractController
      * @Route("/vikaUsers-{orderby}", name="admin_users")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function index(UserRepository $repo, $orderby=null, Request $request)
+    public function index(UserRepository $repo, $orderby=null, Request $request, ObjectManager $manager)
     {
         if ($orderby =='ASC' or $orderby == 'DESC'){
             $users = $repo->findBy(
@@ -32,7 +32,8 @@ class AdminVikaController extends AbstractController
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
                 'isActiveMode' => false,
-                'isTrialMode'      => false,
+                'isTrialMode'  => false,
+                'resetIsActiveMode' => false,
             ]);
         }
         elseif($orderby =='isActive'){
@@ -44,7 +45,8 @@ class AdminVikaController extends AbstractController
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
                 'isActiveMode' => true,
-                'isTrialMode'      => false,
+                'isTrialMode'  => false,
+                'resetIsActiveMode' => false,
             ]);
             }
         elseif($orderby =='isTrial'){
@@ -57,7 +59,8 @@ class AdminVikaController extends AbstractController
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
                 'isActiveMode' => false,
-                'isTrialMode'      => true,
+                'isTrialMode'  => true,
+                'resetIsActiveMode' => false,
             ]);
         }
         elseif ($request->query->get('searchName')) {
@@ -70,7 +73,26 @@ class AdminVikaController extends AbstractController
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
                 'isActiveMode' => false,
-                'isTrialMode'      => false,
+                'isTrialMode'  => false,
+                'resetIsActiveMode' => false,
+            ]);
+        }
+        elseif($orderby =='resetIsActive'){
+            $users = $repo->findBy(
+                ['isActive' => true]
+            );
+            foreach ($users as $user){
+                $user->setIsActive(false);
+                $manager->persist($user);
+                $manager->flush();
+            }
+
+            return $this->render('admin_vika/showContent.html.twig', [
+                'controller_name' => 'Administration des utilisateurs',
+                'users' => $users,
+                'isActiveMode' => false,
+                'isTrialMode'  => false,
+                'resetIsActiveMode' => true,
             ]);
         }
         else{
@@ -82,7 +104,8 @@ class AdminVikaController extends AbstractController
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
                 'isActiveMode' => false,
-                'isTrialMode'      => false,
+                'isTrialMode'  => false,
+                'resetIsActiveMode' => false,
             ]);
             }
     }
@@ -107,5 +130,25 @@ class AdminVikaController extends AbstractController
             'formPicture'=>$form->createView(),
             'editMode'=> $user->getImageName()!==null
         ]);
+    }
+
+    /**
+     * MODIFICATION DU STATUT ISACTIVE
+     * @Route("/changeIsActiveStatus%member-{id}", name="admin_changeIsActive", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function editIsActiveStatus(User $user, Request $request, ObjectManager $manager){
+
+        if ($user->getIsActive()==true){
+            $user->setIsActive(false);
+        }
+        else{
+            $user->setIsActive(true);
+        }
+            $manager->persist($user);
+            $manager->flush();
+
+
+        return $this->redirectToRoute('admin_users', ['orderBy'=>'ASC']);
     }
 }

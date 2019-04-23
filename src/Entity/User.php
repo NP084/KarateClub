@@ -563,6 +563,17 @@ class User
         return $this;
     }
 
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(?bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
     public function getIsTrial(): ?bool
     {
         return $this->isTrial;
