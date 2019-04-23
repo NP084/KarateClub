@@ -80,23 +80,24 @@ class RegistrationController extends AbstractController
         $phone = new Phone();
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
-        $PoC = new PersonOfContact();
-        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
-        $formPoC->handleRequest($request);
-        //$contactList = new ContactList();
-        //$formContactList = $this->createForm(ContactListType::class, $contactList);
-        //$formContactList->handleRequest($request);
 
+        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
         if ($formUser->isSubmitted() && $formUser->isValid()) {
+            //Création du nouveau USER:
             $user->setUserConnected($userConnected);
-            $manager->persist($user, $adress, $city, $phone, $PoC, $manager);
+            $manager->persist($user);
             $manager->flush();
+            //Création de la nouvelle adresse:
+            $this->addUserAdressRegistration($user, $adress, $city, $manager);
+            $this->addUserPhoneRegistration($user, $phone, $manager);
+
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('registration_admin_family', ['id' => $user->getId()]);
+                return $this->redirectToRoute('registration_admin_family', ['id' => $userConnected->getId()]);
             } else {
-                return $this->redirectToRoute('registration_view_family', ['id' => $user->getId()]);
+                return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
             }
         }
+
 
         return $this->render('registration/addUser.html.twig', [
             'user' => $user,
@@ -104,10 +105,75 @@ class RegistrationController extends AbstractController
             'phoneForm' => $formPhone->createView(),
             'adressForm' => $formAdress->createView(),
             'cityForm' => $formCity->createView(),
-            'PoCForm' => $formPoC->createView(),
+            //'PoCForm' => $formPoC->createView(),
             //'ContactListForm' => $formContactList->createView()
         ]);
     }
 
+    /**
+     * AJOUTE NOUVELLE ADRESSE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
+    public function addUserAdressRegistration(User $user, Adress $adress, City $city, ObjectManager $manager)
+    {
+        $repoCity = $this->getDoctrine()->getRepository(City::class);
+        $cityTest = $repoCity->findOneBy([
+            'cityName' => $city->getCityName(),
+            'zip' => $city->getZip(),
+            'country' => $city->getCountry()
+        ]);
+        // si citytest existe pas : on crée une nouvelle ville dans la DB
+        if (!$cityTest) {
+            $manager->persist($city); // le pays est automatiquement associé
+            $manager->flush();
+        }
 
+        $repo = $this->getDoctrine()->getRepository(Adress::class);
+        $adressTest = $repo->findOneBy([
+            'type' => $adress->getType(),
+            'streetName' => $adress->getStreetName(),
+            'num' => $adress->getNum(),
+            'postBox' => $adress->getPostBox()
+            // 'city'      =>$adress->getCity() // commenté car sinon bug
+        ]);
+        // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
+        if (!$adressTest) {
+            $manager->persist($adress);
+            if (!$cityTest) {
+                // si la ville n'existait pas => associe la ville qui vient d'être créée ($city)
+                $adress->setCity($city);
+            } else {
+                // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
+                $adress->setCity($cityTest);
+            }
+            $user->addAdress($adress);
+            $manager->flush();
+        } else {
+            // associe l'adresse existante à cet user
+            $user->addAdress($adressTest);
+            $manager->flush();
+        }
+    }
+
+    /**
+     * AJOUTE NOUVEAU PHONE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
+    public function addUserPhoneRegistration(User $user, Phone $phone, ObjectManager $manager)
+    {
+        $repo = $this->getDoctrine()
+            ->getRepository(Phone::class);
+        $phoneTest = $repo->findOneBy([
+            'type' => $phone->getType(),
+            'num' => $phone->getNum()
+        ]);
+        if (!$phoneTest) {
+            // enregistre le nouveau numéro dans la DB
+            $manager->persist($phone);
+            $user->addPhone($phone);
+            $manager->flush();
+        } else {
+            // associe le n° existant à cet user
+            $user->addPhone($phoneTest);
+            $manager->flush();
+        }
+    }
 }

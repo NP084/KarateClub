@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Adress;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,7 +13,16 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
+use Symfony\Component\Form\FormEvents;
+
+use App\Form\AddUserType;
+use App\Form\AdressType;
+use App\Form\CityType;
+use App\Form\PhoneType;
+use App\Form\PersonOfContactType;
+use App\Form\ContactListType;
 
 
 class AddUserType extends AbstractType
@@ -33,6 +44,7 @@ class AddUserType extends AbstractType
                 'format' => 'dd-MM-yyyy',
             ])
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
