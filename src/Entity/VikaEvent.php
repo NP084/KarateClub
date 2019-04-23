@@ -84,6 +84,11 @@ class VikaEvent
     private $endDate;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\PriceGrid", mappedBy="vikaEvent")
+     */
+    private $priceGrids;
+
+    /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
      */
     public function setImageFile(?File $imageFile = null): void
@@ -115,6 +120,7 @@ class VikaEvent
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
+        $this->priceGrids = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -233,6 +239,34 @@ class VikaEvent
     public function setEndDate(?\DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PriceGrid[]
+     */
+    public function getPriceGrids(): Collection
+    {
+        return $this->priceGrids;
+    }
+
+    public function addPriceGrid(PriceGrid $priceGrid): self
+    {
+        if (!$this->priceGrids->contains($priceGrid)) {
+            $this->priceGrids[] = $priceGrid;
+            $priceGrid->addVikaEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriceGrid(PriceGrid $priceGrid): self
+    {
+        if ($this->priceGrids->contains($priceGrid)) {
+            $this->priceGrids->removeElement($priceGrid);
+            $priceGrid->removeVikaEvent($this);
+        }
 
         return $this;
     }

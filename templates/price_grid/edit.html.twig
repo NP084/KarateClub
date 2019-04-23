@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit PriceGrid{% endblock %}
+
+{% block Body %}
+    <h1>Edit PriceGrid</h1>
+
+    {{ include('price_grid/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('priceGrid_index', {orderby:'ASC'}) }}">back to list</a>
+
+    {{ include('price_grid/_delete_form.html.twig') }}
+{% endblock %}
