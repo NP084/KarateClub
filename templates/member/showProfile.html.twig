@@ -23,14 +23,18 @@
                             </a>
                         {% endif %}
                     </h1>
-                        <div class="row">
+                    <div class="row">
                         {% if(user.ownerUser == false and app.user.id == user.userConnected.id) %}
                             <a class="btn-btn-primary"
                                href="{{ path('view_family',{'id':user.userConnected.id}) }}">
                                 <span class="badge badge-pill badge-warning">Retour</span>
                             </a>
+                        {% elseif (is_granted('ROLE_ADMIN')) %}
+                            <a href="{{ path('admin_users', {'orderby':'ASC'}) }}" class="btn-btn-primary">
+                                <span class="badge badge-pill badge-warning">Retour à la liste des utilisateurs</span>
+                            </a>
                         {% endif %}
-                        </div>
+                    </div>
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -43,14 +47,14 @@
                             </div>
                             {#Parent (qui peut être admin admin) qui visite son propre profil
                              ou un admin qui consulte un parent#}
-                            {% if ((user.ownerUser and (user.ownerUser.id == app.user.id))
-                                or (is_granted('ROLE_ADMIN') and (user.ownerUser and user.userConnected.id == user.ownerUser.id)) ) %}
+                          {#  {% if ((user.ownerUser and (user.ownerUser.id == app.user.id))
+                                or (is_granted('ROLE_ADMIN') and (user.ownerUser and user.userConnected.id == user.ownerUser.id)) ) %}#}
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <h3>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h3>
+                                            <h3>{{ user.name }} {{ user.firstname }} </h3>
                                             <div class="metadata">Inscrit sur le site depuis
-                                                : {{ user.userConnected.createdUser |date('d/m/Y') }}
+                                                : {{ user.createdUs |date('d/m/Y') }}
                                             </div>
                                         </div>
                                     </div>
@@ -65,13 +69,6 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
                                             <p> Email : {{ user.userConnected.email }} </p>
                                         </div>
                                     </div>
@@ -80,7 +77,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <p> Date de naissance
-                                                : {{ user.userConnected.birthday |date('d/m/Y') }} </p>
+                                                : {{ user.birthdate |date('d/m/Y') }} </p>
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +100,7 @@
                                     </div>
                                 </div>
                                 {# parent ou admin qui consulte un User "enfant"     #}
-                            {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
+                            {% if( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -152,23 +149,16 @@
                                             {% if (is_granted('ROLE_ADMIN')) %}
                                                 <a class="btn btn-link"
                                                    href="{{ path('admin_show',{'id':user.userConnected.user.id}) }}">
-                                                    <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                                    <h4>{{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }} </h4>
                                                     <span class="sr-only">Voir le profil</span>
                                                 </a>
                                             {% else %}
                                                 <a class="btn btn-link"
                                                    href="{{ path('profile_show',{'id':user.userConnected.user.id}) }}">
-                                                    <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                                    <h4>{{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }} </h4>
                                                     <span class="sr-only">Voir le profil</span>
                                                 </a>
                                             {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
                                         </div>
                                     </div>
                                 </div>
@@ -187,13 +177,28 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-4">
                                         <div class="form-group">
-                                            {% for phone in user.userConnected.user.phones %}
-                                                <p>  {{ phone.type }}
-                                                    {{ phone.num }}
-                                                </p>
-                                            {% endfor %}
+                                            <h3> Numéro(s) de téléphone </h3>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Numéro</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for phone in user.userConnected.user.phones %}
+
+                                                <td>{{ phone.type }}</td>
+                                                <td>{{ phone.num }}
+                                                    {% else %}
+                                                    <tr>
+                                                        <td colspan="10">Aucun numéro de téléphone</td>
+                                                    </tr>
+                                                </tbody>
+                                                {% endfor %}
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -211,13 +216,29 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-4">
                                     <div class="form-group">
-                                        <h3> Téléphones </h3>
-                                        {% for phone in user.phones %}
-                                            {{ phone.type }}
-                                            {{ phone.num }}
-                                        {% endfor %}
+                                        <div class="form-group">
+                                            <h3> Numéro(s) de téléphone </h3>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Numéro</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for phone in user.userConnected.user.phones %}
+                                                <td>{{ phone.type }}</td>
+                                                <td>{{ phone.num }}
+                                                    {% else %}
+                                                    <tr>
+                                                        <td colspan="10">Aucun numéro de téléphone</td>
+                                                    </tr>
+                                                </tbody>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

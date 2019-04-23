@@ -74,7 +74,6 @@ class UserFixtures extends Fixture
 
             $userC->setPassword($this->passwordEncoder->encodePassword($userC,'testtest'))
                   ->setEmail($faker->email)
-                  ->setUsername($faker->userName)
                   ->setName($faker->lastName())
                   ->setFirstname($faker->firstName())
                   ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))
@@ -138,7 +137,6 @@ class UserFixtures extends Fixture
 
         $userC->setPassword($this->passwordEncoder->encodePassword($userC,'testtest'))
             ->setEmail('admin@admin.com')
-            ->setUsername($faker->userName)
             ->setName($faker->lastName())
             ->setFirstname($faker->firstName())
             ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))

@@ -30,27 +30,10 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
 
-                    {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-                        <h2>Ma famille</h2>
+                    {% if (is_granted('ROLE_ADMIN') and app.user.id != app.request.get("id")) %}
+                        <h2>Famille du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
                     {% else %}
-                        {% if(is_granted('ROLE_ADMIN')) %}
-                            {# User est un parent  #}
-                            {% if (userConnected.user.ownerUser
-                                and userConnected.user.ownerUser.id == userConnected.user.userConnected.id) %}
-                                <h2>Famille du membre : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
-                            {% else %}
-                                <h2>Famille du membre
-                                    : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
-                            {% endif %}
-                        {% else %}
-                            {# le userConnected consulte son propre profil #}
-                            {% if(app.user.id == app.request.get("id")) %}
-                                <h2>Ma famille</h2>
-                            {% else %}
-                                <h2>Famille du membre
-                                    : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
-                            {% endif %}
-                        {% endif %}
+                        <h2>Ma famille</h2>
                     {% endif %}
                     <div class="card">
                         <div class="card-body">
@@ -77,8 +60,8 @@
                                                     {% if (is_granted('ROLE_ADMIN')) %}
                                                         <tr>
                                                         <td><b>{{ user.ownerUser.id }}</b></td>
-                                                        <td><b>{{ user.ownerUser.name }}</b></td>
-                                                        <td><b>{{ user.ownerUser.firstName }}</b></td>
+                                                        <td><b>{{ user.name }}</b></td>
+                                                        <td><b>{{ user.firstName }}</b></td>
                                                         <td class="align-middle text-right">
                                                             <a class="btn btn-sm btn-icon btn-secondary"
                                                                href="{{ path('admin_show', {'id': user.id}) }}"><i
@@ -106,8 +89,8 @@
                                                             </a>
                                                         </td>
                                                     {% else %}
-                                                        <td><b>{{ user.ownerUser.name }}</b></td>
-                                                        <td><b>{{ user.ownerUser.firstName }}</b></td>
+                                                        <td><b>{{ user.name }}</b></td>
+                                                        <td><b>{{ user.firstName }}</b></td>
                                                         <td class="align-middle text-right">
                                                             <a class="btn btn-sm btn-icon btn-secondary"
                                                                href="{{ path('profile_show', {'id': user.id}) }}"><i

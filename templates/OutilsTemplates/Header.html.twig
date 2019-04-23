@@ -78,13 +78,13 @@
                 {% else %}
                 <!-- .btn-account -->
                 <div class="dropdown">
-                    <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{{ vich_uploader_asset(app.user.getUser(), 'imageFile') }}" alt=" " width="42" /></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ app.user.firstname }} {{ app.user.name }} </font></font></span>
+                    <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{{ vich_uploader_asset(app.user.getUser(), 'imageFile') }}" alt=" " width="42" /></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ app.user.user.firstname }} {{ app.user.user.name }} </font></font></span>
                       {#      <span class="account-description"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Directeur Marketing</font></font></span></span>#}
                     </button>
                     <div class="dropdown-arrow dropdown-arrow-left">
                     </div><!-- .dropdown-menu -->
                     <div class="dropdown-menu">
-                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{ app.user.firstname }} {{ app.user.name }} </h6>
+                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{ app.user.user.firstname }} {{ app.user.user.name }} </h6>
                         {% if (is_granted('ROLE_ADMIN')) %}
                             <a class="dropdown-item"
                                href="{{ path('admin_show',{'id':app.user.getUser().id}) }}">

@@ -93,14 +93,14 @@
                     </div>
                     {#Parent (qui peut être admin admin) qui visite son propre profil
                      ou un admin qui consulte un parent#}
-                    {% if ((user.ownerUser and (user.ownerUser.id == app.user.id))
+                {#    {% if ((user.ownerUser and (user.ownerUser.id == app.user.id))
                         or (is_granted('ROLE_ADMIN') and (user.ownerUser and user.userConnected.id == user.ownerUser.id)) ) %}
-                        <div class="row">
+#}                        <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <h3>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h3>
+                                    <h3>{{ user.name }} {{ user.firstname }} </h3>
                                     <div class="metadata">Inscrit sur le site depuis
-                                        : {{ user.userConnected.createdUser |date('d/m/Y') }}
+                                        : {{ user.createdUs |date('d/m/Y') }}
                                     </div>
                                 </div>
                             </div>
@@ -115,13 +115,6 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
                                     <p> Email : {{ user.userConnected.email }} </p>
                                 </div>
                             </div>
@@ -130,7 +123,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <p> Date de naissance
-                                        : {{ user.userConnected.birthday |date('d/m/Y') }} </p>
+                                        : {{ user.birthdate |date('d/m/Y') }} </p>
                                 </div>
                             </div>
                         </div>
@@ -154,42 +147,7 @@
                             </div>
                         </div>
                         {# parent ou admin qui consulte un User "enfant"     #}
-                    {% elseif( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <h3>{{ user.name }} {{ user.firstname }} </h3>
-                                    <div class="metadata">Inscrit sur le site depuis
-                                        : {{ user.createdUs |date('d/m/Y') }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <p> Date de naissance : {{ user.birthDate |date('d/m/Y') }} </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <p>Numéro de fédération  : {{ user.fedNum }} </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    {% if (user.belt) %}
-                                        <h4> Grade</h4>
-                                        <p>{{ user.belt }} reçu
-                                            le {{ user.receiptDate |date('d/m/Y') }}</p>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
+                    {% if( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -203,23 +161,16 @@
                                     {% if (is_granted('ROLE_ADMIN')) %}
                                         <a class="btn btn-link"
                                            href="{{ path('admin_show', {'id':user.userConnected.user.id}) }}">
-                                            <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                            <h4>{{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }} </h4>
                                             <span class="sr-only">Voir le profil</span>
                                         </a>
                                     {% else %}
                                         <a class="btn btn-link"
                                            href="{{ path('profile_show',{'id':user.userConnected.user.id}) }}">
-                                            <h4>{{ user.userConnected.name }} {{ user.userConnected.firstname }} </h4>
+                                            <h4>{{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }} </h4>
                                             <span class="sr-only">Voir le profil</span>
                                         </a>
                                     {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <p> Nom d'utilisateur : {{ user.userConnected.username }} </p>
                                 </div>
                             </div>
                         </div>
@@ -238,14 +189,30 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-4">
                                 <div class="form-group">
-                                    {% for phone in user.userConnected.user.phones %}
-                                        <p>  {{ phone.type }}
-                                            {{ phone.num }}
-                                        </p>
-                                    {% endfor %}
+                                    <h3> Numéro(s) de téléphone </h3>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Numéro</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for phone in user.userConnected.user.phones %}
+
+                                        <td>{{ phone.type }}</td>
+                                        <td>{{ phone.num }}
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucun numéro de téléphone</td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
                                 </div>
+
                             </div>
                         </div>
                     {% endif %}
@@ -300,7 +267,7 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-outline-info">
-                                            Enregister modification(s)
+                                            Enregistrer modification(s)
                                         </button>
                                         {{ form_end(formUser) }}
                                     </div>
@@ -322,7 +289,7 @@
                     <div class="card-body">
                         {# TELEPHONES #}
                         <div class="row">
-                            <div class="col">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <h3>Téléphones</h3>
                                     <table class="table">
@@ -330,6 +297,7 @@
                                         <tr>
                                             <th>Type</th>
                                             <th>Numéro</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -337,7 +305,7 @@
                                         <tr>
                                             <td>{{ phone.type }}</td>
                                             <td>{{ phone.num }}</td>
-                                            <td>
+                                            <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                    href="{{ path('remove_phone_admin',{'idPhone':phone.id, 'idUser':user.id}) }}">
@@ -413,6 +381,7 @@
                                             <th>Rue</th>
                                             <th>Ville</th>
                                             <th>Pays</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -431,7 +400,7 @@
                                                 {% endif %}
                                             </td>
                                             <td>{{ adress.city.country.countryName }}</td>
-                                            <td>
+                                            <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
                                                     <a class="btn btn-sm btn-icon btn-secondary"
                                                        href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':user.id}) }}">
@@ -548,6 +517,7 @@
                                             <th>Numéro</th>
                                             <th>Relation</th>
                                             <th>Informations</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -559,7 +529,7 @@
                                             <td>{{ contactList.relation }}</td>
                                             <td>{{ contactList.info }}</td>
 
-                                            <td class="align-middle">
+                                            <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                    href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
@@ -567,8 +537,6 @@
                                                     </i>
                                                     <span class="sr-only">Modifier</span>
                                                 </a>
-                                            </td>
-                                            <td>
                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                    href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
@@ -582,9 +550,7 @@
                                                     </i>
                                                     <span class="sr-only">Modifier</span>
                                                 </a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
                                                    href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>

@@ -25,6 +25,80 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-10">
+                    <div class="row">
+                        {% if (resetIsActiveMode==true) %}
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <a id="isActive" name="isActive" class="btn btn-outline-primary" methods="GET"
+                                       href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Voir tous les
+                                            membres</label>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-3"></div>
+                        {% else %}
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <form action="{{ path('admin_users', {orderby:'search'}) }}"
+                                          method="GET">
+                                        <div class="input-group input-group-search">
+                                            <div class="input-group-prepend">
+                                                <button type="submit">
+                                                    <span class="oi oi-magnifying-glass"></span></span>
+                                                </button>
+                                            </div>
+                                            <div class="input-group-prepend">
+                                                <input id="searchName" name="searchName"
+                                                       type="text" class="form-control" aria-label="Search"
+                                                       placeholder="Recherche par nom">
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if (isActiveMode==true) %}
+                            <div class="col-2">
+                                <a id="isActive" name="isActive" class="btn btn-primary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Actifs</label>
+                                </a>
+                            </div>
+                            <div class="col-2">
+                                <a id="isTrial" name="isActive" class="btn btn-outline-primary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'isTrial'}) }}"><label>Cours d'essai</label>
+                                </a>
+                            </div>
+
+                        {% elseif (isTrialMode==true) %}
+                            <div class="col-2">
+                                <a id="isActive" name="isActive" class="btn btn-outline-primary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'isActive'}) }}"><label>Actifs</label>
+                                </a>
+                            </div>
+                            <div class="col-2">
+                                <a id="isTrial" name="isTrial" class="btn btn-primary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Cours d'essai</label>
+                                </a>
+                            </div>
+                        {% elseif (resetIsActiveMode==true) %}
+                            <div class="col-5">
+                                <h5>Liste des utilisateurs dont le statut "Membre actif" a été remis à zéro</h5>
+                            </div>
+                        {% else %}
+                            <div class="col-2">
+                                <a id="isActive" name="isActive" class="btn btn-outline-primary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'isActive'}) }}"><label>Actifs</label>
+                                </a>
+                            </div>
+                            <div class="col-2">
+                                <a id="isTrial" name="isActive" class="btn btn-outline-primary" methods="GET"
+                                   href="{{ path('admin_users', {orderby:'isTrial'}) }}"><label>Cours d'essai</label>
+                                </a>
+                            </div>
+
+                        {% endif %}
+                    </div>
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -41,10 +115,12 @@
                                                     <th>
                                                         <a href="{{ path('admin_users', {orderby:'DESC'}) }}">
                                                             Noms</a></th>
-                                                {% else %}
+                                                {% elseif (app.request.get("orderby")=='DESC') %}
                                                     <th>
                                                         <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
                                                             Noms</a></th>
+                                                {% else %}
+                                                    <th>Noms</th>
                                                 {% endif %}
                                                 <th>Prénom</th>
                                                 <th>Email</th>
@@ -52,48 +128,59 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {# user = userconnected #}
+                                            {# user = user #}
                                             {% for user in users %}
                                                 <tr>
                                                     <td>{{ user.id }}</td>
                                                     <td>{{ user.name }}</td>
                                                     <td>{{ user.firstName }}</td>
-                                                    <td>{{ user.email }}</td>
+                                                    <td>{{ user.userConnected.email }}</td>
                                                     <td class="align-middle text-right">
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_show', {'id': user.user.id}) }}"><i
+                                                           href="{{ path('admin_show', {'id': user.id}) }}"><i
                                                                     class="oi oi-person"></i></a>
                                                         <span class="sr-only">Voir profil</span>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_edit', {'id': user.user.id}) }}">
+                                                           href="{{ path('admin_edit', {'id': user.id}) }}">
                                                             <i class="fa fa-pencil">
                                                             </i>
                                                             <span class="sr-only">Modifier</span>
                                                         </a>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_history', {'id': user.user.id}) }}"><i
+                                                           href="{{ path('admin_history', {'id': user.id}) }}"><i
                                                                     class="oi oi-badge"></i></a>
                                                         <span class="sr-only">Parcours</span>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_registration', {'id': user.user.id}) }}"><i
+                                                           href="{{ path('admin_registration', {'id': user.id}) }}"><i
                                                                     class="oi oi-cart"></i>
                                                             <span class="sr-only">Activités</span>
                                                         </a>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_family',{'id': user.id}) }}">
+                                                           href="{{ path('admin_family',{'id': user.userConnected.id}) }}">
                                                             <i class="oi oi-people"></i>
                                                             <span class="sr-only">Famille</span>
                                                         </a>
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_document', {'id': user.user.id}) }}"><i
+                                                           href="{{ path('admin_document', {'id': user.id}) }}"><i
                                                                     class="oi oi-document"></i>
                                                             <span class="sr-only">Documents</span>
                                                         </a>
+                                                        {% if (user.isActive == true) %}
+                                                            <a class="btn btn-outline-dark"
+                                                               href="{{ path('admin_changeIsActive', {'id': user.id}) }}">
+                                                                Actif
+                                                            </a>
+                                                        {% else %}
+                                                            <a class="btn btn-outline-light"
+                                                               href="{{ path('admin_changeIsActive', {'id': user.id}) }}">
+                                                                Actif
+                                                            </a>
+                                                        {% endif %}
                                                     </td>
                                                 </tr>
                                             {% else %}
                                                 <tr>
-                                                    <td colspan="10">Aucun utilisateur enregistré sur le site</td>
+                                                    <td colspan="10">Aucun utilisateur</td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
@@ -104,8 +191,46 @@
                             </div>
                         </div>
                     </div>
+
+                    {% if (resetIsActiveMode==false) %}
+                        <div class="col-2">
+                            <form action="{{ path('admin_users', {orderby:'resetIsActive'}) }}"
+                                  method="GET">
+                                <button type="submit" id="resetIsActive" name="resetIsActive"
+                                        class="btn btn-danger">Reset des membres actifs
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     {% endif %}
+
+    <script type="text/javascript">
+        document.querySelector("#resetIsActive").addEventListener("click", function(event){
+            if (!confirm('Confirmation du reset du statut?')) event.preventDefault();
+        }, false);
+
+
+    </script>
 {% endblock %}
+
+
+                                    {#
+                                    <input id="searchName" name="searchName"/>
+#}
+                                    {#
+                                                                        <input type="submit" value="Rechercher"/>
+                                    #}
+                                    {#   <input id="searchName" name="searchName"/>
+                                       <i class="oi oi-magnifying-glass">
+                                           <input class="btn btn-sm btn-icon btn-secondary" type="submit"/>
+                                       </i>
+                                       <span class="sr-only">Rechercher par nom</span>
+   #}
+                                    {#  <input id="searchName" name="searchName"/>
+                                      <input type="submit" value="Rechercher"/>
+                                     <a class="btn btn-sm btn-icon btn-secondary"><i
+                                                  class="oi oi-magnifying-glass"></i></a>
+                                      <span class="sr-only">Voir profil</span>#}
