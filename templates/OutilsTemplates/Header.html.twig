@@ -43,12 +43,16 @@
                         </li> 
                         <li class="nav-item">
                         <a class="nav-link" href="#">Suivi pédagogique</a>
-                        </li>                          
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('VikaContent',{'path':'contact'}) }}">Contact</a>
+                        </li>
                         {% if (is_granted('ROLE_ADMIN')) %}
                         <li class="nav-item dropdown">
                                 <a class="nav-link" data-toggle="dropdown" href="#" role="button">Administration<span class="caret"></span></a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Gérer les membres</a> 
+                                    <a class="dropdown-item" href="{{ path('admin_users', {orderby:'ASC'}) }}">
+                                        Gérer les membres</a>
                                     <a class="dropdown-item" href="#">Gérer les préinscriptions</a> 
                                     <a class="dropdown-item" href="#">Gérer les évènements</a> 
                                     <a class="dropdown-item" href="#">Gérer les payements</a> 
@@ -57,16 +61,6 @@
                                 </div>
                         </li> 
                         {% endif %}
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('VikaContent',{'path':'contact'}) }}">Contact</a>
-                        </li>
-                        {% if (is_granted('ROLE_ADMIN')) %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('admin_users', {orderby:'ASC'}) }}">Administration</a>
-                        </li>
-                        {% endif %}
-
 
                     </ul><!-- /.navbar-nav -->
                 </div><!-- /.navbar-collapse -->
@@ -78,13 +72,13 @@
                 {% else %}
                 <!-- .btn-account -->
                 <div class="dropdown">
-                    <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{{ vich_uploader_asset(app.user.getUser(), 'imageFile') }}" alt=" " width="42" /></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ app.user.firstname }} {{ app.user.name }} </font></font></span>
+                    <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{{ vich_uploader_asset(app.user.getUser(), 'imageFile') }}" alt=" " width="42" /></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ app.user.user.firstname }} {{ app.user.user.name }} </font></font></span>
                       {#      <span class="account-description"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Directeur Marketing</font></font></span></span>#}
                     </button>
                     <div class="dropdown-arrow dropdown-arrow-left">
                     </div><!-- .dropdown-menu -->
                     <div class="dropdown-menu">
-                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{ app.user.firstname }} {{ app.user.name }} </h6>
+                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{ app.user.user.firstname }} {{ app.user.user.name }} </h6>
                         {% if (is_granted('ROLE_ADMIN')) %}
                             <a class="dropdown-item"
                                href="{{ path('admin_show',{'id':app.user.getUser().id}) }}">

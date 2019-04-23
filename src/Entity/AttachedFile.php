@@ -4,11 +4,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AttachedFileRepository")
- * @Vich\Uploadable
  */
 class AttachedFile
 {
@@ -35,12 +33,6 @@ class AttachedFile
      */
     private $datecreat;
 
-    /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * @Vich\UploadableField(mapping="document_picture", fileNameProperty="docname")
-     * @var File
-     */
-    private $docFile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -100,24 +92,6 @@ class AttachedFile
         return $this;
     }
 
-    /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $docFile
-     */
-    public function setDocFile(?File $docFile = null): void
-    {
-        $this->docFile = $docFile;
-
-        if (null !== $docFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->datecreat = new  \DateTimeImmutable();
-        }
-    }
-
-    public function getDocFile(): ?File
-    {
-        return $this->docFile;
-    }
 
     public function getDescription(): ?string
     {

@@ -1,31 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block Body %}
-    {#    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}#}
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
+    {# Admin ou si la personne connectée est le parent du profil consulté #}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-                        <h2> Parcours personnel </h2>
+                    {#Si admin ou parent qui consulte son propre profil#}
+                    {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
+                        <h2>Parcours personnel </h2>
                     {% else %}
-                        {% if(is_granted('ROLE_ADMIN')) %}
-                            {# User est un parent  #}
-                            {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
-                                <h2>Parcours du membre : {{ user.ownerUser.firstName }} {{ user.ownerUser.name }}</h2>
-                            {% else %}
-                                <h2>Parcours du membre : {{ user.firstName }} {{ user.name }}</h2>
-                            {% endif %}
-                        {% else %}
-                            {# le userConnected consulte son propre profil.
-                            app.user = userConnected #}
-                            {% if(app.user.user.id == app.request.get("id")) %}
-                                <h2>Parcours personnel </h2>
-                            {% else %}
-                                <h2>Parcours du membre : {{ user.firstName }} {{ user.name }}</h2>
-                            {% endif %}
-                        {% endif %}
+                        <h2>Parcours de {{ user.firstName }} {{ user.name }}</h2>
                     {% endif %}
+
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -76,27 +63,27 @@
                     </div>
                     {% if (is_granted('ROLE_ADMIN')) %}
                         <a class="btn btn-primary"
-                           href="{{ path('admin_history_new',{'id': user.id }) }}"
-                           class="btn-btn-primary">
+                           href="{{ path('admin_history_new',{'id': user.id }) }}">
                             <b>Nouvel élément dans le parcours</b>
                         </a>
+                        {#admin consulte un autre profil que le sien => retour vers la liste de users#}
+                        {% if (app.user.id != user.userConnected.id) %}
+                            <a class="btn btn-warning"
+                               href="{{ path('admin_users', {orderBy: 'ASC'}) }}">
+                                <b>Retour</b>
+                            </a>
+                        {% endif %}
+                        {# le profil consulté est un enfant et la personne connectée est son parent:
+                        le retour se fait vers "Ma famille", sinon pas de btn retour#}
+                    {% elseif(user.ownerUser == false and app.user.id == user.userConnected.id) %}
                         <a class="btn btn-warning"
-                           href="{{ path('admin_show',{'id':user.id}) }}"
-                           class="btn-btn-primary">
-                            <b>Retour</b>
-                        </a>
-                    {% else %}
-                        <a class="btn btn-warning"
-                           href="{{ path('profile_show',{'id':user.id}) }}"
-                           class="btn-btn-primary">
+                           href="{{ path('view_family',{'id':user.userConnected.id}) }}">
                             <b>Retour</b>
                         </a>
                     {% endif %}
                 </div>
             </div>
         </div>
-
-
 
 
     {% else %}
