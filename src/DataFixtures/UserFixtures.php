@@ -22,8 +22,8 @@ Use App\Entity\City;
 class UserFixtures extends Fixture
 {
     /**
-    Nécessaire pour utiliser encodePassword dans la fixture
-    */
+     * Nécessaire pour utiliser encodePassword dans la fixture
+     */
     private $passwordEncoder;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
@@ -32,8 +32,8 @@ class UserFixtures extends Fixture
     }
 
     /**
-    Fixtures
-    */
+     * Fixtures
+     */
 
     public function load(ObjectManager $manager)
     {
@@ -46,48 +46,49 @@ class UserFixtures extends Fixture
         $city = new City();
 
         // créer 25 utilisateurs fakés
-        for ($k=1; $k<=10; $k++){
+        for ($k = 1; $k <= 10; $k++) {
 
             $userC = new UserConnected();
             $user = $userC->getUser();
 
             $userAdress = new Adress();
             $userAdress->setType("Domicile")
-                       ->setNum($faker->buildingNumber())
-                       ->setStreetName($faker->streetName())
-                       ->setPostBox($faker->randomDigitNotNull())
-                       ->addUser($user);
+                ->setNum($faker->buildingNumber())
+                ->setStreetName($faker->streetName())
+                ->setPostBox($faker->randomDigitNotNull())
+                ->addUser($user);
             $manager->persist($userAdress);
 
-            $phoneType='Domicile';
-            $userPhone=new Phone();
+            $phoneType = 'Domicile';
+            $userPhone = new Phone();
             $userPhone->setType($phoneType)
-                      ->setNum($faker->phoneNumber())
-                      ->addUser($user);
+                ->setNum($faker->phoneNumber())
+                ->addUser($user);
             $manager->persist($userPhone);
 
             $city->setCityName($faker->city())
-                 ->setZip($faker->postcode())
-                 ->addAdress($userAdress)
-                 ->setCountry($country);
+                ->setZip($faker->postcode())
+                ->addAdress($userAdress)
+                ->setCountry($country);
             $manager->persist($city);
 
-            $userC->setPassword($this->passwordEncoder->encodePassword($userC,'testtest'))
-                  ->setEmail($faker->email)
-                  ->setName($faker->lastName())
-                  ->setFirstname($faker->firstName())
-                  ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))
-                  ->setCreatedUser($faker->dateTimeBetween('-6 months'))
-                  ->addUser($user)
-                  ->setUser($user);
-            $manager-> persist($userC);
+            $userC->setPassword($this->passwordEncoder->encodePassword($userC, 'testtest'))
+                ->setEmail($faker->email)
+                ->setCreatedUser($faker->dateTimeBetween('-6 months'))
+                ->addUser($user)
+                ->setUser($user);
+            $manager->persist($userC);
 
-            $user->setSex('Male')
-                 ->setBelt($faker->safeColorName())
-                 ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
-                 ->setOwnerUser($userC)
-                 ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
-            $manager-> persist($user);
+            $user
+                ->setName($faker->lastName())
+                ->setFirstname($faker->firstName())
+                ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'))
+                ->setSex('Male')
+                ->setBelt($faker->safeColorName())
+                ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
+                ->setOwnerUser($userC)
+                ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
+            $manager->persist($user);
 
             $childUser = new User();
             $childUser->setSex('Female')
@@ -96,8 +97,8 @@ class UserFixtures extends Fixture
                 ->setBelt($faker->safeColorName())
                 ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
                 ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
-            $userC -> addUser($childUser);
-            $manager-> persist($childUser);
+            $userC->addUser($childUser);
+            $manager->persist($childUser);
 
             $childUser = new User();
             $childUser->setSex('Male')
@@ -106,8 +107,8 @@ class UserFixtures extends Fixture
                 ->setBelt($faker->safeColorName())
                 ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
                 ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
-            $userC -> addUser($childUser);
-            $manager-> persist($childUser);
+            $userC->addUser($childUser);
+            $manager->persist($childUser);
 
             $manager->flush();
         }
@@ -122,8 +123,8 @@ class UserFixtures extends Fixture
             ->addUser($user);
         $manager->persist($userAdress);
 
-        $phoneType='Domicile';
-        $userPhone=new Phone();
+        $phoneType = 'Domicile';
+        $userPhone = new Phone();
         $userPhone->setType($phoneType)
             ->setNum($faker->phoneNumber())
             ->addUser($user);
@@ -135,21 +136,21 @@ class UserFixtures extends Fixture
             ->setCountry($country);
         $manager->persist($city);
 
-        $userC->setPassword($this->passwordEncoder->encodePassword($userC,'testtest'))
+        $userC->setPassword($this->passwordEncoder->encodePassword($userC, 'testtest'))
             ->setEmail('admin@admin.com')
-            ->setName($faker->lastName())
-            ->setFirstname($faker->firstName())
-            ->setBirthday($faker->dateTimeBetween('-77 years', '-6years'))
             ->setCreatedUser($faker->dateTimeBetween('-6 months'))
             ->addUser($user)
             ->setUser($user);
-        $manager-> persist($userC);
+        $manager->persist($userC);
 
-        $user->setSex('Male')
-             ->setBelt($faker->safeColorName())
-             ->setOwnerUser($userC)
-             ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
-        $manager-> persist($user);
+        $user->setName($faker->lastName())
+            ->setFirstname($faker->firstName())
+            ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'))
+            ->setSex('Male')
+            ->setBelt($faker->safeColorName())
+            ->setOwnerUser($userC)
+            ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
+        $manager->persist($user);
 
 
         $childUser = new User();
@@ -159,8 +160,8 @@ class UserFixtures extends Fixture
             ->setBelt($faker->safeColorName())
             ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
             ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
-        $userC -> addUser($childUser);
-        $manager-> persist($childUser);
+        $userC->addUser($childUser);
+        $manager->persist($childUser);
 
         $childUser = new User();
         $childUser->setSex('Male')
@@ -169,8 +170,8 @@ class UserFixtures extends Fixture
             ->setBelt($faker->safeColorName())
             ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
             ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
-        $userC -> addUser($childUser);
-        $manager-> persist($childUser);
+        $userC->addUser($childUser);
+        $manager->persist($childUser);
 
         $manager->flush();
     }
