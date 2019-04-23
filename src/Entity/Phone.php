@@ -34,15 +34,9 @@ class Phone
      */
     private $user;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Child", mappedBy="Phones")
-     */
-    private $children;
-
     public function __construct()
     {
         $this->user = new ArrayCollection();
-        $this->children = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,34 +89,6 @@ class Phone
     {
         if ($this->user->contains($user)) {
             $this->user->removeElement($user);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Child[]
-     */
-    public function getChildren(): Collection
-    {
-        return $this->children;
-    }
-
-    public function addChild(Child $child): self
-    {
-        if (!$this->children->contains($child)) {
-            $this->children[] = $child;
-            $child->addPhone($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChild(Child $child): self
-    {
-        if ($this->children->contains($child)) {
-            $this->children->removeElement($child);
-            $child->removePhone($this);
         }
 
         return $this;
