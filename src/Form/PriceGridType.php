@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,6 +18,7 @@ class PriceGridType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('label')
             ->add('price')
             ->add('public',ChoiceType::class,[
                 'choices' => [
@@ -25,8 +27,7 @@ class PriceGridType extends AbstractType
                     'Unifié' => 'Unifié',]
             ])
             ->add('info')
-            ->add('label')
-            ->add('category', EntityType::class,[
+    /*        ->add('category', EntityType::class,[
                 'class'=> Category::class,
                 'query_builder' => function(EntityRepository $er){
                     $disc = "PriceGrid";
@@ -36,7 +37,7 @@ class PriceGridType extends AbstractType
                         -> orderBy('u.title', 'ASC');
                 },
                 'choice_label'=>'title',
-            ])
+            ])*/
     /*        ->add('vikaEvent',EntityType::class,[
                 'class'=> VikaEvent::class,
                 'required'=> false,

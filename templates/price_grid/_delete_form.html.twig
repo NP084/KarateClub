@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('price_grid_delete', {'id': price_grid.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_method" value="DELETE">
+<form method="post" action="{{ path('price_grid_delete', {'id': price_grid.id}) }}" onsubmit="return confirm('Etes vous certain de vouloir supprimer cette ligne?');">
+    <input type="hidden" name="_method" value="Supprimer">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ price_grid.id) }}">
     <button class="btn">Delete</button>
 </form>

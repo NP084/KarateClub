@@ -56,7 +56,7 @@ class VikaEvent
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * @Vich\UploadableField(mapping="article_picture", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="vikaEvent_picture", fileNameProperty="imageName")
      * @var File
      */
     private $imageFile;
@@ -84,9 +84,15 @@ class VikaEvent
     private $endDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PriceGrid", mappedBy="vikaEvent")
+     * @ORM\OneToMany(targetEntity="App\Entity\PriceGrid", mappedBy="vikaEvent", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"public" = "ASC"})
      */
     private $priceGrid;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $info;
 
     /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
@@ -271,6 +277,18 @@ class VikaEvent
                 $priceGrid->setVikaEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInfo(): ?string
+    {
+        return $this->info;
+    }
+
+    public function setInfo(?string $info): self
+    {
+        $this->info = $info;
 
         return $this;
     }

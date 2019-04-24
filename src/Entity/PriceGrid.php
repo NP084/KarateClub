@@ -33,10 +33,6 @@ class PriceGrid
      */
     private $info;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="priceGrids")
-     */
-    private $category;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -90,18 +86,6 @@ class PriceGrid
     public function setInfo(?string $info): self
     {
         $this->info = $info;
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }

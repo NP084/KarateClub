@@ -3,11 +3,29 @@
 {% block title %}Edit PriceGrid{% endblock %}
 
 {% block Body %}
-    <h1>Edit PriceGrid</h1>
 
-    {{ include('price_grid/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h1>Modification d'un tarif</h1>
+            <a href="{{ path('vika_event_edit',{'id':price_grid.vikaEvent.id}) }}"
+               class="btn-btn-primary">
+                <span class="badge badge-pill badge-warning">Retour</span>
+            </a>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                {{ include('price_grid/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+                                {{ include('price_grid/_delete_form.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('priceGrid_index', {orderby:'ASC'}) }}">back to list</a>
 
-    {{ include('price_grid/_delete_form.html.twig') }}
-{% endblock %}
+    {% endblock %}
