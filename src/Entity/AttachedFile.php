@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 
@@ -49,6 +49,11 @@ class AttachedFile
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * @Vich\UploadableField(mapping="document_picture", fileNameProperty="docName")
      * @var File
+     * @Assert\File(
+     *     maxSize="5242880",
+     *     mimeTypes = {
+     *     "application/pdf",
+     *     })
      */
     private $docFile;
 
