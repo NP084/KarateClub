@@ -47,11 +47,6 @@ class User
     private $receiptDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Rental", mappedBy="member")
-     */
-    private $rentals;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="member")
      * @ORM\OrderBy({"datecreat" = "ASC"})
      */
@@ -160,7 +155,6 @@ class User
     {
         $this->phones = new ArrayCollection();
         $this->adress = new ArrayCollection();
-        $this->rentals = new ArrayCollection();
         $this->attachedFiles = new ArrayCollection();
         $this->personOfContact = new ArrayCollection();
         $this->registration = new ArrayCollection();
@@ -280,37 +274,6 @@ class User
     public function setReceiptDate(?\DateTimeInterface $receiptDate): self
     {
         $this->receiptDate = $receiptDate;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Rental[]
-     */
-    public function getRentals(): Collection
-    {
-        return $this->rentals;
-    }
-
-    public function addRental(Rental $rental): self
-    {
-        if (!$this->rentals->contains($rental)) {
-            $this->rentals[] = $rental;
-            $rental->setMember($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRental(Rental $rental): self
-    {
-        if ($this->rentals->contains($rental)) {
-            $this->rentals->removeElement($rental);
-            // set the owning side to null (unless already changed)
-            if ($rental->getMember() === $this) {
-                $rental->setMember(null);
-            }
-        }
 
         return $this;
     }
