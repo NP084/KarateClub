@@ -6,25 +6,11 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    {% if (is_granted('ROLE_USER') or (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id"))) %}
-                        <h2> Documents personnel </h2>
+                    {#Si admin ou parent qui consulte son propre profil#}
+                    {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
+                        <h2>Documents personnels </h2>
                     {% else %}
-                        {% if(is_granted('ROLE_ADMIN')) %}
-                            {# User est un parent  #}
-                            {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
-                                <h2>Documents du membre : {{ user.ownerUser.firstName }} {{ user.ownerUser.name }}</h2>
-                            {% else %}
-                                <h2>Documents du membre : {{ user.firstName }} {{ user.name }}</h2>
-                            {% endif %}
-                        {% else %}
-                            {# le userConnected consulte son propre profil.
-                            app.user = userConnected #}
-                            {% if(app.user.user.id == app.request.get("id")) %}
-                                <h2>Documents personnel </h2>
-                            {% else %}
-                                <h2>Documents du membre : {{ user.firstName }} {{ user.name }}</h2>
-                            {% endif %}
-                        {% endif %}
+                        <h2>Document du membre {{ user.firstName }} {{ user.name }}</h2>
                     {% endif %}
                     <div class="card">
                         <div class="card-body">
