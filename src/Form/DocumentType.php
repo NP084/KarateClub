@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class DocumentType extends AbstractType
 {
@@ -17,8 +18,9 @@ class DocumentType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('docname', FileType::class);
-        ;
+            ->add('docFile', VichImageType::class, [
+                'required'=> false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
