@@ -121,6 +121,7 @@ class VikaEvent
     {
         $this->registrations = new ArrayCollection();
         $this->priceGrids = new ArrayCollection();
+        $this->createdEv = new \DateTime();
     }
 
     public function getId(): ?int

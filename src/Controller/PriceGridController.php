@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\PriceGrid;
 use App\Form\PriceGridType;
+use App\Repository\CategoryRepository;
 use App\Repository\PriceGridRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,8 +57,14 @@ class PriceGridController extends AbstractController
         }
         elseif ($request->query->get('searchName')) {
             $searchName = $request->query->get('searchName');
+            $category = $this->getDoctrine()
+                ->getRepository(Category::class)
+                ->findBy(
+                    ['title'=>$searchName]
+                );
+
             $priceGrid = $repo->findBy(
-                ['category' => $searchName]
+                ['category' => $category]
             );
             return $this->render('price_grid/index.html.twig', [
                 'price_grids' => $priceGrid,

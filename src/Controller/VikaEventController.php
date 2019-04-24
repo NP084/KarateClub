@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\PriceGrid;
 use App\Entity\VikaEvent;
+use App\Form\PriceGridType;
 use App\Form\VikaEventType;
 use App\Repository\VikaEventRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,7 +61,7 @@ class VikaEventController extends AbstractController
     }
 
     /**
-     * @Route("-{id}", name="vika_event_show", methods={"GET"})
+     * @Route("-{id}", name="vika_event_show", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function show(VikaEvent $vikaEvent): Response
     {
@@ -68,29 +71,43 @@ class VikaEventController extends AbstractController
     }
 
     /**
-     * @Route("-{id}-edit", name="vika_event_edit", methods={"GET","POST"})
+     * @Route("-{id}-edit", name="vika_event_edit", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function edit(Request $request, VikaEvent $vikaEvent): Response
+    public function edit(Request $request, VikaEvent $vikaEvent, ObjectManager $manager): Response
     {
         $form = $this->createForm(VikaEventType::class, $vikaEvent);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $price = new PriceGrid();
+        $formPrice= $this->createForm(PriceGridType::class, $price);
+        $formPrice->handleRequest($request);
 
-            return $this->redirectToRoute('vika_event_index', [
-                'id' => $vikaEvent->getId(),
-            ]);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($formPrice->isSubmitted() && $formPrice->isValid()){
+                $manager->persist($price);
+                $vikaEvent->addPriceGrid($price);
+                $manager->persist($vikaEvent);
+                $manager->flush();
+            }
+            else{
+                $this->getDoctrine()->getManager()->flush();
+            }
+
+
+            return $this->redirectToRoute('vika_event_index');
         }
 
         return $this->render('vika_event/edit.html.twig', [
             'vika_event' => $vikaEvent,
+            'price'=>$price,
             'form' => $form->createView(),
+            'formPrice' => $formPrice->createView(),
         ]);
     }
 
     /**
-     * @Route("-{id}-delete", name="vika_event_delete", methods={"DELETE"})
+     * @Route("-{id}-delete", name="vika_event_delete", methods={"DELETE"}, requirements={"id"="\d+"})
      */
     public function delete(Request $request, VikaEvent $vikaEvent): Response
     {
