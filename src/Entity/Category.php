@@ -48,6 +48,11 @@ class Category
      */
     private $vikaEvents;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PriceGrid", mappedBy="category")
+     */
+    private $priceGrids;
+
 
     public function __construct()
     {
@@ -55,6 +60,7 @@ class Category
         $this->equipment = new ArrayCollection();
         $this->history = new ArrayCollection();
         $this->vikaEvents = new ArrayCollection();
+        $this->priceGrids = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -204,6 +210,37 @@ class Category
             // set the owning side to null (unless already changed)
             if ($vikaEvent->getCategory() === $this) {
                 $vikaEvent->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PriceGrid[]
+     */
+    public function getPriceGrids(): Collection
+    {
+        return $this->priceGrids;
+    }
+
+    public function addPriceGrid(PriceGrid $priceGrid): self
+    {
+        if (!$this->priceGrids->contains($priceGrid)) {
+            $this->priceGrids[] = $priceGrid;
+            $priceGrid->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriceGrid(PriceGrid $priceGrid): self
+    {
+        if ($this->priceGrids->contains($priceGrid)) {
+            $this->priceGrids->removeElement($priceGrid);
+            // set the owning side to null (unless already changed)
+            if ($priceGrid->getCategory() === $this) {
+                $priceGrid->setCategory(null);
             }
         }
 

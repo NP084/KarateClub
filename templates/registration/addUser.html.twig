@@ -1,0 +1,133 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Nouveau membre{% endblock %}
+
+{% block Body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8">
+            <h2>Ajouter un nouveau membre de sa famille</h2>
+            <div class="card">
+                <div class="card-body">
+                    {# Informations générales #} 
+                    <h4>Informations générales</h4>
+                    <div class="card">
+                        <div class="card-body">
+                            {{ form_start(formUser) }}  
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="">Nom</label>
+                                        {{ form_widget(formUser.name) }}
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="">Prénom</label>
+                                        {{ form_widget(formUser.firstName) }}
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="">Sexe</label>
+                                        {{ form_widget(formUser.sex) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Date de naissance</label>
+                                {{ form_widget(formUser.birthdate) }}
+                            </div>
+                        </div>
+                    </div>
+                    {# Numéro de téléphone #} 
+                    <h4>Numéro de téléphone</h4>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="">Type</label>
+                                        {{ form_widget(phoneForm.type) }}
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="">Numéro de téléphone</label>
+                                        {{ form_widget(phoneForm.num) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {# Informations générales #} 
+                    <h4>Adresse</h4>
+                    <div class="card">
+                        <div class="card-body"> 
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="">Type</label>
+                                        {{ form_widget(adressForm.type) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="">Rue</label>
+                                        {{ form_widget(adressForm.streetName) }}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="">Numéro d'habitation</label>
+                                        {{ form_widget(adressForm.num) }}
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="">Boite</label>
+                                        {{ form_widget(adressForm.postBox) }}
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="">Code postale</label>
+                                        {{ form_widget(cityForm.zip) }}
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label for="">Ville</label>
+                                        {{ form_widget(cityForm.cityName) }}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="">Pays</label>
+                                        {{ form_widget(cityForm.country) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>             
+                </div>
+                <div class="container">
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-success">Créer un nouveau membre</button>
+                        {{ form_end(formUser) }}
+                    </div>
+                </div>
+                <br>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

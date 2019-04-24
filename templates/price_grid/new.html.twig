@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PriceGrid{% endblock %}
+
+{% block Body %}
+    <h1>Create new PriceGrid</h1>
+
+    {{ include('price_grid/_form.html.twig') }}
+
+    <a href="{{ path('priceGrid_index', {orderby:'search'}) }}">back to list</a>
+{% endblock %}

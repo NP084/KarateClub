@@ -635,10 +635,26 @@ class MemberController extends AbstractController
         $doc = $entityManager->getRepository(AttachedFile::class)->find($id);
         $user = $entityManager->getRepository(User::class)->find($idUser);
 
-        $user->removeDoc($doc);
+        $user->removeAttachedFile($doc);
         $entityManager->flush();
 
         return $this->redirectToRoute('admin_document', ['id' => $user->getId()]);
+    }
+
+    /**
+     * Affiche un document.
+     * @Route("/admin-afficher_document-id={id}-idUser={idUser}", name="afficher_document_admin", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function afficherDoc($id, $idUser)
+    {
+      $entityManager = $this->getDoctrine()->getManager();
+      $doc = $entityManager->getRepository(AttachedFile::class)->find($id);
+      $user = $entityManager->getRepository(User::class)->find($idUser);
+      return $this->render('member/afficherDoc.html.twig', [
+          'doc' => $doc,
+          'user' => $user,
+      ]);
     }
 
 

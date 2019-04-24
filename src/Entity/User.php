@@ -145,6 +145,16 @@ class User
      */
     private $fedNum;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isTrial;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $bars;
+
 
     public function __construct()
     {
@@ -157,6 +167,7 @@ class User
         $this->histories = new ArrayCollection();
         $this->contactLists = new ArrayCollection();
         $this->isActive = false;
+        $this->isTrial = false;
         $this->createdUs = new \DateTime();
         $this->notifications = new ArrayCollection();
     }
@@ -245,18 +256,6 @@ class User
         if ($this->adress->contains($adress)) {
             $this->adress->removeElement($adress);
         }
-
-        return $this;
-    }
-
-    public function getCreatedUser(): ?\DateTimeInterface
-    {
-        return $this->createdUser;
-    }
-
-    public function setCreatedUser(\DateTimeInterface $createdUser): self
-    {
-        $this->createdUser = $createdUser;
 
         return $this;
     }
@@ -565,6 +564,41 @@ class User
     public function setFedNum(?string $fedNum): self
     {
         $this->fedNum = $fedNum;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(?bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+    public function getIsTrial(): ?bool
+    {
+        return $this->isTrial;
+    }
+
+    public function setIsTrial(?bool $isTrial): self
+    {
+        $this->isTrial = $isTrial;
+
+        return $this;
+    }
+
+    public function getBars(): ?int
+    {
+        return $this->bars;
+    }
+
+    public function setBars(?int $bars): self
+    {
+        $this->bars = $bars;
 
         return $this;
     }

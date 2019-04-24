@@ -118,7 +118,11 @@
                     </div>
                     <div class="row justify-content-end">
                         <div class="col-auto">
-                            <button type="button" class="btn btn-success" href="#">Ajouter un nouveau membre</button>
+                            {% if (is_granted('ROLE_ADMIN')) %}
+                                <a class="btn btn-success" href="{{ path('add_admin',{'id':userConnected.id}) }}">Ajouter un nouveau membre</a>
+                            {% else %}
+                                <a class="btn btn-success" href="{{ path('add_profil',{'id':userConnected.id}) }}">Ajouter un nouveau membre</a>
+                            {% endif %}
                         </div>
                      </div>
             

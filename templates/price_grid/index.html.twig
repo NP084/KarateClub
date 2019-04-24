@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PriceGrid index{% endblock %}
+
+{% block Body %}
+    <h1>PriceGrid index</h1>
+    <div class="col-12">
+        <div class="form-group">
+            <form action="{{ path('priceGrid_index', {orderby:'search'}) }}"
+                  method="GET">
+                <div class="input-group input-group-search">
+                    <div class="input-group-prepend">
+                        <button type="submit">
+                            <span class="oi oi-magnifying-glass"></span></span>
+                        </button>
+                    </div>
+                    <div class="input-group-prepend">
+                        <input id="searchName" name="searchName"
+                               type="text" class="form-control" aria-label="Search"
+                               placeholder="Recherche par catégorie">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Label</th>
+            <th>Price</th>
+            <th>Public</th>
+            <th>Catégorie</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for price_grid in price_grids %}
+            <tr>
+                <td>{{ price_grid.id }}</td>
+                <td>{{ price_grid.label }}</td>
+                <td>{{ price_grid.price }}</td>
+                <td>{{ price_grid.public }}</td>
+                {% if (price_grid.vikaEvent and price_grid.vikaEvent.category) %}
+                    <td>{{ price_grid.vikaEvent.category.title }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>
+                    <a href="{{ path('price_grid_show', {'id': price_grid.id}) }}">show</a>
+                    <a href="{{ path('price_grid_edit', {'id': price_grid.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{#    <a href="{{ path('price_grid_new') }}">Create new</a>#}
+{% endblock %}
