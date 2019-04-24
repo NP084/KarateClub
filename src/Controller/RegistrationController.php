@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Child;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\UserConnected;
@@ -15,8 +13,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Entity\User;
-use App\Form\ChildType;
 
 
 class RegistrationController extends AbstractController
@@ -31,48 +27,20 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/preregistration", name="preregistration")
+/**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/registration-member-family-{id}", name="registration_view_family", requirements={"idCL"="\d+"})
+     * @Route("/registration-admin-family-{id}", name="registration_admin_family", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
-    public function preregistration(Request $request, ObjectManager $manager)
+    public function indexFamily(UserConnected $userConnected)
     {
-        $user = new Child();
-
-
-        $form = $this->createForm(ChildType::class, $user);
-        $form->handleRequest($request);
-
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $phone = $user->getPhones();
-//            $manager->persist($phone);
-//            $phone->setUser($user);
-//
-//
-//            $manager->persist($user);
-//            $manager->flush();
-//
-//            return $this->redirectToRoute('home_page');
-//        }
-
-        return $this->render('registration/preregistration.html.twig', [
-            'formChild' => $form->createView()]);
+        $users = $userConnected->getUsers();
+        return $this->render('registration/showFamily.html.twig', [
+            'controller_name' => 'Vue des membres de sa famille',
+            'users' => $users,
+            'userConnected' => $userConnected,
+        ]);
     }
 
-        /**
-         * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-         * @Route("/registration-member-family-{id}", name="registration_view_family", requirements={"idCL"="\d+"})
-         * @Route("/registration-admin-family-{id}", name="registration_admin_family", requirements={"idCL"="\d+"})
-         * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
-         */
-        public
-        function indexFamily(UserConnected $userConnected)
-        {
-            $users = $userConnected->getUsers();
-            return $this->render('registration/showFamily.html.twig', [
-                'controller_name' => 'Vue des membres de sa famille',
-                'users' => $users,
-                'userConnected' => $userConnected,
-            ]);
-        }
-
-    }
+}
