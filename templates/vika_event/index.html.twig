@@ -23,7 +23,7 @@
                                             <th>Capacité</th>
                                             <th>Date de début</th>
                                             <th>Date de fin</th>
-                                            <th>Actions</th>
+                                            <th class="align-middle text-right">Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -38,9 +38,19 @@
                                                 {#           <td>{{ vika_event.updatedImage ? vika_event.updatedImage|date('Y-m-d H:i:s') : '' }}</td>#}
                                                 <td>{{ vika_event.startDate ? vika_event.startDate|date('Y-m-d H:i:s') : '' }}</td>
                                                 <td>{{ vika_event.endDate ? vika_event.endDate|date('Y-m-d H:i:s') : '' }}</td>
-                                                <td>
-                                                    <a href="{{ path('vika_event_show', {'id': vika_event.id}) }}">Voir</a>
-                                                    <a href="{{ path('vika_event_edit', {'id': vika_event.id}) }}">Editer</a>
+                                                <td class="align-middle text-right">
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('vika_event_show',
+                                                           {'id': vika_event.id})  }}"><i
+                                                                class="oi oi-info"></i></a>
+                                                    <span class="sr-only">Voir</span>
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{  path('vika_event_edit',
+                                                           {'id': vika_event.id})  }}">
+                                                        <i class="fa fa-pencil">
+                                                        </i>
+                                                        <span class="sr-only">Editer</span>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         {% else %}
@@ -55,7 +65,10 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ path('vika_event_new') }}">Nouvel événement</a>
+                <button type="button" class="btn btn-outline-primary">
+                    <a href="{{ path('vika_event_new') }}">Nouvel événement</a>
+                </button>
+
             </div>
         </div>
     </div>

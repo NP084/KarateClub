@@ -93,7 +93,7 @@ class PriceGridController extends AbstractController
          else{
              $priceGrid = $repo->findBy(
                  [ ],
-                 ['category'=>'ASC']
+                 ['public'=>'ASC']
              );
              return $this->render('price_grid/index.html.twig', [
                  'price_grids' => $priceGrid

@@ -132,6 +132,7 @@ class VikaEventController extends AbstractController
             'form' => $form->createView(),
             'formPrice' => $formPrice->createView(),
             'newMode' => $newMode,
+            'newMode'=>$newMode,
         ]);
     }
 
