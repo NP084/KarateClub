@@ -34,11 +34,6 @@ class PriceGrid
     private $info;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\VikaEvent", inversedBy="priceGrids")
-     */
-    private $vikaEvent;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="priceGrids")
      */
     private $category;
@@ -48,9 +43,14 @@ class PriceGrid
      */
     private $label;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\VikaEvent", inversedBy="priceGrid")
+     */
+    private $vikaEvent;
+
     public function __construct()
     {
-        $this->vikaEvent = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -94,32 +94,6 @@ class PriceGrid
         return $this;
     }
 
-    /**
-     * @return Collection|VikaEvent[]
-     */
-    public function getVikaEvent(): Collection
-    {
-        return $this->vikaEvent;
-    }
-
-    public function addVikaEvent(VikaEvent $vikaEvent): self
-    {
-        if (!$this->vikaEvent->contains($vikaEvent)) {
-            $this->vikaEvent[] = $vikaEvent;
-        }
-
-        return $this;
-    }
-
-    public function removeVikaEvent(VikaEvent $vikaEvent): self
-    {
-        if ($this->vikaEvent->contains($vikaEvent)) {
-            $this->vikaEvent->removeElement($vikaEvent);
-        }
-
-        return $this;
-    }
-
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -140,6 +114,18 @@ class PriceGrid
     public function setLabel(string $label): self
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    public function getVikaEvent(): ?VikaEvent
+    {
+        return $this->vikaEvent;
+    }
+
+    public function setVikaEvent(?VikaEvent $vikaEvent): self
+    {
+        $this->vikaEvent = $vikaEvent;
 
         return $this;
     }

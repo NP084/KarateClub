@@ -84,9 +84,9 @@ class VikaEvent
     private $endDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\PriceGrid", mappedBy="vikaEvent")
+     * @ORM\OneToMany(targetEntity="App\Entity\PriceGrid", mappedBy="vikaEvent")
      */
-    private $priceGrids;
+    private $priceGrid;
 
     /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
@@ -120,8 +120,8 @@ class VikaEvent
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
-        $this->priceGrids = new ArrayCollection();
         $this->createdEv = new \DateTime();
+        $this->priceGrid = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,16 +247,16 @@ class VikaEvent
     /**
      * @return Collection|PriceGrid[]
      */
-    public function getPriceGrids(): Collection
+    public function getPriceGrid(): Collection
     {
-        return $this->priceGrids;
+        return $this->priceGrid;
     }
 
     public function addPriceGrid(PriceGrid $priceGrid): self
     {
-        if (!$this->priceGrids->contains($priceGrid)) {
-            $this->priceGrids[] = $priceGrid;
-            $priceGrid->addVikaEvent($this);
+        if (!$this->priceGrid->contains($priceGrid)) {
+            $this->priceGrid[] = $priceGrid;
+            $priceGrid->setVikaEvent($this);
         }
 
         return $this;
@@ -264,11 +264,15 @@ class VikaEvent
 
     public function removePriceGrid(PriceGrid $priceGrid): self
     {
-        if ($this->priceGrids->contains($priceGrid)) {
-            $this->priceGrids->removeElement($priceGrid);
-            $priceGrid->removeVikaEvent($this);
+        if ($this->priceGrid->contains($priceGrid)) {
+            $this->priceGrid->removeElement($priceGrid);
+            // set the owning side to null (unless already changed)
+            if ($priceGrid->getVikaEvent() === $this) {
+                $priceGrid->setVikaEvent(null);
+            }
         }
 
         return $this;
     }
+
 }
