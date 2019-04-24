@@ -29,10 +29,7 @@ class GalleryType extends AbstractType
                 'attr' => array(
                     'class' => 'my-selector',
                 ),
-            ])
-            
-
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

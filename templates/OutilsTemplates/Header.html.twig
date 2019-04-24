@@ -28,9 +28,14 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link" data-toggle="dropdown" href="#" role="button">Activités<span class="caret"></span></a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Cours</a> 
-                                    <a class="dropdown-item" href="#">Stage</a>
-                                    <a class="dropdown-item" href="#">Compétition</a>
+                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'all'})
+                                    }}">Tous les événements</a>
+                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Cours'}) }}">Cours</a>
+                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Stages'}) }}">Stages</a>
+                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Compétitions'})
+                                    }}">Compétitions</a>
+                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Autres'})
+                                    }}">Autres</a>
 {#                                    <a class="dropdown-item" href="#">Matériels</a>#}
                                 </div>
                         </li>
@@ -54,7 +59,7 @@
                                     <a class="dropdown-item" href="{{ path('admin_users', {orderby:'ASC'}) }}">
                                         Gérer les membres</a>
                                     <a class="dropdown-item" href="#">Gérer les préinscriptions</a> 
-                                    <a class="dropdown-item" href="#">Gérer les évènements</a> 
+                                    <a class="dropdown-item" href="{{ path('vika_event_index')}}">Gérer les événements</a>
                                     <a class="dropdown-item" href="#">Gérer les payements</a> 
                                     <a class="dropdown-item" href="#">Grille tarifaire</a> 
                                     <a class="dropdown-item" href="#">Matériels</a> 

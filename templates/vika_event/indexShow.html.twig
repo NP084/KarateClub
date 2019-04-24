@@ -1,0 +1,51 @@
+{% extends 'blog/Template.html.twig' %}
+
+
+{% block Content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            {% for vikaEvent in vikaEvents %}
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ vikaEvent.title }}</h5>
+                        </div>
+                        <div class="card-body">
+                        <img class="embed-responsive-rounded"
+                             src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
+                             alt="Card image" width="100%">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                {{ vikaEvent.owner}}
+                            </p>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="card-footer-content text-muted">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="metadata">Diffusé le {{ vikaEvent.createdEv |date('d/m/Y')}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="card-footer-content text-muted">
+                                            <a class="btn btn-primary btn-md" href="{{ path('vika_event_show', {'id':vikaEvent.id}) }}" role="button">Lire la suite</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+{#            <div class="navigation">
+                {{ knp_pagination_render(articles) }}
+            </div>#}
+        </div>
+    </div>
+{% endblock %}

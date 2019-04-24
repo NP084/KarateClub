@@ -56,7 +56,7 @@ class VikaEvent
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * @Vich\UploadableField(mapping="article_picture", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="vikaEvent_picture", fileNameProperty="imageName")
      * @var File
      */
     private $imageFile;
@@ -82,6 +82,17 @@ class VikaEvent
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $endDate;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PriceGrid", mappedBy="vikaEvent", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"public" = "ASC"})
+     */
+    private $priceGrid;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $info;
 
     /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
@@ -115,6 +126,8 @@ class VikaEvent
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
+        $this->createdEv = new \DateTime();
+        $this->priceGrid = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -236,4 +249,48 @@ class VikaEvent
 
         return $this;
     }
+
+    /**
+     * @return Collection|PriceGrid[]
+     */
+    public function getPriceGrid(): Collection
+    {
+        return $this->priceGrid;
+    }
+
+    public function addPriceGrid(PriceGrid $priceGrid): self
+    {
+        if (!$this->priceGrid->contains($priceGrid)) {
+            $this->priceGrid[] = $priceGrid;
+            $priceGrid->setVikaEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriceGrid(PriceGrid $priceGrid): self
+    {
+        if ($this->priceGrid->contains($priceGrid)) {
+            $this->priceGrid->removeElement($priceGrid);
+            // set the owning side to null (unless already changed)
+            if ($priceGrid->getVikaEvent() === $this) {
+                $priceGrid->setVikaEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getInfo(): ?string
+    {
+        return $this->info;
+    }
+
+    public function setInfo(?string $info): self
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
 }

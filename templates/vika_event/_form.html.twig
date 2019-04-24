@@ -1,4 +1,9 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_start(formPrice) }}
+
+{{ form_widget(form) }}
+    {{ form_widget(formPrice) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(formPrice) }}
+
 {{ form_end(form) }}

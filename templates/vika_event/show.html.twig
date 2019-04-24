@@ -3,38 +3,121 @@
 {% block title %}VikaEvent{% endblock %}
 
 {% block Body %}
-    <h1>VikaEvent</h1>
 
-    <table class="table">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ vikaEvent.title }}</h4>
+                    </div>
+
+                    {#                    <figure class="embed-responsive embed-responsive-16by9 mb-0">#}
+                    <img class="embed-responsive-rounded"
+                         src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
+                         alt="Card image" width="50%">
+                    {#                    </figure>#}
+                    <div class="card-body">
+                        <h6>Titulaire de l'événement</h6>
+                        <p class="card-text">
+                            {{ vikaEvent.owner }}</p>
+                    </div>
+
+                    <div class="card-body">
+                        <h6>Date de début</h6>
+                        <p class="card-text">
+                            {{ vikaEvent.startDate |date('d/m/Y H:i:s') }}
+                        </p>
+                    </div>
+
+                    <div class="card-body">
+                        <h6>Date de fin</h6>
+                        <p class="card-text">
+                            {{ vikaEvent.endDate |date('d/m/Y H:i:s') }}
+                        </p>
+                    </div>
+
+                    <div class="card-body">
+                        <h6>Description</h6>
+                        <p class="card-text">
+                            {{ vikaEvent.info|raw }}
+                        </p>
+                    </div>
+
+                    <div class="card-body">
+                        <h6>Capacité</h6>
+                        <p class="card-text">
+                        <td>{{ vikaEvent.capacity }}</td>
+                        </p>
+                    </div>
+
+                    {#                   liste des prix#}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h5>Tarif</h5>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Public</th>
+                                                <th>Prix</th>
+                                                <th>Info</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for priceGrid in vikaEvent.priceGrid %}
+                                        <tr>
+                                            <td>{{ priceGrid.public }}</td>
+                                            <td>{{ priceGrid.price }}</td>
+                                            <td>{{ priceGrid.info }}</td>
+                                        </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucune tarification disponible</td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="card-footer-content text-muted">
+                            <div class="metadata">Diffusé le {{ vikaEvent.createdEv |date('d/m/Y') }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if (is_granted('ROLE_ADMIN')) %}
+                    <a href="{{ path('vika_event_index') }}">back to list</a>
+
+                    <a href="{{ path('vika_event_edit', {'id': vikaEvent.id}) }}">edit</a>
+
+                    {{ include('vika_event/_delete_form.html.twig') }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {#<table class="table">
         <tbody>
             <tr>
+                {% if (is_granted('ROLE_ADMIN')) %}
                 <th>Id</th>
                 <td>{{ vika_event.id }}</td>
+                {% endif %}
             </tr>
             <tr>
-                <th>Owner</th>
+                <th>Titulaire de l'événement</th>
                 <td>{{ vika_event.owner }}</td>
             </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ vika_event.title }}</td>
-            </tr>
-            <tr>
-                <th>Capacity</th>
-                <td>{{ vika_event.capacity }}</td>
-            </tr>
-            <tr>
-                <th>CreatedEv</th>
-                <td>{{ vika_event.createdEv ? vika_event.createdEv|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>ImageName</th>
-                <td>{{ vika_event.imageName }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedImage</th>
-        {#        <td>{{ vika_event.updatedImage ? vika_event.updatedImage|date('Y-m-d H:i:s') : '' }}</td>#}
-            </tr>
+
+
+
             <tr>
                 <th>StartDate</th>
                 <td>{{ vika_event.startDate ? vika_event.startDate|date('Y-m-d H:i:s') : '' }}</td>
@@ -45,10 +128,9 @@
             </tr>
         </tbody>
     </table>
+#}
 
-    <a href="{{ path('vika_event_index') }}">back to list</a>
 
-    <a href="{{ path('vika_event_edit', {'id': vika_event.id}) }}">edit</a>
 
-    {{ include('vika_event/_delete_form.html.twig') }}
+
 {% endblock %}
