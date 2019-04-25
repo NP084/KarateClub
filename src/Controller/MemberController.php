@@ -24,6 +24,7 @@ use App\Form\UserConnectedType;
 use App\Form\UserPictureType;
 use App\Form\UserType;
 use App\Form\ResetPasswordType;
+use App\Form\AddUserType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
@@ -43,6 +44,64 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class MemberController extends AbstractController
 {
+
+    /**
+     * Ajouter un nouveau user
+     * @Route("/add-member-id={id}-new", name="add_profil", requirements={"id"="\d+"})
+     * @Route("/add-admin-id={id}-new", name="add_admin",  requirements={"id"="\d+"})
+     */
+    public function addUser(UserConnected $userConnected, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    {
+        //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
+        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
+        $user = new User();
+        $formUser = $this->createForm(AddUserType::class, $user);
+        $formUser->handleRequest($request);
+        $adress = new Adress();
+        $formAdress = $this->createForm(AdressType::class, $adress);
+        $formAdress->handleRequest($request);
+        $city = new City();
+        $formCity = $this->createForm(CityType::class, $city);
+        $formCity->handleRequest($request);
+        $phone = new Phone();
+        $formPhone = $this->createForm(PhoneType::class, $phone);
+        $formPhone->handleRequest($request);
+        $PoC = new PersonOfContact();
+        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
+        $formPoC->handleRequest($request);
+        $contactList = new ContactList();
+        $formContactList = $this->createForm(ContactListType::class, $contactList);
+        $formContactList->handleRequest($request);
+
+        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
+        if ($formUser->isSubmitted() && $formUser->isValid()) {
+            //Création du nouveau USER:
+            $user->setUserConnected($userConnected);
+            $manager->persist($user);
+            $manager->flush();
+            //Création de la nouvelle adresse:
+            $this->addUserAdress($user, $adress, $city, $manager);
+            $this->addUserPhone($user, $phone, $manager);
+            $this->addUserPoC($user, $contactList, $PoC, $manager);
+            
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('registration_admin_family', ['id' => $userConnected->getId()]);
+            } else {
+                return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
+            }
+        }
+
+
+        return $this->render('member/addUser.html.twig', [
+            'user' => $user,
+            'formUser' => $formUser->createView(),
+            'phoneForm' => $formPhone->createView(),
+            'adressForm' => $formAdress->createView(),
+            'cityForm' => $formCity->createView(),
+            'PoCForm' => $formPoC->createView(),
+            'ContactListForm' => $formContactList->createView()
+        ]);
+    }
 
     /**
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
