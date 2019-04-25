@@ -12,16 +12,24 @@
                         <h4 class="card-title">{{ vikaEvent.title }}</h4>
                     </div>
 
+
+                    {% if (is_granted('ROLE_ADMIN') and vikaEvent.published) %}
+                        <div class="card-body">
+                            <h6>Evénement publique</h6>
+                        </div>
+                    {% endif %}
+
                     {#                    <figure class="embed-responsive embed-responsive-16by9 mb-0">#}
                     <img class="embed-responsive-rounded"
                          src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
-                         alt="Card image" width="50%">
+                         alt="Card image" width="70%">
                     {#                    </figure>#}
                     <div class="card-body">
                         <h6>Titulaire de l'événement</h6>
                         <p class="card-text">
                             {{ vikaEvent.owner }}</p>
                     </div>
+
 
                     <div class="card-body">
                         <h6>Date de début</h6>
@@ -36,18 +44,17 @@
                             {{ vikaEvent.endDate |date('d/m/Y H:i:s') }}
                         </p>
                     </div>
+                    <div class="card-body">
+                        <h6>Capacité</h6>
+                        <p class="card-text">
+                        <td>{{ vikaEvent.capacity }}</td>
+                        </p>
+                    </div>
 
                     <div class="card-body">
                         <h6>Description</h6>
                         <p class="card-text">
                             {{ vikaEvent.info|raw }}
-                        </p>
-                    </div>
-
-                    <div class="card-body">
-                        <h6>Capacité</h6>
-                        <p class="card-text">
-                        <td>{{ vikaEvent.capacity }}</td>
                         </p>
                     </div>
 
@@ -59,11 +66,11 @@
                                     <h5>Tarif</h5>
                                     <table class="table">
                                         <thead>
-                                            <tr>
-                                                <th>Public</th>
-                                                <th>Prix</th>
-                                                <th>Info</th>
-                                            </tr>
+                                        <tr>
+                                            <th>Public</th>
+                                            <th>Prix</th>
+                                            <th>Info</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
                                         {% for priceGrid in vikaEvent.priceGrid %}
@@ -73,9 +80,9 @@
                                             <td>{{ priceGrid.info }}</td>
                                         </tr>
                                         {% else %}
-                                            <tr>
-                                                <td colspan="10">Aucune tarification disponible</td>
-                                            </tr>
+                                        <tr>
+                                            <td colspan="10">Aucune tarification disponible</td>
+                                        </tr>
                                         </tbody>
                                         {% endfor %}
                                     </table>

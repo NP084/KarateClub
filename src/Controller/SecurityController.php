@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\RegistrationType;
+use App\Form\UserForRegType;
+use App\Entity\User;
 use App\Entity\UserConnected;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -22,20 +24,30 @@ class SecurityController extends AbstractController
     public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder){
         $user = new UserConnected();
 
-        $form = $this->createForm(RegistrationType::class, $user);
-        $form->handleRequest($request);
+        $formReg = $this->createForm(RegistrationType::class, $user);
+        $formReg->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        $user2 = new User();
+
+        $formUser = $this->createForm(UserForRegType::class, $user2);
+        $formUser->handleRequest($request);
+
+        if($formReg->isSubmitted() && $formReg->isValid()){
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
 
+            $user->setUser($user2);
+            $user->addUser($user2);
+
             $manager->persist($user);
-            $manager->flush($user);
+            $manager->persist($user2);
+            $manager->flush();
             return $this->redirectToRoute('validation');
         }
 
             return $this->render('security/registration.html.twig', [
-                'form' => $form->createView()
+                'formReg' => $formReg->createView(),
+                'formUser' => $formUser->createView()
             ]);
 
         }

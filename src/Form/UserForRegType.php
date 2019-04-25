@@ -2,29 +2,30 @@
 
 namespace App\Form;
 
-use App\Entity\UserConnected;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class RegistrationType extends AbstractType
+class UserForRegType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('password', PasswordType::class)
-            ->add('confirm_password', PasswordType::class)
+            ->add('name')
+            ->add('firstname')
+            ->add('birthdate', DateType::class, [
+                'years' => range(1900, date('Y')-14),
+                'format' => 'dd-MM-yyyy',
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => UserConnected::class,
+            'data_class' => User::class,
         ]);
     }
 }

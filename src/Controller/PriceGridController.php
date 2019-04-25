@@ -84,7 +84,8 @@ class PriceGridController extends AbstractController
                  );
 
              $priceGrid = $repo->findBy(
-                 ['vikaEvent' => $vikaEvent]
+                 ['vikaEvent' => $vikaEvent],
+                 ['label'=>'ASC']
              );
              return $this->render('price_grid/index.html.twig', [
                  'price_grids' => $priceGrid,
@@ -93,7 +94,7 @@ class PriceGridController extends AbstractController
          else{
              $priceGrid = $repo->findBy(
                  [ ],
-                 ['category'=>'ASC']
+                 ['public'=>'ASC']
              );
              return $this->render('price_grid/index.html.twig', [
                  'price_grids' => $priceGrid

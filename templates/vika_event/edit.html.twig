@@ -37,63 +37,100 @@
                     <h1>Modification d'un événement</h1>
                 {% endif %}
 
-                    <a href="{{ path('vika_event_index') }}">Liste des événements (admin)</a>
+                <a href="{{ path('vika_event_index') }}">Liste des événements (admin)</a>
 
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">
-                            {{ form_label(form.title, 'Titre de l\'événement') }}
-                            {{ form_widget(form.title) }}
-                        </h4>
-                    </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <h4>{{ form_label(form.title, 'Titre de l\'événement') }}</h4>
+                                    {{ form_widget(form.title) }}
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <h6>{{ form_label(form.category, 'Catégorie') }}</h6>
+                                    <p class="card-text">{{ form_widget(form.category) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <h6>{{ form_label(form.imageFile, 'Photo d\'illustration') }}</h6>
+{#                        alt="Card image"   width="100%">#}
+                                    <p class="embed-responsive-item rounded">{{ form_widget(form.imageFile) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <h6>{{ form_label(form.owner, 'Titulaire de l\'événement') }}</h6>
+                                    <p class="card-text">
+                                        {{ form_widget(form.owner) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <h6>{{ form_label(form.startDate, 'Date de début') }}</h6>
+                                    <p class="card-text">{{ form_widget(form.startDate) }}</p>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <h6>{{ form_label(form.endDate, 'Date de fin') }}</h6>
+                                    <p class="card-text">{{ form_widget(form.endDate) }}</p>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <h6>{{ form_label(form.capacity, 'Capacité') }}</h6>
+                                    <p class="card-text">{{ form_widget(form.capacity) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h6>{{ form_label(form.info, 'Description') }}</h6>
+                                    <p class="card-text">{{ form_widget(form.info) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h6>{{ form_label(form.published, 'Publiée sur le site') }}</h6>
+                                    <p class="card-text">{{ form_widget(form.published) }}</p>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            {{ form_label(form.imageFile, 'Photo d\'illustration') }}
-                            {{ form_widget(form.imageFile) }}
-                        </h4>
                     </div>
+                </div>
 
-                    <div class="card-body">
-                        <h6>{{ form_label(form.owner, 'Titulaire de l\'événement') }}</h6>
-                        <p class="card-text">
-                            {{ form_widget(form.owner) }}</p>
-                    </div>
-
-                    <div class="card-body">
-                        <h6>{{ form_label(form.category, 'Catégorie') }}</h6>
-                        <p class="card-text">{{ form_widget(form.category) }}</p>
-                    </div>
-
-                    <div class="card-body">
-                        <h6>{{ form_label(form.startDate, 'Date de début') }}</h6>
-                        <p class="card-text">{{ form_widget(form.startDate) }}</p>
-                    </div>
-
-                    <div class="card-body">
-                        <h6>{{ form_label(form.endDate, 'Date de fin') }}</h6>
-                        <p class="card-text">{{ form_widget(form.endDate) }}</p>
-                    </div>
-
-                    <div class="card-body">
-                        <h6>{{ form_label(form.info, 'Description') }}</h6>
-                        <p class="card-text">{{ form_widget(form.info) }}</p>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="col-2">
-                            <h6>{{ form_label(form.capacity, 'Capacité') }}</h6>
-                            <p class="card-text">{{ form_widget(form.capacity) }}</p>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-info">
+                                {% if (newMode == true) %}
+                                    Enregistrer événément
+                                {% else %}
+                                    Enregistrer modifications
+                                {% endif %}
+                            </button>
+                            {{ form_end(form) }}
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-outline-info">
-                        Enregistrer événément
-                    </button>
-                    {{ form_end(form) }}
 
-                </div>
+
                 <h5>Tarif</h5>
                 {{ form_start(formPrice) }}
                 <div class="card">
@@ -140,44 +177,67 @@
 
                     <div class="card-body">
                         <h5>Nouveau tarif</h5>
-                        <h6>{{ form_label(formPrice.public, 'Public') }}</h6>
-                        <p class="card-text">{{ form_widget(formPrice.public) }}</p>
-                    </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <h6>{{ form_label(formPrice.public, 'Public') }}</h6>
+                                    <p class="card-text">{{ form_widget(formPrice.public) }}</p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <h6>{{ form_label(formPrice.price, 'Prix') }}</h6>
+                                    <p class="card-text">{{ form_widget(formPrice.price) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h6>{{ form_label(formPrice.info, 'Information complémentaire') }}</h6>
+                                    <p class="card-text">{{ form_widget(formPrice.info,
+                                            { 'attr': {'rows' : '4' }} ) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <h6>{{ form_label(formPrice.label, 'Label') }}</h6>
+                                    <p class="card-text">{{ form_widget(formPrice.label) }}</p>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="card-body">
-                        <h6>{{ form_label(formPrice.price, 'Prix') }}</h6>
-                        <p class="card-text">{{ form_widget(formPrice.price) }}</p>
-                    </div>
-                    <div class="card-body">
-                        <h6>{{ form_label(formPrice.info, 'Information complémentaire') }}</h6>
-                        <p class="card-text">{{ form_widget(formPrice.info) }}</p>
-                    </div>
-
-                    <div class="card-body">
-                        <h6>{{ form_label(formPrice.label, 'Label') }}</h6>
-                        <p class="card-text">{{ form_widget(formPrice.label) }}</p>
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="card-footer-content text-muted">
-                            <div class="metadata">Diffusé le {{ vikaEvent.createdEv |date('d/m/Y') }}</div>
+                        <div class="card-footer">
+                            <div class="card-footer-content text-muted">
+                                <div class="metadata">Diffusé le {{ vikaEvent.createdEv |date('d/m/Y') }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-outline-info">
-                        Enregistrer tarif
-                    </button>
-                    {{ form_end(formPrice) }}
+
+                <div class="row">
+                    <div class="col-11">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-info">
+                                Enregistrer tarif
+                            </button>
+                            {{ form_end(formPrice) }}
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        {% if (newMode==false) %}
+                            {#    Delete ne doit apparaitre que qd on édite un événement déjà existant, pas qd on crée un nouveau#}
+                            {{ include('vika_event/_delete_form.html.twig') }}
+                        {% endif %}
+                    </div>
                 </div>
 
-                <a href="{{ path('vika_event_showList',{'cat':'Cours'}) }}">Tous les événements (vue site web)</a>
+                <div class="row">
+                    <a href="{{ path('vika_event_showList',{'cat':'Cours'}) }}">Tous les événements (vue site web)</a>
 
-
-                {% if (newMode==false) %}
-                    {#    Delete ne doit apparaitre que qd on édite un événement déjà existant, pas qd on crée un nouveau#}
-                    {{ include('vika_event/_delete_form.html.twig') }}
-                {% endif %}
+                </div>
             </div>
         </div>
     </div>

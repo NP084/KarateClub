@@ -31,12 +31,12 @@ class VikaEventController extends AbstractController
     {
         if ($cat == 'all') {
             $vikaEvents = $vikaEventRepository->findBy(
-                [ ],
+                ['publique'=>true],
                 ['startDate' => 'DESC']
             );
         }
         else {
-            // trouver la catégorie d'événement à afficher. La catégorie se trouve dans l'URE => cat
+            // trouver la catégorie d'événement à afficher. La catégorie se trouve dans l'URL => cat
             $category = $this->getDoctrine()
                 ->getRepository(Category::class)
                 ->findBy(
@@ -44,7 +44,8 @@ class VikaEventController extends AbstractController
                 );
             // recherche des événements qui sont de la catégorie cat
             $vikaEvents = $vikaEventRepository->findBy(
-                ['category' => $category],
+                ['category' => $category,
+                    'publique'=>true],
                 ['startDate' => 'DESC']
             );
         }
@@ -132,6 +133,7 @@ class VikaEventController extends AbstractController
             'form' => $form->createView(),
             'formPrice' => $formPrice->createView(),
             'newMode' => $newMode,
+            'newMode'=>$newMode,
         ]);
     }
 

@@ -34,11 +34,6 @@ class Category
     private $articles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Equipment", mappedBy="category")
-     */
-    private $equipment;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="category")
      */
     private $history;
@@ -57,7 +52,6 @@ class Category
     public function __construct()
     {
         $this->articles = new ArrayCollection();
-        $this->equipment = new ArrayCollection();
         $this->history = new ArrayCollection();
         $this->vikaEvents = new ArrayCollection();
         $this->priceGrids = new ArrayCollection();
@@ -117,37 +111,6 @@ class Category
             // set the owning side to null (unless already changed)
             if ($article->getCategory() === $this) {
                 $article->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Equipment[]
-     */
-    public function getEquipment(): Collection
-    {
-        return $this->equipment;
-    }
-
-    public function addEquipment(Equipment $equipment): self
-    {
-        if (!$this->equipment->contains($equipment)) {
-            $this->equipment[] = $equipment;
-            $equipment->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipment(Equipment $equipment): self
-    {
-        if ($this->equipment->contains($equipment)) {
-            $this->equipment->removeElement($equipment);
-            // set the owning side to null (unless already changed)
-            if ($equipment->getCategory() === $this) {
-                $equipment->setCategory(null);
             }
         }
 
