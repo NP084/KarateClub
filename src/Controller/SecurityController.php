@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\RegistrationType;
+use App\Form\UserForRegType;
+use App\Entity\User;
 use App\Entity\UserConnected;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -25,7 +27,9 @@ class SecurityController extends AbstractController
         $formReg = $this->createForm(RegistrationType::class, $user);
         $formReg->handleRequest($request);
 
-        $formUser = $this->createForm(UserForRegType::class, $user);
+        $user2 = new User();
+
+        $formUser = $this->createForm(UserForRegType::class, $user2);
         $formUser->handleRequest($request);
 
         if($formReg->isSubmitted() && $formReg->isValid()){

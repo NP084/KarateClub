@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class UserForRegType extends AbstractType
 {
@@ -13,8 +14,8 @@ class UserForRegType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('firstName')
-            ->add('birthday', DateType::class, [
+            ->add('firstname')
+            ->add('birthdate', DateType::class, [
                 'years' => range(1900, date('Y')-14),
                 'format' => 'dd-MM-yyyy',
             ])
