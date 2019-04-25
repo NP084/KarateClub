@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    {# Informations générales #} 
+                    {# Adresse #} 
                     <h4>Adresse</h4>
                     <div class="card">
                         <div class="card-body"> 
@@ -114,7 +114,49 @@
                                 </div>
                             </div>
                         </div>
-                    </div>             
+                    </div>  
+                    {# Point de contact #} 
+                    <h4>Point de contact</h4>
+                    <div class="card">
+                        <div class="card-body"> 
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="">Relation</label>
+                                        {{ form_widget(ContactListForm.relation) }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="">Information</label>
+                                        {{ form_widget(ContactListForm.info) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="">Nom</label>
+                                        {{ form_widget(PoCForm.name) }}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="">Prénom</label>
+                                        {{ form_widget(PoCForm.firstName) }}
+                                    </div>    
+                                </div>
+                                <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="">Numéro de téléphone</label>
+                                            {{ form_widget(PoCForm.num1) }}
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                    
                 </div>
                 <div class="container">
                 <div class="row justify-content-end">

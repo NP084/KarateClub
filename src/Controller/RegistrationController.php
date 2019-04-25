@@ -80,6 +80,12 @@ class RegistrationController extends AbstractController
         $phone = new Phone();
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
+        $PoC = new PersonOfContact();
+        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
+        $formPoC->handleRequest($request);
+        $contactList = new ContactList();
+        $formContactList = $this->createForm(ContactListType::class, $contactList);
+        $formContactList->handleRequest($request);
 
         // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
         if ($formUser->isSubmitted() && $formUser->isValid()) {
@@ -90,7 +96,9 @@ class RegistrationController extends AbstractController
             //Création de la nouvelle adresse:
             $this->addUserAdressRegistration($user, $adress, $city, $manager);
             $this->addUserPhoneRegistration($user, $phone, $manager);
-
+            if ($formPoC->isValid()) {
+                $this->addUserPoCRegistration($user, $contactList, $PoC, $manager);
+            }
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('registration_admin_family', ['id' => $userConnected->getId()]);
             } else {
@@ -105,8 +113,8 @@ class RegistrationController extends AbstractController
             'phoneForm' => $formPhone->createView(),
             'adressForm' => $formAdress->createView(),
             'cityForm' => $formCity->createView(),
-            //'PoCForm' => $formPoC->createView(),
-            //'ContactListForm' => $formContactList->createView()
+            'PoCForm' => $formPoC->createView(),
+            'ContactListForm' => $formContactList->createView()
         ]);
     }
 
@@ -173,6 +181,25 @@ class RegistrationController extends AbstractController
         } else {
             // associe le n° existant à cet user
             $user->addPhone($phoneTest);
+            $manager->flush();
+        }
+    }
+
+        /**
+     * AJOUTE NOUVELLE PERSONNE DE CONTACT à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
+    public function addUserPoCRegistration(User $user, ContactList $contactList, PersonOfContact $PoC, ObjectManager $manager)
+    {
+        $repo = $this->getDoctrine()->getRepository(PersonOfContact::class);
+        $PoCTest = $repo->findOneBy([
+            'name' => $PoC->getName(),
+            'firstName' => $PoC->getFirstName(),
+            'num1' => $PoC->getNum1(),
+        ]);
+        // si personne de contact n'existe pas : on crée une nouvelle personne dans la DB
+        if (!$PoCTest) {
+            // enregistre le nouveau numéro dans la DB
+            $manager->persist($PoC);
             $manager->flush();
         }
     }
