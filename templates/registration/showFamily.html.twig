@@ -73,16 +73,16 @@
                                                     {% if (is_granted('ROLE_ADMIN')) %}
                                                         <tr>
                                                         <td><b>{{ user.ownerUser.id }}</b></td>
-                                                        <td><b>{{ user.ownerUser.name }}</b></td>
-                                                        <td><b>{{ user.ownerUser.firstName }}</b></td>
+                                                        <td><b>{{ user.name }}</b></td>
+                                                        <td><b>{{ user.firstName }}</b></td>
                                                         <td class="align-middle text-right">
                                                             <a class="btn btn-outline-info" href="#">
                                                                 Inscrire
                                                             </a>
                                                         </td>
                                                     {% else %}
-                                                        <td><b>{{ user.ownerUser.name }}</b></td>
-                                                        <td><b>{{ user.ownerUser.firstName }}</b></td>
+                                                        <td><b>{{ user.name }}</b></td>
+                                                        <td><b>{{ user.firstName }}</b></td>
                                                         <td class="align-middle text-right">
                                                             <a class="btn btn-outline-info" href="#">
                                                                 Inscrire
