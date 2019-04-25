@@ -1,34 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{#{% block javascripts %}
-<script type="text/javascript" src="bootstrap-datetimepicker.de.js" charset="UTF-8">
-    $(document).ready(function() {
-        $('#datetimepicker').datetimepicker({
-            format: 'dd-mm-yyyy'
-        });
-    });
-</script>
-{% endblock %}#}
-
 {% block stylesheets %}
     {{ parent() }}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css"
-          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/js/datetimepicker/jquery.datetimepicker.css"/ >
+    <script src="/js/datetimepicker/jquery.js"></script>
+    <script src="/js/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+    <script src="js/datetimepicker/jquery.datetimepicker.js"></script>
     <script>
-        jQuery(document).ready(function () {
-            $('.js-datepicker').datepicker({
-                language: 'fr_FR',
-                format: 'dd/mm/yyyy'
-            });
+         jQuery.datetimepicker.setLocale('fr');
+        jQuery('.datetimepicker').datetimepicker({
+            timepicker:false,
+            format: 'd-m-Y',
         });
     </script>
 {% endblock %}
-
 
 {% block Body %}
 
@@ -278,7 +267,7 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         {{ form_label(formUser.receiptDate, 'Date de réception') }}
-                                        {{ form_widget(formUser.receiptDate, { attr:{ class:'js-datepicker' } }) }}
+                                        {{ form_widget(formUser.receiptDate, { attr:{ class:'datetimepicker' } }) }}
                                     </div>
                                 </div>
                             </div>

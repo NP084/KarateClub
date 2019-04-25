@@ -3,8 +3,6 @@
 {% block title %}Edit VikaEvent{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-{#    <link href="js/datetimepicker/jquery.datetimepicker.css">#}
-
     <link rel="stylesheet" type="text/css" href="/js/datetimepicker/jquery.datetimepicker.css"/ >
     <script src="/js/datetimepicker/jquery.js"></script>
     <script src="/js/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
@@ -14,20 +12,10 @@
     {{ parent() }}
     <script src="js/datetimepicker/jquery.datetimepicker.js"></script>
     <script>
-         jQuery.datetimepicker.setLocale('fr');
-        jQuery('#datetimepicker').datetimepicker({
-            format:'d-m-Y H:i',
+        jQuery.datetimepicker.setLocale('fr');
+        jQuery('.datetimepicker').datetimepicker({
+            format: 'd-m-Y H:i',
         });
-        jQuery('#datetimepicker2').datetimepicker({
-            format:'d-m-Y H:i',
-        });
-
-       /* jQuery(document).ready(function () {
-            $('.js-datepicker').datepicker({
-                language: 'fr_FR',
-                format: 'dd/mm/yyyy'
-            });
-        });*/
     </script>
 {% endblock %}
 
@@ -71,7 +59,6 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <h6>{{ form_label(form.imageFile, 'Photo d\'illustration') }}</h6>
-{#                        alt="Card image"   width="100%">#}
                                     <p class="embed-responsive-item rounded">{{ form_widget(form.imageFile) }}
                                     </p>
                                 </div>
@@ -89,20 +76,14 @@
                         <div class="row">
                             <div class="col-5">
                                 <div class="form-group">
-{#                                    <h6>{{ form_label(form.startDate, 'Date de début') }}</h6>#}
-                                    <h6>Date de début</h6>
-                                    <input id="datetimepicker" type="text" {{ form_widget(form.startDate) }}>
+                                    <h6>{{ form_label(form.startDate, 'Date de début') }}</h6>
+                                    {{ form_widget(form.startDate, { attr:{ class:'datetimepicker' } }) }}
                                 </div>
                             </div>
                             <div class="col-5">
                                 <div class="form-group">
-{#                                    <h6>{{ form_label(form.endDate, 'Date de fin') }}</h6>#}
-                                    <h6>Date de fin</h6>
-                                    <div id="datetimepicker" name="end">
-                                        <input id="datetimepicker2" type="text" {{ form_widget(form.endDate) }}>
-                                    </div>
-                                 {#   <p id="datetimepicker2" type="text" class="card-text">
-                                        {{ form_widget(form.endDate) }}</p>#}
+                                    <h6>{{ form_label(form.endDate, 'Date de fin') }}</h6>
+                                    {{ form_widget(form.endDate, { attr:{ class:'datetimepicker' } }) }}
                                 </div>
                             </div>
                             <div class="col-2">
