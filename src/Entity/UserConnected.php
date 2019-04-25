@@ -83,8 +83,8 @@ class UserConnected implements UserInterface, \Serializable
 
     public function __construct()
     {
-        $user = new User();
-        $user -> setUserConnected($this);
+        /* $user = new User();
+        $user -> setUserConnected($this); */
         $this -> setUser($user);
 
         $this->users = new ArrayCollection();
