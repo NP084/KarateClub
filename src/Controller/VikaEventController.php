@@ -31,7 +31,7 @@ class VikaEventController extends AbstractController
     {
         if ($cat == 'all') {
             $vikaEvents = $vikaEventRepository->findBy(
-                ['publique'=>true],
+                ['published'=>true],
                 ['startDate' => 'DESC']
             );
         }
@@ -45,7 +45,7 @@ class VikaEventController extends AbstractController
             // recherche des événements qui sont de la catégorie cat
             $vikaEvents = $vikaEventRepository->findBy(
                 ['category' => $category,
-                    'publique'=>true],
+                    'published'=>true],
                 ['startDate' => 'DESC']
             );
         }
