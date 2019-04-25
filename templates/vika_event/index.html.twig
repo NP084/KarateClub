@@ -17,6 +17,7 @@
                                         <thead>
                                         <tr>
                                             <th>Id</th>
+                                            <th>Public</th>
                                             <th>Titulaire</th>
                                             <th>Titre</th>
                                             <th>Catégorie</th>
@@ -30,6 +31,11 @@
                                         {% for vika_event in vikaEvents %}
                                             <tr>
                                                 <td>{{ vika_event.id }}</td>
+                                                {% if (vika_event.published) %}
+                                                    <td>Oui</td>
+                                                {% else %}
+                                                    <td>Non</td>
+                                                {% endif %}
                                                 <td>{{ vika_event.owner }}</td>
                                                 <td>{{ vika_event.title }}</td>
                                                 <td>{{ vika_event.category.title }}</td>
@@ -41,12 +47,12 @@
                                                 <td class="align-middle text-right">
                                                     <a class="btn btn-sm btn-icon btn-secondary"
                                                        href="{{ path('vika_event_show',
-                                                           {'id': vika_event.id})  }}"><i
+                                                           {'id': vika_event.id}) }}"><i
                                                                 class="oi oi-info"></i></a>
                                                     <span class="sr-only">Voir</span>
                                                     <a class="btn btn-sm btn-icon btn-secondary"
-                                                       href="{{  path('vika_event_edit',
-                                                           {'id': vika_event.id})  }}">
+                                                       href="{{ path('vika_event_edit',
+                                                           {'id': vika_event.id}) }}">
                                                         <i class="fa fa-pencil">
                                                         </i>
                                                         <span class="sr-only">Editer</span>

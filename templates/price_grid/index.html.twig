@@ -28,6 +28,7 @@
         <thead>
         <tr>
             <th>Id</th>
+            <th>Evénement lié</th>
             <th>Label</th>
             <th>Price</th>
             <th>Public</th>
@@ -39,6 +40,9 @@
         {% for price_grid in price_grids %}
             <tr>
                 <td>{{ price_grid.id }}</td>
+                <td>
+                    <a href="{{ path('vika_event_edit',{'id':price_grid.vikaEvent.id}) }}">{{price_grid.vikaEvent.title }}</a>
+                </td>
                 <td>{{ price_grid.label }}</td>
                 <td>{{ price_grid.price }}</td>
                 <td>{{ price_grid.public }}</td>
