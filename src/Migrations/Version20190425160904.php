@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190424221310 extends AbstractMigration
+final class Version20190425160904 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,8 @@ final class Version20190424221310 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE vika_event CHANGE publique published TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE userConnected DROP name, DROP username, DROP firstname, DROP birthday, DROP created_user');
+        $this->addSql('ALTER TABLE app_user ADD is_trial TINYINT(1) DEFAULT NULL, ADD bars INT DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +31,7 @@ final class Version20190424221310 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE vika_event CHANGE published publique TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE app_user DROP is_trial, DROP bars');
+        $this->addSql('ALTER TABLE userConnected ADD name VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, ADD username VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, ADD firstname VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, ADD birthday DATE NOT NULL, ADD created_user DATETIME NOT NULL');
     }
 }
