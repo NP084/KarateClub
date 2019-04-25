@@ -34,11 +34,6 @@ class Category
     private $articles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Equipment", mappedBy="category")
-     */
-    private $equipment;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="category")
      */
     private $history;
@@ -48,13 +43,18 @@ class Category
      */
     private $vikaEvents;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PriceGrid", mappedBy="category")
+     */
+    private $priceGrids;
+
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
-        $this->equipment = new ArrayCollection();
         $this->history = new ArrayCollection();
         $this->vikaEvents = new ArrayCollection();
+        $this->priceGrids = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,37 +118,6 @@ class Category
     }
 
     /**
-     * @return Collection|Equipment[]
-     */
-    public function getEquipment(): Collection
-    {
-        return $this->equipment;
-    }
-
-    public function addEquipment(Equipment $equipment): self
-    {
-        if (!$this->equipment->contains($equipment)) {
-            $this->equipment[] = $equipment;
-            $equipment->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipment(Equipment $equipment): self
-    {
-        if ($this->equipment->contains($equipment)) {
-            $this->equipment->removeElement($equipment);
-            // set the owning side to null (unless already changed)
-            if ($equipment->getCategory() === $this) {
-                $equipment->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|History[]
      */
     public function getHistory(): Collection
@@ -204,6 +173,37 @@ class Category
             // set the owning side to null (unless already changed)
             if ($vikaEvent->getCategory() === $this) {
                 $vikaEvent->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PriceGrid[]
+     */
+    public function getPriceGrids(): Collection
+    {
+        return $this->priceGrids;
+    }
+
+    public function addPriceGrid(PriceGrid $priceGrid): self
+    {
+        if (!$this->priceGrids->contains($priceGrid)) {
+            $this->priceGrids[] = $priceGrid;
+            $priceGrid->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriceGrid(PriceGrid $priceGrid): self
+    {
+        if ($this->priceGrids->contains($priceGrid)) {
+            $this->priceGrids->removeElement($priceGrid);
+            // set the owning side to null (unless already changed)
+            if ($priceGrid->getCategory() === $this) {
+                $priceGrid->setCategory(null);
             }
         }
 

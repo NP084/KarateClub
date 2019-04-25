@@ -3,10 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AttachedFileRepository")
+ * @Vich\Uploadable
  */
 class AttachedFile
 {
@@ -39,6 +44,18 @@ class AttachedFile
      * @var string
      */
     private $docname;
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * @Vich\UploadableField(mapping="document_picture", fileNameProperty="docName")
+     * @var File
+     * @Assert\File(
+     *     maxSize="5242880",
+     *     mimeTypes = {
+     *     "application/pdf",
+     *     })
+     */
+    private $docFile;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="attachedFiles")
@@ -108,6 +125,31 @@ class AttachedFile
     public function getDocname(): ?string
     {
         return $this->docname;
+    }
+
+    public function getDocFile(): ?File
+    {
+        return $this->docFile;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $docFile
+     */
+    public function setDocFile(?File $docFile = null): void
+    {
+        $this->docFile = $docFile;
+
+        if (null !== $docFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->datecreat = new \DateTimeImmutable();
+        }
     }
 
     public function setDocname(?string $docname): void

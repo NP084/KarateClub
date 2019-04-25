@@ -10,7 +10,7 @@
                     {%if editMode %}
                         Modification d'un document
                     {% else %}
-                        Ajouter un document
+                        Ajouter un nouveau document
                     {% endif %}
                 </h2>
                 <div class="card">
@@ -20,7 +20,7 @@
                                 <div class="form-group">
                                     {{ form_start(formPicture) }}
                                     <div class="form-group">
-                                        {{ form_widget(formPicture.docname) }}
+                                        {{ form_widget(formPicture.docFile) }}
                                     </div>
                                 </div>
                             </div>

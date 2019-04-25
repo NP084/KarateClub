@@ -3,47 +3,80 @@
 {% block title %}VikaEvent index{% endblock %}
 
 {% block Body %}
-    <h1>VikaEvent index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Owner</th>
-                <th>Title</th>
-                <th>Capacity</th>
-                <th>CreatedEv</th>
-                <th>ImageName</th>
-                <th>UpdatedImage</th>
-                <th>StartDate</th>
-                <th>EndDate</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for vika_event in vika_events %}
-            <tr>
-                <td>{{ vika_event.id }}</td>
-                <td>{{ vika_event.owner }}</td>
-                <td>{{ vika_event.title }}</td>
-                <td>{{ vika_event.capacity }}</td>
-                <td>{{ vika_event.createdEv ? vika_event.createdEv|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ vika_event.imageName }}</td>
-     {#           <td>{{ vika_event.updatedImage ? vika_event.updatedImage|date('Y-m-d H:i:s') : '' }}</td>#}
-                <td>{{ vika_event.startDate ? vika_event.startDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ vika_event.endDate ? vika_event.endDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('vika_event_show', {'id': vika_event.id}) }}">show</a>
-                    <a href="{{ path('vika_event_edit', {'id': vika_event.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <h1>Administration des événements</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Public</th>
+                                            <th>Titulaire</th>
+                                            <th>Titre</th>
+                                            <th>Catégorie</th>
+                                            <th>Capacité</th>
+                                            <th>Date de début</th>
+                                            <th>Date de fin</th>
+                                            <th class="align-middle text-right">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for vika_event in vikaEvents %}
+                                            <tr>
+                                                <td>{{ vika_event.id }}</td>
+                                                {% if (vika_event.published) %}
+                                                    <td>Oui</td>
+                                                {% else %}
+                                                    <td>Non</td>
+                                                {% endif %}
+                                                <td>{{ vika_event.owner }}</td>
+                                                <td>{{ vika_event.title }}</td>
+                                                <td>{{ vika_event.category.title }}</td>
+                                                <td>{{ vika_event.capacity }}</td>
+                                                {#                <td>{{ vika_event.createdEv ? vika_event.createdEv|date('Y-m-d H:i:s') : '' }}</td>#}
+                                                {#           <td>{{ vika_event.updatedImage ? vika_event.updatedImage|date('Y-m-d H:i:s') : '' }}</td>#}
+                                                <td>{{ vika_event.startDate ? vika_event.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                                                <td>{{ vika_event.endDate ? vika_event.endDate|date('Y-m-d H:i:s') : '' }}</td>
+                                                <td class="align-middle text-right">
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('vika_event_show',
+                                                           {'id': vika_event.id}) }}"><i
+                                                                class="oi oi-info"></i></a>
+                                                    <span class="sr-only">Voir</span>
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('vika_event_edit',
+                                                           {'id': vika_event.id}) }}">
+                                                        <i class="fa fa-pencil">
+                                                        </i>
+                                                        <span class="sr-only">Editer</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="10">no records found</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-primary">
+                    <a href="{{ path('vika_event_new') }}">Nouvel événement</a>
+                </button>
 
-    <a href="{{ path('vika_event_new') }}">Create new</a>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
