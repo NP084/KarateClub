@@ -36,8 +36,12 @@ class SecurityController extends AbstractController
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
 
+            $user->setUser($user2);
+            $user->addUser($user2);
+
             $manager->persist($user);
-            $manager->flush($user);
+            $manager->persist($user2);
+            $manager->flush();
             return $this->redirectToRoute('validation');
         }
 
