@@ -118,6 +118,7 @@ class VikaEventController extends AbstractController
             //$entityManager->flush();
             $manager->flush();
             //$this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('vika_event_edit', ['id' => $vikaEvent->getId()]);
         }
 
         if ($formPrice->isSubmitted() && $formPrice->isValid()) {
