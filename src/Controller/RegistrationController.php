@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Registration;
+use App\Entity\VikaEvent;
+use App\Form\RegistrationType;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Form;
@@ -45,17 +49,41 @@ class RegistrationController extends AbstractController
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/registration-member-family-{id}", name="registration_view_family", requirements={"idCL"="\d+"})
-     * @Route("/registration-admin-family-{id}", name="registration_admin_family", requirements={"idCL"="\d+"})
+     * @Route("/registration-member-family-{id}-{idevent}", name="registration_view_family", requirements={"idCL"="\d+"})
+     * @Route("/registration-admin-family-{id}-{idevent}", name="registration_admin_family", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
-    */
-    public function indexFamily(UserConnected $userConnected)
+     */
+    public function indexFamily(UserConnected $userConnected, $idevent)
     {
         $users = $userConnected->getUsers();
+        $em = $this -> getDoctrine()->getManager();
+        $event = $em->getRepository(VikaEvent::class)->find($idevent);
         return $this->render('registration/showFamily.html.twig', [
             'controller_name' => 'Vue des membres de sa famille',
             'users' => $users,
             'userConnected' => $userConnected,
+            'event' => $event,
+        ]);
+    }
+
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/condition-member-family-{id}-{idevent}", name="condition_view_family", requirements={"idCL"="\d+"})
+     * @Route("/condition-admin-family-{id}-{idevent}", name="condition_admin_family", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
+     */
+    public function acceptConditions (UserConnected $userConnected, $idevent)
+    {
+        $users = $userConnected->getUsers();
+        $prereg = new Registration();
+        $formprereg =  $this -> createForm(TextType::class);
+
+//        $em = $this -> getDoctrine()->getManager();
+//        $event = $em->getRepository(VikaEvent::class)->find($idevent);
+        return $this->render('registration/conditions.html.twig', [
+            'users' => $users,
+            'userConnected' => $userConnected,
+            'idevent' => $idevent,
         ]);
     }
 
@@ -80,6 +108,12 @@ class RegistrationController extends AbstractController
         $phone = new Phone();
         $formPhone = $this->createForm(PhoneType::class, $phone);
         $formPhone->handleRequest($request);
+        $PoC = new PersonOfContact();
+        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
+        $formPoC->handleRequest($request);
+        $contactList = new ContactList();
+        $formContactList = $this->createForm(ContactListType::class, $contactList);
+        $formContactList->handleRequest($request);
 
         // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
         if ($formUser->isSubmitted() && $formUser->isValid()) {
@@ -90,7 +124,9 @@ class RegistrationController extends AbstractController
             //Création de la nouvelle adresse:
             $this->addUserAdressRegistration($user, $adress, $city, $manager);
             $this->addUserPhoneRegistration($user, $phone, $manager);
-
+            if ($formPoC->isValid()) {
+                $this->addUserPoCRegistration($user, $contactList, $PoC, $manager);
+            }
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('registration_admin_family', ['id' => $userConnected->getId()]);
             } else {
@@ -105,8 +141,8 @@ class RegistrationController extends AbstractController
             'phoneForm' => $formPhone->createView(),
             'adressForm' => $formAdress->createView(),
             'cityForm' => $formCity->createView(),
-            //'PoCForm' => $formPoC->createView(),
-            //'ContactListForm' => $formContactList->createView()
+            'PoCForm' => $formPoC->createView(),
+            'ContactListForm' => $formContactList->createView()
         ]);
     }
 
@@ -173,6 +209,25 @@ class RegistrationController extends AbstractController
         } else {
             // associe le n° existant à cet user
             $user->addPhone($phoneTest);
+            $manager->flush();
+        }
+    }
+
+    /**
+     * AJOUTE NOUVELLE PERSONNE DE CONTACT à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
+    public function addUserPoCRegistration(User $user, ContactList $contactList, PersonOfContact $PoC, ObjectManager $manager)
+    {
+        $repo = $this->getDoctrine()->getRepository(PersonOfContact::class);
+        $PoCTest = $repo->findOneBy([
+            'name' => $PoC->getName(),
+            'firstName' => $PoC->getFirstName(),
+            'num1' => $PoC->getNum1(),
+        ]);
+        // si personne de contact n'existe pas : on crée une nouvelle personne dans la DB
+        if (!$PoCTest) {
+            // enregistre le nouveau numéro dans la DB
+            $manager->persist($PoC);
             $manager->flush();
         }
     }
