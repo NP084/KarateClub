@@ -65,9 +65,6 @@ class PriceGridController extends AbstractController
                  [ ],
                  ['label'=>$orderby]
              );
-             return $this->render('price_grid/index.html.twig', [
-                 'price_grids' => $priceGrid,
-             ]);
          }
          elseif ($request->query->get('searchName')) {
              $searchName = $request->query->get('searchName');
@@ -82,24 +79,21 @@ class PriceGridController extends AbstractController
                  ->findBy(
                      ['category'=>$category]
                  );
-
              $priceGrid = $repo->findBy(
                  ['vikaEvent' => $vikaEvent],
                  ['label'=>'ASC']
              );
-             return $this->render('price_grid/index.html.twig', [
-                 'price_grids' => $priceGrid,
-             ]);
          }
          else{
              $priceGrid = $repo->findBy(
                  [ ],
                  ['public'=>'ASC']
              );
-             return $this->render('price_grid/index.html.twig', [
-                 'price_grids' => $priceGrid
-             ]);
          }
+         return $this->render('price_grid/index.html.twig', [
+             'price_grids' => $priceGrid,
+             'priceGridIndexMode'=>true,
+         ]);
      }
 
     /**
