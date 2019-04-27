@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Registration;
+use App\Form\PreregistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Form;
@@ -53,10 +55,29 @@ class RegistrationController extends AbstractController
     {
         $users = $userConnected->getUsers();
         return $this->render('registration/showFamily.html.twig', [
-            'controller_name' => 'Vue des membres de sa famille',
+
             'users' => $users,
             'userConnected' => $userConnected,
             'idevent' => $idevent,
+        ]);
+    }
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/condition-member-family-{id}-{idevent}", name="condition_view_family", requirements={"idCL"="\d+"})
+     * @Route("/condition-admin-family-{id}-{idevent}", name="condition_admin_family", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
+     */
+    public function conditions(UserConnected $userConnected, $idevent, Request $request)
+    {
+        $users = $userConnected->getUsers();
+        $prereg = new Registration();
+        $form = $this->createForm(PreregistrationType::class, $prereg);
+
+        return $this->render('registration/conditions.html.twig', [
+            'users' => $users,
+            'userConnected' => $userConnected,
+            'idevent' => $idevent,
+            'form' => $form ->createView()
         ]);
     }
     
