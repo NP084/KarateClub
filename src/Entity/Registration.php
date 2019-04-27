@@ -86,11 +86,22 @@ class Registration
      */
     private $userconnected_id;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $total_amount;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Paiement", mappedBy="registration", orphanRemoval=true)
+     */
+    private $paiement;
+
 
     public function __construct()
     {
         $this->attachedFiles = new ArrayCollection();
         $this->status = new ArrayCollection();
+        $this->paiement = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -269,6 +280,49 @@ class Registration
     public function setUserconnectedId(UserConnected $userconnected_id): self
     {
         $this->userconnected_id = $userconnected_id;
+
+        return $this;
+    }
+
+    public function getTotalAmount(): ?float
+    {
+        return $this->total_amount;
+    }
+
+    public function setTotalAmount(?float $total_amount): self
+    {
+        $this->total_amount = $total_amount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Paiement[]
+     */
+    public function getPaiement(): Collection
+    {
+        return $this->paiement;
+    }
+
+    public function addPaiement(Paiement $paiement): self
+    {
+        if (!$this->paiement->contains($paiement)) {
+            $this->paiement[] = $paiement;
+            $paiement->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaiement(Paiement $paiement): self
+    {
+        if ($this->paiement->contains($paiement)) {
+            $this->paiement->removeElement($paiement);
+            // set the owning side to null (unless already changed)
+            if ($paiement->getRegistration() === $this) {
+                $paiement->setRegistration(null);
+            }
+        }
 
         return $this;
     }
