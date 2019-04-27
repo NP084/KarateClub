@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/registration-member-family-{id}", name="registration_view_family", requirements={"idCL"="\d+"})
+     * @Route("/registration-member-family-{id}-{eventid}", name="registration_view_family", requirements={"idCL"="\d+"})
      * @Route("/registration-admin-family-{id}", name="registration_admin_family", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
     */

@@ -33,6 +33,8 @@
                                     <div class="col-4">
                                         <div class="card-footer-content text-muted">
                                             <a class="btn btn-primary btn-md" href="{{ path('vika_event_show', {'id':vikaEvent.id}) }}" role="button">Lire la suite</a>
+
+                                            <a class="btn btn-primary btn-md" href="{{ path('registration_view_family', {'idevent':vikaEvent.id, 'id':user.id}) }}" role="button">Lire la suite</a>
                                         </div>
                                     </div>
                                 </div>
