@@ -79,7 +79,7 @@ class RegistrationController extends AbstractController
             'users' => $users,
             'userConnected' => $userConnected,
             'idevent' => $idevent,
-            'form' => $form ->createView()
+            'form' => $form->createView()
         ]);
     }
     

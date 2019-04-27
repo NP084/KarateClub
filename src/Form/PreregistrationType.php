@@ -18,7 +18,7 @@ class PreregistrationType extends AbstractType
             ->add('image_diffusion')
             ->add('gdpr')
             ->add('condition_registration')
-            ->add('profil_tarif')
+//            ->add('profil_tarif')
         ;
     }
 
