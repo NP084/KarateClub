@@ -29,6 +29,7 @@ class VikaEventController extends AbstractController
      */
     public function showList(VikaEventRepository $vikaEventRepository, $cat): Response
     {
+        $user = $this->getUser();
         if ($cat == 'all') {
             $vikaEvents = $vikaEventRepository->findBy(
                 ['published'=>true],
@@ -51,6 +52,7 @@ class VikaEventController extends AbstractController
         }
         return $this->render('vika_event/indexShow.html.twig', [
             'vikaEvents' => $vikaEvents,
+            'user' => $user,
         ]);
     }
 
