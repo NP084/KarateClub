@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('price_grid_delete', {'id': price_grid.id}) }}" onsubmit="return confirm('Etes vous certain de vouloir supprimer cette ligne?');">
+<form method="post" action="{{ path('price_grid_delete', {'id': price_grid.id, 'route': indexMode}) }}" onsubmit="return confirm('Etes vous certain de vouloir supprimer cette ligne?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ price_grid.id) }}">
     <button class="btn">Effacer</button>
