@@ -72,6 +72,8 @@ class RegistrationController extends AbstractController
         $users = $userConnected->getUsers();
         $prereg = new Registration();
         $form = $this->createForm(PreregistrationType::class, $prereg);
+        $form->handleRequest($request);
+
 
         return $this->render('registration/conditions.html.twig', [
             'users' => $users,

@@ -14,7 +14,6 @@ class PreregistrationType extends AbstractType
         $builder
 
             ->add('remark')
-
             ->add('medical_care')
             ->add('image_diffusion')
             ->add('gdpr')
