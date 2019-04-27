@@ -76,7 +76,7 @@ class RegistrationController extends AbstractController
     {
         $users = $userConnected->getUsers();
         $prereg = new Registration();
-        $formprereg =  $this -> createForm(TextType::class);
+        $formprereg =  $this -> createForm(RegistrationType::class,$prereg);
 
 //        $em = $this -> getDoctrine()->getManager();
 //        $event = $em->getRepository(VikaEvent::class)->find($idevent);
@@ -84,6 +84,7 @@ class RegistrationController extends AbstractController
             'users' => $users,
             'userConnected' => $userConnected,
             'idevent' => $idevent,
+            'prereg' => $formprereg -> createView()
         ]);
     }
 
