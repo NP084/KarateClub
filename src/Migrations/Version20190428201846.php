@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190428164513 extends AbstractMigration
+final class Version20190428201846 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,8 @@ final class Version20190428164513 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE vika_event CHANGE start_date start_date DATETIME NOT NULL, CHANGE end_date end_date DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE userConnected ADD gdpr TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE registration DROP gdpr');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +31,7 @@ final class Version20190428164513 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE vika_event CHANGE start_date start_date DATETIME DEFAULT NULL, CHANGE end_date end_date DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE registration ADD gdpr TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE userConnected DROP gdpr');
     }
 }
