@@ -74,6 +74,13 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(PreregistrationType::class, $prereg);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid() && $form) {
+            $manager->persist($price);
+            $vikaEvent->addPriceGrid($price);
+            $manager->persist($vikaEvent);
+            $manager->flush();
+        }
+
 
         return $this->render('registration/conditions.html.twig', [
             'users' => $users,

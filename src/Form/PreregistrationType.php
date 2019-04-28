@@ -16,7 +16,6 @@ class PreregistrationType extends AbstractType
             ->add('remark')
             ->add('medical_care')
             ->add('image_diffusion')
-            ->add('gdpr')
             ->add('condition_registration')
 //            ->add('profil_tarif')
         ;

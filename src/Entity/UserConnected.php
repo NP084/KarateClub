@@ -64,6 +64,11 @@ class UserConnected implements UserInterface, \Serializable
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $gdpr;
+
 
     /**
     * @return string
@@ -90,6 +95,7 @@ class UserConnected implements UserInterface, \Serializable
         */
 
         $this->users = new ArrayCollection();
+        $this->gdpr = false;
     }
 
     /** @see \Serializable::serialize() */
@@ -210,6 +216,18 @@ class UserConnected implements UserInterface, \Serializable
     public function setUser(User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getGdpr(): ?bool
+    {
+        return $this->gdpr;
+    }
+
+    public function setGdpr(?bool $gdpr): self
+    {
+        $this->gdpr = $gdpr;
 
         return $this;
     }

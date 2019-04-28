@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190427082151 extends AbstractMigration
+final class Version20190427120926 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,9 +22,8 @@ final class Version20190427082151 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE registration DROP FOREIGN KEY FK_62A8A7A7C903FE1D');
-        $this->addSql('DROP INDEX UNIQ_62A8A7A7C903FE1D ON registration');
-        $this->addSql('ALTER TABLE registration DROP userconnected_id_id, DROP tarif_profil');
+        $this->addSql('ALTER TABLE userconnected ADD gdpr TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE registration DROP gdpr');
     }
 
     public function down(Schema $schema) : void
@@ -32,8 +31,7 @@ final class Version20190427082151 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE registration ADD userconnected_id_id INT NOT NULL, ADD tarif_profil INT NOT NULL');
-        $this->addSql('ALTER TABLE registration ADD CONSTRAINT FK_62A8A7A7C903FE1D FOREIGN KEY (userconnected_id_id) REFERENCES userconnected (id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_62A8A7A7C903FE1D ON registration (userconnected_id_id)');
+        $this->addSql('ALTER TABLE registration ADD gdpr TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE userConnected DROP gdpr');
     }
 }
