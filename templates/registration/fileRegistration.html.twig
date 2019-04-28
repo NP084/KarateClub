@@ -15,18 +15,24 @@
                             <br>
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="row justify-content-center">
-                                        <div class="col-3">
-                                            <h5>N°dossier: {{ registration.id }}</h5> 
+                                    <div class="row">
+                                        <div class="col">
+                                            <h3>N°dossier: {{ registration.id }}</h3> 
                                         </div>
-                                        <div class="col-2">
-                                            <h5>Statut:</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6>Statut:</h6>
                                         </div>
-                                        <div class="col-4">
-                                            <h5>Inscrit par: {{ user.name }} {{ user.firstname }}</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6>Inscrit par: {{ user.name }} {{ user.firstname }}</h6>
                                         </div>
-                                        <div class="col-3">
-                                            <h5>Evènement: {{ registration.vikaEvent.title }}</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6>Evènement: {{ registration.vikaEvent.title }}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -37,16 +43,16 @@
                 <div class="container-fluid">
                     <div class="row justify-content-center">
                         <div class="col-11">
-                            <br>
-                            <h4>Informations générales</h4>
-                            <br>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
-                                            <p>Nom: {{ registration.user.name }}</p> 
-                                            <p>Prénom: {{ registration.user.firstname }}</p> 
-                                            <p>Numéro de téléphone: </p> 
+                                            <div class="form-group">
+                                                <h3>Informations générales</h3>
+                                                <p>Nom: {{ registration.user.name }}</p> 
+                                                <p>Prénom: {{ registration.user.firstname }}</p> 
+                                                <p>Numéro de téléphone: </p> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -55,17 +61,50 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-11">
-                            <br>
-                            <h4>Adresse</h4>
-                            <br>
                             <div class="card">
                                 <div class="card-body">
+                                    {# ADRESSES #}
                                     <div class="row">
-                                        <div class="col">
-                                            <p>Type:  </p> 
-                                            <p>Rue: </p> 
-                                            <p>Numéro d'habitation: </p> 
-                                        </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <h3>Adresses</h3>
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Type</th>
+                                                            <th>Numéro</th>
+                                                            <th>Rue</th>
+                                                            <th>Ville</th>
+                                                            <th>Pays</th>
+                                                            <th></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for adress in user.adress %}
+                                                        <tr>
+                                                            <td>{{ adress.type }}</td>
+                                                            <td>{{ adress.num }}
+                                                                {% if adress.postBox %}
+                                                                    (BP:{{ adress.postBox }})
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>{{ adress.streetName }}</td>
+                                                            <td>{{ adress.city.cityName }}
+                                                                {% if adress.city.zip %}
+                                                                    ({{ adress.city.zip }})
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>{{ adress.city.country.countryName }}</td>
+                                                        </tr>
+                                                        {% else %}
+                                                        <tr>
+                                                            <td colspan="10">Aucune adresse</td>
+                                                        </tr>
+                                                        </tbody>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -73,20 +112,73 @@
                     </div>
                     <div class="row justify-content-center">
                             <div class="col-11">
-                                <br>
-                                <h4>Point de contact</h4>
-                                <br>
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <p>Relation:  </p> 
-                                                <p>Information: </p> 
-                                                <p>Nom: </p> 
-                                                <p>Prénom: </p> 
-                                                <p>Numéro de téléphone: </p> 
-                                            </div>
-                                        </div>
+                                        {#PERSONNES DE CONTACT #}
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <div class="form-group">
+                                                                            <h3>Point de contact</h3>
+                                                                            <table class="table">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Nom</th>
+                                                                                    <th>Prénom</th>
+                                                                                    <th>Numéro</th>
+                                                                                    <th>Relation</th>
+                                                                                    <th>Informations</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                {% for contactList in user.contactLists %}
+                                                                                <tr>
+                                                                                    <td>{{ contactList.personOfContact.name }}</td>
+                                                                                    <td>{{ contactList.personOfContact.firstName }}</td>
+                                                                                    <td>{{ contactList.personOfContact.num1 }}</td>
+                                                                                    <td>{{ contactList.relation }}</td>
+                                                                                    <td>{{ contactList.info }}</td>
+                                        
+                                                                                    <td class="align-middle text-right">
+                                                                                        {% if (is_granted('ROLE_ADMIN')) %}
+                                                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                                                            href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                                                                <i class="fa fa-pencil">
+                                                                                                </i>
+                                                                                                <span class="sr-only">Modifier</span>
+                                                                                            </a>
+                                                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                                                            href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':user.id}) }}">
+                                                                                                <i class="fa fa-trash-o">
+                                                                                                </i>
+                                                                                                <span class="sr-only">Supprimer</span>
+                                                                                            </a>
+                                                                                        {% else %}
+                                                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                                                            href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                                                                <i class="fa fa-pencil">
+                                                                                                </i>
+                                                                                                <span class="sr-only">Modifier</span>
+                                                                                            </a>
+                                                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                                                            href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}">
+                                                                                                <i class="fa fa-trash-o">
+                                                                                                </i>
+                                                                                                <span class="sr-only">Supprimer</span>
+                                                                                            </a>
+                                                                                        {% endif %}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                {% else %}
+                                                                                <tr>
+                                                                                    <td colspan="10">Aucune personne de contact</td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                                {% endfor %}
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                     </div>
                                 </div>
                             </div>
@@ -147,15 +239,32 @@
                                                                 </thead>
                                                                 <tbody>
                                                                 {% for paiement in paiements %}
+                                                                <tr>
                                                                     <td>{{ paiement.id }}</td>
                                                                     <td>{{ paiement.modality.name }}</td>
-                                                                    <td>{{ paiement.amount }}
-                                                                    {% else %}
-                                                                    <tr>
-                                                                        <td colspan="10">Aucune modalité de payement encodée</td>
-                                                                    </tr>
-                                                                </tbody>
+                                                                    <td>{{ paiement.amount }}</td>
+                                                                    <td class="align-middle text-right">
+                                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                                               href="{{ path('paiement_edit', {'id': paiement.id}) }}">
+                                                                                <i class="fa fa-pencil">
+                                                                                </i>
+                                                                                <span class="sr-only">Modifier</span>
+                                                                            </a>
+                                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                                                href="{{ path('paiement_remove', {'id': paiement.id}) }}">
+                                                                                <i class="fa fa-trash-o">
+                                                                                </i>
+                                                                                <span class="sr-only">Supprimer</span>
+                                                                            </a>
+
+                                                                    </td>
+                                                                </tr>
+                                                                {% else %}
+                                                                <tr>
+                                                                    <td colspan="10">Aucune modalité de payement encodée</td>
+                                                                </tr>
                                                                 {% endfor %}
+                                                            </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
@@ -190,7 +299,6 @@
                                                                         </div>
                                                                     </div>
                                                                 {{ form_end(formPaiement) }}
-                                                         
                                                     </div>
                                                 </div>
                                             </div>

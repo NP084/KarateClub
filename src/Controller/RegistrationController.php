@@ -83,7 +83,7 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"idCL"="\d+"})
-     * Ne pas oublier la sécurité
+     * @Security("has_role('ROLE_ADMIN')")
     */
     public function viewRegistration(PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
@@ -101,6 +101,19 @@ class RegistrationController extends AbstractController
                 return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
             }     
         }
+
+        //$certificat = new AttachedFile();
+        //$formCertificat = $this->createForm(DocumentType::class, $certificat);
+        //$formCertificat->handleRequest($request);
+
+        //if ($formCertificat->isSubmitted() && $formCertificat->isValid()){
+           // if (!$certificat->getId()){
+           //     $certificat->setDatecreat(new \DateTime());
+           // }
+          //  $manager->persist($certificat);
+          //  $manager->flush();
+          //  return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
+       // }
 
         $user = $registration->getUser();
         $adress = $user->getAdress();
@@ -142,5 +155,50 @@ class RegistrationController extends AbstractController
             $manager->flush();
         }
     }
+
+    /**
+     * @Route("/paiement-id={id}-edit", name="paiement_edit", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function paiementEdit(Paiement $paiement, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    {
+//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
+        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
+        $formPaiement = $this->createForm(PaiementType::class, $paiement);
+        $formPaiement->handleRequest($request);
+        $registration = $paiement->getRegistration();
+
+        if ($formPaiement->isSubmitted() && $formPaiement->isValid()) {
+            $manager->persist($paiement);
+            $this->addPaiementRegistration($registration, $paiement, $manager);
+            $manager->flush();
+            return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
+        }
+
+
+        return $this->render('registration/editPaiement.html.twig', [
+            'formPaiement' => $formPaiement->createView(),
+        ]);
+    }
+
+
+
+    /**
+     * Supprimer la modalité de payement
+     * @Route("/paiement-remove={id}", name="paiement_remove", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function removePaiement($id,Paiement $paiement, AuthorizationCheckerInterface $authChecker)
+    {
+        $registration = $paiement->getRegistration();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $paiement = $entityManager->getRepository(Paiement::class)->find($id);
+        $entityManager->remove($paiement);
+        $entityManager->flush();
+        return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
+
+    }
+
 
 }

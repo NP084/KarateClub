@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modifier la modalité de payement{% endblock %}
+
+{% block Body %}
+
+<h4>Modifier la modalité de payement</h4>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    {{ form_start(formPaiement) }}  
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="">Modalité</label>
+                                {{ form_widget(formPaiement.modality) }}
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="">Montant</label>
+                                {{ form_widget(formPaiement.amount) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-outline-info">
+                                Modifier
+                            </button>
+                        </div>
+                    </div>
+                    {{ form_end(formPaiement) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
