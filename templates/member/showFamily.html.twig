@@ -54,12 +54,11 @@
                                             <tbody>
                                             {% for user in users %}
                                                 {# Si l'id dans l'URL != de l'id du user qui s'affiche
-                                                (pr ne pas afficher son propre profil dans le liste) #}
                                                 {#                {% if (user.ownerUser and app.request.get('id') != user.ownerUser.id) %}#}
                                                 {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
                                                     {% if (is_granted('ROLE_ADMIN')) %}
                                                         <tr>
-                                                        <td><b>{{ user.ownerUser.id }}</b></td>
+                                                        <td><b>{{ user.id }}</b></td>
                                                         <td><b>{{ user.name }}</b></td>
                                                         <td><b>{{ user.firstName }}</b></td>
                                                         <td class="align-middle text-right">

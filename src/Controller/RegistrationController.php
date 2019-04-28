@@ -63,10 +63,26 @@ class RegistrationController extends AbstractController
     }
     
     /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/registration-list", name="registration_view")
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
+    */
+    public function listRegistration(Registration $registration, User $user)
+    {
+        $user= $registration->getUser();
+        return $this->render('registration/showContent.html.twig', [
+            'controller_name' => 'Liste des dossiers de préinscription',
+            'user' => $user,
+            'registrations' => $registration,
+        ]);
+    }
+
+
+    /**
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"idCL"="\d+"})
      * Ne pas oublier la sécurité
     */
-    public function newModality(Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function newModality(Registration $registration, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         $paiement = new Paiement();
         $formPaiement = $this->createForm(PaiementType::class, $paiement);
@@ -86,6 +102,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/finalRegistration.html.twig', [
             'formPaiement' => $formPaiement->createView(),
+            'registration' => $registration,
         ]);
     }
     
