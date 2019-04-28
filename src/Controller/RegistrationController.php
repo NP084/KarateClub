@@ -47,11 +47,27 @@ class RegistrationController extends AbstractController
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/registration-member-family-{id}-{idevent}", name="registration_view_family", requirements={"idCL"="\d+"})
-     * @Route("/registration-admin-family-{id}-{idevent}", name="registration_admin_family", requirements={"idCL"="\d+"})
+     * @Route("/registration-member-family-{id}", name="registration_view_family", requirements={"idCL"="\d+"})
+     * @Route("/registration-admin-family-{id}", name="registration_admin_family", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
+     */
+    public function indexFamily(UserConnected $userConnected)
+    {
+        $users = $userConnected->getUsers();
+        return $this->render('registration/showFamily.html.twig', [
+
+            'users' => $users,
+            'userConnected' => $userConnected
+        ]);
+    }
+
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/registration-member-family-{id}-{idevent}", name="registration_member_lesson", requirements={"idCL"="\d+"})
+     * @Route("/registration-admin-family-{id}-{idevent}", name="registration_admin_lesson", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
     */
-    public function indexFamily(UserConnected $userConnected, $idevent)
+    public function lessonsMember(UserConnected $userConnected, $idevent)
     {
         $users = $userConnected->getUsers();
         return $this->render('registration/showFamily.html.twig', [
@@ -67,9 +83,9 @@ class RegistrationController extends AbstractController
      * @Route("/condition-admin-family-{id}-{idevent}", name="condition_admin_family", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
-    public function conditions(UserConnected $userConnected, $idevent, Request $request, ObjectManager $manager)
+    public function conditions(User $users, $idevent, Request $request, ObjectManager $manager)
     {
-        $users = $userConnected->getUsers();
+
         $prereg = new Registration();
         $form = $this->createForm(PreregistrationType::class, $prereg);
         $form->handleRequest($request);

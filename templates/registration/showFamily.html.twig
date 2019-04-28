@@ -84,9 +84,15 @@
                                                         <td><b>{{ user.name }}</b></td>
                                                         <td><b>{{ user.firstName }}</b></td>
                                                         <td class="align-middle text-right">
-                                                            <a class="btn btn-outline-info" href="#">
+                                                    {% if idevent is defined %}
+                                                            <a class="btn btn-outline-info" href="{{ path('condition_view_family', {'id':userConnected.user.id, 'idevent':  idevent})}}">
                                                                 Inscrire
                                                             </a>
+                                                    {% else %}
+                                                                    <a class="btn btn-outline-info" href="{{  path('vika_event_showList', {'cat': 'all'})}}">
+                                                                        Inscrire2
+                                                                    </a>
+                                                    {% endif %}
                                                         </td>
                                                     {% endif %}
                                                     </tr>
@@ -98,8 +104,8 @@
                                                         <td>{{ user.name }}</td>
                                                         <td>{{ user.firstName }}</td>
                                                         <td class="align-middle text-right">
-                                                            <a class="btn btn-outline-info" href="#">
-                                                                Inscrire
+                                                            <a class="btn btn-outline-info" href="{{  path('vika_event_showList', {'cat':'all'})}}">
+                                                                Inscrire3
                                                             </a>
                                                         </td>
                                                     </tr>
