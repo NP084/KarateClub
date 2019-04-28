@@ -79,12 +79,10 @@ class BlogController extends Controller//AbstractController
      * @Route("/blog-delete-{id}", name="blog_delete", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function EncadrementDelete($id){
+    public function delete(Article $article){
         $em = $this->getDoctrine()->getEntityManager();
-        $article = $em->getRepository(Article::class)->find($id);
         $em->remove($article);
         $em->flush();
-
         return $this->redirectToRoute('blog');
     }
 

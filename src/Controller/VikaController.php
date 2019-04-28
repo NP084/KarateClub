@@ -52,9 +52,8 @@ class VikaController extends AbstractController
      * @Route("/vika-encadrement-delete-{id}", name="encadrement_delete", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function EncadrementDelete($id){
+    public function EncadrementDelete(Encadrement $personne){
         $em = $this->getDoctrine()->getEntityManager();
-        $personne = $em->getRepository(Encadrement::class)->find($id);
         $em->remove($personne);
         $em->flush();
 
