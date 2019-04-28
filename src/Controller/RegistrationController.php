@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Registration;
+use App\Entity\VikaEvent;
+use App\Form\PreregistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Form;
@@ -45,17 +48,66 @@ class RegistrationController extends AbstractController
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/registration-member-family-{id}", name="registration_view_family", requirements={"idCL"="\d+"})
-     * @Route("/registration-admin-family-{id}", name="registration_admin_family", requirements={"idCL"="\d+"})
+     * @Route("/registration-member-family-{id}", name="registration_view_family", requirements={"id"="\d+"})
+     * @Route("/registration-admin-family-{id}", name="registration_admin_family", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
-    */
+     */
     public function indexFamily(UserConnected $userConnected)
     {
         $users = $userConnected->getUsers();
         return $this->render('registration/showFamily.html.twig', [
-            'controller_name' => 'Vue des membres de sa famille',
+
+            'users' => $users,
+            'userConnected' => $userConnected
+        ]);
+    }
+
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/registration-member-family-{id}-{idevent}", name="registration_member_lesson", requirements={"id"="\d+"})
+     * @Route("/registration-admin-family-{id}-{idevent}", name="registration_admin_lesson", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
+    */
+    public function lessonsMember(UserConnected $userConnected, $idevent)
+    {
+        $users = $userConnected->getUsers();
+        return $this->render('registration/showFamily.html.twig', [
+
             'users' => $users,
             'userConnected' => $userConnected,
+            'idevent' => $idevent,
+        ]);
+    }
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/condition-member-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
+     * @Route("/condition-admin-family-{id}-{idevent}", name="condition_admin_family", requirements={"id"="\d+"})
+
+     */
+    public function conditions(User $user, $idevent, Request $request, ObjectManager $manager)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
+        $prereg = new Registration();
+        $form = $this->createForm(PreregistrationType::class, $prereg);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $prereg ->setVikaEvent($event);
+            $prereg ->setUser($user);
+            $prereg->setRegistrationDate(new \DateTime('now'));
+            $manager->persist($prereg);
+
+            $manager->flush();
+        }
+
+
+        return $this->render('registration/conditions.html.twig', [
+            'user' => $user,
+//            'userConnected' => $userConnected,
+            'idevent' => $idevent,
+            'form' => $form->createView()
         ]);
     }
     
