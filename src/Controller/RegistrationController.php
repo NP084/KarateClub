@@ -71,7 +71,7 @@ class RegistrationController extends AbstractController
      * @Route("/registration-member-family-{id}-{idevent}", name="registration_member_lesson", requirements={"id"="\d+"})
      * @Route("/registration-admin-family-{id}-{idevent}", name="registration_admin_lesson", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
-    */
+     */
     public function lessonsMember(UserConnected $userConnected, $idevent)
     {
         $users = $userConnected->getUsers();
@@ -82,11 +82,11 @@ class RegistrationController extends AbstractController
             'idevent' => $idevent,
         ]);
     }
+
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/condition-member-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
      * @Route("/condition-admin-family-{id}-{idevent}", name="condition_admin_family", requirements={"id"="\d+"})
-
      */
     public function conditions(User $user, $idevent, Request $request, ObjectManager $manager)
     {
@@ -98,8 +98,8 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $prereg ->setVikaEvent($event);
-            $prereg ->setUser($user);
+            $prereg->setVikaEvent($event);
+            $prereg->setUser($user);
             $prereg->setRegistrationDate(new \DateTime('now'));
             $manager->persist($prereg);
 
@@ -114,15 +114,15 @@ class RegistrationController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    
+
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/registration-list", name="registration_view")
      * @Security("has_role('ROLE_ADMIN')")
-    */
+     */
     public function listRegistration(RegistrationRepository $repo)
     {
-    
+
         $registration = $repo->findAll();
         return $this->render('registration/showContent.html.twig', [
             'controller_name' => 'Liste des dossiers de préinscription',
@@ -134,8 +134,8 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
-    */
-    public function viewRegistration(PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+     */
+    public function viewRegistration(PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager)
     {
         $paiement = new Paiement();
         $formPaiement = $this->createForm(PaiementType::class, $paiement);
@@ -147,9 +147,7 @@ class RegistrationController extends AbstractController
             $this->addPaiementRegistration($registration, $paiement, $manager);
             $manager->flush();
 
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
-            }     
+            return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
         }
 
         //$certificat = new AttachedFile();
@@ -157,21 +155,21 @@ class RegistrationController extends AbstractController
         //$formCertificat->handleRequest($request);
 
         //if ($formCertificat->isSubmitted() && $formCertificat->isValid()){
-           // if (!$certificat->getId()){
-           //     $certificat->setDatecreat(new \DateTime());
-           // }
-          //  $manager->persist($certificat);
-          //  $manager->flush();
-          //  return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
-       // }
+        // if (!$certificat->getId()){
+        //     $certificat->setDatecreat(new \DateTime());
+        // }
+        //  $manager->persist($certificat);
+        //  $manager->flush();
+        //  return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
+        // }
 
         $user = $registration->getUser();
         $adress = $user->getAdress();
-        
-        
+
+
         //$ID = $registration->getId();
         $paiementNombre = $repo->findBy(
-           ['registration'=> $registration ]
+            ['registration' => $registration]
         );
 
         return $this->render('registration/fileRegistration.html.twig', [
@@ -182,7 +180,7 @@ class RegistrationController extends AbstractController
             'paiements' => $paiementNombre,
         ]);
     }
-    
+
 
     /**
      * AJOUTE NOUVEAU MODALITÉ + ASSOCIATION AVEC LE REGISTRATION
@@ -210,7 +208,7 @@ class RegistrationController extends AbstractController
      * @Route("/paiement-id={id}-edit", name="paiement_edit", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function paiementEdit(Paiement $paiement, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function paiementEdit(Paiement $paiement, Request $request, ObjectManager $manager)
     {
 //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
@@ -225,12 +223,10 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
         }
 
-
         return $this->render('registration/editPaiement.html.twig', [
             'formPaiement' => $formPaiement->createView(),
         ]);
     }
-
 
 
     /**
@@ -238,17 +234,14 @@ class RegistrationController extends AbstractController
      * @Route("/paiement-remove={id}", name="paiement_remove", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function removePaiement($id,Paiement $paiement, AuthorizationCheckerInterface $authChecker)
+    public function removePaiement(Paiement $paiement)
     {
         $registration = $paiement->getRegistration();
 
         $entityManager = $this->getDoctrine()->getManager();
-        $paiement = $entityManager->getRepository(Paiement::class)->find($id);
         $entityManager->remove($paiement);
         $entityManager->flush();
         return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
 
     }
-
-
 }
