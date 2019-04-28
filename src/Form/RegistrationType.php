@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\UserConnected;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -18,6 +19,7 @@ class RegistrationType extends AbstractType
             ->add('email')
             ->add('password', PasswordType::class)
             ->add('confirm_password', PasswordType::class)
+            ->add('gdpr', CheckboxType::class,['required'=>true])
         ;
     }
 

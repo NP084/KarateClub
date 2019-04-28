@@ -30,7 +30,7 @@ class VikaEventType extends AbstractType
                 'required'=> false
             ])
             ->add('startDate', DateType::class, [
-                'required' => false,
+                'required' => true,
                 'widget'  => 'single_text',
                 'html5'   => false,
                 'format'  => 'dd-MM-yyyy HH:mm',
@@ -38,7 +38,7 @@ class VikaEventType extends AbstractType
               //  'attr' => ['class' => 'js-datepicker'],
             ])
             ->add('endDate', DateType::class, [
-                'required' => false,
+                'required' => true,
                 'widget'  => 'single_text',
                 'html5'   => false,
                 'format'  => 'dd-MM-yyyy HH:mm',

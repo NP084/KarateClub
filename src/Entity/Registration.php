@@ -60,10 +60,6 @@ class Registration
      */
     private $image_diffusion;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $gdpr;
 
     /**
      * @ORM\Column(type="boolean")
@@ -220,17 +216,7 @@ class Registration
         return $this;
     }
 
-    public function getGdpr(): ?bool
-    {
-        return $this->gdpr;
-    }
 
-    public function setGdpr(?bool $gdpr): self
-    {
-        $this->gdpr = $gdpr;
-
-        return $this;
-    }
 
     public function getConditionRegistration(): ?bool
     {
