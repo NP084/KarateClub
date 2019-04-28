@@ -90,9 +90,117 @@
                                     </div>
                                 </div>
                             </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-11">
+                            <br>
+                            <h4>Checkbox</h4>
+                            <br>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>Relation:  </p> 
+                                            <p>Information: </p> 
+                                            <p>Nom: </p> 
+                                            <p>Prénom: </p> 
+                                            <p>Numéro de téléphone: </p> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-    
-                </div>
+                    </div>
+                    <div class="row justify-content-center">
+                            <div class="col-11">
+                                <br>
+                                <h4>Finaliser l'inscription</h4>
+                                <br>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Ajouter la photo du membre</h6>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <p>Ajouter la photo du membre</p>
+                                             </div>
+                                        </div>
+                                        <h6>Ajouter le certificat médical</h6>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <p>Ajouter la photo du membre</p>
+                                             </div>
+                                        </div>
+                                        <h6>Liste des modalités de payement</h6>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-10">
+                                                        <div class="form-group">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>N° de payement</th>
+                                                                        <th>Modalité</th>
+                                                                        <th>Montant</th>
+                                                                        <th>Statut</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                {% for paiement in paiements %}
+                                                                    <td>{{ paiement.id }}</td>
+                                                                    <td>{{ paiement.modality.name }}</td>
+                                                                    <td>{{ paiement.amount }}
+                                                                    {% else %}
+                                                                    <tr>
+                                                                        <td colspan="10">Aucune modalité de payement encodée</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                {% endfor %}
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <br>
+                                                <div class="card">  
+                                                    <div class="card-header">
+                                                            <p><b>Ajouter des payements</b></p>
+                                                    </div>
+                                                    <div class="card-body">
+                                                                {{ form_start(formPaiement) }}  
+                                                                    <div class="row align-items-end">
+                                                                        <div class="col-3">
+                                                                            <div class="form-group">
+                                                                                <label for="">Modalité</label>
+                                                                                {{ form_widget(formPaiement.modality) }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="form-group">
+                                                                                <label for="">Montant</label>
+                                                                                {{ form_widget(formPaiement.amount) }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-auto">
+                                                                            <button type="submit" class="btn btn-outline-info">
+                                                                                Ajouter un nouveau payement
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                {{ form_end(formPaiement) }}
+                                                         
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>

@@ -34,6 +34,7 @@ use App\Form\PaiementType;
 
 use App\Repository\UserRepository;
 use App\Repository\RegistrationRepository;
+use App\Repository\PaiementRepository;
 
 
 class RegistrationController extends AbstractController
@@ -84,7 +85,7 @@ class RegistrationController extends AbstractController
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"idCL"="\d+"})
      * Ne pas oublier la sécurité
     */
-    public function viewRegistration(Registration $registration, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function viewRegistration(PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         $paiement = new Paiement();
         $formPaiement = $this->createForm(PaiementType::class, $paiement);
@@ -103,12 +104,19 @@ class RegistrationController extends AbstractController
 
         $user = $registration->getUser();
         $adress = $user->getAdress();
+        
+        
+        //$ID = $registration->getId();
+        $paiementNombre = $repo->findBy(
+           ['registration'=> $registration ]
+        );
 
         return $this->render('registration/fileRegistration.html.twig', [
             'formPaiement' => $formPaiement->createView(),
             'registration' => $registration,
             'user' => $user,
             'adress' => $adress,
+            'paiements' => $paiementNombre,
         ]);
     }
     
@@ -123,16 +131,16 @@ class RegistrationController extends AbstractController
             'modality' => $paiement->getModality(),
             'amount' => $paiement->getAmount()
         ]);
-       // if (!$paiementTest) {
+        if (!$paiementTest) {
             // enregistre le nouveau numéro dans la DB
             $manager->persist($paiement);
             $registration->addPaiement($paiement);
             $manager->flush();
-        //} else {
+        } else {
             // associe le n° existant à cet user
-            //$registration->addPaiement($paiementTest);
-           // $manager->flush();
-        //}
+            $registration->addPaiement($paiementTest);
+            $manager->flush();
+        }
     }
 
 }
