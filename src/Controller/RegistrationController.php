@@ -25,8 +25,6 @@ use App\Entity\Phone;
 use App\Entity\PersonOfContact;
 use App\Entity\ContactList;
 use App\Entity\Paiement;
-use App\Entity\Registration;
-
 use App\Form\AddUserType;
 use App\Form\AdressType;
 use App\Form\CityType;
