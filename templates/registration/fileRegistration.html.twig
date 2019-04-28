@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Dossier de pré-inscription{% endblock %}
+{% block Body %}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h2>Dossier de pré-inscription</h2>
+            <div class="card">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-11">
+                            <br>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row justify-content-center">
+                                        <div class="col-3">
+                                            <h5>N°dossier: {{ registration.id }}</h5> 
+                                        </div>
+                                        <div class="col-2">
+                                            <h5>Statut:</h5>
+                                        </div>
+                                        <div class="col-4">
+                                            <h5>Inscrit par: {{ user.name }} {{ user.firstname }}</h5>
+                                        </div>
+                                        <div class="col-3">
+                                            <h5>Evènement: {{ registration.vikaEvent.title }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-11">
+                            <br>
+                            <h4>Informations générales</h4>
+                            <br>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>Nom: {{ registration.user.name }}</p> 
+                                            <p>Prénom: {{ registration.user.firstname }}</p> 
+                                            <p>Numéro de téléphone: </p> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-11">
+                            <br>
+                            <h4>Adresse</h4>
+                            <br>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>Type:  </p> 
+                                            <p>Rue: </p> 
+                                            <p>Numéro d'habitation: </p> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                            <div class="col-11">
+                                <br>
+                                <h4>Point de contact</h4>
+                                <br>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <p>Relation:  </p> 
+                                                <p>Information: </p> 
+                                                <p>Nom: </p> 
+                                                <p>Prénom: </p> 
+                                                <p>Numéro de téléphone: </p> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

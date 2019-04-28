@@ -84,7 +84,7 @@ class RegistrationController extends AbstractController
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"idCL"="\d+"})
      * Ne pas oublier la sécurité
     */
-    public function newModality(Registration $registration, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function viewRegistration(Registration $registration, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         $paiement = new Paiement();
         $formPaiement = $this->createForm(PaiementType::class, $paiement);
@@ -101,10 +101,14 @@ class RegistrationController extends AbstractController
             }     
         }
 
+        $user = $registration->getUser();
+        $adress = $user->getAdress();
 
-        return $this->render('registration/finalRegistration.html.twig', [
+        return $this->render('registration/fileRegistration.html.twig', [
             'formPaiement' => $formPaiement->createView(),
             'registration' => $registration,
+            'user' => $user,
+            'adress' => $adress,
         ]);
     }
     
