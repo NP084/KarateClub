@@ -79,7 +79,7 @@ class VikaEvent
     private $startDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $endDate;
 
