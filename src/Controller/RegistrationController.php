@@ -21,6 +21,8 @@ use App\Entity\City;
 use App\Entity\Phone;
 use App\Entity\PersonOfContact;
 use App\Entity\ContactList;
+use App\Entity\Paiement;
+use App\Entity\Registration;
 
 use App\Form\AddUserType;
 use App\Form\AdressType;
@@ -28,6 +30,7 @@ use App\Form\CityType;
 use App\Form\PhoneType;
 use App\Form\PersonOfContactType;
 use App\Form\ContactListType;
+use App\Form\PaiementType;
 
 
 
@@ -59,4 +62,54 @@ class RegistrationController extends AbstractController
         ]);
     }
     
+    /**
+     * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"idCL"="\d+"})
+     * Ne pas oublier la sécurité
+    */
+    public function newModality(Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    {
+        $paiement = new Paiement();
+        $formPaiement = $this->createForm(PaiementType::class, $paiement);
+        $formPaiement->handleRequest($request);
+
+        if ($formPaiement->isSubmitted() && $formPaiement->isValid()) {
+            $manager->persist($paiement);
+            // si changement de grade, on l'ajoute à l'historique du user
+            $this->addPaiementRegistration($registration, $paiement, $manager);
+            $manager->flush();
+
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
+            }     
+        }
+
+
+        return $this->render('registration/finalRegistration.html.twig', [
+            'formPaiement' => $formPaiement->createView(),
+        ]);
+    }
+    
+
+    /**
+     * AJOUTE NOUVEAU MODALITÉ + ASSOCIATION AVEC LE REGISTRATION
+     */
+    public function addPaiementRegistration(Registration $registration, Paiement $paiement, ObjectManager $manager)
+    {
+        $repo = $this->getDoctrine()->getRepository(Paiement::class);
+        $paiementTest = $repo->findOneBy([
+            'modality' => $paiement->getModality(),
+            'amount' => $paiement->getAmount()
+        ]);
+       // if (!$paiementTest) {
+            // enregistre le nouveau numéro dans la DB
+            $manager->persist($paiement);
+            $registration->addPaiement($paiement);
+            $manager->flush();
+        //} else {
+            // associe le n° existant à cet user
+            //$registration->addPaiement($paiementTest);
+           // $manager->flush();
+        //}
+    }
+
 }
