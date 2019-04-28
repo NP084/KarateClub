@@ -114,7 +114,7 @@
                                                 {% if (app.request.get("orderby")=='ASC') %}
                                                     <th>
                                                         <a href="{{ path('admin_users', {orderby:'DESC'}) }}">
-                                                            Noms</a></th>
+                                                            Nom</a></th>
                                                 {% elseif (app.request.get("orderby")=='DESC') %}
                                                     <th>
                                                         <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
@@ -124,7 +124,7 @@
                                                 {% endif %}
                                                 <th>Prénom</th>
                                                 <th>Email</th>
-                                                <th></th>
+                                                <th>Actions</th>
                                             </tr>
                                             </thead>
                                             <tbody>

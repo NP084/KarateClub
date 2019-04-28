@@ -27,7 +27,8 @@ class VikaEventType extends AbstractType
             ->add('capacity')
             //  ->add('createdEv')
             ->add('imageFile', VichImageType::class, [
-                'required'=> false
+                'required'=> false,
+                'image_uri' => false,
             ])
             ->add('startDate', DateType::class, [
                 'required' => true,

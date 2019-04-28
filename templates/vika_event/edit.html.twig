@@ -35,8 +35,18 @@
                 {% else %}
                     <h1>Modification d'un événement</h1>
                 {% endif %}
-
-                <a href="{{ path('vika_event_index') }}">Liste des événements (admin)</a>
+                <div class="row">
+                    <div class="col-3">
+                        <a href="{{ path('vika_event_index') }}">
+                            <span class="badge badge-pill badge-warning">Liste des activités (admin)</span></a>
+                    </div>
+                    <div class="col-5"></div>
+                    <div class="col-3">
+                        <a href="{{ path('vika_event_showList',{'cat':'all'}) }}">
+                            <span class="badge badge-pill badge-warning">
+                                Liste des activités (vue web)</span></a>
+                    </div>
+                </div>
 
                 <div class="card">
                     <div class="card-body">
@@ -59,8 +69,10 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <h6>{{ form_label(form.imageFile, 'Photo d\'illustration') }}</h6>
-                                    <p class="embed-responsive-item rounded">{{ form_widget(form.imageFile) }}
-                                    </p>
+                                    {{ form_widget(form.imageFile) }}
+                                    <img class="embed-responsive-rounded"
+                                         src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
+                                         alt="Card image" width="100%">
                                 </div>
                             </div>
                         </div>
@@ -129,113 +141,109 @@
                 </div>
 
                 {% if (newMode==false) %}
-                <h5>Tarif</h5>
-                {{ form_start(formPrice) }}
-                <div class="card">
-                    {#                   liste des prix#}
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Public</th>
-                                            <th>Prix</th>
-                                            <th>Info</th>
-                                            <th class="align-middle text-right">Actions</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for priceGrid in vikaEvent.priceGrid %}
-                                        <tr>
-                                            <td>{{ priceGrid.public }}</td>
-                                            <td>{{ priceGrid.price }}</td>
-                                            <td>{{ priceGrid.info }}</td>
-                                            <td class="align-middle text-right">
-                                                <a class="btn btn-sm btn-icon btn-secondary"
-                                                   href="{{ path('price_grid_edit',{'id':priceGrid.id}) }}">
-                                                    <i class="fa fa-pencil">
-                                                    </i>
-                                                    <span class="sr-only">Editer</span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        {% else %}
-                                        <tr>
-                                            <td colspan="10">Aucune tarification disponible</td>
-                                        </tr>
-                                        </tbody>
-                                        {% endfor %}
-                                    </table>
+                    <h5>Tarif</h5>
+                    {{ form_start(formPrice) }}
+                    <div class="card">
+                        {#                   liste des prix#}
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Public</th>
+                                                <th>Prix</th>
+                                                <th>Info</th>
+                                                <th class="align-middle text-right">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for priceGrid in vikaEvent.priceGrid %}
+                                            <tr>
+                                                <td>{{ priceGrid.public }}</td>
+                                                <td>{{ priceGrid.price }}</td>
+                                                <td>{{ priceGrid.info }}</td>
+                                                <td class="align-middle text-right">
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       href="{{ path('price_grid_edit',{'id':priceGrid.id}) }}">
+                                                        <i class="fa fa-pencil">
+                                                        </i>
+                                                        <span class="sr-only">Editer</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucune tarification disponible</td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <h5>Nouveau tarif</h5>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <h6>{{ form_label(formPrice.public, 'Public') }}</h6>
+                                        <p class="card-text">{{ form_widget(formPrice.public) }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <h6>{{ form_label(formPrice.price, 'Prix') }}</h6>
+                                        <p class="card-text">{{ form_widget(formPrice.price) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h6>{{ form_label(formPrice.info, 'Information complémentaire') }}</h6>
+                                        <p class="card-text">{{ form_widget(formPrice.info,
+                                                { 'attr': {'rows' : '4' }} ) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <h6>{{ form_label(formPrice.label, 'Label') }}</h6>
+                                        <p class="card-text">{{ form_widget(formPrice.label) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="card-footer-content text-muted">
+                                    <div class="metadata">Diffusé le {{ vikaEvent.createdEv |date('d/m/Y') }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card-body">
-                        <h5>Nouveau tarif</h5>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <h6>{{ form_label(formPrice.public, 'Public') }}</h6>
-                                    <p class="card-text">{{ form_widget(formPrice.public) }}</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <h6>{{ form_label(formPrice.price, 'Prix') }}</h6>
-                                    <p class="card-text">{{ form_widget(formPrice.price) }}</p>
-                                </div>
+                    <div class="row">
+                        <div class="col-11">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-info">
+                                    Enregistrer tarif
+                                </button>
+                                {{ form_end(formPrice) }}
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <h6>{{ form_label(formPrice.info, 'Information complémentaire') }}</h6>
-                                    <p class="card-text">{{ form_widget(formPrice.info,
-                                            { 'attr': {'rows' : '4' }} ) }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <h6>{{ form_label(formPrice.label, 'Label') }}</h6>
-                                    <p class="card-text">{{ form_widget(formPrice.label) }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <div class="card-footer-content text-muted">
-                                <div class="metadata">Diffusé le {{ vikaEvent.createdEv |date('d/m/Y') }}</div>
-                            </div>
+                        <div class="col-1">
+                            {% if (newMode==false) %}
+                                {#    Delete ne doit apparaitre que qd on édite un événement déjà existant, pas qd on crée un nouveau#}
+                                {{ include('vika_event/_delete_form.html.twig') }}
+                            {% endif %}
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-11">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-outline-info">
-                                Enregistrer tarif
-                            </button>
-                            {{ form_end(formPrice) }}
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        {% if (newMode==false) %}
-                            {#    Delete ne doit apparaitre que qd on édite un événement déjà existant, pas qd on crée un nouveau#}
-                            {{ include('vika_event/_delete_form.html.twig') }}
-                        {% endif %}
-                    </div>
-                </div>
                 {% endif %}
-                <div class="row">
-                    <a href="{{ path('vika_event_showList',{'cat':'all'}) }}">Tous les événements (vue site web)</a>
-
-                </div>
             </div>
         </div>
     </div>
