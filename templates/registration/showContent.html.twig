@@ -35,6 +35,8 @@
                                                     <th>Numéro de dossier</th>
                                                     <th>Nom</th>
                                                     <th>Prénom</th>
+                                                    <th>Nom de l'évènement</th>
+                                                    <th>Statut</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -44,7 +46,17 @@
                                                 <tr>
                                                     <td>{{ registration.id }}</td>
                                                     <td>{{ registration.user.name }}</td>
-                                                    <td>{{ registration.user.firstName }}</td>
+                                                    <td>{{ registration.user.firstname }}</td>
+                                                    <td>{{ registration.vikaEvent.title }}</td>
+                                                    {#<td>{{ registration.status.name }}</td>#}
+                                                    <td class="align-middle text-right">
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('dossier_inscription', {'id': registration.id}) }}">
+                                                                <i class="fa fa-pencil">
+                                                                </i>
+                                                                <span class="sr-only">Voir dossier</span>
+                                                            </a>
+                                                    </td>
                                                 </tr>
                                             {% else %}
                                                 <tr>

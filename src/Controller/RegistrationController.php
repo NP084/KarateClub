@@ -32,6 +32,8 @@ use App\Form\PersonOfContactType;
 use App\Form\ContactListType;
 use App\Form\PaiementType;
 
+use App\Repository\UserRepository;
+use App\Repository\RegistrationRepository;
 
 
 class RegistrationController extends AbstractController
@@ -65,14 +67,14 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/registration-list", name="registration_view")
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
+     * @Security("has_role('ROLE_ADMIN')")
     */
-    public function listRegistration(Registration $registration, User $user)
+    public function listRegistration(RegistrationRepository $repo)
     {
-        $user= $registration->getUser();
+    
+        $registration = $repo->findAll();
         return $this->render('registration/showContent.html.twig', [
             'controller_name' => 'Liste des dossiers de préinscription',
-            'user' => $user,
             'registrations' => $registration,
         ]);
     }
