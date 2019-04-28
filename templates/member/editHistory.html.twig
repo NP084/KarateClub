@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
+{#{% block stylesheets %}
     {{ parent() }}
     <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css"
           rel="stylesheet">
@@ -15,6 +15,25 @@
                 language: 'fr_FR',
                 format: 'dd/mm/yyyy'
             });
+        });
+    </script>
+{% endblock %}#}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="/js/datetimepicker/jquery.datetimepicker.css"/>
+    <script src="/js/datetimepicker/jquery.js"></script>
+    <script src="/js/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="js/datetimepicker/jquery.datetimepicker.js"></script>
+    <script>
+        jQuery.datetimepicker.setLocale('fr');
+        jQuery('.datetimepicker').datetimepicker({
+            timepicker:false,
+            format: 'd-m-Y',
         });
     </script>
 {% endblock %}
@@ -50,7 +69,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             {{ form_label(historyForm.refDate, 'Date') }}
-                                            {{ form_widget(historyForm.refDate, { attr:{ class:'js-datepicker' } }) }}
+                                            {{ form_widget(historyForm.refDate, { attr:{ class:'datetimepicker' } }) }}
                                         </div>
                                     </div>
                                 </div>

@@ -53,7 +53,7 @@
                 {% endif %}
                 <td>
                     <a href="{{ path('price_grid_show', {'id': price_grid.id}) }}">show</a>
-                    <a href="{{ path('price_grid_edit', {'id': price_grid.id}) }}">edit</a>
+                    <a href="{{ path('price_grid_edit', {'id': price_grid.id, 'route':indexMode}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

@@ -34,7 +34,7 @@ class VikaEventType extends AbstractType
                 'widget'  => 'single_text',
                 'html5'   => false,
                 'format'  => 'dd-MM-yyyy HH:mm',
-                'years'   => range(date('Y') - 5, date('Y') + 15),
+//                'years'   => range(date('Y') - 5, date('Y') + 15),
               //  'attr' => ['class' => 'js-datepicker'],
             ])
             ->add('endDate', DateType::class, [
@@ -42,7 +42,7 @@ class VikaEventType extends AbstractType
                 'widget'  => 'single_text',
                 'html5'   => false,
                 'format'  => 'dd-MM-yyyy HH:mm',
-                'years'   => range(date('Y') - 5, date('Y') + 15),
+//                'years'   => range(date('Y') - 5, date('Y') + 15),
               //  'attr' => ['class' => 'js-datepicker'],
             ])
             ->add('category', EntityType::class, [

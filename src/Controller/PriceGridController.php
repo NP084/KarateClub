@@ -25,11 +25,14 @@ class PriceGridController extends AbstractController
      * CREATION ET EDITION D'UN TARIF (A PRIORI PAS DE CRéATION VIA CETTE FONCTION L'AJOUT D'UN TARIF SE FAIT
      * VIA LE FORMULAIRE D'EDITION DE L'EVENEMENT
      * @Route("-new", name="price_grid_new")
-     * @Route("-{id}-edit", name="price_grid_edit", methods={"GET","POST"}, requirements={"id"="\d+"})
+     * @Route("-{id}-edit-{route}", name="price_grid_edit", methods={"GET","POST"}, requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function edit(Request $request, PriceGrid $priceGrid = null): Response
+    public function edit(Request $request, PriceGrid $priceGrid = null, bool $route=null): Response
     {
+        if(!$route){
+            $route=false;
+        }
         $newMode = false;
         if (!$priceGrid) {
             $priceGrid = new PriceGrid();
@@ -51,6 +54,7 @@ class PriceGridController extends AbstractController
             'price_grid' => $priceGrid,
             'form' => $form->createView(),
             'newMode' => $newMode,
+            'indexMode'=>$route,
         ]);
     }
 
@@ -65,9 +69,6 @@ class PriceGridController extends AbstractController
                  [ ],
                  ['label'=>$orderby]
              );
-             return $this->render('price_grid/index.html.twig', [
-                 'price_grids' => $priceGrid,
-             ]);
          }
          elseif ($request->query->get('searchName')) {
              $searchName = $request->query->get('searchName');
@@ -82,32 +83,29 @@ class PriceGridController extends AbstractController
                  ->findBy(
                      ['category'=>$category]
                  );
-
              $priceGrid = $repo->findBy(
                  ['vikaEvent' => $vikaEvent],
                  ['label'=>'ASC']
              );
-             return $this->render('price_grid/index.html.twig', [
-                 'price_grids' => $priceGrid,
-             ]);
          }
          else{
              $priceGrid = $repo->findBy(
                  [ ],
                  ['public'=>'ASC']
              );
-             return $this->render('price_grid/index.html.twig', [
-                 'price_grids' => $priceGrid
-             ]);
          }
+         return $this->render('price_grid/index.html.twig', [
+             'price_grids' => $priceGrid,
+             'indexMode'=>true,
+         ]);
      }
 
     /**
      * SUPPRIME UN TARIF DE LA DB
-     * @Route("-{id}", name="price_grid_delete", methods={"DELETE"}, requirements={"id"="\d+"})
+     * @Route("-{id}-{route}", name="price_grid_delete", methods={"DELETE"}, requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function delete(Request $request, PriceGrid $priceGrid): Response
+    public function delete(Request $request, PriceGrid $priceGrid, bool $route=null): Response
     {
         if ($this->isCsrfTokenValid('delete' . $priceGrid->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -115,9 +113,14 @@ class PriceGridController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('vika_event_edit', [
-            'id' => $priceGrid->getVikaEvent()->getId(),
-        ]);
+        if (!$route){
+            return $this->redirectToRoute('vika_event_edit', [
+                'id' => $priceGrid->getVikaEvent()->getId(),
+            ]);
+        }
+        elseif ($route==true){
+            return $this->redirectToRoute('priceGrid_index');
+        }
     }
 
     /**

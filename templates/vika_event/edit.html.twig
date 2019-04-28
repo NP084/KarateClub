@@ -3,19 +3,18 @@
 {% block title %}Edit VikaEvent{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css"
-          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/js/datetimepicker/jquery.datetimepicker.css"/ >
+    <script src="/js/datetimepicker/jquery.js"></script>
+    <script src="/js/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+    <script src="js/datetimepicker/jquery.datetimepicker.js"></script>
     <script>
-        jQuery(document).ready(function () {
-            $('.js-datepicker').datepicker({
-                language: 'fr_FR',
-                format: 'dd/mm/yyyy'
-            });
+        jQuery.datetimepicker.setLocale('fr');
+        jQuery('.datetimepicker').datetimepicker({
+            format: 'd-m-Y H:i',
         });
     </script>
 {% endblock %}
@@ -60,7 +59,6 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <h6>{{ form_label(form.imageFile, 'Photo d\'illustration') }}</h6>
-{#                        alt="Card image"   width="100%">#}
                                     <p class="embed-responsive-item rounded">{{ form_widget(form.imageFile) }}
                                     </p>
                                 </div>
@@ -79,13 +77,13 @@
                             <div class="col-5">
                                 <div class="form-group">
                                     <h6>{{ form_label(form.startDate, 'Date de début') }}</h6>
-                                    <p class="card-text">{{ form_widget(form.startDate) }}</p>
+                                    {{ form_widget(form.startDate, { attr:{ class:'datetimepicker' } }) }}
                                 </div>
                             </div>
                             <div class="col-5">
                                 <div class="form-group">
                                     <h6>{{ form_label(form.endDate, 'Date de fin') }}</h6>
-                                    <p class="card-text">{{ form_widget(form.endDate) }}</p>
+                                    {{ form_widget(form.endDate, { attr:{ class:'datetimepicker' } }) }}
                                 </div>
                             </div>
                             <div class="col-2">
@@ -235,7 +233,7 @@
                 </div>
 
                 <div class="row">
-                    <a href="{{ path('vika_event_showList',{'cat':'Cours'}) }}">Tous les événements (vue site web)</a>
+                    <a href="{{ path('vika_event_showList',{'cat':'all'}) }}">Tous les événements (vue site web)</a>
 
                 </div>
             </div>

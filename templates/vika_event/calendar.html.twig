@@ -1,12 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block Body %}
-    {% if (is_granted('ROLE_ADMIN')) %}
-        <a href="{{ path('vika_event_new') }}">Nouvel événement</a>
-    {% endif %}
-    {% include '@Calendar/calendar.html' %}
-{% endblock %}
-
 {% block stylesheets %}
     <style>
         #calendar-holder{
@@ -55,4 +48,11 @@
             calendar.render();
         });
     </script>
+{% endblock %}
+
+{% block Body %}
+  {% if (is_granted('ROLE_ADMIN')) %}
+    <a href="{{ path('vika_event_new') }}">Nouvel événement</a>
+  {% endif %}
+  {% include '@Calendar/calendar.html' %}
 {% endblock %}
