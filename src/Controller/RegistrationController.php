@@ -67,17 +67,20 @@ class RegistrationController extends AbstractController
      * @Route("/condition-admin-family-{id}-{idevent}", name="condition_admin_family", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
-    public function conditions(UserConnected $userConnected, $idevent, Request $request)
+    public function conditions(UserConnected $userConnected, $idevent, Request $request, ObjectManager $manager)
     {
         $users = $userConnected->getUsers();
         $prereg = new Registration();
         $form = $this->createForm(PreregistrationType::class, $prereg);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $form) {
-            $manager->persist($price);
-            $vikaEvent->addPriceGrid($price);
-            $manager->persist($vikaEvent);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $prereg ->setUser($idevent);
+            $prereg ->setUser($users);
+            $prereg->setRegistrationDate(new \DateTime('now'));
+            $manager->persist($prereg);
+
             $manager->flush();
         }
 
