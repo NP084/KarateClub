@@ -100,6 +100,7 @@ class RegistrationController extends AbstractController
 
             $prereg->setVikaEvent($event);
             $prereg->setUser($user);
+            $prereg->setUserconnectedId($user->getUserConnected());
             $prereg->setRegistrationDate(new \DateTime('now'));
             $manager->persist($prereg);
 
