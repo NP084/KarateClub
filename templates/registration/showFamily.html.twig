@@ -84,7 +84,7 @@
                                                         <td><b>{{ user.name }}</b></td>
                                                         <td><b>{{ user.firstName }}</b></td>
                                                         <td class="align-middle text-right">
-                                                    {% if 'idevent' is defined %}
+                                                    {% if idevent is defined %}
                                                             <a class="btn btn-outline-info" href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent})}}">
                                                                 Inscrire
                                                             </a>
@@ -104,7 +104,7 @@
                                                         <td>{{ user.name }}</td>
                                                         <td>{{ user.firstName }}</td>
                                                         <td class="align-middle text-right">
-                                                    {% if 'idevent' is defined %}
+                                                    {% if idevent is defined %}
                                                         <a class="btn btn-outline-info" href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent})}}">
                                                             Inscrire
                                                         </a>
