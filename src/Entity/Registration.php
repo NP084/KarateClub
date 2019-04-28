@@ -73,12 +73,6 @@ class Registration
     private $profil_tarif;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\UserConnected", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $userconnected_id;
-
-    /**
      * @ORM\Column(type="float", nullable=true)
      */
     private $total_amount;
@@ -238,18 +232,6 @@ class Registration
     public function setProfilTarif(?PriceList $profil_tarif): self
     {
         $this->profil_tarif = $profil_tarif;
-
-        return $this;
-    }
-
-    public function getUserconnectedId(): ?UserConnected
-    {
-        return $this->userconnected_id;
-    }
-
-    public function setUserconnectedId(UserConnected $userconnected_id): self
-    {
-        $this->userconnected_id = $userconnected_id;
 
         return $this;
     }
