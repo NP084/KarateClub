@@ -38,7 +38,7 @@
 
                                         </div>
                                     </div>
-                                    {% if app.user %}
+                                    {% if (app.user and vikaEvent.inscription == true) %}
                                         <div class="col-4">
                                             <div class="card-footer-content text-muted">
                                                 <a class="btn btn-primary btn-md"

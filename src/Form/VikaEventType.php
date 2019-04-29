@@ -72,6 +72,7 @@ class VikaEventType extends AbstractType
                     //...
                 )))
             ->add('published')
+            ->add('inscription')
         ;
     }
 

@@ -100,6 +100,11 @@ class VikaEvent
     private $published;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $inscription;
+
+    /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
      */
     public function setImageFile(?File $imageFile = null): void
@@ -134,6 +139,7 @@ class VikaEvent
         $this->createdEv = new \DateTime();
         $this->priceGrid = new ArrayCollection();
         $this->published = false;
+        $this->inscription = true;
     }
 
     public function getId(): ?int
@@ -308,6 +314,18 @@ class VikaEvent
     public function setPublished(?bool $published): self
     {
         $this->published = $published;
+
+        return $this;
+    }
+
+    public function getInscription(): ?bool
+    {
+        return $this->inscription;
+    }
+
+    public function setInscription(?bool $inscription): self
+    {
+        $this->inscription = $inscription;
 
         return $this;
     }
