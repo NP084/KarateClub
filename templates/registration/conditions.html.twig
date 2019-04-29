@@ -8,7 +8,7 @@
         <div class="steps" role="tablist">
             <ul>
                 <li class="step" data-target="#test-l-1">
-                    <a class="step-trigger" tabindex="-1">
+                    <a href="{{ path('registration_member_lesson', {'id':user.userconnected.id, 'idevent':  idevent.id}) }}" class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-person"></i></span>
                         <span class="d-none d-sm-inline">Participant</span>
                     </a>
