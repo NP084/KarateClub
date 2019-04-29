@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -71,8 +72,14 @@ class VikaEventType extends AbstractType
                     'uiColor' => '#ffffff',
                     //...
                 )))
-            ->add('published')
-            ->add('inscription')
+            ->add('published', CheckboxType::class,[
+                'required'=>false,
+                'label'=>'Evénement publié sur le site'
+            ])
+            ->add('inscription', CheckboxType::class,[
+                'required'=>false,
+                'label'=>'Inscription ouverte pour cet événement'
+            ])
         ;
     }
 

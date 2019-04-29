@@ -11,9 +11,9 @@
     {{ parent() }}
     <script src="js/datetimepicker/jquery.datetimepicker.js"></script>
     <script>
-         jQuery.datetimepicker.setLocale('fr');
+        jQuery.datetimepicker.setLocale('fr');
         jQuery('.datetimepicker').datetimepicker({
-            timepicker:false,
+            timepicker: false,
             format: 'd-m-Y',
         });
     </script>
@@ -88,56 +88,169 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <h3>{{ user.name }} {{ user.firstname }} </h3>
-                                <div class="metadata">Inscrit sur le site depuis
-                                    : {{ user.createdUs |date('d/m/Y') }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
                                 <h3> Informations générales :</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <p> Email : {{ user.userConnected.email }} </p>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    {{ form_start(formUser) }}
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    {{ form_label(formUser.name, 'Nom') }}
+                                    {{ form_widget(formUser.name) }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <p> Date de naissance
-                                    : {{ user.birthdate |date('d/m/Y') }} </p>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        {{ form_label(formUser.firstName, 'Prénom') }}
+                                        {{ form_widget(formUser.firstName) }}
+                                    </div>
+                                    <div class="metadata">Inscrit sur le site depuis
+                                        : {{ user.createdUs |date('d/m/Y') }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <p> Numéro de fédération
-                                    : {{ user.fedNum }} </p>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Email : {{ user.userConnected.email }} </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                {% if (user.belt) %}
-                                    <h4> Grade</h4>
-                                    <p>{{ user.belt }} reçu
-                                        le {{ user.receiptDate |date('d/m/Y') }}</p>
-                                {% endif %}
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        {{ form_label(formUser.birthdate, 'Date de naisssance') }}
+                                        {{ form_widget(formUser.birthdate, { attr:{ class:'datetimepicker'}}) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {# parent ou admin qui consulte un User "enfant"     #}
-                    {% if( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        {{ form_label(formUser.sex, 'Sexe') }}
+                                        {{ form_widget(formUser.sex) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    {{ form_label(formUser.fedNum, 'Numéro de fédération') }}
+                                    {{ form_widget(formUser.fedNum) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    {{ form_label(formUser.belt, 'Grade') }}
+                                    {{ form_widget(formUser.belt) }}
+                                </div>
+                            </div>
+                            {#les barrettes ne s'affichent que pour les membres de moins de 12 ans (12 ans compris)#}
+                            {% set diff = date("now").diff(user.birthdate) %}
+                            {% set age = diff.days/365 %}
+                            {% if (age<13) %}
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        {{ form_label(formUser.bars, 'Barrettes') }}
+                                        {{ form_widget(formUser.bars) }}
+                                    </div>
+                                </div>
+                            {% else %}
+                                {# si plus de 12 ans, les barrettes sont cachées grâce à style#}
+                                <div class="col-2" style="visibility:hidden">
+                                    <div class="form-group">
+                                        {{ form_label(formUser.bars, 'Barrettes') }}
+                                        {{ form_widget(formUser.bars) }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    {{ form_label(formUser.receiptDate, 'Date de réception') }}
+                                    {{ form_widget(formUser.receiptDate, { attr:{ class:'datetimepicker' } }) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h3>{{ user.name }} {{ user.firstname }} </h3>
+                                    <div class="metadata">Inscrit sur le site depuis
+                                        : {{ user.createdUs |date('d/m/Y') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Email : {{ user.userConnected.email }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Date de naissance
+                                        : {{ user.birthdate |date('d/m/Y') }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <p> Numéro de fédération
+                                        : {{ user.fedNum }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% set diff = date("now").diff(user.birthdate) %}
+                            {% set age = diff.days/365 %}
+                            {% if (age<13) %}
+                            <div class="col">
+                                <div class="form-group">
+                                    {% if (user.belt) %}
+                                        <h4> Grade</h4>
+                                        <p>{{ user.belt }}
+                                            {% if (user.bars) %}
+                                            avec {{ user.bars }} barette(s)
+                                            {% endif %}, reçu
+                                            le {{ user.receiptDate |date('d/m/Y') }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="col">
+                                <div class="form-group">
+                                    {% if (user.belt) %}
+                                        <h4> Grade</h4>
+                                        <p>{{ user.belt }}, reçu
+                                            le {{ user.receiptDate |date('d/m/Y') }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    {# parent ou admin qui consulte un User "enfant" #}
+                   {% if( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -167,7 +280,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <p> Email : {{ user.userConnected.user.fedNum }} </p>
+                                    <p> Numéro de fédération : {{ user.userConnected.user.fedNum }} </p>
                                 </div>
                             </div>
                         </div>
@@ -205,88 +318,23 @@
 
                             </div>
                         </div>
-                    {% endif %}
+                   {% endif %}
                 </div>
             </div>
-        </div>
-    </div>
-
-
-    {% if (is_granted('ROLE_ADMIN')) %}
-        {{ form_start(formUser) }}
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <h2> Modification des données personnelles </h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        {{ form_label(formUser.sex, 'Genre') }}
-                                        {{ form_widget(formUser.sex) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        {{ form_label(formUser.fedNum, 'Numéro de fédération') }}
-                                        {{ form_widget(formUser.fedNum) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        {{ form_label(formUser.belt, 'Grade') }}
-                                        {{ form_widget(formUser.belt) }}
-                                    </div>
-                                </div>
-                                {#les barrettes ne s'affichent que pour les membres de moins de 12 ans (12 ans compris)#}
-                                {% set diff = date("now").diff(user.birthdate) %}
-                                {% set age = diff.days/365 %}
-                                {% if (age<13) %}
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            {{ form_label(formUser.bars, 'Barrettes') }}
-                                            {{ form_widget(formUser.bars) }}
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    {# si plus de 12 ans, les barrettes sont cachées grâce à style#}
-                                    <div class="col-2" style="visibility:hidden">
-                                        <div class="form-group">
-                                            {{ form_label(formUser.bars, 'Barrettes') }}
-                                            {{ form_widget(formUser.bars) }}
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        {{ form_label(formUser.receiptDate, 'Date de réception') }}
-                                        {{ form_widget(formUser.receiptDate, { attr:{ class:'datetimepicker' } }) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-outline-info">
-                                            Enregistrer modification(s)
-                                        </button>
-                                        {{ form_end(formUser) }}
-                                    </div>
-                                </div>
-                            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-info">
+                                Enregistrer modification(s)
+                            </button>
+                            {{ form_end(formUser) }}
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
-    {% endif %}
+    </div>
 
     {#COORDONNEES #}
     <div class="container-fluid">
@@ -371,7 +419,8 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-outline-info">Ajouter numéro</button>
+                                    <button type="submit" class="btn btn-outline-info">Ajouter numéro
+                                    </button>
                                     {{ form_end(phoneForm) }}
                                 </div>
                             </div>
@@ -497,7 +546,8 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-outline-info">Ajouter adresse</button>
+                                    <button type="submit" class="btn btn-outline-info">Ajouter adresse
+                                    </button>
                                     {{ form_end(adressForm) }}
                                 </div>
                             </div>
@@ -622,7 +672,8 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-outline-info">Ajouter une nouvelle personne
+                                    <button type="submit" class="btn btn-outline-info">Ajouter une nouvelle
+                                        personne
                                         de contact
                                     </button>
                                     {{ form_end(PoCForm) }}
