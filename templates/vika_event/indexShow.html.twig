@@ -11,13 +11,13 @@
                             <h5 class="card-title">{{ vikaEvent.title }}</h5>
                         </div>
                         <div class="card-body">
-                        <img class="embed-responsive-rounded"
-                             src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
-                             alt="Card image" width="100%">
+                            <img class="embed-responsive-rounded"
+                                 src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
+                                 alt="Card image" width="100%">
                         </div>
                         <div class="card-body">
                             <p class="card-text">
-                                {{ vikaEvent.owner}}
+                                {{ vikaEvent.owner }}
                             </p>
                         </div>
 
@@ -25,17 +25,20 @@
                             <div class="card-footer-content text-muted">
                                 <div class="row">
                                     <div class="col">
-                                        <div class="metadata">Diffusé le {{ vikaEvent.createdEv |date('d/m/Y')}}</div>
+                                        <div class="metadata">Diffusé le {{ vikaEvent.createdEv |date('d/m/Y') }}</div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="card-footer-content text-muted">
-                                            <a class="btn btn-primary btn-md" href="{{ path('vika_event_show', {'id':vikaEvent.id}) }}" role="button">Lire la suite</a>
+                                            <a class="btn btn-primary btn-md"
+                                               href="{{ path('vika_event_show', {'id':vikaEvent.id}) }}" role="button">Lire
+                                                la suite</a>
 
                                         </div>
                                     </div>
+<<<<<<< HEAD
                                 {% if user is not null %}
                                     <div class="col-4">
                                         <div class="card-footer-content text-muted">
@@ -43,7 +46,18 @@
                                         </div>
                                     </div>
                                 {% endif %}
+=======
+                                    {% if app.user %}
+                                        <div class="col-4">
+                                            <div class="card-footer-content text-muted">
+                                                <a class="btn btn-primary btn-md"
+                                                   href="{{ path('registration_member_lesson', {'idevent':vikaEvent.id, 'id':user.id}) }}"
+                                                   role="button">S'inscrire</a>
+                                            </div>
+>>>>>>> master
                                         </div>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -51,9 +65,9 @@
 
             {% endfor %}
 
-{#            <div class="navigation">
-                {{ knp_pagination_render(articles) }}
-            </div>#}
+            {#            <div class="navigation">
+                            {{ knp_pagination_render(articles) }}
+                        </div>#}
         </div>
     </div>
 {% endblock %}
