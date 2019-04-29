@@ -1,10 +1,46 @@
 {% extends 'base.html.twig'%}
 
 {% block Body %}
+    <div class="card">
+    <!-- .card-header -->
+    <div class="card-header">
+        <!-- .steps -->
+        <div class="steps" role="tablist">
+            <ul>
+                <li class="step" data-target="#test-l-1">
+                    <a  class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-person"></i></span>
+                        <span class="d-none d-sm-inline">Participant</span>
+                    </a>
+                </li>
+                <li class="step" data-target="#test-l-2">
+                    <a  class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-script "></i></span>
+                        <span class="d-none d-sm-inline">Conditions Générales</span>
+                    </a>
+                </li>
+                <li class="step" data-target="#test-l-3">
+                    <a  class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
+                        <span class="d-none d-sm-inline">Confirmation</span>
+                    </a>
+                </li>
 
+            </ul>
+        </div>
+        <!-- /.steps -->
+    </div>
 
     {{ form_start(form) }}
+
+    {{ form_widget(form.medical_care) }}
+
+    {{ form_widget(form.image_diffusion) }}
+
+    {{ form_widget(form.condition_registration) }}
+    
     {{ form_widget(form.remark) }}
+
     <button type="submit" class="btn btn-secondary">Confirmer</button>
     {{ form_end(form)}}
 

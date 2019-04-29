@@ -17,10 +17,41 @@
     </script>
 {% endblock %}
 
+
+
 {% block title %}Composition de la famille{% endblock %}
 
 
 {% block Body %}
+<div class="card">
+    <!-- .card-header -->
+    <div class="card-header">
+        <!-- .steps -->
+        <div class="steps" role="tablist">
+            <ul>
+                <li class="step" data-target="#test-l-1">
+                    <a  class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-person"></i></span>
+                        <span class="d-none d-sm-inline">Participant</span>
+                    </a>
+                </li>
+                <li class="step" data-target="#test-l-2">
+                    <a  class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-script "></i></span>
+                        <span class="d-none d-sm-inline">Conditions Générales</span>
+                    </a>
+                </li>
+                <li class="step" data-target="#test-l-3">
+                    <a  class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
+                        <span class="d-none d-sm-inline">Confirmation</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <!-- /.steps -->
+    </div>
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
 
         <div class="container-fluid">
@@ -88,8 +119,8 @@
                                                             {% set foo = '1' %}
                                                             {% for prereg in preregs %}
                                                                 {% if prereg.user.id == user.id %}
-                                                                    <a class="btn btn-info disabled disabled">
-                                                                        Inscrit
+                                                                    <a class="btn btn-secondary disabled disabled">
+                                                                        Inscrit <i class="oi oi-check"></i>
                                                                     </a>
                                                                     {% set foo = '0' %}
                                                                 {% endif %}
@@ -123,8 +154,8 @@
                                                     {% set foo = '1' %}
                                                     {% for prereg in preregs %}
                                                         {% if prereg.user.id == user.id %}
-                                                            <a class="btn btn-info disabled disabled">
-                                                                Inscrit
+                                                            <a class="btn btn-secondary disabled disabled">
+                                                                Inscrit <i class="oi oi-check"></i>
                                                             </a>
                                                             {% set foo = '0' %}
                                                         {% endif %}
