@@ -72,12 +72,24 @@ class RegistrationController extends AbstractController
      */
     public function lessonsMember(UserConnected $userConnected, $idevent)
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Registration::class);
+        $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
+
+        $prereg = new Registration();
+        $preregs = $repository->findBy(
+            ['vikaEvent' => $idevent]
+        );
+
+
+
         $users = $userConnected->getUsers();
         return $this->render('registration/showFamily.html.twig', [
 
             'users' => $users,
             'userConnected' => $userConnected,
-            'idevent' => $idevent,
+            'idevent' => $event,
+            'preregs' => $preregs,
         ]);
     }
 
@@ -85,8 +97,9 @@ class RegistrationController extends AbstractController
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
      */
-    public function conditions(User $user, $idevent, Request $request, ObjectManager $manager)
+    public function conditions( User $user, $idevent, Request $request, ObjectManager $manager)
     {
+        $userConnected = $this->getUser($user);
         $entityManager = $this->getDoctrine()->getManager();
         $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
         $prereg = new Registration();
@@ -101,13 +114,14 @@ class RegistrationController extends AbstractController
             $manager->persist($prereg);
 
             $manager->flush();
+            return $this->redirectToRoute('registration_view_family',['id' => $userConnected->getId()]);
         }
 
 
         return $this->render('registration/conditions.html.twig', [
             'user' => $user,
 //            'userConnected' => $userConnected,
-            'idevent' => $idevent,
+            'idevent' => $event,
             'form' => $form->createView()
         ]);
     }
