@@ -26,7 +26,6 @@ class VikaEventType extends AbstractType
             ->add('owner')
             ->add('title')
             ->add('capacity')
-            //  ->add('createdEv')
             ->add('imageFile', VichImageType::class, [
                 'required'=> false,
                 'image_uri' => false,
@@ -57,16 +56,7 @@ class VikaEventType extends AbstractType
                         ->orderBy('u.title', 'ASC');
                 },
                 'choice_label' => 'title',
-            ])/*            ->add('priceGrids', collectionType::class, [
-                'entry_type' => PriceGrid::class,
-                'entry_options' =>['label'=>false],
-                'allow_add'     => true,
-                'allow_delete'  => true,
-                'prototype'     => true,
-                'attr' => array(
-                    'class' => 'my-selector',
-                ),
-            ])*/
+            ])
             ->add('info', CKEditorType::class, array(
                 'config' => array(
                     'uiColor' => '#ffffff',

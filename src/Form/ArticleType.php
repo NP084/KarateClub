@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +20,14 @@ class ArticleType extends AbstractType
             ->add('title')
             ->add('category', EntityType::class,[
                 'class'=> Category::class,
-                'choice_label'=>'title'
+                'query_builder' => function(EntityRepository $er){
+                    $disc = "Articles";
+                    return $er->createQueryBuilder('u')
+                        -> where('u.description LIKE :Articles')
+                        -> setParameter('Articles', $disc)
+                        -> orderBy('u.title', 'ASC');
+                },
+                'choice_label'=>'title',
             ])
             ->add('content', CKEditorType::class, array(
                 'config' => array(
