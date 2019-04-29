@@ -176,4 +176,33 @@ class RegistrationController extends AbstractController
             $manager->flush();
         }
     }
+
+    /**
+     * @Route("/envoyer_fiche", name="envoyer_fiche")
+     */
+    public function envoyerFiche(Request $request,\Swift_Mailer $mailer)
+    {
+        if ($request->isMethod('POST')) {
+            $email = $request->request->get('email');
+            $entityManager = $this->getDoctrine()->getManager();
+            $user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email);
+            /* @var $user User */
+            if ($user === null) {
+                $this->addFlash('danger', 'Email Inconnu');
+                return $this->redirectToRoute('member_document', [
+                    'id' => $user->getId(),
+                  ]);
+            }
+            $message = (new \Swift_Message('Fiche de renseignements'))
+                ->setFrom('vi.ka.59@hotmail.fr')
+                ->setTo($user->getEmail())
+                ->setBody("Voici la fiche de renseignements! ", 'text/html');
+            $mailer->send($message);
+            $this->addFlash('notice', 'Mail envoyé');
+            return $this->redirectToRoute('member_document', [
+                'id' => $user->getId(),
+              ]);
+        }
+        return $this->render('registration/fiche.html.twig');
+    }
 }

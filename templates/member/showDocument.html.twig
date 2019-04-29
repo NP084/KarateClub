@@ -9,6 +9,14 @@
                     {#Si admin ou parent qui consulte son propre profil#}
                     {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
                         <h2>Documents personnels </h2>
+                        <div>
+                            <a class="btn btn-primary" href="{{ path('envoyer_fiche', {'idUser':user.id}) }}"
+                               class="btn-btn-primary">
+                                <b>Recevoir la fiche de renseignements</b>
+                            </a>
+                            </br>
+                            </br>
+                        </div>
                     {% else %}
                         <h2>Document du membre {{ user.firstName }} {{ user.name }}</h2>
                     {% endif %}
