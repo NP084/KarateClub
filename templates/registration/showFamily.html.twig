@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li class="step" data-target="#test-l-2">
-                    <a  class="step-trigger" tabindex="-1">
+                    <a href="#" data-toggle="modal" data-target="#error1" class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-script "></i></span>
                         <span class="d-none d-sm-inline">Conditions Générales</span>
                     </a>
@@ -51,7 +51,21 @@
             </ul>
         </div>
         <!-- /.steps -->
-    </div>
+        <!--Error1-->
+
+        <div class="modal fade" id="error1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             xmlns="http://www.w3.org/1999/html">
+            <div class="modal-dialog" role="document">
+                <div class="modal-header text-center">
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <a href="#" class="alert-link">Veuillez d'abord choisir un <strong>participant</strong>.</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
 
         <div class="container-fluid">
