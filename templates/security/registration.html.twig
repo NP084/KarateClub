@@ -17,8 +17,44 @@
     {{ form_row(formReg.password, {'label': 'Mot de passe', 'attr': {'placeholder':'Mot de passe...'}}) }}
     {{ form_row(formReg.confirm_password, {'label': 'Confirmez le mot de passe', 'attr': {'placeholder':'Confirmez svp...'}}) }}
 
+    <div id="aff">
+        <button type="submit" id="affiche" class="btn btn-success">
+            <span class="text-hover">Inscription!</span>
+            <span class="text-base">Inscription!</span>
+        </button>
+        </br>
+        </br>
+        <h1 class="text-hover2">!Vérifiez vos données avant de confirmer votre inscription!</h1>
+    </div>
 
-       <button type="submit" class="btn btn-success">Inscription!</button>
+    <style>
+        .text-base{
+            opacity: 1;
+            }
+        .text-hover{
+            display: none;
+            }
+        .text-hover2{
+            opacity: 0;
+            }
+        #aff:hover span.text-base{
+            opacity: 0;
+            }
+        #affiche:hover{
+            background-color: red;
+            }
+        #aff:hover span.text-base{
+            opacity: 0;
+            }
+        #aff:hover span.text-hover{
+            display: inherit;
+            position: absolute;
+            }
+        #aff:hover .text-hover2{
+            color: red;
+            opacity: 1;
+            }
+       </style>
 
     {{ form_end(formReg) }}
     {{ form_end(formUser) }}
