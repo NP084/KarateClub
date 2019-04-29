@@ -19,7 +19,7 @@ class PreregistrationType extends AbstractType
             ->add('medical_care',CheckboxType::class,['label'=> 'Prise en charge médicale'])
             ->add('image_diffusion',CheckboxType::class,['label'=> 'Droit à l\' image'])
             ->add('condition_registration',CheckboxType::class,['label'=> 'Conditions générales'])
-            ->add('remark',TextareaType::class,['label'=> 'Remarque éventuelle'])
+            ->add('remark')
 //            ->add('profil_tarif')
         ;
     }
