@@ -275,7 +275,9 @@ class RegistrationController extends AbstractController
             $message = (new \Swift_Message('Fiche de renseignements'))
                 ->setFrom('vi.ka.59@hotmail.fr')
                 ->setTo($user->getEmail())
-                ->setBody("Voici la fiche de renseignements! ", 'text/html');
+                ->setBody("Voici la fiche de renseignements! ", 'text/html')
+                /*->attach(\Swift_Attachment::fromPath('fiche20182019V2.pdf')->setFilename('test.pdf'))*/
+                ;
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
             return $this->redirectToRoute('member_document', [
