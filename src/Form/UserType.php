@@ -19,7 +19,17 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          //  ->add('belt')
+            ->add('name')
+            ->add('firstName')
+            ->add('birthdate',DateType::class, [
+                'label'=>'refDate',
+                'required'=> false,
+                'widget'  => 'single_text',
+                'html5'   => false,
+                'format'  => 'dd-MM-yyyy',
+                'years'   => range(1980, date('Y')),
+                'attr' => ['class' => 'js-datepicker'],
+            ])
             ->add('belt', ChoiceType::class,[
                 'choices' => [
                     'Ceinture blanche' => 'Ceinture blanche',
@@ -40,8 +50,9 @@ class UserType extends AbstractType
             ])
             ->add('bars', ChoiceType::class,[
                 'choices' => [
-                    'Une barrette' => '1',
-                    'Deux barrettes' => '2',
+                    'Aucune'          => '0',
+                    'Une barrette'    => '1',
+                    'Deux barrettes'  => '2',
                     'Trois barrettes' => '3',
                 ],
             ])
@@ -64,9 +75,6 @@ class UserType extends AbstractType
             ->add('fedNum', TextType::class, [
                 'required'=> false
             ])
-            /* ->add('imageFile', VichImageType::class, [
-                 'required'=> false
-             ])*/
            ;
     }
 
