@@ -70,68 +70,84 @@
                                                 (pr ne pas afficher son propre profil dans le liste) #}
                                                 {#                {% if (user.ownerUser and app.request.get('id') != user.ownerUser.id) %}#}
                                                 {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
-                                                    {% if (is_granted('ROLE_ADMIN')) %}
-                                                        <tr>
-                                                        <td><b>{{ user.ownerUser.id }}</b></td>
-                                                        <td><b>{{ user.name }}</b></td>
-                                                        <td><b>{{ user.firstName }}</b></td>
-                                                        <td class="align-middle text-right">
-                                                            <a class="btn btn-outline-info" href="#">
-                                                                Inscrire
-                                                            </a>
-                                                        </td>
-                                                    {% else %}
-                                                        <td><b>{{ user.name }}</b></td>
-                                                        <td><b>{{ user.firstName }}</b></td>
-                                                        <td class="align-middle text-right">
-                                                    {% if idevent is defined %}
-                                                        {%  if prereg.user.id == user.id %}
-                                                            <a class="btn btn-info disabled disabled" >
-                                                                Inscrit
-                                                            </a>
-                                                            {% else %}
-                                                            <a class="btn btn-outline-info" href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id})}}">
-                                                                Inscrire
-                                                            </a>
-                                                        {% endif %}
-                                                    {% else %}
-                                                                    <a class="btn btn-outline-info" href="{{  path('vika_event_showList', {'cat': 'all'})}}">
-                                                                        Inscrire à un cours
-                                                                    </a>
-                                                    {% endif %}
-                                                        </td>
-                                                    {% endif %}
-                                                    </tr>
-                                                {% else %}
+                                                {% if (is_granted('ROLE_ADMIN')) %}
                                                     <tr>
-                                                        {% if (is_granted('ROLE_ADMIN')) %}
-                                                            <td>{{ user.id }}</td>
-                                                        {% endif %}
-                                                        <td>{{ user.name }}</td>
-                                                        <td>{{ user.firstName }}</td>
-                                                        <td class="align-middle text-right">
-                                                    {% if idevent is defined %}
-                                                        {%  if prereg.user.id == user.id %}
-                                                            <a class="btn btn-info disabled disabled" >
-                                                                Inscrit
-                                                            </a>
-                                                        {% else %}
-                                                        <a class="btn btn-outline-info" href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id})}}">
-                                                            Inscrire3
+                                                    <td><b>{{ user.ownerUser.id }}</b></td>
+                                                    <td><b>{{ user.name }}</b></td>
+                                                    <td><b>{{ user.firstName }}</b></td>
+                                                    <td class="align-middle text-right">
+                                                        <a class="btn btn-outline-info" href="#">
+                                                            Inscrire
                                                         </a>
-                                                        {% endif %}
-                                                    {% else %}
-                                                            <a class="btn btn-outline-info" href="{{  path('vika_event_showList', {'cat':'all'})}}">
+                                                    </td>
+                                                {% else %}
+                                                    <td><b>{{ user.name }}</b></td>
+                                                    <td><b>{{ user.firstName }}</b></td>
+                                                    <td class="align-middle text-right">
+                                                        {% if idevent is defined %}
+                                                            {% set foo = '1' %}
+                                                            {% for prereg in preregs %}
+                                                                {% if prereg.user.id == user.id %}
+                                                                    <a class="btn btn-info disabled disabled">
+                                                                        Inscrit
+                                                                    </a>
+                                                                    {% set foo = '0' %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                                    {% if foo == 1 %}
+                                                                    <a class="btn btn-outline-info"
+                                                                       href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                        Inscrire
+                                                                    </a>
+                                                                {% endif %}
+
+
+                                                        {% else %}
+                                                            <a class="btn btn-outline-info"
+                                                               href="{{ path('vika_event_showList', {'cat': 'all'}) }}">
                                                                 Inscrire à un cours
                                                             </a>
                                                         {% endif %}
-                                                        </td>
-                                                    </tr>
+                                                    </td>
                                                 {% endif %}
+                                                </tr>
                                             {% else %}
                                                 <tr>
-                                                    <td colspan="10">Aucun membre de famille enregistré</td>
-                                                </tr>
+                                                {% if (is_granted('ROLE_ADMIN')) %}
+                                                    <td>{{ user.id }}</td>
+                                                {% endif %}
+                                                <td>{{ user.name }}</td>
+                                                <td>{{ user.firstName }}</td>
+                                                <td class="align-middle text-right">
+                                                {% if idevent is defined %}
+                                                    {% set foo = '1' %}
+                                                    {% for prereg in preregs %}
+                                                        {% if prereg.user.id == user.id %}
+                                                            <a class="btn btn-info disabled disabled">
+                                                                Inscrit
+                                                            </a>
+                                                            {% set foo = '0' %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                        {% if foo == 1 %}
+                                                        <a class="btn btn-outline-info"
+                                                           href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                            Inscrire
+                                                        </a>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <a class="btn btn-outline-info"
+                                                           href="{{ path('vika_event_showList', {'cat':'all'}) }}">
+                                                            Inscrire à un cours
+                                                        </a>
+                                                    {% endif %}
+                                                    </td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="10">Aucun membre de famille enregistré</td>
+                                                    </tr>
                                             {% endfor %}
                                             </tbody>
                                         </table>
@@ -143,13 +159,15 @@
                     <div class="row justify-content-end">
                         <div class="col-auto">
                             {% if (is_granted('ROLE_ADMIN')) %}
-                                <a class="btn btn-success" href="{{ path('add_admin',{'id':userConnected.id}) }}">Ajouter un nouveau membre</a>
+                                <a class="btn btn-success" href="{{ path('add_admin',{'id':userConnected.id}) }}">Ajouter
+                                    un nouveau membre</a>
                             {% else %}
-                                <a class="btn btn-success" href="{{ path('add_profil',{'id':userConnected.id}) }}">Ajouter un nouveau membre</a>
+                                <a class="btn btn-success" href="{{ path('add_profil',{'id':userConnected.id}) }}">Ajouter
+                                    un nouveau membre</a>
                             {% endif %}
                         </div>
-                     </div>
-            
+                    </div>
+
                 </div>
             </div>
         </div>
