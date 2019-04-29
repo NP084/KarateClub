@@ -85,9 +85,15 @@
                                                         <td><b>{{ user.firstName }}</b></td>
                                                         <td class="align-middle text-right">
                                                     {% if idevent is defined %}
-                                                            <a class="btn btn-outline-info" href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent})}}">
+                                                        {%  if prereg.user.id == user.id %}
+                                                            <a class="btn btn-info disabled disabled" >
+                                                                Inscrit
+                                                            </a>
+                                                            {% else %}
+                                                            <a class="btn btn-outline-info" href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id})}}">
                                                                 Inscrire
                                                             </a>
+                                                        {% endif %}
                                                     {% else %}
                                                                     <a class="btn btn-outline-info" href="{{  path('vika_event_showList', {'cat': 'all'})}}">
                                                                         Inscrire à un cours
@@ -105,9 +111,15 @@
                                                         <td>{{ user.firstName }}</td>
                                                         <td class="align-middle text-right">
                                                     {% if idevent is defined %}
-                                                        <a class="btn btn-outline-info" href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent})}}">
-                                                            Inscrire
+                                                        {%  if prereg.user.id == user.id %}
+                                                            <a class="btn btn-info disabled disabled" >
+                                                                Inscrit
+                                                            </a>
+                                                        {% else %}
+                                                        <a class="btn btn-outline-info" href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id})}}">
+                                                            Inscrire3
                                                         </a>
+                                                        {% endif %}
                                                     {% else %}
                                                             <a class="btn btn-outline-info" href="{{  path('vika_event_showList', {'cat':'all'})}}">
                                                                 Inscrire à un cours

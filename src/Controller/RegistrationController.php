@@ -74,12 +74,16 @@ class RegistrationController extends AbstractController
      */
     public function lessonsMember(UserConnected $userConnected, $idevent)
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
+        $prereg = $entityManager->getRepository(Registration::class)->find($idevent);
         $users = $userConnected->getUsers();
         return $this->render('registration/showFamily.html.twig', [
 
             'users' => $users,
             'userConnected' => $userConnected,
-            'idevent' => $idevent,
+            'idevent' => $event,
+            'prereg' => $prereg
         ]);
     }
 
@@ -112,7 +116,7 @@ class RegistrationController extends AbstractController
         return $this->render('registration/conditions.html.twig', [
             'user' => $user,
 //            'userConnected' => $userConnected,
-            'idevent' => $idevent,
+            'idevent' => $event,
             'form' => $form->createView()
         ]);
     }
