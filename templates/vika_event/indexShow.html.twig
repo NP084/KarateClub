@@ -36,11 +36,13 @@
 
                                         </div>
                                     </div>
+                                {% if user is not null %}
                                     <div class="col-4">
                                         <div class="card-footer-content text-muted">
                                     <a class="btn btn-primary btn-md" href="{{ path('registration_member_lesson', {'idevent':vikaEvent.id, 'id':user.id}) }}" role="button">S'inscrire</a>
                                         </div>
                                     </div>
+                                {% endif %}
                                         </div>
                             </div>
                         </div>

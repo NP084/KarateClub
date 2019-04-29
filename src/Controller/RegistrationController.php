@@ -88,8 +88,9 @@ class RegistrationController extends AbstractController
      * @Route("/condition-member-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
      * @Route("/condition-admin-family-{id}-{idevent}", name="condition_admin_family", requirements={"id"="\d+"})
      */
-    public function conditions(User $user, $idevent, Request $request, ObjectManager $manager)
+    public function conditions( User $user, $idevent, Request $request, ObjectManager $manager)
     {
+        $userConnected = $this->getUser($user);
         $entityManager = $this->getDoctrine()->getManager();
         $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
         $prereg = new Registration();
@@ -104,6 +105,7 @@ class RegistrationController extends AbstractController
             $manager->persist($prereg);
 
             $manager->flush();
+            return $this->redirectToRoute('registration_view_family',['id' => $userConnected->getId()]);
         }
 
 
