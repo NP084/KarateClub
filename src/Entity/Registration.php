@@ -82,6 +82,11 @@ class Registration
      */
     private $attachedFiles;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $medicalCertificate;
+
 
 
     public function __construct()
@@ -276,6 +281,18 @@ class Registration
                 $attachedFile->setRegistration(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMedicalCertificate(): ?int
+    {
+        return $this->medicalCertificate;
+    }
+
+    public function setMedicalCertificate(?int $medicalCertificate): self
+    {
+        $this->medicalCertificate = $medicalCertificate;
 
         return $this;
     }

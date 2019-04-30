@@ -10,7 +10,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AttachedFileRepository")
  * @Vich\Uploadable
@@ -49,13 +48,8 @@ class AttachedFile
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * @Vich\UploadableField(mapping="document_picture", fileNameProperty="docName")
+     * @Vich\UploadableField(mapping="document_picture", fileNameProperty="docname")
      * @var File
-     * @Assert\File(
-     *     maxSize="5242880",
-     *     mimeTypes = {
-     *     "application/pdf",
-     *     })
      */
     private $docFile;
 

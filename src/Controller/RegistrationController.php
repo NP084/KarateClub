@@ -32,10 +32,12 @@ use App\Form\PhoneType;
 use App\Form\PersonOfContactType;
 use App\Form\ContactListType;
 use App\Form\PaiementType;
+use App\Entity\AttachedFile;
 
 use App\Repository\UserRepository;
 use App\Repository\RegistrationRepository;
 use App\Repository\PaiementRepository;
+use App\Form\DocumentType;
 
 
 class RegistrationController extends AbstractController
@@ -146,8 +148,14 @@ class RegistrationController extends AbstractController
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewRegistration(PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager)
+    public function viewRegistration(AttachedFile $attachedFile = null, PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager)
     {
+        //Obtenir la liste des paiements associés:
+        $paiementNombre = $repo->findBy(
+            ['registration' => $registration]
+        );
+
+        //Ajouter des nouveaux paiements:
         $paiement = new Paiement();
         $formPaiement = $this->createForm(PaiementType::class, $paiement);
         $formPaiement->handleRequest($request);
@@ -161,30 +169,41 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
         }
 
-        //$certificat = new AttachedFile();
-        //$formCertificat = $this->createForm(DocumentType::class, $certificat);
-        //$formCertificat->handleRequest($request);
 
-        //if ($formCertificat->isSubmitted() && $formCertificat->isValid()){
-        // if (!$certificat->getId()){
-        //     $certificat->setDatecreat(new \DateTime());
-        // }
-        //  $manager->persist($certificat);
-        //  $manager->flush();
-        //  return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
-        // }
-
+        
+        //Informations de l'USER:
         $user = $registration->getUser();
+        //Informations sur l'adresse du USER:
         $adress = $user->getAdress();
 
+        //Ajouter le document 1:
+        if (!$attachedFile) {
+            $attachedFile = new AttachedFile();
+        }
+        $formAttachedFile_1 = $this->createForm(DocumentType::class, $attachedFile);
+        $formAttachedFile_1->handleRequest($request);
 
-        //$ID = $registration->getId();
-        $paiementNombre = $repo->findBy(
-            ['registration' => $registration]
-        );
+        if ($formAttachedFile_1->isSubmitted() && $formAttachedFile_1->isValid()) {
 
+            if (!$attachedFile->getId()){
+                $attachedFile->setDatecreat(new \DateTime());
+            }
+            $attachedFile->setRegistration($registration);
+            $manager->persist($attachedFile);
+            //Obtenir l'ID de l'attached file:
+            $id = $attachedFile->getId();
+            //Insérer l'ID du certificat medical dans registration:
+            $registration->setMedicalCertificate($id);
+            $manager->persist($registration);
+            $manager->flush();
+
+            return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
+
+        }
+        
         return $this->render('registration/fileRegistration.html.twig', [
             'formPaiement' => $formPaiement->createView(),
+            'formAttachedFile_1' => $formAttachedFile_1->createView(),
             'registration' => $registration,
             'user' => $user,
             'adress' => $adress,
