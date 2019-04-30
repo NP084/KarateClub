@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -63,10 +65,15 @@ class AttachedFile
     private $member;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="attachedFile")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Registration", inversedBy="attachedFiles")
      */
-    private $status;
+    private $registration;
 
+
+    public function __construct()
+    {
+        $this->registrations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -96,19 +103,6 @@ class AttachedFile
 
         return $this;
     }
-
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
 
     public function getDescription(): ?string
     {
@@ -168,5 +162,19 @@ class AttachedFile
 
         return $this;
     }
+
+    public function getRegistration(): ?Registration
+    {
+        return $this->registration;
+    }
+
+    public function setRegistration(?Registration $registration): self
+    {
+        $this->registration = $registration;
+
+        return $this;
+    }
+
+    
 
 }

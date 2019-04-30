@@ -29,11 +29,6 @@ class Registration
     private $remark;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Status", mappedBy="registration")
-     */
-    private $status;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="registration")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -82,6 +77,12 @@ class Registration
      */
     private $paiement;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="registration")
+     */
+    private $attachedFiles;
+
+
 
     public function __construct()
     {
@@ -115,37 +116,6 @@ class Registration
     public function setRemark(?string $remark): self
     {
         $this->remark = $remark;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Status[]
-     */
-    public function getStatus(): Collection
-    {
-        return $this->status;
-    }
-
-    public function addStatus(Status $status): self
-    {
-        if (!$this->status->contains($status)) {
-            $this->status[] = $status;
-            $status->setRegistration($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStatus(Status $status): self
-    {
-        if ($this->status->contains($status)) {
-            $this->status->removeElement($status);
-            // set the owning side to null (unless already changed)
-            if ($status->getRegistration() === $this) {
-                $status->setRegistration(null);
-            }
-        }
 
         return $this;
     }
@@ -278,5 +248,37 @@ class Registration
 
         return $this;
     }
+
+    /**
+     * @return Collection|AttachedFile[]
+     */
+    public function getAttachedFiles(): Collection
+    {
+        return $this->attachedFiles;
+    }
+
+    public function addAttachedFile(AttachedFile $attachedFile): self
+    {
+        if (!$this->attachedFiles->contains($attachedFile)) {
+            $this->attachedFiles[] = $attachedFile;
+            $attachedFile->setRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttachedFile(AttachedFile $attachedFile): self
+    {
+        if ($this->attachedFiles->contains($attachedFile)) {
+            $this->attachedFiles->removeElement($attachedFile);
+            // set the owning side to null (unless already changed)
+            if ($attachedFile->getRegistration() === $this) {
+                $attachedFile->setRegistration(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 }
