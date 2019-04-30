@@ -32,11 +32,10 @@ class VikaEventController extends AbstractController
         $user = $this->getUser();
         if ($cat == 'all') {
             $vikaEvents = $vikaEventRepository->findBy(
-                ['published'=>true],
+                ['published' => true],
                 ['startDate' => 'DESC']
             );
-        }
-        else {
+        } else {
             // trouver la catégorie d'événement à afficher. La catégorie se trouve dans l'URL => cat
             $category = $this->getDoctrine()
                 ->getRepository(Category::class)
@@ -46,7 +45,7 @@ class VikaEventController extends AbstractController
             // recherche des événements qui sont de la catégorie cat
             $vikaEvents = $vikaEventRepository->findBy(
                 ['category' => $category,
-                    'published'=>true],
+                    'published' => true],
                 ['startDate' => 'DESC']
             );
         }
@@ -61,15 +60,44 @@ class VikaEventController extends AbstractController
      * @Route("-list", name="vika_event_index", methods={"GET"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function index(VikaEventRepository $vikaEventRepository): Response
+    public function index(VikaEventRepository $vikaEventRepository, Request $request): Response
     {
-        $vikaEvents = $vikaEventRepository->findBy(
-            [ ],
-            ['startDate' => 'DESC']
-        );
+        if ($request->query->get('searchName')) {
+            $searchValue = $request->query->get('searchName');
+            /**
+             * recherche par id, titre, titulaire ou via la fonction personnalisée findByWord
+             * qui est dans VikaEventRepository
+             */
+            $eventsSearch = $vikaEventRepository->findByWord($searchValue);
+
+            /**
+             * recherche par catégorie : la catégorie est dans une autre table, il faut donc d'abord
+             * récupérer la catégorie associé à la recherche, ensuite afficher les Events corrrespond à cet
+             * catégorie
+             */
+            $category = $this->getDoctrine()
+                ->getRepository(Category::class)
+                ->findBy(
+                    ['title' => $searchValue]
+                );
+            $eventsCategory = $vikaEventRepository->findByCategory($category);
+
+            /**
+             * Fusion des résultats des 2 recherches et envoi dans le twig
+             */
+            $vikaEvents = array_merge($eventsSearch, $eventsCategory);
+
+        } else {
+            $vikaEvents = $vikaEventRepository->findBy(
+                [],
+                ['startDate' => 'DESC']
+            );
+        }
+
         return $this->render('vika_event/index.html.twig', [
             'vikaEvents' => $vikaEvents,
         ]);
+
     }
 
     /**
@@ -136,7 +164,7 @@ class VikaEventController extends AbstractController
             'form' => $form->createView(),
             'formPrice' => $formPrice->createView(),
             'newMode' => $newMode,
-            'newMode'=>$newMode,
+            'newMode' => $newMode,
         ]);
     }
 

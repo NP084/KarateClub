@@ -1,13 +1,21 @@
-{% extends 'base.html.twig'%}
+{% extends 'base.html.twig' %}
 
 {% block Body %}
 
     <h1>
-        {%if editMode %}
-            Modification d'un article
+        {% if editMode %}
+            {% if (article.category) %}
+                {% if (article.category.title == 'Publication') %}
+                    Modification de la {{ article.category.title }}
+                {% elseif (article.category.title != 'Autre') %}
+                    Modification de l'{{ article.category.title }}
+                {% else %}
+                    Modification de l'article
+                {% endif %}
+            {% endif %}
         {% else %}
             Création d'un article
-        {% endif %} 
+        {% endif %}
     </h1>
 
     {{ form_start(formArticle) }}
@@ -27,16 +35,16 @@
         {{ form_widget(formArticle.content) }}
     </div>
     <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="">Sélectionnez une image</label>
-                    {{ form_widget(formArticle.imageFile) }}                     
-                </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="">Sélectionnez une image</label>
+                {{ form_widget(formArticle.imageFile) }}
             </div>
         </div>
+    </div>
 
     <button type="submit" class="btn btn-success">
-        {%if editMode %}
+        {% if editMode %}
             Enregister modification(s)
         {% else %}
             Ajouter l'article
@@ -44,16 +52,16 @@
     </button>
 
 
-    {{ form_end(formArticle)}}
+    {{ form_end(formArticle) }}
 
-<!--
-ancienne version avant sécurité dans le BlogController
-<form action="" method="post">
-    <input type="text" name="title" placeholder="Titre de l'article">
-    <textarea name="content" placeholder="Contenu de l'article"></textarea>
-    <input type="text" name="image" placeholder="Image de l'article">
-    <button type="submit">Enregistrer</button>
-</form>
--->
+    <!--
+    ancienne version avant sécurité dans le BlogController
+    <form action="" method="post">
+        <input type="text" name="title" placeholder="Titre de l'article">
+        <textarea name="content" placeholder="Contenu de l'article"></textarea>
+        <input type="text" name="image" placeholder="Image de l'article">
+        <button type="submit">Enregistrer</button>
+    </form>
+    -->
 
 {% endblock %}

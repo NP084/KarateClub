@@ -14,15 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-
 use Symfony\Component\Form\FormEvents;
 
-use App\Form\AddUserType;
-use App\Form\AdressType;
-use App\Form\CityType;
-use App\Form\PhoneType;
-use App\Form\PersonOfContactType;
-use App\Form\ContactListType;
 
 
 class AddUserType extends AbstractType

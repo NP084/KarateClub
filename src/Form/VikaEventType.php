@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -25,7 +26,6 @@ class VikaEventType extends AbstractType
             ->add('owner')
             ->add('title')
             ->add('capacity')
-            //  ->add('createdEv')
             ->add('imageFile', VichImageType::class, [
                 'required'=> false,
                 'image_uri' => false,
@@ -56,23 +56,24 @@ class VikaEventType extends AbstractType
                         ->orderBy('u.title', 'ASC');
                 },
                 'choice_label' => 'title',
-            ])/*            ->add('priceGrids', collectionType::class, [
-                'entry_type' => PriceGrid::class,
-                'entry_options' =>['label'=>false],
-                'allow_add'     => true,
-                'allow_delete'  => true,
-                'prototype'     => true,
-                'attr' => array(
-                    'class' => 'my-selector',
-                ),
-            ])*/
+            ])
             ->add('info', CKEditorType::class, array(
                 'config' => array(
                     'uiColor' => '#ffffff',
                     //...
                 )))
-            ->add('published')
-            ->add('inscription')
+            ->add('published', CheckboxType::class,[
+                'required'=>false,
+                'label'=>'Evénement publié sur le site'
+            ])
+            ->add('inscription', CheckboxType::class,[
+                'required'=>false,
+                'label'=>'Inscription ouverte pour cet événement'
+            ])
+            ->add('easyInscription', CheckboxType::class,[
+                'required'=>false,
+                'label'=>'Inscription simplifiée'
+            ])
         ;
     }
 

@@ -61,12 +61,6 @@ class Registration
      */
     private $condition_registration;
 
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\PriceList", cascade={"persist", "remove"})
-     */
-    private $profil_tarif;
-
     /**
      * @ORM\Column(type="float", nullable=true)
      */
@@ -200,18 +194,6 @@ class Registration
     public function setConditionRegistration(bool $condition_registration): self
     {
         $this->condition_registration = $condition_registration;
-
-        return $this;
-    }
-
-    public function getProfilTarif(): ?PriceList
-    {
-        return $this->profil_tarif;
-    }
-
-    public function setProfilTarif(?PriceList $profil_tarif): self
-    {
-        $this->profil_tarif = $profil_tarif;
 
         return $this;
     }
