@@ -30,7 +30,6 @@ class VikaEventRepository extends ServiceEntityRepository
             ->orWhere('u.id = :val')
             ->setParameter('val', $value)
             ->orderBy('u.startDate', 'DESC')
-            //  ->setMaxResults(10)
             ->getQuery()
             ->getResult()
             ;

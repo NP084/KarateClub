@@ -181,12 +181,12 @@ class LoadSiteController extends AbstractController
 
         // création des CATEGORIES pour la table VIKAEVENT
         $category = new Category();
-        $category->setTitle('Stages')
+        $category->setTitle('Stage')
             ->setDescription('Event');
         $entityManager->persist($category);
 
         $category = new Category();
-        $category->setTitle('Compétitions')
+        $category->setTitle('Compétition')
             ->setDescription('Event');
         $entityManager->persist($category);
 
@@ -196,12 +196,12 @@ class LoadSiteController extends AbstractController
         $entityManager->persist($category);
 
         $category = new Category();
-        $category->setTitle('Passage de grade')
+        $category->setTitle('Interclub')
             ->setDescription('Event');
         $entityManager->persist($category);
 
         $category = new Category();
-        $category->setTitle('Autres')
+        $category->setTitle('Autre')
             ->setDescription('Event');
         $entityManager->persist($category);
 
