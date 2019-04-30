@@ -38,7 +38,7 @@ use App\Repository\UserRepository;
 use App\Repository\RegistrationRepository;
 use App\Repository\PaiementRepository;
 use App\Form\DocumentType;
-
+use App\Form\UserPictureType;
 
 class RegistrationController extends AbstractController
 {
@@ -176,7 +176,7 @@ class RegistrationController extends AbstractController
         //Informations sur l'adresse du USER:
         $adress = $user->getAdress();
 
-        //Ajouter le document 1:
+        //Ajouter le document le certificat médical:
         if (!$attachedFile) {
             $attachedFile = new AttachedFile();
         }
@@ -201,9 +201,27 @@ class RegistrationController extends AbstractController
 
         }
         
+        //Ajouter la photo du membre:
+        $formPicture = $this->createForm(UserPictureType::class, $user);
+        $formPicture->handleRequest($request);
+
+        if ($formPicture->isSubmitted() && $formPicture->isValid()){
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
+        }
+
+        //Condition d'inscription:
+        if ($attachedFile == true && $user->getImageName() == true){
+            $validateRegistration = true;
+        }
+
         return $this->render('registration/fileRegistration.html.twig', [
             'formPaiement' => $formPaiement->createView(),
             'formAttachedFile_1' => $formAttachedFile_1->createView(),
+            'formPicture'=>$formPicture->createView(),
+            'editModePicture'=> $user->getImageName()!==null,
+            'validateRegistration'=> $validateRegistration,
             'registration' => $registration,
             'user' => $user,
             'adress' => $adress,
@@ -273,5 +291,16 @@ class RegistrationController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
 
+    }
+
+    /**
+     * VALIDATION DU DOSSIER D'INSCRIPTION
+     * @Route("/dossier-inscription-validat-{id}", name="registration_validate")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function validateRegistration(Registration $registration)
+    {
+        $registration->setValidateRegistrationDate(new \DateTime());
+        return $this->render('registration_view');
     }
 }

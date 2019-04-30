@@ -87,6 +87,11 @@ class Registration
      */
     private $medicalCertificate;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $validateRegistration_date;
+
 
 
     public function __construct()
@@ -293,6 +298,18 @@ class Registration
     public function setMedicalCertificate(?int $medicalCertificate): self
     {
         $this->medicalCertificate = $medicalCertificate;
+
+        return $this;
+    }
+
+    public function getValidateRegistrationDate(): ?\DateTimeInterface
+    {
+        return $this->validateRegistration_date;
+    }
+
+    public function setValidateRegistrationDate(?\DateTimeInterface $validateRegistration_date): self
+    {
+        $this->validateRegistration_date = $validateRegistration_date;
 
         return $this;
     }

@@ -23,7 +23,13 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <h6>Statut:</h6>
+                                            <h6>Statut: 
+                                                {% if ((registration.registrationDate |date('d/m/Y')) == true) %}
+                                                 traiter
+                                                {% else %}
+                                                Clôturer
+                                                {% endif %}
+                                            </h6>
                                             <h6>Date de la pré-inscription: {{ registration.registrationDate |date('d/m/Y') }}</h6>
                                             <h6>Date de l'inscription: </h6>
                                             <h6>Evènement: {{ registration.vikaEvent.title }}</h6>
@@ -275,7 +281,15 @@
                                             <h6>Ajouter la photo du membre</h6>
                                             <div class="card">
                                                 <div class="card-body">
-                                                    
+                                                    {{ form_start(formPicture) }}
+                                                    <div class="form-group">
+                                                        <label for="">Nom de la photo:</label>
+                                                        {{ form_widget(formPicture.imageFile) }}
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info">
+                                                        Ajouter la photo
+                                                    </button>
+                                                    {{ form_end(formPicture) }}
                                                 </div>
                                             </div>
                                             <h6>Ajouter le certificat médical</h6>
@@ -385,6 +399,33 @@
                                     </div>
                                 </div>
                             </div>
+                    </div>
+                </div>
+                {#VALIDER L'INSCRIPTION#}
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-11">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row justify-content-between">
+                                        <div class="col-auto">
+                                            <a class="btn btn-primary"
+                                                href="#" role="button">
+                                                Supprimer l'inscription
+                                            </a>
+                                        </div>
+                                        <div class="col-auto">
+                                            {% if (validateRegistration == true) %}
+                                             <a class="btn btn-primary"
+                                                href="{{ path('registration_validate', {'id':registration.id}) }}" role="button">
+                                                Valider l'inscription
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
