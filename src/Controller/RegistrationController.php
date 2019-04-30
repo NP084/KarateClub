@@ -29,7 +29,8 @@ use App\Form\PhoneType;
 use App\Form\PersonOfContactType;
 use App\Form\ContactListType;
 
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class RegistrationController extends AbstractController
 {
@@ -197,7 +198,7 @@ class RegistrationController extends AbstractController
                 ->setFrom('vi.ka.59@hotmail.fr')
                 ->setTo($user->getEmail())
                 ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                /*->attach(\Swift_Attachment::fromPath('fiche20182019V2.pdf')->setFilename('test.pdf'))*/
+                ->attach(\Swift_Attachment::fromPath("./upload/fiche/fiche  renseignements VIKA  2018  2019 V2.pdf"))
                 ;
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
@@ -206,5 +207,39 @@ class RegistrationController extends AbstractController
               ]);
         }
         return $this->render('registration/fiche.html.twig');
+    }
+
+    /**
+     * @Route("/member-id={id}-print-preinscription", name="HTML_to_PDF", requirements={"id"="\d+"})
+     */
+    public function HTMLToPDF(User $user)
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('member/showDocument.html.twig', [
+            'user' => $user
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => false
+        ]);
+
+        return $this->redirectToRoute('home_page', ['path' => 'accueil']);
     }
 }
