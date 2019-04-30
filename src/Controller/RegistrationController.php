@@ -189,6 +189,7 @@ class RegistrationController extends AbstractController
                 $attachedFile->setDatecreat(new \DateTime());
             }
             $attachedFile->setRegistration($registration);
+            $attachedFile->setMember($user);
             $manager->persist($attachedFile);
             //Obtenir l'ID de l'attached file:
             $id = $attachedFile->getId();
@@ -295,12 +296,17 @@ class RegistrationController extends AbstractController
 
     /**
      * VALIDATION DU DOSSIER D'INSCRIPTION
-     * @Route("/dossier-inscription-validat-{id}", name="registration_validate")
+     * @Route("/dossier-inscription-valide-{id}", name="registration_validate", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function validateRegistration(Registration $registration)
+    public function validateRegistration($id, RegistrationRepository $repo, Request $request, ObjectManager $manager)
     {
+        $registration = $repo->findBy(
+            ['id' => $id]
+        );
         $registration->setValidateRegistrationDate(new \DateTime());
-        return $this->render('registration_view');
+        $manager->persist($registration);
+        $manager->flush();
+        return $this->redirectToRoute('registration_view');
     }
 }

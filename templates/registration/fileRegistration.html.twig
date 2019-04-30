@@ -25,7 +25,7 @@
                                         <div class="col">
                                             <h6>Statut: 
                                                 {% if ((registration.registrationDate |date('d/m/Y')) == true) %}
-                                                 traiter
+                                                A traiter
                                                 {% else %}
                                                 Clôturer
                                                 {% endif %}
@@ -417,7 +417,7 @@
                                         <div class="col-auto">
                                             {% if (validateRegistration == true) %}
                                              <a class="btn btn-primary"
-                                                href="{{ path('registration_validate', {'id':registration.id}) }}" role="button">
+                                                href="{{ path('registration_validate', {'id':registration}) }}" role="button">
                                                 Valider l'inscription
                                             </a>
                                             {% endif %}
