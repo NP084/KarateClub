@@ -531,7 +531,7 @@ class MemberController extends AbstractController
      * @Route("/admin-id={id}-registration", name="admin_registration",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function showRegistration(User $usr, AuthorizationCheckerInterface $authChecker)
+    public function showRegistration(User $usr)
     {
         return $this->render('member/showRegistrations.html.twig', [
             'user' => $usr
@@ -586,7 +586,7 @@ class MemberController extends AbstractController
      * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function showDocument(User $usr, AuthorizationCheckerInterface $authChecker)
+    public function showDocument(User $usr)
     {
         return $this->render('member/showDocument.html.twig', [
             'user' => $usr
