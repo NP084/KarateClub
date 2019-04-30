@@ -308,7 +308,8 @@ class RegistrationController extends AbstractController
         $manager->persist($registration);
         $manager->flush();
         return $this->redirectToRoute('registration_view');
-        
+    }   
+    
     /**  
      * @Route("/envoyer_fiche", name="envoyer_fiche")
      */
@@ -339,4 +340,6 @@ class RegistrationController extends AbstractController
         }
         return $this->render('registration/fiche.html.twig');
     }
+
+    
 }
