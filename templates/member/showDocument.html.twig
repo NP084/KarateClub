@@ -101,10 +101,8 @@
                                 <b>Retour</b>
                             </a>
                         {% endif %}
-                        {# le profil consulté est un enfant et la personne connectée est son parent:
-                        le retour se fait vers "Ma famille", sinon pas de btn retour#}
-                    {% elseif(user.ownerUser == false and app.user.id == user.userConnected.id) %}
-                        <a class="btn btn-primary" href="{{ path('load_member_document', {'idUser':user.id}) }}"
+                    {% else %}
+                        <a class="btn btn-primary" href="{{  path('load_member_document', {'idUser':user.id})}}"
                            class="btn-btn-primary">
                             <b>Nouveau document</b>
                         </a>
