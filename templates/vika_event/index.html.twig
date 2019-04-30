@@ -8,6 +8,23 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <h1>Administration des événements</h1>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <form action="{{ path('vika_event_index', {orderby:'search'}) }}"
+                                  method="GET">
+                                <div class="input-group input-group-search">
+                                    <button type="submit">
+                                        <span class="oi oi-magnifying-glass"></span>
+                                    </button>
+                                    <input id="searchName" name="searchName"
+                                           type="text" class="form-control" aria-label="Search"
+                                           placeholder="Recherche par id, titre, titulaire ou catégorie">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -18,8 +35,8 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Public</th>
-                                            <th>Titulaire</th>
                                             <th>Titre</th>
+                                            <th>Titulaire</th>
                                             <th>Catégorie</th>
                                             <th>Capacité</th>
                                             <th>Date de début</th>
@@ -36,8 +53,8 @@
                                                 {% else %}
                                                     <td>Non</td>
                                                 {% endif %}
-                                                <td>{{ vika_event.owner }}</td>
                                                 <td>{{ vika_event.title }}</td>
+                                                <td>{{ vika_event.owner }}</td>
                                                 <td>{{ vika_event.category.title }}</td>
                                                 <td>{{ vika_event.capacity }}</td>
                                                 {#                <td>{{ vika_event.createdEv ? vika_event.createdEv|date('Y-m-d H:i:s') : '' }}</td>#}

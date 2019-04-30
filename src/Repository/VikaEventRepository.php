@@ -19,6 +19,22 @@ class VikaEventRepository extends ServiceEntityRepository
         parent::__construct($registry, VikaEvent::class);
     }
 
+     /**
+     * @return VikaEvent[] Returns an array of VikaEvent objects
+     */
+    public function findByWord($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andwhere('u.owner LIKE :val')
+            ->orWhere('u.title LIKE :val')
+            ->orWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.startDate', 'DESC')
+            //  ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return VikaEvent[] Returns an array of VikaEvent objects
     //  */
