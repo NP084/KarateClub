@@ -2,9 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Registration;
-use App\Entity\VikaEvent;
-use App\Form\PreregistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Form;
@@ -24,21 +21,16 @@ use App\Entity\City;
 use App\Entity\Phone;
 use App\Entity\PersonOfContact;
 use App\Entity\ContactList;
-use App\Entity\Paiement;
+
 use App\Form\AddUserType;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\PhoneType;
 use App\Form\PersonOfContactType;
 use App\Form\ContactListType;
-use App\Form\PaiementType;
-use App\Entity\AttachedFile;
 
-use App\Repository\UserRepository;
-use App\Repository\RegistrationRepository;
-use App\Repository\PaiementRepository;
-use App\Form\DocumentType;
-use App\Form\UserPictureType;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class RegistrationController extends AbstractController
 {
@@ -54,264 +46,139 @@ class RegistrationController extends AbstractController
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/registration-user-family-{id}", name="registration_view_family", requirements={"id"="\d+"})
+     * @Route("/registration-member-family-{id}", name="registration_view_family", requirements={"idCL"="\d+"})
+     * @Route("/registration-admin-family-{id}", name="registration_admin_family", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
-     */
+    */
     public function indexFamily(UserConnected $userConnected)
     {
         $users = $userConnected->getUsers();
         return $this->render('registration/showFamily.html.twig', [
-
-            'users' => $users,
-            'userConnected' => $userConnected
-        ]);
-    }
-
-    /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/registration-user-family-{id}-{idevent}", name="registration_member_lesson", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
-     */
-    public function lessonsMember(UserConnected $userConnected, $idevent)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository(Registration::class);
-        $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
-
-        $prereg = new Registration();
-        $preregs = $repository->findBy(
-            ['vikaEvent' => $idevent]
-        );
-
-
-
-        $users = $userConnected->getUsers();
-        return $this->render('registration/showFamily.html.twig', [
-
+            'controller_name' => 'Vue des membres de sa famille',
             'users' => $users,
             'userConnected' => $userConnected,
-            'idevent' => $event,
-            'preregs' => $preregs,
         ]);
     }
 
     /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * Ajouter un nouveau user
+     * @Route("/add-member-id={id}-new", name="add_profil", requirements={"id"="\d+"})
+     * @Route("/add-admin-id={id}-new", name="add_admin",  requirements={"id"="\d+"})
      */
-    public function conditions(User $usr, $idevent, Request $request, ObjectManager $manager)
+    public function addUser(UserConnected $userConnected, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
-        $userConnected = $usr->getUserConnected() ;
-        $entityManager = $this->getDoctrine()->getManager();
-        $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
-        $prereg = new Registration();
-        $form = $this->createForm(PreregistrationType::class, $prereg);
-        $form->handleRequest($request);
+        //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
+        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
+        $user = new User();
+        $formUser = $this->createForm(AddUserType::class, $user);
+        $formUser->handleRequest($request);
+        $adress = new Adress();
+        $formAdress = $this->createForm(AdressType::class, $adress);
+        $formAdress->handleRequest($request);
+        $city = new City();
+        $formCity = $this->createForm(CityType::class, $city);
+        $formCity->handleRequest($request);
+        $phone = new Phone();
+        $formPhone = $this->createForm(PhoneType::class, $phone);
+        $formPhone->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $prereg->setVikaEvent($event);
-            $prereg->setUser($usr);
-            $prereg->setRegistrationDate(new \DateTime('now'));
-            $manager->persist($prereg);
-
-            $manager->flush();
-            return $this->redirectToRoute('registration_view_family',['id' => $userConnected->getId()]);
-        }
-
-
-        return $this->render('registration/conditions.html.twig', [
-            'user' => $usr,
-//            'userConnected' => $userConnected,
-            'idevent' => $event,
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/registration-list", name="registration_view")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function listRegistration(RegistrationRepository $repo)
-    {
-
-        $registration = $repo->findAll();
-        return $this->render('registration/showContent.html.twig', [
-            'controller_name' => 'Liste des dossiers de préinscription',
-            'registrations' => $registration,
-        ]);
-    }
-
-
-    /**
-     * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function viewRegistration(AttachedFile $attachedFile = null, PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager)
-    {
-        //Obtenir la liste des paiements associés:
-        $paiementNombre = $repo->findBy(
-            ['registration' => $registration]
-        );
-
-        //Ajouter des nouveaux paiements:
-        $paiement = new Paiement();
-        $formPaiement = $this->createForm(PaiementType::class, $paiement);
-        $formPaiement->handleRequest($request);
-
-        if ($formPaiement->isSubmitted() && $formPaiement->isValid()) {
-            $manager->persist($paiement);
-            // si changement de grade, on l'ajoute à l'historique du user
-            $this->addPaiementRegistration($registration, $paiement, $manager);
-            $manager->flush();
-
-            return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
-        }
-
-
-        
-        //Informations de l'USER:
-        $user = $registration->getUser();
-        //Informations sur l'adresse du USER:
-        $adress = $user->getAdress();
-
-        //Ajouter le document le certificat médical:
-        if (!$attachedFile) {
-            $attachedFile = new AttachedFile();
-        }
-        $formAttachedFile_1 = $this->createForm(DocumentType::class, $attachedFile);
-        $formAttachedFile_1->handleRequest($request);
-
-        if ($formAttachedFile_1->isSubmitted() && $formAttachedFile_1->isValid()) {
-
-            if (!$attachedFile->getId()){
-                $attachedFile->setDatecreat(new \DateTime());
-            }
-            $attachedFile->setRegistration($registration);
-            $attachedFile->setMember($user);
-            $manager->persist($attachedFile);
-            //Obtenir l'ID de l'attached file:
-            $id = $attachedFile->getId();
-            //Insérer l'ID du certificat medical dans registration:
-            $registration->setMedicalCertificate($id);
-            $manager->persist($registration);
-            $manager->flush();
-
-            return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
-
-        }
-        
-        //Ajouter la photo du membre:
-        $formPicture = $this->createForm(UserPictureType::class, $user);
-        $formPicture->handleRequest($request);
-
-        if ($formPicture->isSubmitted() && $formPicture->isValid()){
+        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
+        if ($formUser->isSubmitted() && $formUser->isValid()) {
+            //Création du nouveau USER:
+            $user->setUserConnected($userConnected);
             $manager->persist($user);
             $manager->flush();
-            return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
+            //Création de la nouvelle adresse:
+            $this->addUserAdressRegistration($user, $adress, $city, $manager);
+            $this->addUserPhoneRegistration($user, $phone, $manager);
+
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('registration_admin_family', ['id' => $userConnected->getId()]);
+            } else {
+                return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
+            }
         }
 
-        //Condition d'inscription:
-        if ($attachedFile == true && $user->getImageName() == true){
-            $validateRegistration = true;
-        }
 
-        return $this->render('registration/fileRegistration.html.twig', [
-            'formPaiement' => $formPaiement->createView(),
-            'formAttachedFile_1' => $formAttachedFile_1->createView(),
-            'formPicture'=>$formPicture->createView(),
-            'editModePicture'=> $user->getImageName()!==null,
-            'validateRegistration'=> $validateRegistration,
-            'registration' => $registration,
+        return $this->render('registration/addUser.html.twig', [
             'user' => $user,
-            'adress' => $adress,
-            'paiements' => $paiementNombre,
+            'formUser' => $formUser->createView(),
+            'phoneForm' => $formPhone->createView(),
+            'adressForm' => $formAdress->createView(),
+            'cityForm' => $formCity->createView(),
+            //'PoCForm' => $formPoC->createView(),
+            //'ContactListForm' => $formContactList->createView()
         ]);
     }
 
+    /**
+     * AJOUTE NOUVELLE ADRESSE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
+     */
+    public function addUserAdressRegistration(User $user, Adress $adress, City $city, ObjectManager $manager)
+    {
+        $repoCity = $this->getDoctrine()->getRepository(City::class);
+        $cityTest = $repoCity->findOneBy([
+            'cityName' => $city->getCityName(),
+            'zip' => $city->getZip(),
+            'country' => $city->getCountry()
+        ]);
+        // si citytest existe pas : on crée une nouvelle ville dans la DB
+        if (!$cityTest) {
+            $manager->persist($city); // le pays est automatiquement associé
+            $manager->flush();
+        }
+
+        $repo = $this->getDoctrine()->getRepository(Adress::class);
+        $adressTest = $repo->findOneBy([
+            'type' => $adress->getType(),
+            'streetName' => $adress->getStreetName(),
+            'num' => $adress->getNum(),
+            'postBox' => $adress->getPostBox()
+            // 'city'      =>$adress->getCity() // commenté car sinon bug
+        ]);
+        // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
+        if (!$adressTest) {
+            $manager->persist($adress);
+            if (!$cityTest) {
+                // si la ville n'existait pas => associe la ville qui vient d'être créée ($city)
+                $adress->setCity($city);
+            } else {
+                // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
+                $adress->setCity($cityTest);
+            }
+            $user->addAdress($adress);
+            $manager->flush();
+        } else {
+            // associe l'adresse existante à cet user
+            $user->addAdress($adressTest);
+            $manager->flush();
+        }
+    }
 
     /**
-     * AJOUTE NOUVEAU MODALITÉ + ASSOCIATION AVEC LE REGISTRATION
+     * AJOUTE NOUVEAU PHONE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public function addPaiementRegistration(Registration $registration, Paiement $paiement, ObjectManager $manager)
+    public function addUserPhoneRegistration(User $user, Phone $phone, ObjectManager $manager)
     {
-        $repo = $this->getDoctrine()->getRepository(Paiement::class);
-        $paiementTest = $repo->findOneBy([
-            'modality' => $paiement->getModality(),
-            'amount' => $paiement->getAmount()
+        $repo = $this->getDoctrine()
+            ->getRepository(Phone::class);
+        $phoneTest = $repo->findOneBy([
+            'type' => $phone->getType(),
+            'num' => $phone->getNum()
         ]);
-        if (!$paiementTest) {
+        if (!$phoneTest) {
             // enregistre le nouveau numéro dans la DB
-            $manager->persist($paiement);
-            $registration->addPaiement($paiement);
+            $manager->persist($phone);
+            $user->addPhone($phone);
             $manager->flush();
         } else {
             // associe le n° existant à cet user
-            $registration->addPaiement($paiementTest);
+            $user->addPhone($phoneTest);
             $manager->flush();
         }
     }
 
     /**
-     * @Route("/paiement-id={id}-edit", name="paiement_edit", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function paiementEdit(Paiement $paiement, Request $request, ObjectManager $manager)
-    {
-//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
-        $formPaiement = $this->createForm(PaiementType::class, $paiement);
-        $formPaiement->handleRequest($request);
-        $registration = $paiement->getRegistration();
-
-        if ($formPaiement->isSubmitted() && $formPaiement->isValid()) {
-            $manager->persist($paiement);
-            $this->addPaiementRegistration($registration, $paiement, $manager);
-            $manager->flush();
-            return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
-        }
-
-        return $this->render('registration/editPaiement.html.twig', [
-            'formPaiement' => $formPaiement->createView(),
-        ]);
-    }
-
-
-    /**
-     * Supprimer la modalité de payement
-     * @Route("/paiement-remove={id}", name="paiement_remove", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function removePaiement(Paiement $paiement)
-    {
-        $registration = $paiement->getRegistration();
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($paiement);
-        $entityManager->flush();
-        return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
-
-    }
-
-    /**
-     * VALIDATION DU DOSSIER D'INSCRIPTION
-     * @Route("/dossier-inscription-valide-{id}", name="registration_validate", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function validateRegistration($id, RegistrationRepository $repo, Request $request, ObjectManager $manager)
-    {
-        $registration = $repo->findBy(
-            ['id' => $id]
-        );
-        $registration->setValidateRegistrationDate(new \DateTime());
-        $manager->persist($registration);
-        $manager->flush();
-        return $this->redirectToRoute('registration_view');
-    }   
-    
-    /**  
      * @Route("/envoyer_fiche", name="envoyer_fiche")
      */
     public function envoyerFiche(Request $request,\Swift_Mailer $mailer)
@@ -331,7 +198,7 @@ class RegistrationController extends AbstractController
                 ->setFrom('vi.ka.59@hotmail.fr')
                 ->setTo($user->getEmail())
                 ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                /*->attach(\Swift_Attachment::fromPath('fiche20182019V2.pdf')->setFilename('test.pdf'))*/
+                ->attach(\Swift_Attachment::fromPath("./upload/fiche/fiche  renseignements VIKA  2018  2019 V2.pdf"))
                 ;
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
@@ -342,5 +209,37 @@ class RegistrationController extends AbstractController
         return $this->render('registration/fiche.html.twig');
     }
 
-    
+    /**
+     * @Route("/member-id={id}-print-preinscription", name="HTML_to_PDF", requirements={"id"="\d+"})
+     */
+    public function HTMLToPDF(User $user)
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('member/showDocument.html.twig', [
+            'user' => $user
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => false
+        ]);
+
+        return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+    }
 }
