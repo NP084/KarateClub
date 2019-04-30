@@ -83,7 +83,7 @@ class MemberController extends AbstractController
             $this->addUserAdress($user, $adress, $city, $manager);
             $this->addUserPhone($user, $phone, $manager);
             $this->addUserPoC($user, $contactList, $PoC, $manager);
-            
+
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('registration_admin_family', ['id' => $userConnected->getId()]);
             } else {
@@ -106,23 +106,24 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-edit", name="admin_edit",  requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function profileEdit(User $user, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function profileEdit(User $usr, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
 //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
-        $formUser = $this->createForm(UserType::class, $user);
+        $formUser = $this->createForm(UserType::class, $usr);
         $formUser->handleRequest($request);
 
         if ($formUser->isSubmitted() && $formUser->isValid()) {
-            $manager->persist($user);
+            $manager->persist($usr);
             // si changement de grade, on l'ajoute à l'historique du user
-            $this->addHistory($user, null, $manager);
+            $this->addHistory($usr, null, $manager);
             $manager->flush();
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
             }
         }
 
@@ -133,11 +134,11 @@ class MemberController extends AbstractController
 
         if ($formPhone->isSubmitted() && $formPhone->isValid()) {
             // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
-            $this->addUserPhone($user, $phone, $manager);
+            $this->addUserPhone($usr, $phone, $manager);
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
             }
         }
 
@@ -152,11 +153,11 @@ class MemberController extends AbstractController
         // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
         if ($formAdress->isSubmitted() && $formAdress->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->addUserAdress($user, $adress, $city, $manager);
+            $this->addUserAdress($usr, $adress, $city, $manager);
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
             }
         }
 
@@ -171,15 +172,15 @@ class MemberController extends AbstractController
         // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
         if ($formPoC->isSubmitted() && $formPoC->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->addUserPoC($user, $contactList, $PoC, $manager);
+            $this->addUserPoC($usr, $contactList, $PoC, $manager);
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+                return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
             } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+                return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
             }
         }
         return $this->render('member/editProfile.html.twig', [
-            'user' => $user,
+            'user' => $usr,
             'formUser' => $formUser->createView(),
             'phoneForm' => $formPhone->createView(),
             'adressForm' => $formAdress->createView(),
@@ -192,11 +193,12 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}", name="admin_show",  requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function profileShow(User $user, Request $request)
+    public function profileShow(User $usr, Request $request)
     {
         return $this->render('member/showProfile.html.twig', [
-            'user' => $user
+            'user' => $usr
         ]);
     }
 
@@ -225,61 +227,42 @@ class MemberController extends AbstractController
 
     /**
      * Supprime un numéro de téléphone d'un user. (le numéro reste dans la DB)
-     * @Route("/member-removePhone-idPhone={idPhone}-idUser={idUser}", name="remove_phone", requirements={"id"="\d+"})
-     * @Route("/admin-removePhone-idPhone={idPhone}-idUser={idUser}", name="remove_phone_admin", requirements={"id"="\d+"})
+     * @Route("/member-removePhone-idPhone={idPhone}-idUser={id}", name="remove_phone", requirements={"id"="\d+"})
+     * @Route("/admin-removePhone-idPhone={idPhone}-idUser={id}", name="remove_phone_admin", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function removeUserPhone($idPhone, $idUser, AuthorizationCheckerInterface $authChecker)
+    public function removeUserPhone(User $usr, $idPhone, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $phone = $entityManager->getRepository(Phone::class)->find($idPhone);
-        $user = $entityManager->getRepository(User::class)->find($idUser);
+        $phone->removeUser($usr);
+        $entityManager->flush();
 
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du user pour lequel on supprime le téléphone
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $user->getUserConnected()->getId()) {
-
-            $phone->removeUser($user);
-            $entityManager->flush();
-
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
-            } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
-            }
+        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
         } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
-
+            return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
         }
     }
 
     /**
      * Supprime une adresse d'un user. (l'adresse reste dans la DB)
-     * @Route("/member-removeAdress-idAdress={idAdress}-idUser={idUser}", name="remove_adress", requirements={"id"="\d+"})
-     * @Route("/admin-removeAdress-idAdress={idAdress}-idUser={idUser}", name="remove_adress_admin", requirements={"id"="\d+"})
+     * @Route("/member-removeAdress-idAdress={idAdress}-idUser={id}", name="remove_adress", requirements={"id"="\d+"})
+     * @Route("/admin-removeAdress-idAdress={idAdress}-idUser={id}", name="remove_adress_admin", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function removeUserAdress($idAdress, $idUser, AuthorizationCheckerInterface $authChecker)
+    public function removeUserAdress(User $usr, $idAdress, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($idUser);
-
         $adress = $entityManager->getRepository(Adress::class)->find($idAdress);
 
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $user->getUserConnected()->getId()) {
+        $usr->removeAdress($adress);
+        $entityManager->flush();
 
-            $user->removeAdress($adress);
-            $entityManager->flush();
-
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
-            } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
-            }
+        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
         } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+            return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
         }
     }
 
@@ -361,20 +344,18 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-history", name="profile_history", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history", name="admin_history",  requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function showHistory(User $user, AuthorizationCheckerInterface $authChecker)
+    public function showHistory(User $usr, AuthorizationCheckerInterface $authChecker)
     {
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $user->getUserConnected()->getId()) {
-            return $this->render('member/showHistory.html.twig', [
-                'user' => $user
-            ]);
-        } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
-        }
+        return $this->render('member/showHistory.html.twig', [
+            'user' => $usr
+        ]);
     }
+
+    /**
+     * Ajoute une ligne d'historique dans le parcours d'un utilisateur
+     */
 
     public function addHistory(User $user, History $newHistory = null, ObjectManager $manager)
     {
@@ -426,30 +407,22 @@ class MemberController extends AbstractController
 
     /**
      * Supprime une personne de contact.
-     * @Route("/member-removePoC-idCL={idCL}-idUser={idUser}", name="remove_PoC", requirements={"idCL"="\d+"})
-     * @Route("/admin-removePoC-idCL={idCL}-idUser={idUser}", name="remove_PoC_admin", requirements={"idCL"="\d+"})
+     * @Route("/member-removePoC-idCL={idCL}-idUser={id}", name="remove_PoC", requirements={"idCL"="\d+"})
+     * @Route("/admin-removePoC-idCL={idCL}-idUser={id}", name="remove_PoC_admin", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function removePoC($idCL, $idUser, AuthorizationCheckerInterface $authChecker)
+    public function removePoC(User $usr, $idCL, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
-        $user = $entityManager->getRepository(User::class)->find($idUser);
 
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $user->getUserConnected()->getId()) {
+        $usr->removeContactList($contactList);
+        $entityManager->flush();
 
-            $user->removeContactList($contactList);
-            $entityManager->flush();
-
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
-            } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
-            }
+        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
         } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+            return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
         }
     }
 
@@ -504,10 +477,9 @@ class MemberController extends AbstractController
      * @ParamConverter("contactList", options={"id"="idCL"})
      * @Security("has_role('ROLE_ADMIN') or user.getUser().getId() == contactList.getUser().getuserConnected().getUser().getId()")
      */
-    public function editPoC($id, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function editPoC(User $user, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($id);
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
 
         $formCL = $this->createForm(ContactListType::class, $contactList);
@@ -523,7 +495,7 @@ class MemberController extends AbstractController
             }
         }
         return $this->render('member/editPersonOfContact.html.twig', [
-            'user'=>$user,
+            'user' => $user,
             'contactList' => $contactList,
             'ContactListForm' => $formCL->createView(),
             'personOfContact' => $personOfContact,
@@ -557,20 +529,13 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-registration", name="member_registration", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-registration", name="admin_registration",  requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function showRegistration(User $user, AuthorizationCheckerInterface $authChecker)
+    public function showRegistration(User $usr, AuthorizationCheckerInterface $authChecker)
     {
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $user->getUserConnected()->getId()) {
-
-            return $this->render('member/showRegistrations.html.twig', [
-                'user' => $user
-            ]);
-        } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
-        }
+        return $this->render('member/showRegistrations.html.twig', [
+            'user' => $usr
+        ]);
     }
 
     public function addRegistration(User $user, Registration $newRegistration, ObjectManager $manager)
@@ -619,20 +584,13 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-document", name="member_document", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function showDocument(User $user, AuthorizationCheckerInterface $authChecker)
+    public function showDocument(User $usr, AuthorizationCheckerInterface $authChecker)
     {
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du user pour lequel on supprime l'adresse
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $user->getUserConnected()->getId()) {
-
-            return $this->render('member/showDocument.html.twig', [
-                'user' => $user
-            ]);
-        } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
-        }
+        return $this->render('member/showDocument.html.twig', [
+            'user' => $usr
+        ]);
     }
 
     /**
@@ -707,13 +665,13 @@ class MemberController extends AbstractController
      */
     public function afficherDoc($id, $idUser)
     {
-      $entityManager = $this->getDoctrine()->getManager();
-      $doc = $entityManager->getRepository(AttachedFile::class)->find($id);
-      $user = $entityManager->getRepository(User::class)->find($idUser);
-      return $this->render('member/afficherDoc.html.twig', [
-          'doc' => $doc,
-          'user' => $user,
-      ]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $doc = $entityManager->getRepository(AttachedFile::class)->find($id);
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+        return $this->render('member/afficherDoc.html.twig', [
+            'doc' => $doc,
+            'user' => $user,
+        ]);
     }
 
 

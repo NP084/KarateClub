@@ -98,10 +98,11 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function conditions( User $user, $idevent, Request $request, ObjectManager $manager)
+    public function conditions(User $usr, $idevent, Request $request, ObjectManager $manager)
     {
-        $userConnected = $this->getUser($user);
+        $userConnected = $usr->getUserConnected() ;
         $entityManager = $this->getDoctrine()->getManager();
         $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
         $prereg = new Registration();
@@ -111,7 +112,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $prereg->setVikaEvent($event);
-            $prereg->setUser($user);
+            $prereg->setUser($usr);
             $prereg->setRegistrationDate(new \DateTime('now'));
             $manager->persist($prereg);
 
@@ -121,7 +122,7 @@ class RegistrationController extends AbstractController
 
 
         return $this->render('registration/conditions.html.twig', [
-            'user' => $user,
+            'user' => $usr,
 //            'userConnected' => $userConnected,
             'idevent' => $event,
             'form' => $form->createView()

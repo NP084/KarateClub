@@ -23,7 +23,7 @@ class VikaEventController extends AbstractController
 {
     /**
      * AFFICHE LA LISTE DES EVENEMENTS AUX VISITEURS DU SITE - TRIE SUR LE CHAMP CAT
-     * Cat : all; Cours; Stages; Compétitions; Autres
+     * Cat : all; Cours; Stages; Compétitions; Interclub; Autres
      * Correspond aux champs du Header du site
      * @Route("-showList-{cat}", name="vika_event_showList", methods={"GET"})
      */

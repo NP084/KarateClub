@@ -83,19 +83,22 @@
                            class="btn-btn-primary">
                             <b>Nouveau document</b>
                         </a>
-                        <a class="btn btn-warning"
-                           href="{{ path('admin_show',{'id':user.id}) }}"
-                           class="btn-btn-primary">
-                            <b>Retour</b>
-                        </a>
-                    {% else %}
+                        {#admin consulte un autre profil que le sien => retour vers la liste de users#}
+                        {% if (app.user.id != user.userConnected.id) %}
+                            <a class="btn btn-warning"
+                               href="{{ path('admin_users', {orderBy: 'ASC'}) }}">
+                                <b>Retour</b>
+                            </a>
+                        {% endif %}
+                        {# le profil consulté est un enfant et la personne connectée est son parent:
+                        le retour se fait vers "Ma famille", sinon pas de btn retour#}
+                    {% elseif(user.ownerUser == false and app.user.id == user.userConnected.id) %}
                         <a class="btn btn-primary" href="{{ path('load_member_document', {'idUser':user.id}) }}"
                            class="btn-btn-primary">
                             <b>Nouveau document</b>
                         </a>
                         <a class="btn btn-warning"
-                           href="{{ path('admin_show',{'id':user.id}) }}"
-                           class="btn-btn-primary">
+                           href="{{ path('view_family',{'id':user.userConnected.id}) }}">
                             <b>Retour</b>
                         </a>
                     {% endif %}
