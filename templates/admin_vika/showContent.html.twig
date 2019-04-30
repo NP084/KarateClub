@@ -42,17 +42,15 @@
                                     <form action="{{ path('admin_users', {orderby:'search'}) }}"
                                           method="GET">
                                         <div class="input-group input-group-search">
-                                            <div class="input-group-prepend">
+{#                                            <div class="input-group-prepend">#}
                                                 <button type="submit">
-                                                    <span class="oi oi-magnifying-glass"></span></span>
+                                                    <span class="oi oi-magnifying-glass"></span>
                                                 </button>
-                                            </div>
-                                            <div class="input-group-prepend">
                                                 <input id="searchName" name="searchName"
                                                        type="text" class="form-control" aria-label="Search"
-                                                       placeholder="Recherche par nom">
+                                                       placeholder="Recherche par nom ou prénom">
                                             </div>
-                                        </div>
+{#                                        </div>#}
 
                                     </form>
                                 </div>
@@ -64,7 +62,7 @@
                                    href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Actifs</label>
                                 </a>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-lg">
                                 <a id="isTrial" name="isActive" class="btn btn-outline-primary" methods="GET"
                                    href="{{ path('admin_users', {orderby:'isTrial'}) }}"><label>Cours d'essai</label>
                                 </a>
@@ -76,7 +74,7 @@
                                    href="{{ path('admin_users', {orderby:'isActive'}) }}"><label>Actifs</label>
                                 </a>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-lg">
                                 <a id="isTrial" name="isTrial" class="btn btn-primary" methods="GET"
                                    href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Cours d'essai</label>
                                 </a>
@@ -91,7 +89,7 @@
                                    href="{{ path('admin_users', {orderby:'isActive'}) }}"><label>Actifs</label>
                                 </a>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-lg">
                                 <a id="isTrial" name="isActive" class="btn btn-outline-primary" methods="GET"
                                    href="{{ path('admin_users', {orderby:'isTrial'}) }}"><label>Cours d'essai</label>
                                 </a>
@@ -118,9 +116,11 @@
                                                 {% elseif (app.request.get("orderby")=='DESC') %}
                                                     <th>
                                                         <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
-                                                            Noms</a></th>
+                                                            Nom</a></th>
                                                 {% else %}
-                                                    <th>Noms</th>
+                                                    <th>
+                                                        <a href="{{ path('admin_users', {orderby:'ASC'}) }}">
+                                                            Nom</a></th>
                                                 {% endif %}
                                                 <th>Prénom</th>
                                                 <th>Email</th>
@@ -193,7 +193,7 @@
                     </div>
 
                     {% if (resetIsActiveMode==false) %}
-                        <div class="col-2">
+                        <div class="col-md col-lg">
                             <form action="{{ path('admin_users', {orderby:'resetIsActive'}) }}"
                                   method="GET">
                                 <button type="submit" id="resetIsActive" name="resetIsActive"

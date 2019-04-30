@@ -65,10 +65,9 @@ class AdminVikaController extends AbstractController
         }
         elseif ($request->query->get('searchName')) {
             $searchName = $request->query->get('searchName');
-            $users = $repo->findBy(
-                ['name' => $searchName],
-                ['firstName' => 'ASC']
-            );
+            $usersName = $repo->findByName($searchName);
+            $usersFirstName = $repo->findByFirstName($searchName);
+            $users = array_merge($usersName, $usersFirstName);
             return $this->render('admin_vika/showContent.html.twig', [
                 'controller_name' => 'Administration des utilisateurs',
                 'users' => $users,
