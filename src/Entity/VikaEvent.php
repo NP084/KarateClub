@@ -105,6 +105,11 @@ class VikaEvent
     private $inscription;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $easyInscription;
+
+    /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
      */
     public function setImageFile(?File $imageFile = null): void
@@ -140,6 +145,7 @@ class VikaEvent
         $this->priceGrid = new ArrayCollection();
         $this->published = false;
         $this->inscription = true;
+        $this->easyInscription = false;
     }
 
     public function getId(): ?int
@@ -326,6 +332,18 @@ class VikaEvent
     public function setInscription(?bool $inscription): self
     {
         $this->inscription = $inscription;
+
+        return $this;
+    }
+
+    public function getEasyInscription(): ?bool
+    {
+        return $this->easyInscription;
+    }
+
+    public function setEasyInscription(?bool $easyInscription): self
+    {
+        $this->easyInscription = $easyInscription;
 
         return $this;
     }

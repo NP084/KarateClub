@@ -70,6 +70,10 @@ class VikaEventType extends AbstractType
                 'required'=>false,
                 'label'=>'Inscription ouverte pour cet événement'
             ])
+            ->add('easyInscription', CheckboxType::class,[
+                'required'=>false,
+                'label'=>'Inscription simplifiée'
+            ])
         ;
     }
 
