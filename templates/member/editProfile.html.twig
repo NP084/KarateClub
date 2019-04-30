@@ -363,14 +363,14 @@
                                             <td>{{ phone.num }}</td>
                                             <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
-                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                    href="{{ path('remove_phone_admin',{'idPhone':phone.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>
                                                     <span class="sr-only">Supprimer</span>
                                                 </a>
                                                 {% else %}
-                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                    href="{{ path('remove_phone',{'idPhone':phone.id, 'idUser':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>
@@ -459,14 +459,14 @@
                                             <td>{{ adress.city.country.countryName }}</td>
                                             <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
-                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                        href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'idUser':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
                                                         <span class="sr-only">Supprimer</span>
                                                     </a>
                                                 {% else %}
-                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                        href="{{ path('remove_adress',{'idAdress':adress.id, 'idUser':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -595,7 +595,7 @@
                                                         </i>
                                                         <span class="sr-only">Modifier</span>
                                                     </a>
-                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                        href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -608,7 +608,7 @@
                                                         </i>
                                                         <span class="sr-only">Modifier</span>
                                                     </a>
-                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                        href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -689,5 +689,11 @@
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}
+
+    <script type="text/javascript">
+        document.querySelector("#deleteRel").addEventListener("click", function(event){
+            if (!confirm('Veuillez confirmer la suppression svp?')) event.preventDefault();
+        }, false);
+    </script>
 
     {% endblock %}

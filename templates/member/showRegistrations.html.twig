@@ -55,7 +55,7 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                            <a class="btn btn-sm btn-icon btn-secondary" id="deleteReg"
                                                                href="{{ path('remove_registration_admin',{'id':registration.id, 'idUser':user.id}) }}">
                                                                 <i class="fa fa-trash-o">
                                                                 </i>
@@ -99,5 +99,11 @@
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}
+
+    <script type="text/javascript">
+        document.querySelector("#deleteReg").addEventListener("click", function(event){
+            if (!confirm('Veuillez confirmer la suppression cette inscription svp?')) event.preventDefault();
+        }, false);
+    </script>
 
 {% endblock %}
