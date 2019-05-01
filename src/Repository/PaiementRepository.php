@@ -19,22 +19,21 @@ class PaiementRepository extends ServiceEntityRepository
         parent::__construct($registry, Paiement::class);
     }
 
-    // /**
-    //  * @return Paiement[] Returns an array of Paiement objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Paiement[] Returns an array of Paiement objects
+    */
+    
+    public function findByNbPaiement($id)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('p.registration = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getResult()
+            ->getScalarResult()
+
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Paiement

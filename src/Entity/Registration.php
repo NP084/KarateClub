@@ -86,6 +86,11 @@ class Registration
      */
     private $validateRegistration_date;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $conditionRegistration_Document;
+
 
 
     public function __construct()
@@ -292,6 +297,18 @@ class Registration
     public function setValidateRegistrationDate(?\DateTimeInterface $validateRegistration_date): self
     {
         $this->validateRegistration_date = $validateRegistration_date;
+
+        return $this;
+    }
+
+    public function getConditionRegistrationDocument(): ?int
+    {
+        return $this->conditionRegistration_Document;
+    }
+
+    public function setConditionRegistrationDocument(?int $conditionRegistration_Document): self
+    {
+        $this->conditionRegistration_Document = $conditionRegistration_Document;
 
         return $this;
     }

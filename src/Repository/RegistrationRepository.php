@@ -36,6 +36,34 @@ class RegistrationRepository extends ServiceEntityRepository
     }
     */
 
+    /**
+    * @return Registration[] Returns an array of Registration objects
+    */
+    public function findByValidateRegistration()
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.validateRegistration_date > :annee')
+            ->setParameter('annee', new \DateTime('2019-01-01'))
+            ->orderBy('r.validateRegistration_date', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+    * @return Registration[] Returns an array of Registration objects
+    */
+    public function findByEditRegistration($id)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.id = :id')
+            ->setParameter('id', $id)
+            ->andWhere('r.validateRegistration_date > :annee')
+            ->setParameter('annee', new \DateTime('2019-01-01'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     /*
     public function findOneBySomeField($value): ?Registration
     {

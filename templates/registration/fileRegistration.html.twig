@@ -33,11 +33,12 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
+                                            <br>
                                             <h6>Statut: 
-                                                {% if ((registration.registrationDate |date('d/m/Y')) == true) %}
-                                                A traiter
-                                                {% else %}
+                                                {% if ((registration.ValidateRegistrationDate |date('d/m/Y')) == true) %}
                                                 Clôturer
+                                                {% else %}
+                                                A traiter
                                                 {% endif %}
                                             </h6>
                                             <h6>Date de la pré-inscription: {{ registration.registrationDate |date('d/m/Y') }}</h6>
@@ -324,6 +325,29 @@
                                                     {{ form_end(formAttachedFile_1) }}
                                                 </div>
                                             </div>
+                                            <h6>Ajouter le document d'inscription</h6>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    {{ form_start(formAttachedFile_2) }}
+                                                    <div class="form-group">
+                                                        <label for="">Nom du document:</label>
+                                                        {{ form_widget(formAttachedFile_2.title) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Description:</label>
+                                                        {{ form_widget(formAttachedFile_2.description) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Nom de la pièce jointe:</label>
+                                                        {{ form_widget(formAttachedFile_2.docFile) }}
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info">
+                                                        Ajouter le document
+                                                    </button>
+                                                    {{ form_end(formAttachedFile_2) }}
+                                                </div>
+                                            </div>
+
                                             <h6>Liste des modalités de payement</h6>
                                             <div class="card">
                                                 <div class="card-body">
@@ -428,8 +452,14 @@
                                             {% if (validateRegistration == true) %}
                                              <a class="btn btn-primary"
                                                 href="{{ path('registration_validate', {'id':registration.id}) }}" role="button">
+                                                {% if editRegistration == true %}
+                                                Modifier l'inscription
+                                                {% else %}
                                                 Valider l'inscription
+                                                {% endif %}
                                             </a>
+                                            {% else %}
+                                                
                                             {% endif %}
                                         </div>
                                     </div>
