@@ -324,6 +324,29 @@
                                                     {{ form_end(formAttachedFile_1) }}
                                                 </div>
                                             </div>
+                                            <h6>Ajouter le document d'inscription</h6>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    {{ form_start(formAttachedFile_2) }}
+                                                    <div class="form-group">
+                                                        <label for="">Nom du document:</label>
+                                                        {{ form_widget(formAttachedFile_2.title) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Description:</label>
+                                                        {{ form_widget(formAttachedFile_2.description) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Nom de la pièce jointe:</label>
+                                                        {{ form_widget(formAttachedFile_2.docFile) }}
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info">
+                                                        Ajouter le document
+                                                    </button>
+                                                    {{ form_end(formAttachedFile_2) }}
+                                                </div>
+                                            </div>
+
                                             <h6>Liste des modalités de payement</h6>
                                             <div class="card">
                                                 <div class="card-body">
