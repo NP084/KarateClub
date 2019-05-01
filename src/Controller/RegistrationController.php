@@ -310,7 +310,8 @@ class RegistrationController extends AbstractController
 
     }
 
-
+ 
+    
     /**  
      * @Route("/envoyer_fiche", name="envoyer_fiche")
      */
