@@ -44,10 +44,10 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link" data-toggle="dropdown" href="#" role="button">Actualités<span class="caret"></span></a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ path('blog')}}">Publications</a> 
-                                    <a class="dropdown-item" href="{{ path('galeriephoto')}}">Galerie photo</a> 
+                                    <a class="dropdown-item" href="{{ path('blog')}}">Publications</a>
+                                    <a class="dropdown-item" href="{{ path('galeriephoto')}}">Galerie photo</a>
                                 </div>
-                        </li> 
+                        </li>
                         <li class="nav-item">
                         <a class="nav-link" href="#">Suivi pédagogique</a>
                         </li>
@@ -60,14 +60,14 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ path('admin_users', {orderby:'ASC'}) }}">
                                         Gérer les membres</a>
-                                    <a class="dropdown-item" href="{{ path('registration_view')}}">Gérer les préinscriptions</a> 
+                                    <a class="dropdown-item" href="{{ path('registration_view')}}">Gérer les préinscriptions</a>
                                     <a class="dropdown-item" href="{{ path('vika_event_index')}}">Gérer les événements</a>
-                                    <a class="dropdown-item" href="#">Gérer les payements</a> 
+                                    <a class="dropdown-item" href="#">Gérer les payements</a>
                                     <a class="dropdown-item" href="{{ path('priceGrid_index',
                                         {orderby:'ASC'}) }}">Grille tarifaire</a>
 {#                                    <a class="dropdown-item" href="#">Matériels</a> #}
                                 </div>
-                        </li> 
+                        </li>
                         {% endif %}
 
                     </ul><!-- /.navbar-nav -->
