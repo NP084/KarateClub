@@ -84,11 +84,8 @@ class MemberController extends AbstractController
             $this->addUserPhone($user, $phone, $manager);
             $this->addUserPoC($user, $contactList, $PoC, $manager);
 
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('registration_admin_family', ['id' => $userConnected->getId()]);
-            } else {
+
                 return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
-            }
         }
 
 
