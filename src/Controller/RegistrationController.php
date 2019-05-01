@@ -115,11 +115,17 @@ class RegistrationController extends AbstractController
 
             $prereg->setVikaEvent($event);
             $prereg->setUser($usr);
-            $prereg->setRegistrationDate(new \DateTime('now'));
-            $manager->persist($prereg);
+//            $prereg->setRegistrationDate(new \DateTime('now'));
+//            $manager->persist($prereg);
 
             $manager->flush();
-            return $this->redirectToRoute('registration_view_family',['id' => $userConnected->getId()]);
+            return $this->render('registration/confirmation.html.twig',[
+                'user' => $usr,
+                'registration' => $prereg,
+                'medicaleCare' =>$prereg->getMedicalCare(),
+                'ImageDiffusion' =>$prereg->getImageDiffusion(),
+                'ConditionRegistration' =>$prereg->getConditionRegistration(),
+            ]);
         }
 
 
@@ -130,7 +136,13 @@ class RegistrationController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/validation_successful", name="validation_successful")
+     */
+    public function successful
+    public function listRegistration(PaiementRepository $repoPaiement, RegistrationRepository $repoRegistration,VikaEventRepository $repoVikaEvent)
+    {
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/registration-list", name="registration_view")
