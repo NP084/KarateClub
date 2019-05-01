@@ -34,7 +34,7 @@ use App\Form\ContactListType;
 use App\Form\PaiementType;
 use App\Entity\AttachedFile;
 use App\Repository\AttachedFileRepository;
-
+use App\Repository\VikaEventRepository;
 use App\Repository\UserRepository;
 use App\Repository\RegistrationRepository;
 use App\Repository\PaiementRepository;
@@ -134,18 +134,15 @@ class RegistrationController extends AbstractController
      * @Route("/registration-list", name="registration_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function listRegistration(RegistrationRepository $repoRegistration)
+    public function listRegistration(PaiementRepository $repoPaiement, RegistrationRepository $repoRegistration,VikaEventRepository $repoVikaEvent)
     {
-
-       
-
+        //Tableau Pré-inscription:
         $registration = $repoRegistration->findBy(
             ['validateRegistration_date' => null]
         );
-
-        $date = new \DateTime('2019-01-01');
-        $registrationValidate = $repoRegistration->findByValidateRegistration($date);
-
+        //Tableau Inscription:
+        $registrationValidate = $repoRegistration->findByValidateRegistration();
+        //$nbPaiement = $repoPaiement->findByNbPaiement($registrationValidate->getId());
         return $this->render('registration/showContent.html.twig', [
             'controller_name' => 'Liste des dossiers de préinscription',
             'registrations' => $registration,
@@ -171,7 +168,7 @@ class RegistrationController extends AbstractController
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewRegistration(AttachedFileRepository $repoAttachedFile, AttachedFile $attachedFile_1, AttachedFile $attachedFile_2, PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager)
+    public function viewRegistration(RegistrationRepository $repoRegistration,AttachedFileRepository $repoAttachedFile, AttachedFile $attachedFile_1, AttachedFile $attachedFile_2, PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager)
     {
         //Obtenir la liste des paiements associés:
         $paiementNombre = $repo->findBy(
@@ -273,11 +270,19 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
         }
 
-        //Condition d'inscription:
+        //Conditions d'inscription:
         $validateRegistration = false;
+        //Conditions pour modifier:
+        $editRegistration = false;
+
         if ($registration->getMedicalCertificate() == true && $registration->getConditionRegistrationDocument() == true && $user->getImageName() == true){
             $validateRegistration = true;
+            $verifEdit = $repoRegistration->findByEditRegistration($registration->getId());
+            if ($verifEdit == $registration){
+                $editRegistration = true;
+            }
         }
+
         
 
         return $this->render('registration/fileRegistration.html.twig', [
@@ -291,6 +296,7 @@ class RegistrationController extends AbstractController
             'user' => $user,
             'adress' => $adress,
             'paiements' => $paiementNombre,
+            'editRegistration'=>$editRegistration,
         ]);
     }
 

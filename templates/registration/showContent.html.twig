@@ -30,7 +30,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <table id="usertabel" class="table dataTable no-footer">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Numéro de dossier</th>
@@ -80,23 +80,25 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row">
+                                        <div class="row justify-content-center">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <table id="usertabel" class="table dataTable no-footer">
+                                                    <table class="table">
                                                         <thead>
                                                             <tr>
                                                                 <th>Numéro de dossier</th>
                                                                 <th>Nom</th>
                                                                 <th>Prénom</th>
                                                                 <th>Nom de l'évènement</th>
-                                                                <th>Valider le</th>
-                                                                <th>Date de fin</th>
+                                                                <th>Date de validation</th>
+                                                                <th>Date de clôture</th>
+                                                                <th>Nombre de payement</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                         {% for registrationValidate in registrationsValidate %}
+                                                            {% if  ((registrationValidate.vikaEvent.endDate |date('d/m/Y')) > ("now"|date("m/d/Y"))) %}
                                                             <tr>
                                                                 <td>{{ registrationValidate.id }}</td>
                                                                 <td>{{ registrationValidate.user.name }}</td>
@@ -104,6 +106,11 @@
                                                                 <td>{{ registrationValidate.vikaEvent.title }}</td>
                                                                 <td>{{ (registrationValidate.ValidateRegistrationDate |date('d/m/Y')) }}</td>
                                                                 <td>{{ (registrationValidate.vikaEvent.endDate |date('d/m/Y')) }}</td>
+                                                                {% set nbr = 0 %}
+                                                                {% for id in registrationValidate.Paiement %}
+                                                                    {% set nbr = nbr + 1 %}
+                                                                 {% endfor %}
+                                                                <td>{{ nbr }}</td>
                                                                 <td class="align-middle text-right">
                                                                         <a class="btn btn-sm btn-icon btn-secondary"
                                                                            href="{{ path('dossier_inscription', {'id': registrationValidate.id}) }}">
@@ -113,9 +120,17 @@
                                                                         </a>
                                                                 </td>
                                                             </tr>
+                                                            {% else %}
+                                                                {% if registrationValidate |length > 1 %}
+                                                                {% else %}
+                                                                <tr>
+                                                                    <td colspan="10">Aucun dossier d'inscription</td>
+                                                                </tr>
+                                                                {% endif %}
+                                                            {% endif %}
                                                         {% else %}
                                                             <tr>
-                                                                <td colspan="10">Aucun dossier de pré-inscription</td>
+                                                                <td colspan="10">Aucun dossier d'inscription</td>
                                                             </tr>
                                                         {% endfor %}
                                                         </tbody>

@@ -33,11 +33,12 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
+                                            <br>
                                             <h6>Statut: 
-                                                {% if ((registration.registrationDate |date('d/m/Y')) == true) %}
-                                                A traiter
-                                                {% else %}
+                                                {% if ((registration.ValidateRegistrationDate |date('d/m/Y')) == true) %}
                                                 Clôturer
+                                                {% else %}
+                                                A traiter
                                                 {% endif %}
                                             </h6>
                                             <h6>Date de la pré-inscription: {{ registration.registrationDate |date('d/m/Y') }}</h6>
@@ -451,8 +452,14 @@
                                             {% if (validateRegistration == true) %}
                                              <a class="btn btn-primary"
                                                 href="{{ path('registration_validate', {'id':registration.id}) }}" role="button">
+                                                {% if editRegistration == true %}
+                                                Modifier l'inscription
+                                                {% else %}
                                                 Valider l'inscription
+                                                {% endif %}
                                             </a>
+                                            {% else %}
+                                                
                                             {% endif %}
                                         </div>
                                     </div>
