@@ -145,9 +145,22 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    /**
+     * VALIDATION DU DOSSIER D'INSCRIPTION
+     * @Route("/dossier-inscription-valide-{id}", name="registration_validate", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function validateRegistration(Registration $registration, Request $request, ObjectManager $manager)
+    {
+        
+        $registration->setValidateRegistrationDate(new \DateTime());
+        $manager->persist($registration);
+        $manager->flush();
+        return $this->redirectToRoute('registration_view');
+    }  
 
     /**
-     * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"idCL"="\d+"})
+     * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function viewRegistration(AttachedFile $attachedFile = null, PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager)
@@ -296,21 +309,7 @@ class RegistrationController extends AbstractController
 
     }
 
-    /**
-     * VALIDATION DU DOSSIER D'INSCRIPTION
-     * @Route("/dossier-inscription-valide-{id}", name="registration_validate", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function validateRegistration($id, RegistrationRepository $repo, Request $request, ObjectManager $manager)
-    {
-        $registration = $repo->findBy(
-            ['id' => $id]
-        );
-        $registration->setValidateRegistrationDate(new \DateTime());
-        $manager->persist($registration);
-        $manager->flush();
-        return $this->redirectToRoute('registration_view');
-    }   
+ 
     
     /**  
      * @Route("/envoyer_fiche", name="envoyer_fiche")
