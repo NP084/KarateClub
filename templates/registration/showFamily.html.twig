@@ -128,8 +128,8 @@
                                                             <td><b>{{ user.name }}</b></td>
                                                             <td><b>{{ user.firstName }}</b></td>
                                                             <td class="align-middle text-right">
-                                                                <a class="btn btn-outline-info" href="#">
-                                                                    Inscrire
+                                                                <a class="btn btn-outline-info" href=href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                    Inscrire1
                                                                 </a>
                                                             </td>
                                                         {% else %}
@@ -148,8 +148,8 @@
                                                                     {% endfor %}
                                                                     {% if foo == 1 %}
                                                                         <a class="btn btn-outline-info"
-                                                                           href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id}) }}">
-                                                                            Inscrire
+                                                                           href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                            Inscrire2
                                                                         </a>
                                                                     {% endif %}
 

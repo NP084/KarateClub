@@ -11,6 +11,7 @@ use App\Entity\History;
 use App\Entity\PersonOfContact;
 use App\Entity\Registration;
 use App\Entity\UserConnected;
+use App\Entity\VikaEvent;
 use App\Form\AdressType;
 use App\Form\CityType;
 use App\Form\ContactListType;
@@ -18,6 +19,7 @@ use App\Form\DocType;
 use App\Form\DocumentType;
 use App\Form\HistoryType;
 use App\Form\PersonOfContactType;
+use App\Form\PreregistrationType;
 use App\Form\RegistrationRemarkType;
 use App\Form\RegistrationType;
 use App\Form\UserConnectedType;
@@ -102,10 +104,10 @@ class MemberController extends AbstractController
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/verify-user-profile-{id}", name="verify_profile", requirements={"id"="\d+"})
+     * @Route("/verify-user-profile-{id}-{idevent}", name="verify_profile", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function verifyProfile(User $usr, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function verifyProfile(User $usr, Request $request, ObjectManager $manager,$idevent, AuthorizationCheckerInterface $authChecker)
     {
 
 //        $formUser = $this->createForm(AddUserType::class, $usr);
@@ -152,7 +154,14 @@ class MemberController extends AbstractController
             $this->addUserPoC($usr, $contactList, $PoC, $manager);
 
         }
+if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSubmitted())
+{
 
+    return $this->redirectToRoute('condition_view_family', [
+    'id' => $usr->getId(),
+    'idevent' => $idevent,
+    ]);
+}
 
 
 return $this->render('member/completeUser.html.twig', ['user' => $usr,
