@@ -153,12 +153,12 @@ class RegistrationController extends AbstractController
      */
     public function validateRegistration(Registration $registration, Request $request, ObjectManager $manager)
     {
-        
+
         $registration->setValidateRegistrationDate(new \DateTime());
         $manager->persist($registration);
         $manager->flush();
         return $this->redirectToRoute('registration_view');
-    }  
+    }
 
     /**
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"id"="\d+"})
@@ -186,7 +186,7 @@ class RegistrationController extends AbstractController
         }
 
 
-        
+
         //Informations de l'USER:
         $user = $registration->getUser();
         //Informations sur l'adresse du USER:
@@ -217,7 +217,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
 
         }
-        
+
         //Ajouter la photo du membre:
         $formPicture = $this->createForm(UserPictureType::class, $user);
         $formPicture->handleRequest($request);
@@ -310,9 +310,9 @@ class RegistrationController extends AbstractController
 
     }
 
- 
-    
-    /**  
+
+
+    /**
      * @Route("/envoyer_fiche", name="envoyer_fiche")
      */
     public function envoyerFiche(Request $request,\Swift_Mailer $mailer)
@@ -321,6 +321,7 @@ class RegistrationController extends AbstractController
             $email = $request->request->get('email');
             $entityManager = $this->getDoctrine()->getManager();
             $user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email);
+
             /* @var $user User */
             if ($user === null) {
                 $this->addFlash('danger', 'Email Inconnu');
@@ -336,9 +337,11 @@ class RegistrationController extends AbstractController
                 ;
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
+            /*
             return $this->redirectToRoute('member_document', [
-                'id' => $user->getId(),
+                'id' => $user1->getId(),
               ]);
+            */
         }
         return $this->render('registration/fiche.html.twig');
     }
