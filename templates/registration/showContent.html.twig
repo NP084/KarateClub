@@ -36,7 +36,7 @@
                                                     <th>Nom</th>
                                                     <th>Prénom</th>
                                                     <th>Nom de l'évènement</th>
-                                                    <th>Statut</th>
+                                                    <th>Soumis le</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -47,7 +47,7 @@
                                                     <td>{{ registration.user.name }}</td>
                                                     <td>{{ registration.user.firstname }}</td>
                                                     <td>{{ registration.vikaEvent.title }}</td>
-                                                    {#<td>{{ registration.status.name }}</td>#}
+                                                    <td>{{ (registration.registrationDate |date('d/m/Y')) }}</td>
                                                     <td class="align-middle text-right">
                                                             <a class="btn btn-sm btn-icon btn-secondary"
                                                                href="{{ path('dossier_inscription', {'id': registration.id}) }}">

@@ -136,7 +136,9 @@ class RegistrationController extends AbstractController
     public function listRegistration(RegistrationRepository $repo)
     {
 
-        $registration = $repo->findAll();
+        $registration = $repo->findAll(
+            ['validateRegistration_date' => null]
+        );
         return $this->render('registration/showContent.html.twig', [
             'controller_name' => 'Liste des dossiers de préinscription',
             'registrations' => $registration,
