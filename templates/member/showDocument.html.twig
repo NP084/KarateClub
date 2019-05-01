@@ -9,6 +9,7 @@
                     {#Si admin ou parent qui consulte son propre profil#}
                     {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
                         <h2>Documents personnels </h2>
+
                         <div>
                             <a class="btn btn-primary" href="{{ path('envoyer_fiche', {'idUser':user.id}) }}"
                                class="btn-btn-primary">
@@ -17,6 +18,16 @@
                             </br>
                             </br>
                         </div>
+                        <!--
+                        <div>
+                            <a class="btn btn-primary" href="{{ path('HTML_to_PDF', {'id':user.id}) }}"
+                               class="btn-btn-primary">
+                                <b>Convertir en PDF</b>
+                            </a>
+                            </br>
+                            </br>
+                        </div>
+                        -->
                     {% else %}
                         <h2>Document du membre {{ user.firstName }} {{ user.name }}</h2>
                     {% endif %}
@@ -83,19 +94,20 @@
                            class="btn-btn-primary">
                             <b>Nouveau document</b>
                         </a>
-                        <a class="btn btn-warning"
-                           href="{{ path('admin_show',{'id':user.id}) }}"
-                           class="btn-btn-primary">
-                            <b>Retour</b>
-                        </a>
+                        {#admin consulte un autre profil que le sien => retour vers la liste de users#}
+                        {% if (app.user.id != user.userConnected.id) %}
+                            <a class="btn btn-warning"
+                               href="{{ path('admin_users', {orderBy: 'ASC'}) }}">
+                                <b>Retour</b>
+                            </a>
+                        {% endif %}
                     {% else %}
-                        <a class="btn btn-primary" href="{{ path('load_member_document', {'idUser':user.id}) }}"
+                        <a class="btn btn-primary" href="{{  path('load_member_document', {'idUser':user.id})}}"
                            class="btn-btn-primary">
                             <b>Nouveau document</b>
                         </a>
                         <a class="btn btn-warning"
-                           href="{{ path('admin_show',{'id':user.id}) }}"
-                           class="btn-btn-primary">
+                           href="{{ path('view_family',{'id':user.userConnected.id}) }}">
                             <b>Retour</b>
                         </a>
                     {% endif %}

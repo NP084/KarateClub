@@ -7,24 +7,11 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-                        <h2> Activités personnelles </h2>
+                    {#Si admin ou parent qui consulte son propre profil#}
+                    {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
+                        <h2>Parcours personnel </h2>
                     {% else %}
-                        {% if(is_granted('ROLE_ADMIN')) %}
-                            {# User est un parent  #}
-                            {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
-                                <h2>Activités du membre : {{ user.firstName }} {{ user.name }}</h2>
-                            {% else %}
-                                <h2>Activités du membre : {{ user.firstName }} {{ user.name }}</h2>
-                            {% endif %}
-                        {% else %}
-                            {# le userConnected consulte son propre profil #}
-                            {% if(app.user.user.id == app.request.get("id")) %}
-                                <h2>Activités personnelles </h2>
-                            {% else %}
-                                <h2>Activités du membre : {{ user.firstName }} {{ user.name }}</h2>
-                            {% endif %}
-                        {% endif %}
+                        <h2>Parcours de {{ user.firstName }} {{ user.name }}</h2>
                     {% endif %}
                     <div class="card">
                         <div class="card-body">
@@ -34,8 +21,10 @@
                                         <table class="table">
                                             <thead>
                                             <tr>
-                                                <th>Date</th>
+                                                <th>Date d'inscription</th>
                                                 <th>Activités</th>
+                                                <th>Date de début</th>
+                                                <th>Date de fin</th>
                                                 <th>Remarque</th>
                                             </tr>
                                             </thead>
@@ -44,6 +33,8 @@
                                                 <tr>
                                                     <td>{{ registration.registrationDate | date ('d/m/Y') }}</td>
                                                     <td>{{ registration.vikaEvent.title }}</td>
+                                                    <td>{{ registration.startDate }}</td>
+                                                    <td>{{ registration.endDate }}</td>
                                                     <td>{{ registration.remark }}</td>
                                                     {% if (is_granted('ROLE_ADMIN')) %}
                                                         <td class="align-middle">

@@ -99,10 +99,11 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.userConnected.getId()")
      */
-    public function conditions( User $user, $idevent, Request $request, ObjectManager $manager)
+    public function conditions( User $usr, $idevent, Request $request, ObjectManager $manager)
     {
-        $userConnected = $this->getUser($user);
+        $userConnected = $usr->getUserConnected();
         $entityManager = $this->getDoctrine()->getManager();
         $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
         $prereg = new Registration();
@@ -112,7 +113,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $prereg->setVikaEvent($event);
-            $prereg->setUser($user);
+            $prereg->setUser($usr);
             $prereg->setRegistrationDate(new \DateTime('now'));
             $manager->persist($prereg);
 
@@ -122,7 +123,7 @@ class RegistrationController extends AbstractController
 
 
         return $this->render('registration/conditions.html.twig', [
-            'user' => $user,
+            'user' => $usr,
 //            'userConnected' => $userConnected,
             'idevent' => $event,
             'form' => $form->createView()
@@ -157,12 +158,12 @@ class RegistrationController extends AbstractController
      */
     public function validateRegistration(Registration $registration, Request $request, ObjectManager $manager)
     {
-        
+
         $registration->setValidateRegistrationDate(new \DateTime());
         $manager->persist($registration);
         $manager->flush();
         return $this->redirectToRoute('registration_view');
-    }  
+    }
 
     /**
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"id"="\d+"})
@@ -190,7 +191,7 @@ class RegistrationController extends AbstractController
         }
 
 
-        
+
         //Informations de l'USER:
         $user = $registration->getUser();
         //Informations sur l'adresse du USER:
@@ -364,9 +365,9 @@ class RegistrationController extends AbstractController
 
     }
 
- 
-    
-    /**  
+
+
+    /**
      * @Route("/envoyer_fiche", name="envoyer_fiche")
      */
     public function envoyerFiche(Request $request,\Swift_Mailer $mailer)
@@ -375,6 +376,7 @@ class RegistrationController extends AbstractController
             $email = $request->request->get('email');
             $entityManager = $this->getDoctrine()->getManager();
             $user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email);
+
             /* @var $user User */
             if ($user === null) {
                 $this->addFlash('danger', 'Email Inconnu');
@@ -386,16 +388,50 @@ class RegistrationController extends AbstractController
                 ->setFrom('vi.ka.59@hotmail.fr')
                 ->setTo($user->getEmail())
                 ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                /*->attach(\Swift_Attachment::fromPath('fiche20182019V2.pdf')->setFilename('test.pdf'))*/
+                ->attach(\Swift_Attachment::fromPath("./upload/fiche/fiche  renseignements VIKA  2018  2019 V2.pdf"))
                 ;
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
+            /*
             return $this->redirectToRoute('member_document', [
-                'id' => $user->getId(),
+                'id' => $user1->getId(),
               ]);
+            */
         }
         return $this->render('registration/fiche.html.twig');
     }
 
-    
+    /**
+     * @Route("/member-id={id}-print-preinscription", name="HTML_to_PDF", requirements={"id"="\d+"})
+     */
+    public function HTMLToPDF(User $user)
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('member/showDocument.html.twig', [
+            'user' => $user
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => false
+        ]);
+
+        return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+    }
 }
