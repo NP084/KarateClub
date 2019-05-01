@@ -67,6 +67,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/registration-user-family-{id}-{idevent}", name="registration_member_lesson", requirements={"id"="\d+"})
@@ -98,7 +99,7 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.userConnected.getId()")
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function conditions( User $usr, $idevent, Request $request, ObjectManager $manager)
     {
