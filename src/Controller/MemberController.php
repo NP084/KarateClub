@@ -148,13 +148,12 @@ class MemberController extends AbstractController
 
         }
 
-        // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
         if ($formPoC->isSubmitted() && $formPoC->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
             $this->addUserPoC($usr, $contactList, $PoC, $manager);
 
         }
-if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSubmitted())
+if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSubmitted() )
 {
 
     return $this->redirectToRoute('condition_view_family', [

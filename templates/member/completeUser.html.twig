@@ -11,37 +11,7 @@
                 <h2>Ajouter un nouveau membre de sa famille</h2>
                 <div class="card">
                     <div class="card-body">
-                        {#                    #}{# Informations générales #}{# #}
-                        {#                    <h4>Informations générales</h4>#}
-                        {#                    <div class="card">#}
-                        {#                        <div class="card-body">#}
-                        {#                            {{ form_start(formUser) }}  #}
-                        {#                            <div class="row">#}
-                        {#                                <div class="col-4">#}
-                        {#                                    <div class="form-group">#}
-                        {#                                        <label for="">Nom</label>#}
-                        {#                                        {{ form_widget(formUser.name) }}#}
-                        {#                                    </div>#}
-                        {#                                </div>#}
-                        {#                                <div class="col-4">#}
-                        {#                                    <div class="form-group">#}
-                        {#                                        <label for="">Prénom</label>#}
-                        {#                                        {{ form_widget(formUser.firstName) }}#}
-                        {#                                    </div>#}
-                        {#                                </div>#}
-                        {#                                <div class="col-2">#}
-                        {#                                    <div class="form-group">#}
-                        {#                                        <label for="">Sexe</label>#}
-                        {#                                        {{ form_widget(formUser.sex) }}#}
-                        {#                                    </div>#}
-                        {#                                </div>#}
-                        {#                            </div>#}
-                        {#                            <div class="form-group">#}
-                        {#                                <label for="">Date de naissance</label>#}
-                        {#                                {{ form_widget(formUser.birthdate) }}#}
-                        {#                            </div>#}
-                        {#                        </div>#}
-                        {#                    </div>#}
+                      
                         {# Numéro de téléphone #}
 
                         {% if user.phones|length < 1 %}
@@ -125,7 +95,7 @@
                         {% endif %}
                         {# Point de contact #}
                         {% if user.contactLists|length < 1 %}
-                        {{ form_start(ContactListForm) }}
+                        {{ form_start(PoCForm) }}
                         <h4>Point de contact</h4>
                         <h6>(Obligatoire - En cas d'accident)</h6>
                         <div class="card">
@@ -172,7 +142,7 @@
                 <div class="container">
                     <div class="row justify-content-end">
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-success">Créer un nouveau membre</button>
+                            <button type="submit" class="btn btn-success">Valider mes informations</button>
                             {% if user.phones|length < 1 %}
                             {{ form_end(phoneForm) }}
                             {% endif %}
@@ -180,7 +150,8 @@
                             {{ form_end(adressForm) }}
                             {% endif %}
                             {% if user.contactLists|length < 1 %}
-                            {{ form_end(ContactListForm) }}
+
+                                {{ form_end(PoCForm) }}
                             {% endif %}
                         </div>
                     </div>
