@@ -310,7 +310,8 @@ class RegistrationController extends AbstractController
             'editModePicture'=> $user->getImageName()!==null,
             'validateRegistration'=> $validateRegistration,
             'registration' => $registration,
-            'user' => $user,
+           // pas nécessaire de faire passer le user (on peut le récupérer avec registration.user)
+            // 'user' => $user,
             'adress' => $adress,
             'paiements' => $paiementNombre,
             'editRegistration'=>$editRegistration,

@@ -12,9 +12,15 @@ class PersonOfContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('firstName')
-            ->add('num1')
+            ->add('name', null, [
+                'required'=>true,
+            ])
+            ->add('firstName', null, [
+                'required'=>true,
+            ])
+            ->add('num1',null, [
+                'required'=>true,
+            ])
         ;
     }
 

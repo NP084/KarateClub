@@ -44,8 +44,8 @@
                                             <h6>Date de la pré-inscription: {{ registration.registrationDate |date('d/m/Y') }}</h6>
                                             <h6>Date de l'inscription: </h6>
                                             <h6>Evènement: {{ registration.vikaEvent.title }}</h6>
-                                            <h6>Inscrit par: {{ user.name }} {{ user.firstname }}</h6>
-                                            <h6>Email: {{ user.userConnected.email }}</h6>
+                                            <h6>Inscrit par : {{ registration.user.userConnected.user.name }} {{ registration.user.userConnected.user.name }}</h6>
+                                            <h6>Email: {{ registration.user.userConnected.email }}</h6>
                                             <br>
                                         </div>
                                     </div>  
@@ -99,7 +99,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        {% for phone in user.phones %}
+                                                        {% for phone in registration.user.phones %}
                                                         <tr>
                                                             <td>{{ phone.type }}</td>
                                                             <td>{{ phone.num }}</td>
@@ -140,7 +140,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        {% for adress in user.adress %}
+                                                        {% for adress in registration.user.adress %}
                                                         <tr>
                                                             <td>{{ adress.type }}</td>
                                                             <td>{{ adress.num }}
@@ -191,7 +191,7 @@
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                {% for contactList in user.contactLists %}
+                                                                                {% for contactList in registration.user.contactLists %}
                                                                                 <tr>
                                                                                     <td>{{ contactList.personOfContact.name }}</td>
                                                                                     <td>{{ contactList.personOfContact.firstName }}</td>
@@ -202,26 +202,26 @@
                                                                                     <td class="align-middle text-right">
                                                                                         {% if (is_granted('ROLE_ADMIN')) %}
                                                                                             <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                            href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                                                            href="{{ path('edit_PoC_admin',{'id':registration.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
                                                                                                 <i class="fa fa-pencil">
                                                                                                 </i>
                                                                                                 <span class="sr-only">Modifier</span>
                                                                                             </a>
                                                                                             <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                            href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'idUser':user.id}) }}">
+                                                                                            href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':registration.user.id}) }}">
                                                                                                 <i class="fa fa-trash-o">
                                                                                                 </i>
                                                                                                 <span class="sr-only">Supprimer</span>
                                                                                             </a>
                                                                                         {% else %}
                                                                                             <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                            href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                                                            href="{{ path('edit_PoC',{'id':registration.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
                                                                                                 <i class="fa fa-pencil">
                                                                                                 </i>
                                                                                                 <span class="sr-only">Modifier</span>
                                                                                             </a>
                                                                                             <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                            href="{{ path('remove_PoC',{'idCL':contactList.id, 'idUser':user.id}) }}">
+                                                                                            href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':registration.user.id}) }}">
                                                                                                 <i class="fa fa-trash-o">
                                                                                                 </i>
                                                                                                 <span class="sr-only">Supprimer</span>
@@ -296,6 +296,9 @@
                                                     <div class="form-group">
                                                         <label for="">Nom de la photo:</label>
                                                         {{ form_widget(formPicture.imageFile) }}
+                                                        <img class="embed-responsive-rounded"
+                                                             src="{{ asset('/upload/user/' ~ registration.user.imageName) }}"
+                                                             alt="Card image" width="15%">
                                                     </div>
                                                     <button type="submit" class="btn btn-outline-info">
                                                         Ajouter la photo
