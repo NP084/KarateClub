@@ -169,7 +169,10 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
             'adressForm' => $formAdress->createView(),
             'cityForm' => $formCity->createView(),
             'PoCForm' => $formPoC->createView(),
-            'ContactListForm' => $formContactList->createView()]);
+            'ContactListForm' => $formContactList->createView(),
+            'idevent'=>$idevent,
+            'user'=>$usr
+        ]);
     }
 
     /**

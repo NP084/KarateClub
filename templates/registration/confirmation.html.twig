@@ -35,7 +35,7 @@
                                         <h6>Date de la pré-inscription: {{ "now"|date("m/d/Y") }}</h6>
                                         <h6>Date de l'inscription: </h6>
                                         <h6>Evènement: {{ registration.vikaEvent.title }}</h6>
-                                        <h6>Inscrit par: {{ user.name }} {{ user.firstname }}</h6>
+                                        <h6>Inscrit par: {{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }}</h6>
                                         <h6>Email: {{ user.userConnected.email }}</h6>
                                         <br>
                                     </div>
