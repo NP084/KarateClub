@@ -5,10 +5,11 @@
 {% block Body %}
 
 
+    {% if (user.phones|length < 1 or user.Adress|length < 1 or user.contactLists|length < 1 )%}
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-8">
-                <h2>Ajouter un nouveau membre de sa famille</h2>
+                <h2>Il semble manquer quelques informations à votre profil</h2>
                 <div class="card">
                     <div class="card-body">
                       
@@ -160,6 +161,8 @@
             </div>
         </div>
     </div>
-
+{% else %}
+        Rien ne manque sur votre profil
+    {% endif %}
 
 {% endblock %}
