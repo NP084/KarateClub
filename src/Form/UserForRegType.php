@@ -13,8 +13,12 @@ class UserForRegType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('firstname')
+            ->add('name', null, [
+                'required'=> true,
+            ])
+            ->add('firstname', null, [
+                'required'=> true,
+            ])
             ->add('birthdate', DateType::class, [
                 'years' => range(1900, date('Y')-14),
                 'format' => 'dd-MM-yyyy',
