@@ -50,8 +50,6 @@ vich_uploader:
         document_picture:
             uri_prefix: /upload/document
             upload_destination: '%kernel.project_dir%/public/upload/document'
-            namer:
-                service: Vich\UploaderBundle\Naming\UniqidNamer
             inject_on_load: true
             delete_on_update: true
             delete_on_remove: true
@@ -64,4 +62,3 @@ vich_uploader:
             inject_on_load: true
             delete_on_update: true
             delete_on_remove: true
-

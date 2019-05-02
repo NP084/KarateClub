@@ -385,35 +385,39 @@ class RegistrationController extends AbstractController
 
 
     /**
-     * @Route("/envoyer_fiche", name="envoyer_fiche")
+     * @Route("/envoyer_fiche-idUser={idUser}", name="envoyer_fiche")
      */
-    public function envoyerFiche(Request $request,\Swift_Mailer $mailer)
+    public function envoyerFiche(Request $request,\Swift_Mailer $mailer, $idUser)
     {
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
             $entityManager = $this->getDoctrine()->getManager();
-            $user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email);
+            /*$user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email); */
+            $user1 = $entityManager->getRepository(User::class)->find($idUser);
+            $user2 = $user1->getUserConnected()->getId();
+            $user3 = $entityManager->getRepository(UserConnected::class)->find($user2);
 
             /* @var $user User */
-            if ($user === null) {
+            /*if ($user === null) {
                 $this->addFlash('danger', 'Email Inconnu');
                 return $this->redirectToRoute('member_document', [
-                    'id' => $user->getId(),
+                    'id' => $idUser,
                   ]);
-            }
+            }*/
             $message = (new \Swift_Message('Fiche de renseignements'))
                 ->setFrom('vi.ka.59@hotmail.fr')
-                ->setTo($user->getEmail())
+                /*->setTo($user->getEmail())*/
+                ->setTo($user3->getEmail())
                 ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                ->attach(\Swift_Attachment::fromPath("./upload/fiche/fiche  renseignements VIKA  2018  2019 V2.pdf"))
+                ->attach(\Swift_Attachment::fromPath("./upload/document/fiche  renseignements VIKA.pdf"))
                 ;
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
-            /*
+
             return $this->redirectToRoute('member_document', [
-                'id' => $user1->getId(),
+                'id' => $idUser,
               ]);
-            */
+
         }
         return $this->render('registration/fiche.html.twig');
     }
