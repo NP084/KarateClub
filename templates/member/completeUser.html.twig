@@ -95,7 +95,7 @@
                         {% endif %}
                         {# Point de contact #}
                         {% if user.contactLists|length < 1 %}
-                        {{ form_start(ContactListForm) }}
+                        {{ form_start(PoCForm) }}
                         <h4>Point de contact</h4>
                         <h6>(Obligatoire - En cas d'accident)</h6>
                         <div class="card">
@@ -142,7 +142,7 @@
                 <div class="container">
                     <div class="row justify-content-end">
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-success">Créer un nouveau membre</button>
+                            <button type="submit" class="btn btn-success">Valider mes informations</button>
                             {% if user.phones|length < 1 %}
                             {{ form_end(phoneForm) }}
                             {% endif %}
@@ -150,7 +150,8 @@
                             {{ form_end(adressForm) }}
                             {% endif %}
                             {% if user.contactLists|length < 1 %}
-                            {{ form_end(ContactListForm) }}
+
+                                {{ form_end(PoCForm) }}
                             {% endif %}
                         </div>
                     </div>
