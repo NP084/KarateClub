@@ -376,20 +376,22 @@ class RegistrationController extends AbstractController
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
             $entityManager = $this->getDoctrine()->getManager();
-            $user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email);
-            $user1 = $idUser->getUserConnected()->getId();
+            /*$user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email); */
+            $user1 = $entityManager->getRepository(User::class)->find($idUser);
+            $user2 = $user1->getUserConnected()->getId();
+            $user3 = $entityManager->getRepository(UserConnected::class)->find($user2);
 
             /* @var $user User */
-            if ($user === null) {
+            /*if ($user === null) {
                 $this->addFlash('danger', 'Email Inconnu');
                 return $this->redirectToRoute('member_document', [
                     'id' => $idUser,
                   ]);
-            }
+            }*/
             $message = (new \Swift_Message('Fiche de renseignements'))
                 ->setFrom('vi.ka.59@hotmail.fr')
                 /*->setTo($user->getEmail())*/
-                ->setTo($user1->getEmail())
+                ->setTo($user3->getEmail())
                 ->setBody("Voici la fiche de renseignements! ", 'text/html')
                 ->attach(\Swift_Attachment::fromPath("./upload/document/fiche  renseignements VIKA.pdf"))
                 ;
