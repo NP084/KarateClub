@@ -44,7 +44,7 @@
                 <li class="step" data-target="#test-l-3">
                     <a class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
-                        <span class="d-none d-sm-inline">Confirmation</span>
+                        <span class="d-none d-sm-inline">Résumé</span>
                     </a>
                 </li>
 
@@ -123,15 +123,36 @@
                                                     {#                {% if (user.ownerUser and app.request.get('id') != user.ownerUser.id) %}#}
                                                     {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
                                                         {% if (is_granted('ROLE_ADMIN')) %}
+
                                                             <tr>
+
                                                             <td><b>{{ user.ownerUser.id }}</b></td>
                                                             <td><b>{{ user.name }}</b></td>
                                                             <td><b>{{ user.firstName }}</b></td>
                                                             <td class="align-middle text-right">
-                                                                <a class="btn btn-outline-info" href=href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                {% if idevent is defined %}
+                                                                {% set foo = '1' %}
+                                                                {% for prereg in preregs %}
+                                                                    {% if prereg.user.id == user.id %}
+                                                                        <a class="btn btn-secondary disabled disabled">
+                                                                            Inscrit <i class="oi oi-check"></i>
+                                                                        </a>
+                                                                        {% set foo = '0' %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                {% if foo == 1 %}
+                                                                <a class="btn btn-outline-info" href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
                                                                     Inscrire1
                                                                 </a>
+                                                                    {% endif %}
+                                                            {% else %}
+                                                                <a class="btn btn-outline-info"
+                                                                   href="{{ path('vika_event_showList', {'cat': 'all'}) }}">
+                                                                    Inscrire à un cours
+                                                                </a>
+                                                            {% endif %}
                                                             </td>
+
                                                         {% else %}
                                                             <td><b>{{ user.name }}</b></td>
                                                             <td><b>{{ user.firstName }}</b></td>
