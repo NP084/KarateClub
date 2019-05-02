@@ -119,7 +119,15 @@ class RegistrationController extends AbstractController
             $manager->persist($prereg);
 
             $manager->flush();
-            return $this->redirectToRoute('registration_view_family',['id' => $userConnected->getId()]);
+            return $this->render('registration/confirmation.html.twig',[
+                'user' => $usr,
+                'registration' => $prereg,
+                'medicaleCare' =>$prereg->getMedicalCare(),
+                'ImageDiffusion' =>$prereg->getImageDiffusion(),
+                'ConditionRegistration' =>$prereg->getConditionRegistration(),
+                'idevent' => $event,
+
+            ]);
         }
 
 
@@ -130,6 +138,13 @@ class RegistrationController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/validation-préinscription", name="preinscription_validation")
+     */
+
+
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE

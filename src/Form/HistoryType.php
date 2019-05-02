@@ -22,7 +22,7 @@ class HistoryType extends AbstractType
         $builder
             ->add('refDate', DateType::class, [
                 'label'=>'refDate',
-                'required'=> false,
+                'required'=> true,
                 'widget'  => 'single_text',
                 'html5'   => false,
                 'format'  => 'dd-MM-yyyy',
