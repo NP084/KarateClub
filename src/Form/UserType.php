@@ -64,7 +64,7 @@ class UserType extends AbstractType
             ])
             ->add('receiptDate',DateType::class, [
                 'label'=>'refDate',
-                'required'=> false,
+                'required'=> true,
                 'widget'  => 'single_text',
                 'html5'   => false,
                 'format'  => 'dd-MM-yyyy',
