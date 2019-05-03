@@ -52,7 +52,7 @@ class MemberController extends AbstractController
      * @Route("/add-member-id-{id}-new-{idevent}", name="add_profil_event", requirements={"id"="\d+"})
      * @Route("/add-admin-id-{id}-new-{idevent}", name="add_admin_event",  requirements={"id"="\d+"})
      */
-    public function addUserEvent(UserConnected $userConnected,$idevent, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function addUserEvent(UserConnected $userConnected,$idevent=null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
@@ -86,8 +86,15 @@ class MemberController extends AbstractController
             $this->addUserPhone($user, $phone, $manager);
             $this->addUserPoC($user, $contactList, $PoC, $manager);
 
-
+        if(!$idevent)
+        {
+            return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
+        }
+        else
+        {
             return $this->redirectToRoute('registration_member_lesson', ['id' => $userConnected->getId(),'idevent'=> $idevent]);
+        }
+
         }
 
 
@@ -111,50 +118,11 @@ class MemberController extends AbstractController
     {
         //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
-        $user = new User();
-        $formUser = $this->createForm(AddUserType::class, $user);
-        $formUser->handleRequest($request);
-        $adress = new Adress();
-        $formAdress = $this->createForm(AdressType::class, $adress);
-        $formAdress->handleRequest($request);
-        $city = new City();
-        $formCity = $this->createForm(CityType::class, $city);
-        $formCity->handleRequest($request);
-        $phone = new Phone();
-        $formPhone = $this->createForm(PhoneType::class, $phone);
-        $formPhone->handleRequest($request);
-        $PoC = new PersonOfContact();
-        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
-        $formPoC->handleRequest($request);
-        $contactList = new ContactList();
-        $formContactList = $this->createForm(ContactListType::class, $contactList);
-        $formContactList->handleRequest($request);
 
-        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-        if ($formUser->isSubmitted() && $formUser->isValid()) {
-            //Création du nouveau USER:
-            $user->setUserConnected($userConnected);
-            $manager->persist($user);
-            $manager->flush();
-            //Création de la nouvelle adresse:
-            $this->addUserAdress($user, $adress, $city, $manager);
-            $this->addUserPhone($user, $phone, $manager);
-            $this->addUserPoC($user, $contactList, $PoC, $manager);
+           return $this->addUserEvent($userConnected, null, $request, $manager, $authChecker);
 
 
-            return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
-        }
 
-
-        return $this->render('member/addUser.html.twig', [
-            'user' => $user,
-            'formUser' => $formUser->createView(),
-            'phoneForm' => $formPhone->createView(),
-            'adressForm' => $formAdress->createView(),
-            'cityForm' => $formCity->createView(),
-            'PoCForm' => $formPoC->createView(),
-            'ContactListForm' => $formContactList->createView()
-        ]);
     }
 
     /**
