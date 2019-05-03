@@ -21,13 +21,13 @@
                     </a>
                 </li>
                 <li class="step" data-target="#test-l-3">
-                    <a class="step-trigger" tabindex="-1">
+                    <a href="#" data-toggle="modal" data-target="#error1" class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
                         <span class="d-none d-sm-inline">Conditions Générales</span>
                     </a>
                 </li>
                 <li class="step" data-target="#test-l-4">
-                    <a class="step-trigger" tabindex="-1">
+                    <a href="#" data-toggle="modal" data-target="#error1" class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
                         <span class="d-none d-sm-inline">Résumé</span>
                     </a>
@@ -60,9 +60,18 @@
                         {% endif %}
                     </h3>
                     <h7>
+                        <div class="row">
+                            <div class="col-md-11">
                         <div class="text-perso">Si ces informations ne sont pas correctes, veuillez les modifier en
                             cliquant sur
                             l'icône ci-dessus.
+                        </div></div>
+                            <div class="col-md-1">
+                            <div class="form-group">
+                            <a class="btn btn-outline-info"
+                               href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                            </div>
+                            </div>
                         </div>
                     </h7>
                     <h4> Informations générales : </h4>
@@ -106,8 +115,8 @@
 
 
                                 <div class="col">
-                                    TEext
-                                    <div class="user-avatar user-avatar-xl fileinput-button">
+
+                                    <div class="user-avatar user-avatar-xxl fileinput-button">
                                         <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
                                              alt="{{ user.imageFile }}" name="avatar" width="150"/>
                                     </div>
@@ -227,11 +236,13 @@
                             </div>
                         </div>
                     </div>
+                    <a class="btn btn-outline-info"
+                       href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
                 </div>
+
             </div>
         </div>
-        <a class="btn btn-outline-info"
-           href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+
     {% else %}
         <h4> Vous n'êtes pas autorisé à accéder à cette page </h4>
     {% endif %}
