@@ -190,6 +190,15 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                        <a class="btn btn-success"
+                                           href="{{ path('add_admin',{'id':userConnected.id}) }}">Ajouter
+                                            un nouveau membre</a>
+                                    {% else %}
+                                        <a class="btn btn-success"
+                                           href="{{ path('add_profil',{'id':userConnected.id}) }}">Ajouter
+                                            un nouveau membre</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
