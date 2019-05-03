@@ -2,32 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\PersonOfContact;
+use App\Entity\AttachedFile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class PersonOfContactType extends AbstractType
+class DocumentForRegType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, [
-                'required'=>true,
+        //    ->add('title')
+            ->add('description', null,[
+                'required'=>false,
             ])
-            ->add('firstName', null, [
-                'required'=>true,
-            ])
-            ->add('num1',null, [
-                'required'=>true,
-            ])
+            ->add('docFile', VichImageType::class, [
+                'required'=> false
+            ]);
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PersonOfContact::class,
+            'data_class' => AttachedFile::class,
         ]);
     }
 }
