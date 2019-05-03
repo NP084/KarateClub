@@ -72,7 +72,7 @@ class Registration
     private $paiement;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="registration")
+     * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="registration", cascade={"persist", "remove"}, orphanRemoval=true )
      */
     private $attachedFiles;
 
