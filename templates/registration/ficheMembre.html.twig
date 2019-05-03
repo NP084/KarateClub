@@ -4,7 +4,55 @@
         <title>Fiche membre</title>
     </head>
     <body>
-        <h4>{{ title }}</h4>
-        <h6>Nom: {{ user.name }}</h6>
+        <h1>Villeneuve Karaté do Association</h1>
+        <h2>Fiche d'inscription ........ / ........</h2>
+        <h4>Numéro dossier: ........</h4>
+        <hr>
+        <h3>Informations générales</h3>
+        <h4>Nom: {{ user.name }}</h4>
+        <h4>Prénom: {{ user.firstName }}</h4>
+        <h4>Sexe: {{ user.sex }}</h4>
+        <h4>Date de naissance: {{ user.birthdate }}</h4>
+        <h4>Adresse: {# {{ user.adress }} #}</h4>
+        <h4>Téléphone: {# {{ user.phones }} #}</h4> <p>(père-mère-tuteur, si mineur)*</p>
+        <h4>Grade:  {{ user.belt }} </h4>
+        <h4>Date de l'obtention:  {{ user.receiptDate }} </h4>
+        <h4>Adresse email:  {{ user1.email }} </h4>
+        <p>Représentant légal pour les mineurs(père-mère-tuteur, si mineur)*</p>
+        <h4>Nom: ........</h4>
+        <h4>Prénom: ........</h4>
+        <h2>Veuillez nous informer en cas de changement d'adresse</h2>
+        <p><strong>Prise en charge médicale</strong> autorise la prise en charge médicale pour tout accident survenant
+durant les cours ou les manifestations auxquelles participerait le club</p>
+        <p>Personne à prévenir en cas d'accident: ........</p>
+        <p><strong>Droit à l'image</strong> autorise la publication non commerciale des photos prises lors des différentes
+activités organisées au sein du club ou auxquelles il participe. (oui/non)* Signature : ............................................</p>
+        <p><strong>Autorisation des parents ou du responsable légal pour les enfants mineurs</strong> J’autorise l'enfant inscrit ci-dessus à pratiquer le karaté do au sein de Villeneuve Karaté do Association –
+VIKA</p>
+        <p><strong>Inscription</strong><br> Je soussigné (prénom et nom) : ....................................................................................................
+          (père-mère-tuteur, si mineur) *, reconnais avoir pris connaissance des conditions d’inscription, des horaires des cours et du règlement intérieur
+(ce dernier est disponible sur le site de VIKA et au bureau du Dojo)
+Veuillez écrire manuscritement et intégralement la phrase ci-dessous
+« J'atteste avoir pris connaissance du règlement intérieur de l’association VIKA et en accepte les termes »</p>
+        <p>.......................................................................................................................................................................</p>
+        <p>Fait à Villeneuve d'Ascq, le : ..................................... Signature : .....................................</p>
+        <p><strong>La présence de l’adhérent,accompagné de ses parents pour un mineur, est indispensable pour finaliser l’inscription (Photo et cotisation)</strong></p>
+        <hr>
+        <h3>Compétitions</h3>
+        <p>Je suis intéressé(e) par la compétition : <strong>Kata (oui/non)*</strong></p>
+        <p>Je suis intéressé(e) par la compétition : <strong>Combat (oui/non)*</strong></p>
+        <p><strong>Demande de passeport ........ euros (oui/non)*</strong></p>
+        <hr>
+        <h3>A remplir par l'association</h3>
+        <p><strong>Autorisation parentale pour les mineurs (oui)**</strong></p>
+        <p><strong>Certificat médical (à fournir en septembre ........) (oui)**</strong></p>
+        <p><strong>Une enveloppe timbrée (oui)**</strong></p>
+        <p><strong>Licence Fédération ........ / ........ (Chèque/Espèce)* Montant ........ euros</strong></p>
+        <p><strong>Montant de la cotisation annuelle : ........ Somme versée ........ (Chèque/Espèce(un seul règlement))* Montant ........ euros</strong></p>
+        <hr>
+        <p><strong>(Chèque vacances/ coupon sport)* Montant ........ euros</strong></p>
+        <hr>
+        <p>* rayer les mentions inutiles</p>
+        <p>** entourer la mention</p>
     </body>
 </html>
