@@ -203,7 +203,7 @@ class RegistrationController extends AbstractController
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewRegistration(RegistrationRepository $repoRegistration, PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager)
+    public function viewRegistration(Registration $registration, PaiementRepository $repo, Request $request, ObjectManager $manager)
     {
         //Obtenir la liste des paiements associés:
         $paiementNombre = $repo->findBy(
@@ -342,6 +342,13 @@ class RegistrationController extends AbstractController
         //Conditions pour modifier:
         $editRegistration = false;
 
+        if ($attachedFile_1->getId() and $attachedFile_2->getId() and $user->getImageName()){
+            $validateRegistration = true;
+            if ($registration->getValidateRegistrationDate()){
+                $editRegistration = true;
+            }
+        }
+
    /*     if ($registration->getMedicalCertificate() == true && $registration->getConditionRegistrationDocument() == true && $user->getImageName() == true) {
             $validateRegistration = true;
             $verifEdit = $repoRegistration->findByEditRegistration($registration->getId());
@@ -375,16 +382,16 @@ class RegistrationController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(Paiement::class);
         $paiementTest = $repo->findOneBy([
-            'modality' => $paiement->getModality(),
+            'category' => $paiement->getCategory(),
             'amount' => $paiement->getAmount()
         ]);
         if (!$paiementTest) {
-            // enregistre le nouveau numéro dans la DB
+            // enregistre le nouveau paiement dans la DB
             $manager->persist($paiement);
             $registration->addPaiement($paiement);
             $manager->flush();
         } else {
-            // associe le n° existant à cet user
+            // associe le n° existant à cette registration
             $registration->addPaiement($paiementTest);
             $manager->flush();
         }
