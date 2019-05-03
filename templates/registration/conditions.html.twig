@@ -8,39 +8,47 @@
         <div class="steps" role="tablist">
             <ul>
                 <li class="step" data-target="#test-l-1">
-                    <a href="{{ path('registration_member_lesson', {'id':user.userconnected.id, 'idevent':  idevent.id}) }}" class="step-trigger" tabindex="-1">
+                    <a href="{{ path('registration_member_lesson', {'id':user.userConnected.id, 'idevent':  idevent.id}) }}"
+                       class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-person"></i></span>
-                        <span class="d-none d-sm-inline">Participant</span>
+                        <span class="d-none d-sm-inline">Ma famille</span>
                     </a>
                 </li>
-                <li class="active" data-target="#test-l-2">
-                    <a class="step-trigger" tabindex="-1">
+                <li class="step" data-target="#test-l-2">
+                    <a href="{{ path('preregistration_summary', {'id':user.id, 'idevent':  idevent.id}) }}"
+                       class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-script "></i></span>
+                        <span class="d-none d-sm-inline">Informations du participant</span>
+                    </a>
+                </li>
+                <li class="active" data-target="#test-l-3">
+                    <a class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
                         <span class="d-none d-sm-inline">Conditions Générales</span>
                     </a>
                 </li>
-                <li class="step" data-target="#test-l-3">
+                <li class="step" data-target="#test-l-4">
                     <a class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
                         <span class="d-none d-sm-inline">Résumé</span>
                     </a>
                 </li>
-
             </ul>
         </div>
         <!-- /.steps -->
     </div>
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
+    <div class="row justify-content-center">
+    <div class="col-md-10">
 
-                <h2> Conditions générales </h2>
-                <div class="card">
+    <h2> Conditions générales </h2>
+    <div class="card">
     <div class="card-body">
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    J'accepte le/la :
+                </br>
+                    <h6>En cochant ci-dessous, j'accepte le/la :</h6>
                     {{ form_start(form) }}
                     </br>
                     {{ form_widget(form.medical_care) }}
@@ -51,19 +59,22 @@
                     </br>
                     {{ form_widget(form.condition_registration) }}
 
-                    </br>
-                    {{ form_label(form.remark, 'Remarque éventuelle') }}
-                    {{ form_widget(form.remark) }}
-                    </br>
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-secondary">Confirmer</button>
-                            </div>
-                        </div>
-                    </div>
+</br>
+
                 </div>
+            <h6>{{ form_label(form.remark, 'Remarque éventuelle') }}</h6>
             </div>
+        </div>
+            </br>
+
+            {{ form_widget(form.remark) }}
+            </br>
+
+
+                <button type="submit" class="btn btn-secondary btn-lg btn-block">Confirmer mon inscription au
+                    cours
+                </button>
+
         </div>
     </div>
     {{ form_end(form) }}

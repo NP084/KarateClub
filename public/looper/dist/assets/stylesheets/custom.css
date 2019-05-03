@@ -1,1 +1,5 @@
 /* put your own styles to customize and override the theme */
+.text-perso
+{
+  color: red;
+}

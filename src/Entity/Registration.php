@@ -76,20 +76,11 @@ class Registration
      */
     private $attachedFiles;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $medicalCertificate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $validateRegistration_date;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $conditionRegistration_Document;
 
 
 
@@ -277,18 +268,6 @@ class Registration
         return $this;
     }
 
-    public function getMedicalCertificate(): ?int
-    {
-        return $this->medicalCertificate;
-    }
-
-    public function setMedicalCertificate(?int $medicalCertificate): self
-    {
-        $this->medicalCertificate = $medicalCertificate;
-
-        return $this;
-    }
-
     public function getValidateRegistrationDate(): ?\DateTimeInterface
     {
         return $this->validateRegistration_date;
@@ -300,18 +279,5 @@ class Registration
 
         return $this;
     }
-
-    public function getConditionRegistrationDocument(): ?int
-    {
-        return $this->conditionRegistration_Document;
-    }
-
-    public function setConditionRegistrationDocument(?int $conditionRegistration_Document): self
-    {
-        $this->conditionRegistration_Document = $conditionRegistration_Document;
-
-        return $this;
-    }
-
 
 }

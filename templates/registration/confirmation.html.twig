@@ -3,7 +3,38 @@
 
 {% block title %}Résumé de votre pré-inscription{% endblock %}
 {% block Body %}
-
+    <div class="card-header">
+        <!-- .steps -->
+        <div class="steps" role="tablist">
+            <ul>
+                <li class="step" data-target="#test-l-1">
+                    <a href="{{ path('registration_member_lesson', {'id':user.userconnected.id, 'idevent':  idevent.id}) }}" class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-people"></i></span>
+                        <span class="d-none d-sm-inline">Ma famille</span>
+                    </a>
+                </li>
+                <li class="active" data-target="#test-l-2">
+                    <a class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-person "></i></span>
+                        <span class="d-none d-sm-inline">Informations du participant</span>
+                    </a>
+                </li>
+                <li class="step" data-target="#test-l-3">
+                    <a class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
+                        <span class="d-none d-sm-inline">Conditions Générales</span>
+                    </a>
+                </li>
+                <li class="step" data-target="#test-l-4">
+                    <a class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
+                        <span class="d-none d-sm-inline">Résumé</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.steps -->
+    </div>
     <div class="container-fluid">
     <div class="row justify-content-center">
     <div class="col-md-10">
@@ -35,8 +66,8 @@
                                         <h6>Date de la pré-inscription: {{ "now"|date("m/d/Y") }}</h6>
                                         <h6>Date de l'inscription: </h6>
                                         <h6>Evènement: {{ registration.vikaEvent.title }}</h6>
-                                        <h6>Inscrit par: {{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }}</h6>
-                                        <h6>Email: {{ user.userConnected.email }}</h6>
+                                        <h6>Inscrit par : {{ registration.user.userConnected.user.name }} {{ registration.user.userConnected.user.firstname }}</h6>
+                                        <h6>Email: {{ registration.user.userConnected.email }}</h6>
                                         <br>
                                     </div>
                                 </div>
@@ -90,7 +121,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for phone in user.phones %}
+                                                {% for phone in registration.user.phones %}
                                                 <tr>
                                                     <td>{{ phone.type }}</td>
                                                     <td>{{ phone.num }}</td>
@@ -131,7 +162,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for adress in user.adress %}
+                                                {% for adress in registration.user.adress %}
                                                 <tr>
                                                     <td>{{ adress.type }}</td>
                                                     <td>{{ adress.num }}
@@ -182,7 +213,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for contactList in user.contactLists %}
+                                                {% for contactList in registration.user.contactLists %}
                                                 <tr>
                                                     <td>{{ contactList.personOfContact.name }}</td>
                                                     <td>{{ contactList.personOfContact.firstName }}</td>
@@ -251,7 +282,7 @@
                             <a class="btn btn-outline-info" href="{{ path('home_page', {'path':'accueil'}) }}"> Retour à
                                 l'accueil</a>
                             <a class="btn btn-outline-info"
-                               href="{{ path('registration_member_lesson', {'id':user.userconnected.id, 'idevent':  idevent.id}) }}">Inscrire
+                               href="{{ path('registration_member_lesson', {'id':registration.user.userconnected.id, 'idevent':  idevent.id}) }}">Inscrire
                                 une nouvelle personne à cet événement</a>
                         </div>
                     </div>

@@ -31,18 +31,24 @@
             <ul>
                 <li class="active" data-target="#test-l-1">
                     <a class="step-trigger" tabindex="-1">
-                        <span class="step-indicator step-indicator-icon"><i class="oi oi-person"></i></span>
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-people"></i></span>
                         <span class="d-none d-sm-inline">Participant</span>
                     </a>
                 </li>
                 <li class="step" data-target="#test-l-2">
                     <a href="#" data-toggle="modal" data-target="#error1" class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-person "></i></span>
+                        <span class="d-none d-sm-inline">Informations du participant</span>
+                    </a>
+                </li>
+                <li class="step" data-target="#test-l-3">
+                    <a href="#" data-toggle="modal" data-target="#error1" class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-script "></i></span>
                         <span class="d-none d-sm-inline">Conditions Générales</span>
                     </a>
                 </li>
-                <li class="step" data-target="#test-l-3">
-                    <a class="step-trigger" tabindex="-1">
+                <li class="step" data-target="#test-l-4">
+                    <a href="#" data-toggle="modal" data-target="#error1" class="step-trigger" tabindex="-1">
                         <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
                         <span class="d-none d-sm-inline">Résumé</span>
                     </a>
@@ -56,81 +62,81 @@
         <div class="modal fade" id="error1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              xmlns="http://www.w3.org/1999/html">
             <div class="modal-dialog" role="document">
-                
+
                 <div class="modal-body ">
 
                     <div class="row">
                         <!-- grid column -->
 
 
-                            <div class="alert alert-danger alert-dismissible fade show">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <a href="#" class="alert-link">Veuillez d'abord choisir un <strong>participant</strong>.</a>
-                            </div>
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <a href="#" class="alert-link">Veuillez d'abord choisir un <strong>participant</strong>.</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
+    </div>
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == app.request.get("id")) %}
 
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-                            <h2>Ma famille</h2>
-                        {% else %}
-                            {% if (is_granted('ROLE_ADMIN')) %}
-                                {# User est un parent  #}
-                                {% if (userConnected.user.ownerUser
-                                    and userConnected.user.ownerUser.id == userConnected.user.userConnected.id) %}
-                                    <h2>Famille du membre
-                                        : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
-                                {% else %}
-                                    <h2>Famille du membre
-                                        : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
-                                {% endif %}
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
+                        <h2>Ma famille</h2>
+                    {% else %}
+                        {% if (is_granted('ROLE_ADMIN')) %}
+                            {# User est un parent  #}
+                            {% if (userConnected.user.ownerUser
+                                and userConnected.user.ownerUser.id == userConnected.user.userConnected.id) %}
+                                <h2>Famille du membre
+                                    : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
                             {% else %}
-                                {# le userConnected consulte son propre profil #}
-                                {% if (app.user.id == app.request.get("id")) %}
-                                    <h2>Ma famille</h2>
-                                {% else %}
-                                    <h2>Famille du membre
-                                        : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
-                                {% endif %}
+                                <h2>Famille du membre
+                                    : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
+                            {% endif %}
+                        {% else %}
+                            {# le userConnected consulte son propre profil #}
+                            {% if (app.user.id == app.request.get("id")) %}
+                                <h2>Ma famille</h2>
+                            {% else %}
+                                <h2>Famille du membre
+                                    : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
                             {% endif %}
                         {% endif %}
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <table id="usertabel" class="table dataTable no-footer">
-                                                <thead>
-                                                <tr>
+                    {% endif %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <table id="usertabel" class="table dataTable no-footer">
+                                            <thead>
+                                            <tr>
+                                                {% if (is_granted('ROLE_ADMIN')) %}
+                                                    <th>Id</th>
+                                                {% endif %}
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for user in users %}
+                                                {# Si l'id dans l'URL != de l'id du user qui s'affiche
+                                                (pr ne pas afficher son propre profil dans le liste) #}
+                                                {#                {% if (user.ownerUser and app.request.get('id') != user.ownerUser.id) %}#}
+                                                {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
                                                     {% if (is_granted('ROLE_ADMIN')) %}
-                                                        <th>Id</th>
-                                                    {% endif %}
-                                                    <th>Nom</th>
-                                                    <th>Prénom</th>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {% for user in users %}
-                                                    {# Si l'id dans l'URL != de l'id du user qui s'affiche
-                                                    (pr ne pas afficher son propre profil dans le liste) #}
-                                                    {#                {% if (user.ownerUser and app.request.get('id') != user.ownerUser.id) %}#}
-                                                    {% if (user.ownerUser and user.ownerUser.id == user.userConnected.id) %}
-                                                        {% if (is_granted('ROLE_ADMIN')) %}
 
-                                                            <tr>
+                                                        <tr>
 
-                                                            <td><b>{{ user.ownerUser.id }}</b></td>
-                                                            <td><b>{{ user.name }}</b></td>
-                                                            <td><b>{{ user.firstName }}</b></td>
-                                                            <td class="align-middle text-right">
-                                                                {% if idevent is defined %}
+                                                        <td><b>{{ user.id }}</b></td>
+                                                        <td><b>{{ user.name }}</b></td>
+                                                        <td><b>{{ user.firstName }}</b></td>
+                                                        <td class="align-middle text-right">
+                                                            {% if idevent is defined %}
                                                                 {% set foo = '1' %}
                                                                 {% for prereg in preregs %}
                                                                     {% if prereg.user.id == user.id %}
@@ -141,113 +147,116 @@
                                                                     {% endif %}
                                                                 {% endfor %}
                                                                 {% if foo == 1 %}
-                                                                <a class="btn btn-outline-info" href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
-                                                                    Inscrire1
-                                                                </a>
-                                                                    {% endif %}
+                                                                    <a class="btn btn-outline-info"
+                                                                       href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                        Inscrire1
+                                                                    </a>
+                                                                {% endif %}
                                                             {% else %}
                                                                 <a class="btn btn-outline-info"
                                                                    href="{{ path('vika_event_showList', {'cat': 'all'}) }}">
                                                                     Inscrire à un cours
                                                                 </a>
                                                             {% endif %}
-                                                            </td>
+                                                        </td>
 
-                                                        {% else %}
-                                                            <td><b>{{ user.name }}</b></td>
-                                                            <td><b>{{ user.firstName }}</b></td>
-                                                            <td class="align-middle text-right">
-                                                                {% if idevent is defined %}
-                                                                    {% set foo = '1' %}
-                                                                    {% for prereg in preregs %}
-                                                                        {% if prereg.user.id == user.id %}
-                                                                            <a class="btn btn-secondary disabled disabled">
-                                                                                Inscrit <i class="oi oi-check"></i>
-                                                                            </a>
-                                                                            {% set foo = '0' %}
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                    {% if foo == 1 %}
-                                                                        <a class="btn btn-outline-info"
-                                                                           href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
-                                                                            Inscrire2
-                                                                        </a>
-                                                                    {% endif %}
-
-
-                                                                {% else %}
-                                                                    <a class="btn btn-outline-info"
-                                                                       href="{{ path('vika_event_showList', {'cat': 'all'}) }}">
-                                                                        Inscrire à un cours
-                                                                    </a>
-                                                                {% endif %}
-                                                            </td>
-                                                        {% endif %}
-                                                        </tr>
                                                     {% else %}
-                                                        <tr>
-                                                            {% if (is_granted('ROLE_ADMIN')) %}
-                                                                <td>{{ user.id }}</td>
-                                                            {% endif %}
-                                                            <td>{{ user.name }}</td>
-                                                            <td>{{ user.firstName }}</td>
-                                                            <td class="align-middle text-right">
-                                                                {% if idevent is defined %}
-                                                                    {% set foo = '1' %}
-                                                                    {% for prereg in preregs %}
-                                                                        {% if prereg.user.id == user.id %}
-                                                                            <a class="btn btn-secondary disabled disabled">
-                                                                                Inscrit <i class="oi oi-check"></i>
-                                                                            </a>
-                                                                            {% set foo = '0' %}
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                    {% if foo == 1 %}
-                                                                        <a class="btn btn-outline-info"
-                                                                           href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id}) }}">
-                                                                            Inscrire
+                                                        <td><b>{{ user.name }}</b></td>
+                                                        <td><b>{{ user.firstName }}</b></td>
+                                                        <td class="align-middle text-right">
+                                                            {% if idevent is defined %}
+                                                                {% set foo = '1' %}
+                                                                {% for prereg in preregs %}
+                                                                    {% if prereg.user.id == user.id %}
+                                                                        <a class="btn btn-secondary disabled disabled">
+                                                                            Inscrit <i class="oi oi-check"></i>
                                                                         </a>
+                                                                        {% set foo = '0' %}
                                                                     {% endif %}
-                                                                {% else %}
+                                                                {% endfor %}
+                                                                {% if foo == 1 %}
                                                                     <a class="btn btn-outline-info"
-                                                                       href="{{ path('vika_event_showList', {'cat':'all'}) }}">
-                                                                        Inscrire à un cours
+                                                                       href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                        Inscrire2
                                                                     </a>
                                                                 {% endif %}
-                                                            </td>
-                                                        </tr>
+
+
+                                                            {% else %}
+                                                                <a class="btn btn-outline-info"
+                                                                   href="{{ path('vika_event_showList', {'cat': 'all'}) }}">
+                                                                    Inscrire à un cours
+                                                                </a>
+                                                            {% endif %}
+                                                        </td>
                                                     {% endif %}
+                                                    </tr>
                                                 {% else %}
                                                     <tr>
-                                                        <td colspan="10">Aucun membre de famille enregistré</td>
+                                                        {% if (is_granted('ROLE_ADMIN')) %}
+                                                            <td>{{ user.id }}</td>
+                                                        {% endif %}
+                                                        <td>{{ user.name }}</td>
+                                                        <td>{{ user.firstName }}</td>
+                                                        <td class="align-middle text-right">
+                                                            {% if idevent is defined %}
+                                                                {% set foo = '1' %}
+                                                                {% for prereg in preregs %}
+                                                                    {% if prereg.user.id == user.id %}
+                                                                        <a class="btn btn-secondary disabled disabled">
+                                                                            Inscrit <i class="oi oi-check"></i>
+                                                                        </a>
+                                                                        {% set foo = '0' %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                {% if foo == 1 %}
+                                                                    <a class="btn btn-outline-info"
+                                                                       href="{{ path('preregistration_summary', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                        {#                                                                           href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id}) }}">#}
+                                                                        Inscrire
+                                                                    </a>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <a class="btn btn-outline-info"
+                                                                   href="{{ path('vika_event_showList', {'cat':'all'}) }}">
+                                                                    Inscrire à un cours
+                                                                </a>
+                                                            {% endif %}
+                                                        </td>
                                                     </tr>
-                                                {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                {% endif %}
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun membre de famille enregistré</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row justify-content-end">
-                            <div class="col-auto">
-                                {% if (is_granted('ROLE_ADMIN')) %}
-                                    <a class="btn btn-success"
-                                       href="{{ path('add_admin',{'id':userConnected.id}) }}">Ajouter
-                                        un nouveau membre</a>
-                                {% else %}
-                                    <a class="btn btn-success"
-                                       href="{{ path('add_profil',{'id':userConnected.id}) }}">Ajouter
-                                        un nouveau membre</a>
-                                {% endif %}
-                            </div>
-                        </div>
-
                     </div>
+                    <div class="row justify-content-end">
+                        <div class="col-auto">
+                            {% if (is_granted('ROLE_ADMIN')) %}
+                                <a class="btn btn-success"
+                                   href="{{ path('add_admin',{'id':userConnected.id}) }}">Ajouter
+                                    un nouveau membre</a>
+                            {% else %}
+                                <a class="btn btn-success"
+                                   href="{{ path('add_profil',{'id':userConnected.id}) }}">Ajouter
+                                    un nouveau membre</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        {% else %}
-            <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
-        {% endif %}
-        {% endblock %}
+        </div>
+    {% else %}
+        <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
+    {% endif %}
+</div>
+    {% endblock %}
 
