@@ -370,7 +370,7 @@
                                                                     {% for paiement in paiements %}
                                                                     <tr>
                                                                         <td>{{ paiement.id }}</td>
-                                                                        <td>{{ paiement.modality.name }}</td>
+                                                                        <td>{{ paiement.category.title }}</td>
                                                                         <td>{{ paiement.amount }}</td>
                                                                         <td class="align-middle text-right">
                                                                                 <a class="btn btn-sm btn-icon btn-secondary"
@@ -410,7 +410,7 @@
                                                                             <div class="col-3">
                                                                                 <div class="form-group">
                                                                                     <label for="">Modalité</label>
-                                                                                    {{ form_widget(formPaiement.modality) }}
+                                                                                    {{ form_widget(formPaiement.category) }}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-3">
@@ -462,7 +462,6 @@
                                                 {% endif %}
                                             </a>
                                             {% else %}
-
                                             {% endif %}
                                         </div>
                                     </div>
