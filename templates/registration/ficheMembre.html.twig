@@ -13,14 +13,38 @@
         <h4>Prénom: {{ user.firstName }}</h4>
         <h4>Sexe: {{ user.sex }}</h4>
         <h4>Date de naissance: {{ user.birthdate }}</h4>
-        <h4>Adresse: {# {{ user.adress }} #}</h4>
-        <h4>Téléphone: {# {{ user.phones }} #}</h4> <p>(père-mère-tuteur, si mineur)*</p>
+
+        <h4>Adresse:
+            {% for adress in user.adress %}
+                {{ adress.type }}
+                {{ adress.num }}
+                    {% if adress.postBox %}
+                        (BP:{{ adress.postBox }})
+                    {% endif %}
+                {{ adress.streetName }}
+                {{ adress.city.cityName }}
+                    {% if adress.city.zip %}
+                        ({{ adress.city.zip }})
+                    {% endif %}
+                {{ adress.city.country.countryName }}
+            {% endfor %}
+        </h4>
+
+        <h4>Téléphone:
+            {% for phone in user.userConnected.user.phones %}
+                {{ phone.type }}
+                {{ phone.num }}
+            {% endfor %}
+        </h4><p>(père-mère-tuteur, si mineur)*</p>
+
         <h4>Grade:  {{ user.belt }} </h4>
         <h4>Date de l'obtention:  {{ user.receiptDate }} </h4>
         <h4>Adresse email:  {{ user1.email }} </h4>
         <p>Représentant légal pour les mineurs(père-mère-tuteur, si mineur)*</p>
+
         <h4>Nom: ........</h4>
         <h4>Prénom: ........</h4>
+        
         <h2>Veuillez nous informer en cas de changement d'adresse</h2>
         <p><strong>Prise en charge médicale</strong> autorise la prise en charge médicale pour tout accident survenant
 durant les cours ou les manifestations auxquelles participerait le club</p>
