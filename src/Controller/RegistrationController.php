@@ -7,6 +7,7 @@ use App\Entity\VikaEvent;
 use App\Form\DocumentForReg2Type;
 use App\Form\DocumentForRegType;
 use App\Form\PreregistrationType;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Form;
@@ -42,6 +43,9 @@ use App\Repository\RegistrationRepository;
 use App\Repository\PaiementRepository;
 use App\Form\DocumentType;
 use App\Form\UserPictureType;
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class RegistrationController extends AbstractController
 {
@@ -415,43 +419,52 @@ class RegistrationController extends AbstractController
 
 
     /**
-     * @Route("/envoyer_fiche", name="envoyer_fiche")
+     * @Route("/envoyer_fiche-idUser={idUser}", name="envoyer_fiche")
      */
-    public function envoyerFiche(Request $request, \Swift_Mailer $mailer)
+    public function envoyerFiche(Request $request,\Swift_Mailer $mailer, $idUser)
     {
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
             $entityManager = $this->getDoctrine()->getManager();
-            $user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email);
+            /*$user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email); */
+            $user1 = $entityManager->getRepository(User::class)->find($idUser);
+            $user2 = $user1->getUserConnected()->getId();
+            $user3 = $entityManager->getRepository(UserConnected::class)->find($user2);
 
             /* @var $user User */
-            if ($user === null) {
+            /*if ($user === null) {
                 $this->addFlash('danger', 'Email Inconnu');
                 return $this->redirectToRoute('member_document', [
-                    'id' => $user->getId(),
-                ]);
-            }
+                    'id' => $idUser,
+                  ]);
+            }*/
             $message = (new \Swift_Message('Fiche de renseignements'))
                 ->setFrom('vi.ka.59@hotmail.fr')
-                ->setTo($user->getEmail())
+                /*->setTo($user->getEmail())*/
+                ->setTo($user3->getEmail())
                 ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                ->attach(\Swift_Attachment::fromPath("./upload/fiche/fiche  renseignements VIKA  2018  2019 V2.pdf"));
+                ->attach(\Swift_Attachment::fromPath("./upload/document/fiche  renseignements VIKA.pdf"))
+                ;
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
-            /*
+
             return $this->redirectToRoute('member_document', [
-                'id' => $user1->getId(),
+                'id' => $idUser,
               ]);
-            */
+
         }
         return $this->render('registration/fiche.html.twig');
     }
 
     /**
-     * @Route("/member-id={id}-print-preinscription", name="HTML_to_PDF", requirements={"id"="\d+"})
+     * @Route("/fiche-membre-idUser={id}", name="fiche_membre", requirements={"id"="\d+"})
      */
-    public function HTMLToPDF(User $user)
+    public function HTMLToPDF($id)
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($id);
+        $form = $this->createForm(UserType::class, $user);
+
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
@@ -460,8 +473,11 @@ class RegistrationController extends AbstractController
         $dompdf = new Dompdf($pdfOptions);
 
         // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('member/showDocument.html.twig', [
-            'user' => $user
+        $html = $this->renderView('registration/ficheMembre.html.twig', [
+            'title' => "Fiche membre",
+            'form' => $form->createView(),
+            'user' => $user,
+
         ]);
 
         // Load HTML to Dompdf
@@ -474,10 +490,9 @@ class RegistrationController extends AbstractController
         $dompdf->render();
 
         // Output the generated PDF to Browser (inline view)
-        $dompdf->stream("mypdf.pdf", [
-            "Attachment" => false
+        $dompdf->stream("Fiche membre de NOM Prénom.pdf", [
+            "Attachment" => false //afficher dans le browser
+            //"Attachment" => true //télécharger directement
         ]);
-
-        return $this->redirectToRoute('home_page', ['path' => 'accueil']);
     }
 }
