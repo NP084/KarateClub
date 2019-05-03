@@ -3,7 +3,38 @@
 
 {% block title %}Résumé de votre pré-inscription{% endblock %}
 {% block Body %}
-
+    <div class="card-header">
+        <!-- .steps -->
+        <div class="steps" role="tablist">
+            <ul>
+                <li class="step" data-target="#test-l-1">
+                    <a href="{{ path('registration_member_lesson', {'id':user.userconnected.id, 'idevent':  idevent.id}) }}" class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-people"></i></span>
+                        <span class="d-none d-sm-inline">Ma famille</span>
+                    </a>
+                </li>
+                <li class="active" data-target="#test-l-2">
+                    <a class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-person "></i></span>
+                        <span class="d-none d-sm-inline">Informations du participant</span>
+                    </a>
+                </li>
+                <li class="step" data-target="#test-l-3">
+                    <a class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
+                        <span class="d-none d-sm-inline">Conditions Générales</span>
+                    </a>
+                </li>
+                <li class="step" data-target="#test-l-4">
+                    <a class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span>
+                        <span class="d-none d-sm-inline">Résumé</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.steps -->
+    </div>
     <div class="container-fluid">
     <div class="row justify-content-center">
     <div class="col-md-10">

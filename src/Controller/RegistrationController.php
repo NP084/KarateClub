@@ -68,6 +68,24 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/preregistration-user-summary-{id}-{idevent}", name="preregistration_summary", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     */
+    public function preregistrationSummary(User $usr, $idevent)
+    {
+
+        return $this->render('registration/preregistrationSummary.html.twig', [
+
+            'user' => $usr,
+//            'userConnected' => $userConnected,
+            'idevent' => $idevent,
+
+        ]);
+    }
+
+
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
@@ -138,11 +156,6 @@ class RegistrationController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
-    /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/validation-préinscription", name="preinscription_validation")
-     */
 
 
 
