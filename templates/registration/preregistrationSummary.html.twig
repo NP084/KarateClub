@@ -118,8 +118,7 @@
                                 <div class="form-group">
                                     {#  Si au moins un numéro chez le User ou son parent, alors on l'affiche.
                                      Sinon on met le form et on associe le numéro au user (pas au parent) #}
-                                    {% if ((user.phones|length > 0 or user.userConnected.user.phones|length > 0)) %}
-                                        <h6>Numéro(s) du compte enfant</h6>
+                                    {% if ((user.phones|length > 0 )) %}
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -159,7 +158,6 @@
                                             {% endfor %}
                                         </table>
                                     {% else %}
-                                        <h6>Numéro pour {{ user.firstName }} {{ user.name }} </h6>
                                         {{ form_start(phoneForm) }}
                                         {{ form_widget(phoneForm) }}
                                         <div class="form-group">
@@ -175,7 +173,7 @@
                     </div>
                 </div>
 
-                <h5>Adresse(s)</h5>
+                <h4>Adresse(s)</h4>
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -183,7 +181,7 @@
                                 <div class="form-group">
                                     {#  Si au moins une adresse chez le User ou son parent, alors on l'affiche.
                                      Sinon on met le form et on associe le numéro au user (pas au parent) #}
-                                    {% if ((user.adress|length > 0 or user.userConnected.user.adress|length > 0)) %}
+                                    {% if ((user.adress|length > 0 )) %}
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -196,7 +194,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for adress in user.userConnected.user.adress %}
+                                            {% for adress in user.adress %}
                                             <td>{{ adress.type }}</td>
                                             <td>{{ adress.num }}
                                                 {% if adress.postBox %}
@@ -235,7 +233,6 @@
                                             {% endfor %}
                                         </table>
                                     {% else %}
-                                        <h6>Adresse pour {{ user.firstName }} {{ user.name }} </h6>
                                         {{ form_start(adressForm) }}
                                         {{ form_widget(adressForm) }}
                                         {{ form_start(cityForm) }}
