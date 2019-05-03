@@ -292,7 +292,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public
-    function profileShow(User $usr, Request $request)
+    function profileShow(User $usr)
     {
         return $this->render('member/showProfile.html.twig', [
             'user' => $usr
@@ -325,33 +325,38 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
 
     /**
      * Supprime un numéro de téléphone d'un user. (le numéro reste dans la DB)
-     * @Route("/member-removePhone-idPhone={idPhone}-idUser={id}", name="remove_phone", requirements={"id"="\d+"})
-     * @Route("/admin-removePhone-idPhone={idPhone}-idUser={id}", name="remove_phone_admin", requirements={"id"="\d+"})
+     * @Route("/member-removePhone-idPhone={idPhone}-idUser={id}-{idevent}", name="remove_phone", requirements={"id"="\d+"})
+     * @Route("/admin-removePhone-idPhone={idPhone}-idUser={id}-{idevent}", name="remove_phone_admin", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public
-    function removeUserPhone(User $usr, $idPhone, AuthorizationCheckerInterface $authChecker)
+    function removeUserPhone(User $usr, $idPhone, $idevent = null, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $phone = $entityManager->getRepository(Phone::class)->find($idPhone);
         $phone->removeUser($usr);
         $entityManager->flush();
 
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
-        } else {
-            return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
+        if (!$idevent){
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
+            } else {
+                return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
+            }
+        }else{
+                return $this->redirectToRoute('preregistration_summary',
+                    ['id' => $usr->getId(), 'idevent' => $idevent]);
         }
     }
 
     /**
      * Supprime une adresse d'un user. (l'adresse reste dans la DB)
-     * @Route("/member-removeAdress-idAdress={idAdress}-idUser={id}", name="remove_adress", requirements={"id"="\d+"})
-     * @Route("/admin-removeAdress-idAdress={idAdress}-idUser={id}", name="remove_adress_admin", requirements={"id"="\d+"})
+     * @Route("/member-removeAdress-idAdress={idAdress}-idUser={id}-{idevent}", name="remove_adress", requirements={"id"="\d+"})
+     * @Route("/admin-removeAdress-idAdress={idAdress}-idUser={id}-{idevent}", name="remove_adress_admin", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public
-    function removeUserAdress(User $usr, $idAdress, AuthorizationCheckerInterface $authChecker)
+    function removeUserAdress(User $usr, $idAdress, $idevent = null,  AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $adress = $entityManager->getRepository(Adress::class)->find($idAdress);
@@ -359,10 +364,15 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
         $usr->removeAdress($adress);
         $entityManager->flush();
 
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
-        } else {
-            return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
+        if (!$idevent){
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
+            } else {
+                return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
+            }
+        }else{
+            return $this->redirectToRoute('preregistration_summary',
+                ['id' => $usr->getId(), 'idevent' => $idevent]);
         }
     }
 
@@ -517,12 +527,12 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
 
     /**
      * Supprime une personne de contact.
-     * @Route("/member-removePoC-idCL={idCL}-idUser={id}", name="remove_PoC", requirements={"idCL"="\d+"})
-     * @Route("/admin-removePoC-idCL={idCL}-idUser={id}", name="remove_PoC_admin", requirements={"idCL"="\d+"})
+     * @Route("/member-removePoC-idCL={idCL}-idUser={id}-{idevent}", name="remove_PoC", requirements={"idCL"="\d+"})
+     * @Route("/admin-removePoC-idCL={idCL}-idUser={id}-{idevent}", name="remove_PoC_admin", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public
-    function removePoC(User $usr, $idCL, AuthorizationCheckerInterface $authChecker)
+    function removePoC(User $usr, $idCL, $idevent = null, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
@@ -530,10 +540,15 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
         $usr->removeContactList($contactList);
         $entityManager->flush();
 
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
-        } else {
-            return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
+        if (!$idevent){
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
+            } else {
+                return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
+            }
+        }else{
+            return $this->redirectToRoute('preregistration_summary',
+                ['id' => $usr->getId(), 'idevent' => $idevent]);
         }
     }
 
@@ -584,13 +599,13 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
 
     /**
      * MODIFICATION D'UNE PERSONNE DE CONTACT.
-     * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC", requirements={"id"="\d+"})
-     * @Route("/admin-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}", name="edit_PoC_admin", requirements={"id"="\d+"})
+     * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}-{idevent}", name="edit_PoC", requirements={"id"="\d+"})
+     * @Route("/admin-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}-{idevent}", name="edit_PoC_admin", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
      * @Security("has_role('ROLE_ADMIN') or user.getUser().getId() == contactList.getUser().getuserConnected().getUser().getId()")
      */
     public
-    function editPoC(User $user, $idPoC, ContactList $contactList, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    function editPoC(User $user, $idPoC, ContactList $contactList, $idevent = null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
@@ -601,10 +616,15 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
         if ($formCL->isSubmitted() && $formCL->isValid()) {
             $manager->persist($contactList);
             $manager->flush();
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
-            } else {
-                return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+            if (!$idevent){
+                if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                    return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
+                } else {
+                    return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+                }
+            }else{
+                return $this->redirectToRoute('preregistration_summary',
+                    ['id' => $user->getId(), 'idevent' => $idevent]);
             }
         }
         return $this->render('member/editPersonOfContact.html.twig', [
@@ -612,6 +632,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
             'contactList' => $contactList,
             'ContactListForm' => $formCL->createView(),
             'personOfContact' => $personOfContact,
+            'idevent'=>$idevent,
         ]);
     }
 

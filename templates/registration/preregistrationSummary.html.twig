@@ -42,29 +42,11 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <h3>Résumé des informations de l'utilisateur
-                    {% if (is_granted('ROLE_ADMIN')) %}
-                        <a class="btn btn-sm btn-icon btn-secondary"
-                           href="{{ path('admin_edit',{'id':user.id}) }}">
-                            <i class="fa fa-pencil">
-                            </i>
-                            <span class="sr-only">Modifier son profil</span>
-                        </a>
-                    {% else %}
-                        <a class="btn btn-sm btn-icon btn-secondary"
-                           href="{{ path('profile_edit',{'id':user.id}) }}">
-                            <i class="fa fa-pencil">
-                            </i>
-                            <span class="sr-only">Modifier le profil</span>
-                        </a>
-                    {% endif %}
-                </h3>
+                <h3>Résumé des informations de l'utilisateur</h3>
                 <h7>
                     <div class="row">
                         <div class="col-md-11">
-                            <div class="text-perso">Si ces informations ne sont pas correctes, veuillez les modifier en
-                                cliquant sur
-                                l'icône ci-dessus.
+                            <div class="text-perso">Veuillez svp vérifier, et le cas échéant, mettre à jour vos données reprises sur ce formulaire
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -132,57 +114,50 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-5">
                                 <div class="form-group">
                                     {#  Si au moins un numéro chez le User ou son parent, alors on l'affiche.
                                      Sinon on met le form et on associe le numéro au user (pas au parent) #}
-                                    {% if ((user.phones|length > 1 or user.userConnected.user.phones|length > 1)) %}
-                                    <h6>Numéro(s) du compte parent</h6>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Type</th>
-                                            <th>Numéro</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for phone in user.userConnected.user.phones %}
-                                        <tr>
-                                            <td>{{ phone.type }}</td>
-                                            <td>{{ phone.num }}
-                                        </tr>
-                                        {% else %}
-                                        <tr>
-                                            <td colspan="10">Aucun numéro de téléphone</td>
-                                        </tr>
-                                        </tbody>
-                                        {% endfor %}
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <h6>Numéro(s) du compte enfant</h6>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Type</th>
-                                            <th>Numéro</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for phone in user.phones %}
-                                        <tr>
-                                            <td>{{ phone.type }}</td>
-                                            <td>{{ phone.num }}
-                                        </tr>
-                                        {% else %}
-                                        <tr>
-                                            <td colspan="10">Aucun numéro de téléphone</td>
-                                        </tr>
-                                        </tbody>
-                                        {% endfor %}
-                                    </table>
+                                    {% if ((user.phones|length > 0 or user.userConnected.user.phones|length > 0)) %}
+                                        <h6>Numéro(s) du compte enfant</h6>
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Numéro</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for phone in user.phones %}
+                                            <tr>
+                                                <td>{{ phone.type }}</td>
+                                                <td>{{ phone.num }}</td>
+                                                <td class="align-middle text-right">
+                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                        <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                           href="{{ path('remove_phone_admin',{'idPhone':phone.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
+                                                    {% else %}
+                                                        <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                           href="{{ path('remove_phone',{'idPhone':phone.id, 'id':user.id}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucun numéro de téléphone</td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
                                     {% else %}
                                         <h6>Numéro pour {{ user.firstName }} {{ user.name }} </h6>
                                         {{ form_start(phoneForm) }}
@@ -200,86 +175,65 @@
                     </div>
                 </div>
 
-                <h5> Adresse(s) </h5>
+                <h5>Adresse(s)</h5>
                 <div class="card">
                     <div class="card-body">
-
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col">
                                 <div class="form-group">
                                     {#  Si au moins une adresse chez le User ou son parent, alors on l'affiche.
                                      Sinon on met le form et on associe le numéro au user (pas au parent) #}
-                                    {% if ((user.adress|length > 1 or user.userConnected.user.adress|length > 1)) %}
-                                    <h6>Adresse(s) du compte parent</h6>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Type</th>
-                                            <th>Numéro</th>
-                                            <th>Rue</th>
-                                            <th>Ville</th>
-                                            <th>Pays</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for adress in user.adress %}
-                                        <td>{{ adress.type }}</td>
-                                        <td>{{ adress.num }}
-                                            {% if adress.postBox %}
-                                                ({{ adress.postBox }})
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ adress.streetName }}</td>
-                                        <td>{{ adress.city.cityName }}
-                                            {% if adress.city.zip %}
-                                                ({{ adress.city.zip }})
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ adress.city.country.countryName }}</td>
-                                        {% else %}
-                                        <tr>
-                                            <td colspan="10">Aucune adresse</td>
-                                        </tr>
-                                        </tbody>
-                                        {% endfor %}
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <h6>Numéro(s) du compte enfant</h6>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Type</th>
-                                            <th>Numéro</th>
-                                            <th>Rue</th>
-                                            <th>Ville</th>
-                                            <th>Pays</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for adress in user.userConnected.user.adress %}
-                                        <td>{{ adress.type }}</td>
-                                        <td>{{ adress.num }}
-                                            {% if adress.postBox %}
-                                                ({{ adress.postBox }})
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ adress.streetName }}</td>
-                                        <td>{{ adress.city.cityName }}
-                                            {% if adress.city.zip %}
-                                                ({{ adress.city.zip }})
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ adress.city.country.countryName }}</td>
-                                        {% else %}
-                                        <tr>
-                                            <td colspan="10">Aucune adresse</td>
-                                        </tr>
-                                        </tbody>
-                                        {% endfor %}
-                                    </table>
+                                    {% if ((user.adress|length > 0 or user.userConnected.user.adress|length > 0)) %}
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Numéro</th>
+                                                <th>Rue</th>
+                                                <th>Ville</th>
+                                                <th>Pays</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for adress in user.userConnected.user.adress %}
+                                            <td>{{ adress.type }}</td>
+                                            <td>{{ adress.num }}
+                                                {% if adress.postBox %}
+                                                    ({{ adress.postBox }})
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ adress.streetName }}</td>
+                                            <td>{{ adress.city.cityName }}
+                                                {% if adress.city.zip %}
+                                                    ({{ adress.city.zip }})
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ adress.city.country.countryName }}</td>
+                                            <td class="align-middle text-right">
+                                                {% if (is_granted('ROLE_ADMIN')) %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                       href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                {% else %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                       href="{{ path('remove_adress',{'idAdress':adress.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                {% endif %}
+                                            </td>
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucune adresse</td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
                                     {% else %}
                                         <h6>Adresse pour {{ user.firstName }} {{ user.name }} </h6>
                                         {{ form_start(adressForm) }}
@@ -288,7 +242,7 @@
                                         {{ form_widget(cityForm) }}
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-outline-info">
-                                                Ajouter un numéro
+                                                Ajouter une adresse
                                             </button>
                                             {{ form_end(adressForm) }}
                                             {{ form_end(cityForm) }}
@@ -296,41 +250,92 @@
                                     {% endif %}
                                 </div>
                             </div>
+                            <div class="col-6">
+
+                            </div>
                         </div>
                     </div>
                 </div>
 
 
-                <h4>Personne de contact </h4>
+                <h4>Personne(s) de contact</h4>
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Nom</th>
-                                            <th>Prénom</th>
-                                            <th>Numéro</th>
-                                            <th>Relation</th>
-                                            <th>Informations</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for contactList in user.contactLists %}
-                                        <td>{{ contactList.personOfContact.name }}</td>
-                                        <td>{{ contactList.personOfContact.firstName }}</td>
-                                        <td>{{ contactList.personOfContact.num1 }}</td>
-                                        <td>{{ contactList.relation }}</td>
-                                        <td>{{ contactList.info }}</td>
-                                        {% else %}
-                                        <tr>
-                                            <td colspan="10">Aucune personne de contact</td>
-                                        </tr>
-                                        </tbody>
-                                        {% endfor %}
-                                    </table>
+                                    {#  Si au moins une PoC chez le User, alors on l'affiche.
+                                     Sinon on met le form et on associe la PoC au user #}
+                                    {% if (user.contactLists|length > 0) %}
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th>Numéro</th>
+                                                <th>Relation</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for contactList in user.contactLists %}
+                                            <tr>
+                                                <td>{{ contactList.personOfContact.name }}</td>
+                                                <td>{{ contactList.personOfContact.firstName }}</td>
+                                                <td>{{ contactList.personOfContact.num1 }}</td>
+                                                <td>{{ contactList.relation }}</td>
+                                                <td class="align-middle text-right">
+                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">
+                                                            <i class="fa fa-pencil">
+                                                            </i>
+                                                            <span class="sr-only">Modifier</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                           href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
+                                                    {% else %}
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                            <i class="fa fa-pencil">
+                                                            </i>
+                                                            <span class="sr-only">Modifier</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                           href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':user.id}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucune personne de contact</td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    {% else %}
+                                        <h6>Personne de contact pour {{ user.firstName }} {{ user.name }} </h6>
+                                        {{ form_start(PoCForm) }}
+                                        {{ form_widget(PoCForm) }}
+                                        {{ form_start(ContactListForm) }}
+                                        {{ form_widget(ContactListForm) }}
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline-info">
+                                                Ajouter une personne de contact
+                                            </button>
+                                            {{ form_end(ContactListForm) }}
+                                            {{ form_end(PoCForm) }}
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

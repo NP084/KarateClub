@@ -109,7 +109,7 @@ class RegistrationController extends AbstractController
         // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
         if ($formAdress->isSubmitted() && $formAdress->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->foward('App\Controller\MemberController::addUserAdress', [
+            $this->forward('App\Controller\MemberController::addUserAdress', [
                 'user' => $usr,
                 'adress' => $adress,
                 'city' => $city,
@@ -130,7 +130,7 @@ class RegistrationController extends AbstractController
         // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
         if ($formPoC->isSubmitted() && $formPoC->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->foward('App\Controller\MemberController::addUserPoC', [
+            $this->forward('App\Controller\MemberController::addUserPoC', [
                 'user' => $usr,
                 'contactList' => $contactList,
                 'PoC' => $PoC,
