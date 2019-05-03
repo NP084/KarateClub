@@ -239,14 +239,26 @@
                     </div>
                     <div class="row justify-content-end">
                         <div class="col-auto">
+                            {% if idevent is defined %}
                             {% if (is_granted('ROLE_ADMIN')) %}
                                 <a class="btn btn-success"
-                                   href="{{ path('add_admin',{'id':userConnected.id}) }}">Ajouter
+                                   href="{{ path('add_admin_event',{'id':userConnected.id,'idevent':idevent.id}) }}">Ajouter
                                     un nouveau membre</a>
                             {% else %}
                                 <a class="btn btn-success"
-                                   href="{{ path('add_profil',{'id':userConnected.id}) }}">Ajouter
+                                   href="{{ path('add_profil_event',{'id':userConnected.id,'idevent':idevent.id}) }}">Ajouter
                                     un nouveau membre</a>
+                            {% endif %}
+                            {% else %}
+                                {% if (is_granted('ROLE_ADMIN')) %}
+                                    <a class="btn btn-success"
+                                       href="{{ path('add_admin',{'id':userConnected.id}) }}">Ajouter
+                                        un nouveau membre</a>
+                                {% else %}
+                                    <a class="btn btn-success"
+                                       href="{{ path('add_profil',{'id':userConnected.id}) }}">Ajouter
+                                        un nouveau membre</a>
+                                {% endif %}
                             {% endif %}
                         </div>
                     </div>
