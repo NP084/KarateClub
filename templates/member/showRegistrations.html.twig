@@ -26,9 +26,12 @@
                                                 <th>Date de début</th>
                                                 <th>Date de fin</th>
                                                 <th>Remarque</th>
+                                                {% if (is_granted('ROLE_ADMIN')) %}
+
                                                 <th class="align-middle text-right">
                                                     Actions
                                                 </th>
+                                                {% endif %}
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -42,7 +45,7 @@
                                                     <td class="align-middle text-right">
                                                         {% if (is_granted('ROLE_ADMIN')) %}
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('admin_registration_edit',{'id': user.id, 'idReg':registration.id}) }}">
+                                                           href="{{ path('dossier_inscription',{'id': registration.id}) }}">
                                                             <i class="fa fa-pencil">
                                                             </i>
                                                             <span class="sr-only">Modifier</span>
@@ -69,14 +72,12 @@
                             </div>
                         </div>
                     </div>
-                    {% if (is_granted('ROLE_ADMIN')) %}
+                    {% if (is_granted('ROLE_ADMIN') and (app.user.id != user.userConnected.id)) %}
                         {#admin consulte un autre profil que le sien => retour vers la liste de users#}
-                        {% if (app.user.id != user.userConnected.id) %}
-                            <a class="btn btn-warning"
-                               href="{{ path('admin_users', {orderBy: 'ASC'}) }}">
-                                <b>Retour</b>
-                            </a>
-                        {% endif %}
+                        <a class="btn btn-warning"
+                           href="{{ path('admin_users', {orderBy: 'ASC'}) }}">
+                            <b>Retour</b>
+                        </a>
                         {# le profil consulté est un enfant et la personne connectée est son parent:
                         le retour se fait vers "Ma famille", sinon pas de btn retour#}
                     {% elseif(user.ownerUser == false and app.user.id == user.userConnected.id) %}
