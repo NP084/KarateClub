@@ -52,7 +52,7 @@ class MemberController extends AbstractController
      * @Route("/add-member-id-{id}-new-{idevent}", name="add_profil_event", requirements={"id"="\d+"})
      * @Route("/add-admin-id-{id}-new-{idevent}", name="add_admin_event",  requirements={"id"="\d+"})
      */
-    public function addUserEvent(UserConnected $userConnected,$idevent=null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function addUserEvent(UserConnected $userConnected, $idevent = null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
@@ -86,17 +86,13 @@ class MemberController extends AbstractController
             $this->addUserPhone($user, $phone, $manager);
             $this->addUserPoC($user, $contactList, $PoC, $manager);
 
-        if(!$idevent)
-        {
-            return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
-        }
-        else
-        {
-            return $this->redirectToRoute('registration_member_lesson', ['id' => $userConnected->getId(),'idevent'=> $idevent]);
-        }
+            if (!$idevent) {
+                return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
+            } else {
+                return $this->redirectToRoute('registration_member_lesson', ['id' => $userConnected->getId(), 'idevent' => $idevent]);
+            }
 
         }
-
 
         return $this->render('member/addUser.html.twig', [
             'user' => $user,
@@ -106,9 +102,10 @@ class MemberController extends AbstractController
             'cityForm' => $formCity->createView(),
             'PoCForm' => $formPoC->createView(),
             'ContactListForm' => $formContactList->createView(),
-            'idevent'=> $idevent
+            'idevent' => $idevent
         ]);
     }
+
     /**
      * Ajouter un nouveau user
      * @Route("/add-member-id={id}-new", name="add_profil", requirements={"id"="\d+"})
@@ -119,9 +116,7 @@ class MemberController extends AbstractController
         //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
 
-           return $this->addUserEvent($userConnected, null, $request, $manager, $authChecker);
-
-
+        return $this->addUserEvent($userConnected, null, $request, $manager, $authChecker);
 
     }
 
@@ -176,15 +171,13 @@ class MemberController extends AbstractController
             $this->addUserPoC($usr, $contactList, $PoC, $manager);
 
         }
-if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSubmitted() )
-{
+        if ($formPhone->isSubmitted() || $formAdress->isSubmitted() || $formPoC->isSubmitted()) {
 
             return $this->redirectToRoute('condition_view_family', [
                 'id' => $usr->getId(),
                 'idevent' => $idevent,
             ]);
         }
-
 
         return $this->render('member/completeUser.html.twig', ['user' => $usr,
 //'formUser' => $formUser->createView(),
@@ -193,8 +186,8 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
             'cityForm' => $formCity->createView(),
             'PoCForm' => $formPoC->createView(),
             'ContactListForm' => $formContactList->createView(),
-            'idevent'=>$idevent,
-            'user'=>$usr
+            'idevent' => $idevent,
+            'user' => $usr
         ]);
     }
 
@@ -203,11 +196,9 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-id={id}-edit", name="admin_edit",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public
-    function profileEdit(User $usr, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function profileEdit(User $usr, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
 //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
         $formUser = $this->createForm(UserType::class, $usr);
         $formUser->handleRequest($request);
 
@@ -291,8 +282,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-id={id}", name="admin_show",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public
-    function profileShow(User $usr)
+    public function profileShow(User $usr)
     {
         return $this->render('member/showProfile.html.twig', [
             'user' => $usr
@@ -302,8 +292,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
     /**
      * AJOUTE NOUVEAU PHONE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public
-    function addUserPhone(User $user, Phone $phone, ObjectManager $manager)
+    public function addUserPhone(User $user, Phone $phone, ObjectManager $manager)
     {
         $repo = $this->getDoctrine()
             ->getRepository(Phone::class);
@@ -329,23 +318,23 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-removePhone-idPhone={idPhone}-idUser={id}-{idevent}", name="remove_phone_admin", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public
-    function removeUserPhone(User $usr, $idPhone, $idevent = null, AuthorizationCheckerInterface $authChecker)
+    public function removeUserPhone(User $usr, $idPhone, $idevent = null, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $phone = $entityManager->getRepository(Phone::class)->find($idPhone);
         $phone->removeUser($usr);
         $entityManager->flush();
 
-        if (!$idevent){
+//        Gestion du btn retour : si idevent => retour vers preview inscription event
+        if (!$idevent) {
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
             } else {
                 return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
             }
-        }else{
-                return $this->redirectToRoute('preregistration_summary',
-                    ['id' => $usr->getId(), 'idevent' => $idevent]);
+        } else {
+            return $this->redirectToRoute('preregistration_summary',
+                ['id' => $usr->getId(), 'idevent' => $idevent]);
         }
     }
 
@@ -355,8 +344,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-removeAdress-idAdress={idAdress}-idUser={id}-{idevent}", name="remove_adress_admin", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public
-    function removeUserAdress(User $usr, $idAdress, $idevent = null,  AuthorizationCheckerInterface $authChecker)
+    public function removeUserAdress(User $usr, $idAdress, $idevent = null, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $adress = $entityManager->getRepository(Adress::class)->find($idAdress);
@@ -364,13 +352,13 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
         $usr->removeAdress($adress);
         $entityManager->flush();
 
-        if (!$idevent){
+        if (!$idevent) {
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
             } else {
                 return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
             }
-        }else{
+        } else {
             return $this->redirectToRoute('preregistration_summary',
                 ['id' => $usr->getId(), 'idevent' => $idevent]);
         }
@@ -379,8 +367,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
     /**
      * AJOUTE NOUVELLE ADRESSE à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public
-    function addUserAdress(User $user, Adress $adress, City $city, ObjectManager $manager)
+    public function addUserAdress(User $user, Adress $adress, City $city, ObjectManager $manager)
     {
         $repoCity = $this->getDoctrine()
             ->getRepository(City::class);
@@ -428,8 +415,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-id={id}-history-new", name="admin_history_new",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public
-    function editHistory(User $user, $idHist = null, Request $request, ObjectManager $manager)
+    public function editHistory(User $user, $idHist = null, Request $request, ObjectManager $manager)
     {
         if (!$idHist) {
             $history = new History();
@@ -458,8 +444,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-id={id}-history", name="admin_history",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public
-    function showHistory(User $usr, AuthorizationCheckerInterface $authChecker)
+    public function showHistory(User $usr)
     {
         return $this->render('member/showHistory.html.twig', [
             'user' => $usr
@@ -470,8 +455,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * Ajoute une ligne d'historique dans le parcours d'un utilisateur
      */
 
-    public
-    function addHistory(User $user, History $newHistory = null, ObjectManager $manager)
+    public function addHistory(User $user, History $newHistory = null, ObjectManager $manager)
     {
         if ($newHistory) {
             $newHistory->setUser($user);
@@ -500,7 +484,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
                 }
 
                 $history->setCategory($category)
-                        ->setUser($user);
+                    ->setUser($user);
                 $manager->persist($history);
                 $manager->flush();
             }
@@ -512,11 +496,9 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-remove_history-id={id}-idUser={idUser}", name="remove_history_admin", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public
-    function removeHistory($id, $idUser)
+    public function removeHistory(History $history, $idUser)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $history = $entityManager->getRepository(History::class)->find($id);
         $user = $entityManager->getRepository(User::class)->find($idUser);
 
         $user->removeHistory($history);
@@ -531,8 +513,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-removePoC-idCL={idCL}-idUser={id}-{idevent}", name="remove_PoC_admin", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public
-    function removePoC(User $usr, $idCL, $idevent = null, AuthorizationCheckerInterface $authChecker)
+    public function removePoC(User $usr, $idCL, $idevent = null, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $contactList = $entityManager->getRepository(ContactList::class)->find($idCL);
@@ -540,13 +521,13 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
         $usr->removeContactList($contactList);
         $entityManager->flush();
 
-        if (!$idevent){
+        if (!$idevent) {
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('admin_edit', ['id' => $usr->getId()]);
             } else {
                 return $this->redirectToRoute('profile_edit', ['id' => $usr->getId()]);
             }
-        }else{
+        } else {
             return $this->redirectToRoute('preregistration_summary',
                 ['id' => $usr->getId(), 'idevent' => $idevent]);
         }
@@ -555,8 +536,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
     /**
      * AJOUTE NOUVELLE PERSONNE DE CONTACT à LA DB (test si existe pour éviter doublon) + ASSOCIATION AU USER
      */
-    public
-    function addUserPoC(User $user, ContactList $contactList, PersonOfContact $PoC, ObjectManager $manager)
+    public function addUserPoC(User $user, ContactList $contactList, PersonOfContact $PoC, ObjectManager $manager)
     {
         $repo = $this->getDoctrine()
             ->getRepository(PersonOfContact::class);
@@ -604,8 +584,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @ParamConverter("contactList", options={"id"="idCL"})
      * @Security("has_role('ROLE_ADMIN') or user.getUser().getId() == contactList.getUser().getuserConnected().getUser().getId()")
      */
-    public
-    function editPoC(User $user, $idPoC, ContactList $contactList, $idevent = null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function editPoC(User $user, $idPoC, ContactList $contactList, $idevent = null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $personOfContact = $entityManager->getRepository(PersonOfContact::class)->find($idPoC);
@@ -616,13 +595,13 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
         if ($formCL->isSubmitted() && $formCL->isValid()) {
             $manager->persist($contactList);
             $manager->flush();
-            if (!$idevent){
+            if (!$idevent) {
                 if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                     return $this->redirectToRoute('admin_edit', ['id' => $user->getId()]);
                 } else {
                     return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
                 }
-            }else{
+            } else {
                 return $this->redirectToRoute('preregistration_summary',
                     ['id' => $user->getId(), 'idevent' => $idevent]);
             }
@@ -632,7 +611,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
             'contactList' => $contactList,
             'ContactListForm' => $formCL->createView(),
             'personOfContact' => $personOfContact,
-            'idevent'=>$idevent,
+            'idevent' => $idevent,
         ]);
     }
 
@@ -640,8 +619,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-id={id}-idReg={idReg}-registration-edit", name="admin_registration_edit",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public
-    function editRegistration(User $user, $idReg, Request $request, ObjectManager $manager)
+    public function editRegistration(User $user, $idReg, Request $request, ObjectManager $manager)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $registration = $entityManager->getRepository(Registration::class)->find($idReg);
@@ -666,16 +644,14 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-id={id}-registration", name="admin_registration",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public
-    function showRegistration(User $usr)
+    public function showRegistration(User $usr)
     {
         return $this->render('member/showRegistrations.html.twig', [
             'user' => $usr
         ]);
     }
 
-    public
-    function addRegistration(User $user, Registration $newRegistration, ObjectManager $manager)
+    public function addRegistration(User $user, Registration $newRegistration, ObjectManager $manager)
     {
         if ($newRegistration) {
             $newRegistration->setUser($user);
@@ -689,11 +665,9 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-remove_registration-id={id}-idUser={idUser}", name="remove_registration_admin", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public
-    function removeRegistration($id, $idUser)
+    public function removeRegistration(Registration $registration, $idUser)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $registration = $entityManager->getRepository(Registration::class)->find($id);
         $user = $entityManager->getRepository(User::class)->find($idUser);
 
         $user->removeRegistration($registration);
@@ -709,8 +683,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-family-{id}", name="admin_family", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
-    public
-    function indexFamily(UserConnected $userConnected)
+    public function indexFamily(UserConnected $userConnected)
     {
         $users = $userConnected->getUsers();
         return $this->render('member/showFamily.html.twig', [
@@ -725,8 +698,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public
-    function showDocument(User $usr)
+    public function showDocument(User $usr)
     {
         return $this->render('member/showDocument.html.twig', [
             'user' => $usr
@@ -740,8 +712,7 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/member-idUser={idUser}-document-{id}-edit", name="edit_member_document")
      * @Route("/admin-idUser={idUser}-document-{id}-edit", name="edit_admin_document")
      */
-    public
-    function form(AttachedFile $attachedFile = null, $idUser, Request $request, AuthorizationCheckerInterface $authChecker)
+    public function form(AttachedFile $attachedFile = null, $idUser, Request $request, AuthorizationCheckerInterface $authChecker)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->find($idUser);
@@ -787,11 +758,9 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-remove_document-id={id}-idUser={idUser}", name="remove_document_admin", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public
-    function removeDoc($id, $idUser)
+    public function removeDoc(AttachedFile $doc, $idUser)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $doc = $entityManager->getRepository(AttachedFile::class)->find($id);
         $user = $entityManager->getRepository(User::class)->find($idUser);
 
         $user->removeAttachedFile($doc);
@@ -805,11 +774,9 @@ if($formPhone->isSubmitted() || $formAdress ->isSubmitted() || $formPoC -> isSub
      * @Route("/admin-afficher_document-id={id}-idUser={idUser}", name="afficher_document_admin", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public
-    function afficherDoc($id, $idUser)
+    public function afficherDoc(AttachedFile $doc, $idUser)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $doc = $entityManager->getRepository(AttachedFile::class)->find($id);
         $user = $entityManager->getRepository(User::class)->find($idUser);
         return $this->render('member/afficherDoc.html.twig', [
             'doc' => $doc,
