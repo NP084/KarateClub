@@ -50,15 +50,6 @@ use Dompdf\Options;
 
 class RegistrationController extends AbstractController
 {
-    /**
-     * @Route("/registration", name="registration")
-     */
-    public function index()
-    {
-        return $this->render('registration/showContent.html.twig', [
-            'controller_name' => 'RegistrationController',
-        ]);
-    }
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE

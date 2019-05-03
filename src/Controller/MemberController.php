@@ -662,10 +662,10 @@ class MemberController extends AbstractController
 
     /**
      * Supprime une ligne des inscriptions de contact.
-     * @Route("/admin-remove_registration-id={id}-idUser={idUser}", name="remove_registration_admin", requirements={"idCL"="\d+"})
+     * @Route("/admin-remove_registration-id={id}-idUser={idUser}-{idevent}", name="remove_registration_admin", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function removeRegistration(Registration $registration, $idUser)
+    public function removeRegistration(Registration $registration, $idUser, $idevent = null)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->find($idUser);
@@ -673,8 +673,11 @@ class MemberController extends AbstractController
         $user->removeRegistration($registration);
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_registration', ['id' => $user->getId()]);
-
+        if ($idevent){
+            return $this->redirectToRoute('admin_registration', ['id' => $user->getId()]);
+        }else{
+            return $this->redirectToRoute('registration_view');
+        }
     }
 
     /**
