@@ -36,216 +36,316 @@
         </div>
         <!-- /.steps -->
     </div>
-{#
-    #}{# Admin ou si la personne connectée est le parent du profil consulté #}{#
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}#}
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <h3>Résumé des informations de l'utilisateur
-                        {% if (is_granted('ROLE_ADMIN')) %}
-                            <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('admin_edit',{'id':user.id}) }}">
-                                <i class="fa fa-pencil">
-                                </i>
-                                <span class="sr-only">Modifier son profil</span>
-                            </a>
-                        {% else %}
-                            <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('profile_edit',{'id':user.id}) }}">
-                                <i class="fa fa-pencil">
-                                </i>
-                                <span class="sr-only">Modifier le profil</span>
-                            </a>
-                        {% endif %}
-                    </h3>
-                    <h7>
-                        <div class="row">
-                            <div class="col-md-11">
-                        <div class="text-perso">Si ces informations ne sont pas correctes, veuillez les modifier en
-                            cliquant sur
-                            l'icône ci-dessus.
-                        </div></div>
-                            <div class="col-md-1">
-                            <div class="form-group">
-                            <a class="btn btn-outline-info"
-                               href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
-                            </div>
+    {#
+        #}{# Admin ou si la personne connectée est le parent du profil consulté #}{#
+        {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}#}
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <h3>Résumé des informations de l'utilisateur
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <a class="btn btn-sm btn-icon btn-secondary"
+                           href="{{ path('admin_edit',{'id':user.id}) }}">
+                            <i class="fa fa-pencil">
+                            </i>
+                            <span class="sr-only">Modifier son profil</span>
+                        </a>
+                    {% else %}
+                        <a class="btn btn-sm btn-icon btn-secondary"
+                           href="{{ path('profile_edit',{'id':user.id}) }}">
+                            <i class="fa fa-pencil">
+                            </i>
+                            <span class="sr-only">Modifier le profil</span>
+                        </a>
+                    {% endif %}
+                </h3>
+                <h7>
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="text-perso">Si ces informations ne sont pas correctes, veuillez les modifier en
+                                cliquant sur
+                                l'icône ci-dessus.
                             </div>
                         </div>
-                    </h7>
-                    <h4> Informations générales : </h4>
-                    <div class="card">
-                        <div class="card-body">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <a class="btn btn-outline-info"
+                                   href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                            </div>
+                        </div>
+                    </div>
+                </h7>
+                <h4> Informations générales : </h4>
+                <div class="card">
+                    <div class="card-body">
 
 
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
 
-                                        <h6>Nom:</h6> {{ user.name }}
-                                    </div>
-                                    <div class="form-group"><h6>Prénom:</h6> {{ user.firstname }}
-                                    </div>
-                                    <div class="form-group">
-                                        <p>  <h6>Date de naissance:</h6>
-                                        {{ user.birthdate |date('d/m/Y') }} </p>
-                                    </div>
-                                    <div class="form-group">
-                                        <p> <h6>Numéro de fédération :</h6> {{ user.fedNum }} </p>
-                                    </div>
-                                    {% set diff = date("now").diff(user.birthdate) %}
-                                    {% set age = diff.days/365 %}
-                                    {% if (user.belt) %}
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="form-group">
-                                                    <h6> Grade:</h6>
-                                                    <p>{{ user.belt }}
-                                                        {% if (age<13) %}
-                                                            {{ user.bars }} barrete(s)
-                                                        {% endif %}
-                                                        reçu
-                                                        le {{ user.receiptDate |date('d/m/Y') }}</p>
-                                                </div>
+                                    <h6>Nom:</h6> {{ user.name }}
+                                </div>
+                                <div class="form-group"><h6>Prénom:</h6> {{ user.firstname }}
+                                </div>
+                                <div class="form-group">
+                                    <p>  <h6>Date de naissance:</h6>
+                                    {{ user.birthdate |date('d/m/Y') }} </p>
+                                </div>
+                                <div class="form-group">
+                                    <p> <h6>Numéro de fédération :</h6> {{ user.fedNum }} </p>
+                                </div>
+                                {% set diff = date("now").diff(user.birthdate) %}
+                                {% set age = diff.days/365 %}
+                                {% if (user.belt) %}
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group">
+                                                <h6> Grade:</h6>
+                                                <p>{{ user.belt }}
+                                                    {% if (age<13) %}
+                                                        {{ user.bars }} barrete(s)
+                                                    {% endif %}
+                                                    reçu
+                                                    le {{ user.receiptDate |date('d/m/Y') }}</p>
                                             </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="col">
+
+                                <div class="user-avatar user-avatar-xxl fileinput-button">
+                                    <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
+                                         alt="{{ user.imageFile }}" name="avatar" width="150"/>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h4> Numéro(s) de téléphone </h4>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    {#  Si au moins un numéro chez le User ou son parent, alors on l'affiche.
+                                     Sinon on met le form et on associe le numéro au user (pas au parent) #}
+                                    {% if ((user.phones|length > 1 or user.userConnected.user.phones|length > 1)) %}
+                                    <h6>Numéro(s) du compte parent</h6>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Numéro</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for phone in user.userConnected.user.phones %}
+                                        <tr>
+                                            <td>{{ phone.type }}</td>
+                                            <td>{{ phone.num }}
+                                        </tr>
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="10">Aucun numéro de téléphone</td>
+                                        </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <h6>Numéro(s) du compte enfant</h6>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Numéro</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for phone in user.phones %}
+                                        <tr>
+                                            <td>{{ phone.type }}</td>
+                                            <td>{{ phone.num }}
+                                        </tr>
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="10">Aucun numéro de téléphone</td>
+                                        </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                    {% else %}
+                                        <h6>Numéro pour {{ user.firstName }} {{ user.name }} </h6>
+                                        {{ form_start(phoneForm) }}
+                                        {{ form_widget(phoneForm) }}
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline-info">
+                                                Ajouter un numéro
+                                            </button>
+                                            {{ form_end(phoneForm) }}
                                         </div>
                                     {% endif %}
                                 </div>
-
-
-                                <div class="col">
-
-                                    <div class="user-avatar user-avatar-xxl fileinput-button">
-                                        <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
-                                             alt="{{ user.imageFile }}" name="avatar" width="150"/>
-                                    </div>
-
-                                </div>
                             </div>
                         </div>
                     </div>
-
-
-                    <h4>Coordonnées </h4>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <h5> Numéro(s) de téléphone </h5>
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Type</th>
-                                                    <th>Numéro</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {% for phone in user.userConnected.user.phones %}
-                                                <td>{{ phone.type }}</td>
-                                                <td>{{ phone.num }}
-                                                    {% else %}
-                                                    <tr>
-                                                        <td colspan="10">Aucun numéro de téléphone</td>
-                                                    </tr>
-                                                </tbody>
-                                                {% endfor %}
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <h5> Adresses </h5>
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th>Type</th>
-                                                <th>Numéro</th>
-                                                <th>Rue</th>
-                                                <th>Ville</th>
-                                                <th>Pays</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for adress in user.adress %}
-
-                                            <td>{{ adress.type }}</td>
-                                            <td>{{ adress.num }}
-                                                {% if adress.postBox %}
-                                                    ({{ adress.postBox }})
-                                                {% endif %}
-                                            </td>
-                                            <td>{{ adress.streetName }}</td>
-                                            <td>{{ adress.city.cityName }}
-                                                {% if adress.city.zip %}
-                                                    ({{ adress.city.zip }})
-                                                {% endif %}
-                                            </td>
-                                            <td>{{ adress.city.country.countryName }}</td>
-                                            {% else %}
-                                            <tr>
-                                                <td colspan="10">Aucune adresse</td>
-                                            </tr>
-                                            </tbody>
-                                            {% endfor %}
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <h4>Personne de contact </h4>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th>Nom</th>
-                                                <th>Prénom</th>
-                                                <th>Numéro</th>
-                                                <th>Relation</th>
-                                                <th>Informations</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for contactList in user.contactLists %}
-                                            <td>{{ contactList.personOfContact.name }}</td>
-                                            <td>{{ contactList.personOfContact.firstName }}</td>
-                                            <td>{{ contactList.personOfContact.num1 }}</td>
-                                            <td>{{ contactList.relation }}</td>
-                                            <td>{{ contactList.info }}</td>
-                                            {% else %}
-                                            <tr>
-                                                <td colspan="10">Aucune personne de contact</td>
-                                            </tr>
-                                            </tbody>
-                                            {% endfor %}
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="btn btn-outline-info"
-                       href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
                 </div>
 
+                <h5> Adresse(s) </h5>
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    {#  Si au moins une adresse chez le User ou son parent, alors on l'affiche.
+                                     Sinon on met le form et on associe le numéro au user (pas au parent) #}
+                                    {% if ((user.adress|length > 1 or user.userConnected.user.adress|length > 1)) %}
+                                    <h6>Adresse(s) du compte parent</h6>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Numéro</th>
+                                            <th>Rue</th>
+                                            <th>Ville</th>
+                                            <th>Pays</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for adress in user.adress %}
+                                        <td>{{ adress.type }}</td>
+                                        <td>{{ adress.num }}
+                                            {% if adress.postBox %}
+                                                ({{ adress.postBox }})
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ adress.streetName }}</td>
+                                        <td>{{ adress.city.cityName }}
+                                            {% if adress.city.zip %}
+                                                ({{ adress.city.zip }})
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ adress.city.country.countryName }}</td>
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="10">Aucune adresse</td>
+                                        </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <h6>Numéro(s) du compte enfant</h6>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Numéro</th>
+                                            <th>Rue</th>
+                                            <th>Ville</th>
+                                            <th>Pays</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for adress in user.userConnected.user.adress %}
+                                        <td>{{ adress.type }}</td>
+                                        <td>{{ adress.num }}
+                                            {% if adress.postBox %}
+                                                ({{ adress.postBox }})
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ adress.streetName }}</td>
+                                        <td>{{ adress.city.cityName }}
+                                            {% if adress.city.zip %}
+                                                ({{ adress.city.zip }})
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ adress.city.country.countryName }}</td>
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="10">Aucune adresse</td>
+                                        </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                    {% else %}
+                                        <h6>Adresse pour {{ user.firstName }} {{ user.name }} </h6>
+                                        {{ form_start(adressForm) }}
+                                        {{ form_widget(adressForm) }}
+                                        {{ form_start(cityForm) }}
+                                        {{ form_widget(cityForm) }}
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline-info">
+                                                Ajouter un numéro
+                                            </button>
+                                            {{ form_end(adressForm) }}
+                                            {{ form_end(cityForm) }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h4>Personne de contact </h4>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Numéro</th>
+                                            <th>Relation</th>
+                                            <th>Informations</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for contactList in user.contactLists %}
+                                        <td>{{ contactList.personOfContact.name }}</td>
+                                        <td>{{ contactList.personOfContact.firstName }}</td>
+                                        <td>{{ contactList.personOfContact.num1 }}</td>
+                                        <td>{{ contactList.relation }}</td>
+                                        <td>{{ contactList.info }}</td>
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="10">Aucune personne de contact</td>
+                                        </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-outline-info"
+                   href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
             </div>
+
         </div>
-{#
-    {% else %}
-        <h4> Vous n'êtes pas autorisé à accéder à cette page </h4>
-    {% endif %}#}
+    </div>
+    {#
+        {% else %}
+            <h4> Vous n'êtes pas autorisé à accéder à cette page </h4>
+        {% endif %}#}
 
 {% endblock %}
 
