@@ -35,16 +35,16 @@
                             </br>
                             </br>
                         </div>
-                        <!--
+
                         <div>
-                            <a class="btn btn-primary" href="{{ path('HTML_to_PDF', {'id':user.id}) }}"
+                            <a class="btn btn-primary" href="{{ path('fiche_membre', {'id':user.id}) }}"
                                class="btn-btn-primary">
-                                <b>Convertir en PDF</b>
+                                <b>Voir ma fiche membre</b>
                             </a>
                             </br>
                             </br>
                         </div>
-                        -->
+
                     {% else %}
                         <h2>Document du membre {{ user.firstName }} {{ user.name }}</h2>
                     {% endif %}
