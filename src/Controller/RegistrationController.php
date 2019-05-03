@@ -6,6 +6,7 @@ use App\Entity\Registration;
 use App\Entity\VikaEvent;
 use App\Form\PreregistrationType;
 use App\Form\UserType;
+use App\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Form;
@@ -434,6 +435,10 @@ class RegistrationController extends AbstractController
         $user = $entityManager->getRepository(User::class)->find($id);
         $form = $this->createForm(UserType::class, $user);
 
+        $user1 = $user->getUserConnected()->getId();
+        $user2 = $entityManager->getRepository(UserConnected::class)->find($user1);
+        $form1 = $this->createForm(RegistrationType::class, $user2);
+
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
@@ -445,8 +450,9 @@ class RegistrationController extends AbstractController
         $html = $this->renderView('registration/ficheMembre.html.twig', [
             'title' => "Fiche membre",
             'form' => $form->createView(),
+            'form1' => $form1->createView(),
             'user' => $user,
-
+            'user1' => $user2,
         ]);
 
         // Load HTML to Dompdf
