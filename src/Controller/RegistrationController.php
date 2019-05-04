@@ -217,22 +217,30 @@ class RegistrationController extends AbstractController
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/registration-list", name="registration_view")
+     * @Route("/registration-list-{orderby}", name="registration_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function listRegistration(RegistrationRepository $repoRegistration)
+    public function listRegistration(RegistrationRepository $repoRegistration, $orderby =null)
     {
         //Tableau Pré-inscription:
         $registration = $repoRegistration->findBy(
             ['validateRegistration_date' => null]
         );
         //Tableau Inscription:
-        $registrationValidate = $repoRegistration->findByValidateRegistration();
+        if (!$orderby) {
+            $registrationValidate = $repoRegistration->findByValidateRegistration();
+        }elseif($orderby =='allReg'){
+            $registrationValidate = $repoRegistration->findBy(
+                ['isValidated' => true]
+            );
+        }
+
         //$nbPaiement = $repoPaiement->findByNbPaiement($registrationValidate->getId());
         return $this->render('registration/showContent.html.twig', [
             'controller_name' => 'Liste des dossiers de préinscription',
             'registrations' => $registration,
             'registrationsValidate' => $registrationValidate,
+            'allReg'=>$orderby,
         ]);
     }
 
@@ -244,7 +252,8 @@ class RegistrationController extends AbstractController
     public function validateRegistration(Registration $registration, Request $request, ObjectManager $manager)
     {
 
-        $registration->setValidateRegistrationDate(new \DateTime());
+        $registration->setValidateRegistrationDate(new \DateTime())
+                     ->setIsValidated();
         $manager->persist($registration);
         $manager->flush();
         return $this->redirectToRoute('registration_view');

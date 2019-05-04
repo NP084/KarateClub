@@ -82,6 +82,11 @@ class Registration
      */
     private $validateRegistration_date;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isValidated;
+
 
 
     public function __construct()
@@ -276,6 +281,18 @@ class Registration
     public function setValidateRegistrationDate(?\DateTimeInterface $validateRegistration_date): self
     {
         $this->validateRegistration_date = $validateRegistration_date;
+
+        return $this;
+    }
+
+    public function getIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(?bool $isValidated): self
+    {
+        $this->isValidated = $isValidated;
 
         return $this;
     }
