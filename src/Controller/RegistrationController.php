@@ -253,7 +253,7 @@ class RegistrationController extends AbstractController
     {
 
         $registration->setValidateRegistrationDate(new \DateTime())
-                     ->setIsValidated();
+                     ->setIsValidated(true);
         $manager->persist($registration);
         $manager->flush();
         return $this->redirectToRoute('registration_view');
