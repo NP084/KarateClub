@@ -596,7 +596,7 @@
                                                         </i>
                                                         <span class="sr-only">Modifier</span>
                                                     </a>
-                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deletePoc"
                                                        href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -609,7 +609,7 @@
                                                         </i>
                                                         <span class="sr-only">Modifier</span>
                                                     </a>
-                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deletePoc"
                                                        href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -693,6 +693,11 @@
 
     <script type="text/javascript">
         document.querySelector("#deleteRel").addEventListener("click", function (event) {
+            if (!confirm('Veuillez confirmer la suppression svp?')) event.preventDefault();
+        }, false);
+    </script>
+    <script type="text/javascript">
+        document.querySelector("#deletePoc").addEventListener("click", function (event) {
             if (!confirm('Veuillez confirmer la suppression svp?')) event.preventDefault();
         }, false);
     </script>

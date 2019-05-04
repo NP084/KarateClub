@@ -644,10 +644,11 @@ class MemberController extends AbstractController
      * @Route("/admin-id={id}-registration", name="admin_registration",  requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function showRegistration(User $usr)
-    {
+    public function showRegistration(User $usr){
+        $idevent=true;
         return $this->render('member/showRegistrations.html.twig', [
-            'user' => $usr
+            'user' => $usr,
+            'idevent'=>$idevent
         ]);
     }
 
@@ -672,10 +673,11 @@ class MemberController extends AbstractController
 
         $user->removeRegistration($registration);
         $entityManager->flush();
+        $userCnt =$this->getUser();
 
-        if ($idevent){
+        if (($userCnt->getId() == $user->getUserConnected()->getId())) {
             return $this->redirectToRoute('admin_registration', ['id' => $user->getId()]);
-        }else{
+        } else {
             return $this->redirectToRoute('registration_view');
         }
     }

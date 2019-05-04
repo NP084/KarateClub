@@ -124,7 +124,7 @@
                                             <tr>
                                                 <th>Type</th>
                                                 <th>Numéro</th>
-                                                <th>Action</th>
+                                                <th class="align-middle text-right">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -142,7 +142,7 @@
                                                         </a>
                                                     {% else %}
                                                         <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
-                                                           href="{{ path('remove_phone',{'idPhone':phone.id, 'id':user.id}) }}">
+                                                           href="{{ path('remove_phone',{'idPhone':phone.id, 'id':user.id, 'idevent':idevent}) }}">
                                                             <i class="fa fa-trash-o">
                                                             </i>
                                                             <span class="sr-only">Supprimer</span>
@@ -190,7 +190,7 @@
                                                 <th>Rue</th>
                                                 <th>Ville</th>
                                                 <th>Pays</th>
-                                                <th>Action</th>
+                                                <th class="align-middle text-right">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -271,7 +271,7 @@
                                                 <th>Prénom</th>
                                                 <th>Numéro</th>
                                                 <th>Relation</th>
-                                                <th>Action</th>
+                                                <th class="align-middle text-right">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -297,13 +297,13 @@
                                                         </a>
                                                     {% else %}
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                           href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">
                                                             <i class="fa fa-pencil">
                                                             </i>
                                                             <span class="sr-only">Modifier</span>
                                                         </a>
                                                         <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
-                                                           href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':user.id}) }}">
+                                                           href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':user.id, 'idevent':idevent}) }}">
                                                             <i class="fa fa-trash-o">
                                                             </i>
                                                             <span class="sr-only">Supprimer</span>
@@ -320,7 +320,6 @@
                                             {% endfor %}
                                         </table>
                                     {% else %}
-                                        <h6>Personne de contact pour {{ user.firstName }} {{ user.name }} </h6>
                                         {{ form_start(PoCForm) }}
                                         {{ form_widget(PoCForm) }}
                                         {{ form_start(ContactListForm) }}
@@ -348,6 +347,12 @@
         {% else %}
             <h4> Vous n'êtes pas autorisé à accéder à cette page </h4>
         {% endif %}#}
+
+    <script type="text/javascript">
+        document.querySelector("#deleteRel").addEventListener("click", function (event) {
+            if (!confirm('Veuillez confirmer la suppression svp?')) event.preventDefault();
+        }, false);
+    </script>
 
 {% endblock %}
 

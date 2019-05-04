@@ -45,14 +45,14 @@
                                                     <td class="align-middle text-right">
                                                         {% if (is_granted('ROLE_ADMIN')) %}
                                                         <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('dossier_inscription',{'id': registration.id}) }}">
+                                                           href="{{ path('dossier_inscription',{'id': registration.id, 'idevent':idevent}) }}">
                                                             <i class="fa fa-pencil">
                                                             </i>
                                                             <span class="sr-only">Modifier</span>
                                                         </a>
 
                                                         <a class="btn btn-sm btn-icon btn-secondary" id="deleteReg"
-                                                           href="{{ path('remove_registration_admin',{'id':registration.id, 'idUser':user.id}) }}">
+                                                           href="{{ path('remove_registration_admin',{'id':registration.id, 'idUser':user.id, 'idevent':idevent}) }}">
                                                             <i class="fa fa-trash-o">
                                                             </i>
                                                             <span class="sr-only">Supprimer</span>
