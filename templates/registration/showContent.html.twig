@@ -91,7 +91,7 @@
                                             </thead>
                                             <tbody>
                                             {% for registrationValidate in registrationsValidate %}
-                                                {% if  ((registrationValidate.vikaEvent.endDate |date('d-m-Y')) > ("now"|date("d-m-Y"))) %}
+                                                {% if  ((registrationValidate.vikaEvent.endDate |date('Y-m-d')) > ("now"|date("Y-m-d"))) %}
                                                     <tr>
                                                         <td>{{ registrationValidate.id }}</td>
                                                         <td>{{ registrationValidate.user.name }}</td>

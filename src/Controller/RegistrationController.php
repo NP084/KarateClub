@@ -220,7 +220,7 @@ class RegistrationController extends AbstractController
      * @Route("/registration-list", name="registration_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function listRegistration(PaiementRepository $repoPaiement, RegistrationRepository $repoRegistration, VikaEventRepository $repoVikaEvent)
+    public function listRegistration(RegistrationRepository $repoRegistration)
     {
         //Tableau Pré-inscription:
         $registration = $repoRegistration->findBy(
