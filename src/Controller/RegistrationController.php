@@ -402,7 +402,7 @@ class RegistrationController extends AbstractController
         //Conditions pour modifier:
         $editRegistration = false;
 
-        if ($attachedFile_1->getId() and $attachedFile_2->getId() and $user->getImageName()) {
+        if (($attachedFile_1->getId() and $attachedFile_2->getId() and $user->getImageName()) or $registration->getVikaEvent()->getEasyInscription(true) ) {
             $validateRegistration = true;
             if ($registration->getValidateRegistrationDate()) {
                 $editRegistration = true;
