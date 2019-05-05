@@ -185,6 +185,14 @@ class RegistrationController extends AbstractController
         $prereg = new Registration();
         $form = $this->createForm(PreregistrationType::class, $prereg);
         $form->handleRequest($request);
+//        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Registration::class);
+        $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
+
+        $prereg = new Registration();
+        $preregs = $repository->findBy(
+            ['vikaEvent' => $idevent]
+        );
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -210,7 +218,8 @@ class RegistrationController extends AbstractController
             'user' => $usr,
 //            'userConnected' => $userConnected,
             'idevent' => $event,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'preregs'=>$preregs
         ]);
     }
 
