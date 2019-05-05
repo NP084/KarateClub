@@ -11,12 +11,21 @@
                 <div class="col-auto">
                     <h2>Dossier de pré-inscription</h2>
                 </div>
+                {% if (app.user.id == registration.user.userConnected.id) %}
+                <div class="col-auto">
+                    <a class="btn btn-warning"
+                        href="{{ path('admin_registration', {'id':registration.user.id}) }}" role="button">
+                        Retour
+                    </a>
+                </div>
+                {% else %}
                 <div class="col-auto">
                     <a class="btn btn-warning"
                         href="{{ path('registration_view') }}" role="button">
                         Retour
                     </a>
                 </div>
+                {% endif %}
             </div>
             <div class="card">
                 <div class="container-fluid">

@@ -36,131 +36,152 @@
         </div>
         <!-- /.steps -->
     </div>
-{#
-    #}{# Admin ou si la personne connectée est le parent du profil consulté #}{#
-    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}#}
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <h3>Résumé des informations de l'utilisateur
-                        {% if (is_granted('ROLE_ADMIN')) %}
-                            <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('admin_edit',{'id':user.id}) }}">
-                                <i class="fa fa-pencil">
-                                </i>
-                                <span class="sr-only">Modifier son profil</span>
-                            </a>
-                        {% else %}
-                            <a class="btn btn-sm btn-icon btn-secondary"
-                               href="{{ path('profile_edit',{'id':user.id}) }}">
-                                <i class="fa fa-pencil">
-                                </i>
-                                <span class="sr-only">Modifier le profil</span>
-                            </a>
-                        {% endif %}
-                    </h3>
-                    <h7>
-                        <div class="row">
-                            <div class="col-md-11">
-                        <div class="text-perso">Si ces informations ne sont pas correctes, veuillez les modifier en
-                            cliquant sur
-                            l'icône ci-dessus.
-                        </div></div>
-                            <div class="col-md-1">
-                            <div class="form-group">
-                            <a class="btn btn-outline-info"
-                               href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
-                            </div>
+    {#
+        #}{# Admin ou si la personne connectée est le parent du profil consulté #}{#
+        {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}#}
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <h3>Résumé des informations de l'utilisateur</h3>
+                <h7>
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="text-perso">Veuillez svp vérifier, et le cas échéant, mettre à jour vos données personnelles reprises sur ce formulaire
                             </div>
                         </div>
-                    </h7>
-                    <h4> Informations générales : </h4>
-                    <div class="card">
-                        <div class="card-body">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <a class="btn btn-outline-info"
+                                   href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                            </div>
+                        </div>
+                    </div>
+                </h7>
+                <h4> Informations générales : </h4>
+                <div class="card">
+                    <div class="card-body">
 
 
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
 
-                                        <h6>Nom:</h6> {{ user.name }}
-                                    </div>
-                                    <div class="form-group"><h6>Prénom:</h6> {{ user.firstname }}
-                                    </div>
-                                    <div class="form-group">
-                                        <p>  <h6>Date de naissance:</h6>
-                                        {{ user.birthdate |date('d/m/Y') }} </p>
-                                    </div>
-                                    <div class="form-group">
-                                        <p> <h6>Numéro de fédération :</h6> {{ user.fedNum }} </p>
-                                    </div>
-                                    {% set diff = date("now").diff(user.birthdate) %}
-                                    {% set age = diff.days/365 %}
-                                    {% if (user.belt) %}
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="form-group">
-                                                    <h6> Grade:</h6>
-                                                    <p>{{ user.belt }}
-                                                        {% if (age<13) %}
-                                                            {{ user.bars }} barrete(s)
-                                                        {% endif %}
-                                                        reçu
-                                                        le {{ user.receiptDate |date('d/m/Y') }}</p>
-                                                </div>
+                                    <h6>Nom:</h6> {{ user.name }}
+                                </div>
+                                <div class="form-group"><h6>Prénom:</h6> {{ user.firstname }}
+                                </div>
+                                <div class="form-group">
+                                    <p>  <h6>Date de naissance:</h6>
+                                    {{ user.birthdate |date('d/m/Y') }} </p>
+                                </div>
+                                <div class="form-group">
+                                    <p> <h6>Numéro de fédération :</h6> {{ user.fedNum }} </p>
+                                </div>
+                                {% set diff = date("now").diff(user.birthdate) %}
+                                {% set age = diff.days/365 %}
+                                {% if (user.belt) %}
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="form-group">
+                                                <h6> Grade:</h6>
+                                                <p>{{ user.belt }}
+                                                    {% if (age<13) %}
+                                                        {{ user.bars }} barrete(s)
+                                                    {% endif %}
+                                                    reçu
+                                                    le {{ user.receiptDate |date('d/m/Y') }}</p>
                                             </div>
                                         </div>
-                                    {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="col">
+
+                                <div class="user-avatar user-avatar-xxl fileinput-button">
+                                    <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
+                                         alt="{{ user.imageFile }}" name="avatar" width="150"/>
                                 </div>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                <div class="col">
 
-                                    <div class="user-avatar user-avatar-xxl fileinput-button">
-                                        <img src="{{ vich_uploader_asset(user, 'imageFile') }}"
-                                             alt="{{ user.imageFile }}" name="avatar" width="150"/>
-                                    </div>
-
+                <h4> Numéro(s) de téléphone </h4>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="form-group">
+                                    {#  Si au moins un numéro chez le User ou son parent, alors on l'affiche.
+                                     Sinon on met le form et on associe le numéro au user (pas au parent) #}
+                                    {% if ((user.phones|length > 0 )) %}
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Numéro</th>
+                                                <th class="align-middle text-right">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for phone in user.phones %}
+                                            <tr>
+                                                <td>{{ phone.type }}</td>
+                                                <td>{{ phone.num }}</td>
+                                                <td class="align-middle text-right">
+                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                        <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                           href="{{ path('remove_phone_admin',{'idPhone':phone.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
+                                                    {% else %}
+                                                        <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                           href="{{ path('remove_phone',{'idPhone':phone.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="10">Aucun numéro de téléphone</td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    {% else %}
+                                        {{ form_start(phoneForm) }}
+                                        {{ form_widget(phoneForm) }}
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline-info">
+                                                Ajouter un numéro
+                                            </button>
+                                            {{ form_end(phoneForm) }}
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-
-                    <h4>Coordonnées </h4>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <h5> Numéro(s) de téléphone </h5>
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Type</th>
-                                                    <th>Numéro</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {% for phone in user.userConnected.user.phones %}
-                                                <td>{{ phone.type }}</td>
-                                                <td>{{ phone.num }}
-                                                    {% else %}
-                                                    <tr>
-                                                        <td colspan="10">Aucun numéro de téléphone</td>
-                                                    </tr>
-                                                </tbody>
-                                                {% endfor %}
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <h5> Adresses </h5>
+                <h4>Adresse(s)</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {#  Si au moins une adresse chez le User ou son parent, alors on l'affiche.
+                                     Sinon on met le form et on associe le numéro au user (pas au parent) #}
+                                    {% if ((user.adress|length > 0 )) %}
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -169,11 +190,11 @@
                                                 <th>Rue</th>
                                                 <th>Ville</th>
                                                 <th>Pays</th>
+                                                <th class="align-middle text-right">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             {% for adress in user.adress %}
-
                                             <td>{{ adress.type }}</td>
                                             <td>{{ adress.num }}
                                                 {% if adress.postBox %}
@@ -187,6 +208,23 @@
                                                 {% endif %}
                                             </td>
                                             <td>{{ adress.city.country.countryName }}</td>
+                                            <td class="align-middle text-right">
+                                                {% if (is_granted('ROLE_ADMIN')) %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                       href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                {% else %}
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                       href="{{ path('remove_adress',{'idAdress':adress.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                        <i class="fa fa-trash-o">
+                                                        </i>
+                                                        <span class="sr-only">Supprimer</span>
+                                                    </a>
+                                                {% endif %}
+                                            </td>
                                             {% else %}
                                             <tr>
                                                 <td colspan="10">Aucune adresse</td>
@@ -194,19 +232,38 @@
                                             </tbody>
                                             {% endfor %}
                                         </table>
-                                    </div>
+                                    {% else %}
+                                        {{ form_start(adressForm) }}
+                                        {{ form_widget(adressForm) }}
+                                        {{ form_start(cityForm) }}
+                                        {{ form_widget(cityForm) }}
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline-info">
+                                                Ajouter une adresse
+                                            </button>
+                                            {{ form_end(adressForm) }}
+                                            {{ form_end(cityForm) }}
+                                        </div>
+                                    {% endif %}
                                 </div>
+                            </div>
+                            <div class="col-6">
+
                             </div>
                         </div>
                     </div>
+                </div>
 
 
-                    <h4>Personne de contact </h4>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
+                <h4>Personne(s) de contact</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {#  Si au moins une PoC chez le User, alors on l'affiche.
+                                     Sinon on met le form et on associe la PoC au user #}
+                                    {% if (user.contactLists|length > 0) %}
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -214,16 +271,47 @@
                                                 <th>Prénom</th>
                                                 <th>Numéro</th>
                                                 <th>Relation</th>
-                                                <th>Informations</th>
+                                                <th class="align-middle text-right">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             {% for contactList in user.contactLists %}
-                                            <td>{{ contactList.personOfContact.name }}</td>
-                                            <td>{{ contactList.personOfContact.firstName }}</td>
-                                            <td>{{ contactList.personOfContact.num1 }}</td>
-                                            <td>{{ contactList.relation }}</td>
-                                            <td>{{ contactList.info }}</td>
+                                            <tr>
+                                                <td>{{ contactList.personOfContact.name }}</td>
+                                                <td>{{ contactList.personOfContact.firstName }}</td>
+                                                <td>{{ contactList.personOfContact.num1 }}</td>
+                                                <td>{{ contactList.relation }}</td>
+                                                <td class="align-middle text-right">
+                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">
+                                                            <i class="fa fa-pencil">
+                                                            </i>
+                                                            <span class="sr-only">Modifier</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                           href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
+                                                    {% else %}
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">
+                                                            <i class="fa fa-pencil">
+                                                            </i>
+                                                            <span class="sr-only">Modifier</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                           href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':user.id, 'idevent':idevent}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+
                                             {% else %}
                                             <tr>
                                                 <td colspan="10">Aucune personne de contact</td>
@@ -231,21 +319,40 @@
                                             </tbody>
                                             {% endfor %}
                                         </table>
-                                    </div>
+                                    {% else %}
+                                        {{ form_start(PoCForm) }}
+                                        {{ form_widget(PoCForm) }}
+                                        {{ form_start(ContactListForm) }}
+                                        {{ form_widget(ContactListForm) }}
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline-info">
+                                                Ajouter une personne de contact
+                                            </button>
+                                            {{ form_end(ContactListForm) }}
+                                            {{ form_end(PoCForm) }}
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-outline-info"
-                       href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
                 </div>
-
+                <a class="btn btn-outline-info"
+                   href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
             </div>
+
         </div>
-{#
-    {% else %}
-        <h4> Vous n'êtes pas autorisé à accéder à cette page </h4>
-    {% endif %}#}
+    </div>
+    {#
+        {% else %}
+            <h4> Vous n'êtes pas autorisé à accéder à cette page </h4>
+        {% endif %}#}
+
+    <script type="text/javascript">
+        document.querySelector("#deleteRel").addEventListener("click", function (event) {
+            if (!confirm('Veuillez confirmer la suppression svp?')) event.preventDefault();
+        }, false);
+    </script>
 
 {% endblock %}
 
