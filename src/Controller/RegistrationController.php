@@ -189,7 +189,7 @@ class RegistrationController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Registration::class);
         $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
 
-        $prereg = new Registration();
+
         $preregs = $repository->findBy(
             ['vikaEvent' => $idevent]
         );
