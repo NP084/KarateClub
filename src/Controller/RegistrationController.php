@@ -44,6 +44,7 @@ use App\Repository\RegistrationRepository;
 use App\Repository\PaiementRepository;
 use App\Form\DocumentType;
 use App\Form\UserPictureType;
+use App\Form\PaiementManagementType;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -241,6 +242,43 @@ class RegistrationController extends AbstractController
             'registrations' => $registration,
             'registrationsValidate' => $registrationValidate,
             'allReg'=>$orderby,
+        ]);
+    }
+
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/paiement-list-{orderby}", name="paiement_view")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function listPaiement(PaiementRepository $repoPaiement, $orderby =null)
+    {
+        //Tableau des payements en attante:
+        $paiement = $repoPaiement->findBy(
+            ['isPaid' => false]
+        );
+        //Tableau des payements clôturés:
+        $paiementValidate = $repoPaiement->findBy(
+            ['isPaid' => true]
+        );
+
+        //Ajouter des nouveaux paiements:
+        //$formPaiement = $this->createForm(PaiementManagementType::class, $paiement);
+        //$formPaiement->handleRequest($request);
+
+        //if ($formPaiement->isSubmitted() && $formPaiement->isValid()) {
+        //    $manager->persist($paiement);
+        //    $manager->flush();
+
+        //    return $this->redirectToRoute('paiement_view');
+        //}
+
+        
+        //$nbPaiement = $repoPaiement->findByNbPaiement($registrationValidate->getId());
+        return $this->render('registration/showPaiement.html.twig', [
+            'paiements' => $paiement,
+            'paiementValidate' => $paiementValidate,
+            'allReg'=>$orderby,
+            //'formPaiementManagement'=>$formPaiement,
         ]);
     }
 
@@ -443,7 +481,8 @@ class RegistrationController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Paiement::class);
         $paiementTest = $repo->findOneBy([
             'category' => $paiement->getCategory(),
-            'amount' => $paiement->getAmount()
+            'amount' => $paiement->getAmount(),
+            'isPaid' => $paiement->getIsPaid()
         ]);
         if (!$paiementTest) {
             // enregistre le nouveau paiement dans la DB

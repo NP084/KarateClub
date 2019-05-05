@@ -306,9 +306,10 @@
                                                     <div class="form-group">
                                                         <label for="">Nom de la photo:</label>
                                                         {{ form_widget(formPicture.imageFile) }}
-                                                        <img class="embed-responsive-rounded"
+                                                        <img class="user-avatar user-avatar-xl fileinput-button"
                                                              src="{{ asset('/upload/user/' ~ registration.user.imageName) }}"
-                                                             alt="Card image" width="15%">
+                                                             alt="..." width="15%">
+                                                             
                                                     </div>
                                                     <button type="submit" class="btn btn-outline-info">
                                                         Ajouter la photo
@@ -382,6 +383,12 @@
                                                                         <td>{{ paiement.id }}</td>
                                                                         <td>{{ paiement.category.title }}</td>
                                                                         <td>{{ paiement.amount }}</td>
+                                                                        {% if paiement.isPaid == true %}
+                                                                        <td>En ordre</td>
+                                                                        {% else %}
+                                                                        <td>En attente</td>
+                                                                        {% endif %}
+                                                                        
                                                                         <td class="align-middle text-right">
                                                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                                                 href="{{ path('paiement_edit', {'id': paiement.id}) }}">
@@ -427,6 +434,12 @@
                                                                                 <div class="form-group">
                                                                                     <label for="">Montant</label>
                                                                                     {{ form_widget(formPaiement.amount) }}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <div class="form-group">
+                                                                                    <label for="">Statut</label>
+                                                                                    {{ form_widget(formPaiement.isPaid) }}
                                                                                 </div>
                                                                             </div>
                                                                         </div>
