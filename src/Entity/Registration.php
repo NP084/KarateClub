@@ -87,6 +87,11 @@ class Registration
      */
     private $isValidated;
 
+    /**
+     * @ORM\Column(type="blob", nullable=true)
+     */
+    private $Documents;
+
 
 
     public function __construct()
@@ -293,6 +298,18 @@ class Registration
     public function setIsValidated(?bool $isValidated): self
     {
         $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    public function getDocuments()
+    {
+        return $this->Documents;
+    }
+
+    public function setDocuments($Documents): self
+    {
+        $this->Documents = $Documents;
 
         return $this;
     }
