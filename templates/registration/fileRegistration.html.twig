@@ -306,9 +306,9 @@
                                                     <div class="form-group">
                                                         <label for="">Nom de la photo:</label>
                                                         {{ form_widget(formPicture.imageFile) }}
-                                                        <img class="user-avatar user-avatar-xl fileinput-button"
+                                                        <img class="embed-responsive-rounded"
                                                              src="{{ asset('/upload/user/' ~ registration.user.imageName) }}"
-                                                             alt="..." width="15%">
+                                                             alt="Card image" width="15%">
                                                              
                                                     </div>
                                                     <button type="submit" class="btn btn-outline-info">

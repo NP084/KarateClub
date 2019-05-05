@@ -283,6 +283,20 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * VALIDATION DU PAYEMENT
+     * @Route("/paiement-validate-{id}", name="paiement_validate", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function validatePaiement(Paiement $paiement, Request $request, ObjectManager $manager)
+    {
+
+        $paiement->setIsPaid(true);
+        $manager->persist($paiement);
+        $manager->flush();
+        return $this->redirectToRoute('paiement_view');
+    }
+
+    /**
      * VALIDATION DU DOSSIER D'INSCRIPTION
      * @Route("/dossier-inscription-valide-{id}", name="registration_validate", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
