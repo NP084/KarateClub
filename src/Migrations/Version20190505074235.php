@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190503173557 extends AbstractMigration
+final class Version20190505074235 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -28,6 +28,7 @@ final class Version20190503173557 extends AbstractMigration
         $this->addSql('ALTER TABLE paiement CHANGE modality_id category_id INT NOT NULL');
         $this->addSql('ALTER TABLE paiement ADD CONSTRAINT FK_B1DC7A1E12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
         $this->addSql('CREATE INDEX IDX_B1DC7A1E12469DE2 ON paiement (category_id)');
+        $this->addSql('ALTER TABLE registration ADD is_validated TINYINT(1) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -39,7 +40,8 @@ final class Version20190503173557 extends AbstractMigration
         $this->addSql('ALTER TABLE paiement DROP FOREIGN KEY FK_B1DC7A1E12469DE2');
         $this->addSql('DROP INDEX IDX_B1DC7A1E12469DE2 ON paiement');
         $this->addSql('ALTER TABLE paiement CHANGE category_id modality_id INT NOT NULL');
-        $this->addSql('ALTER TABLE paiement ADD CONSTRAINT FK_B1DC7A1E2D6D889B FOREIGN KEY (modality_id) REFERENCES modality (id) ON UPDATE NO ACTION ON DELETE NO ACTION');
+        $this->addSql('ALTER TABLE paiement ADD CONSTRAINT FK_B1DC7A1E2D6D889B FOREIGN KEY (modality_id) REFERENCES modality (id)');
         $this->addSql('CREATE INDEX IDX_B1DC7A1E2D6D889B ON paiement (modality_id)');
+        $this->addSql('ALTER TABLE registration DROP is_validated');
     }
 }
