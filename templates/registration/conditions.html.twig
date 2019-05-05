@@ -74,12 +74,14 @@
                     </br>
                     {{ form_widget(form.condition_registration) }}
 
-</br>
-
+                    </br>
                 </div>
             <h6>{{ form_label(form.remark, 'Remarque éventuelle') }}</h6>
             </div>
+
+
         </div>
+
             </br>
 
             {{ form_widget(form.remark) }}
@@ -91,8 +93,12 @@
                 </button>
 
         </div>
+        <a class="btn btn-link"
+           href="{{ asset('/upload/document/' ~ AttachedFile.docname) }}">Voir nos conditions générales</a>
     </div>
     {{ form_end(form) }}
+
+
 {% endif %}
 
 

@@ -190,9 +190,14 @@ class RegistrationController extends AbstractController
         $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
 
 
-        $preregs = $repository->findBy(
+            $preregs = $repository->findBy(
             ['vikaEvent' => $idevent]
         );
+        $attachedFile_1 = $this->getDoctrine()
+            ->getRepository(AttachedFile::class)
+            ->findOneBy(
+                ['title' => 'CG']
+            );
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -219,10 +224,57 @@ class RegistrationController extends AbstractController
 //            'userConnected' => $userConnected,
             'idevent' => $event,
             'form' => $form->createView(),
-            'preregs'=>$preregs
+            'preregs'=>$preregs,
+            'AttachedFile' => $attachedFile_1
         ]);
     }
 
+
+
+    /**
+     * Conditions générales
+     * @Route("/conditions-générales", name="general_conditions")
+     */
+    public function conditionsGenerales(Request $request, ObjectManager $manager)
+    {
+        $attachedFile_1 = $this->getDoctrine()
+            ->getRepository(AttachedFile::class)
+            ->findOneBy(
+                ['title' => 'CG']
+            );
+
+        if (!$attachedFile_1) {
+            $attachedFile_1 = new AttachedFile();
+        }
+        $formAttachedFile_1 = $this->createForm(DocumentForRegType::class, $attachedFile_1);
+        $formAttachedFile_1->handleRequest($request);
+
+
+        if ($formAttachedFile_1->isSubmitted() && $formAttachedFile_1->isValid()) {
+
+            if (!$attachedFile_1->getId()) {
+                $attachedFile_1->setDatecreat(new \DateTime());
+            }
+            $attachedFile_1->setTitle('CG');
+            $attachedFile_1->setRegistration(null);
+            $attachedFile_1->setMember(null);
+            $manager->persist($attachedFile_1);
+            $manager->flush();
+            //supprime les lignes dans AttachedFile si DocName est null (qd on supprime la pièce jointe)
+            if ($attachedFile_1->getDocname() == null) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->remove($attachedFile_1);
+                $em->flush();
+            }
+
+
+        }
+        return $this->render('registration/conditionsGenerales.html.twig', [
+            'formAttachedFile_1' => $formAttachedFile_1->createView(),
+            'AttachedFile' => $attachedFile_1
+
+        ]);
+    }
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE

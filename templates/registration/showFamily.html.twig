@@ -147,10 +147,18 @@
                                                                     {% endif %}
                                                                 {% endfor %}
                                                                 {% if foo == 1 %}
+                                                                   {% if  idevent.easyinscription %}
+                                                                       <a class="btn btn-outline-info"
+                                                                          href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                           InscrireSimplifiée
+                                                                       </a>
+                                                                       {% else %}
+
                                                                     <a class="btn btn-outline-info"
                                                                        href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
                                                                         Inscrire
                                                                     </a>
+                                                                       {% endif %}
                                                                 {% endif %}
                                                             {% else %}
                                                                 <a class="btn btn-outline-info"
@@ -261,6 +269,7 @@
                                 {% endif %}
                             {% endif %}
                         </div>
+
                     </div>
 
                 </div>
