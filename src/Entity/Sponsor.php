@@ -4,8 +4,16 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SponsorRepository")
+ * @Vich\Uploadable
  */
 class Sponsor
 {
@@ -28,13 +36,24 @@ class Sponsor
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
      */
     private $logo;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
-    private $link;
+    private $datecreat;
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * @Vich\UploadableField(mapping="sponsors_picture", fileNameProperty="logo")
+     * @var File
+     */
+    private $imageFile;
+
+
 
     public function getId(): ?int
     {
@@ -70,21 +89,19 @@ class Sponsor
         return $this->logo;
     }
 
-    public function setLogo(?string $logo): self
+    public function setLogo(?string $logo): void
     {
         $this->logo = $logo;
-
-        return $this;
     }
 
-    public function getLink(): ?string
+    public function getDatecreat(): ?\DateTimeInterface
     {
-        return $this->link;
+        return $this->datecreat;
     }
 
-    public function setLink(?string $link): self
+    public function setDatecreat(\DateTimeInterface $datecreat): self
     {
-        $this->link = $link;
+        $this->datecreat = $datecreat;
 
         return $this;
     }

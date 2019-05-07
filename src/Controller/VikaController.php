@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\ContentPage;
+use App\Entity\Sponsor;
 use App\Form\ArticleType;
 use App\Form\ContentType;
+use App\Form\SponsorType;
+
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\EncadrementType;
 use App\Entity\Encadrement;
 use App\Repository\EncadrementRepository;
+use App\Repository\SponsorRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
@@ -48,6 +52,35 @@ class VikaController extends AbstractController
     }
 
     /**
+     * @Route("/vika-sponsors-new", name="sponsors_create")
+     * @Route("/vika-sponsors-{id}-edit", name="sponsors_edit", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function formSponsors(Sponsor $sponsors=null, Request $request, ObjectManager $manager ){
+
+        if (!$sponsors) {
+            $sponsors = New Sponsor();
+        }
+
+        $form = $this->createForm(SponsorType::class, $personne);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()){
+            if (!$sponsors->getId()){
+                $sponsors->setDatecreat(new \DateTime());
+            }
+            $manager->persist($sponsors);
+            $manager->flush();
+            return $this->redirectToRoute('sponsor_index',['path'=>'Sponsor']);
+        }
+
+        return $this->render('vika/Encadrementcreate.html.twig', [
+            'formSponsor'=>$form->createView(),
+            'editMode'=> $sponsors->getId()!==null
+        ]);
+    }
+
+    /**
      * Supprime l'entraineur.
      * @Route("/vika-encadrement-delete-{id}", name="encadrement_delete", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
@@ -60,6 +93,19 @@ class VikaController extends AbstractController
         return $this->redirectToRoute('encadrement_index',['path'=>'Encadrement']);
     }
 
+
+    /**
+     * @Route("/vika%page-{path}", name="sponsor_index")
+     */
+    public function vikaSponsor(SponsorRepository $repo, ContentPage $contentPage){
+
+        $sponsors = $repo -> findAll();
+
+        return $this->render('vika/Sponsorindex.html.twig', [
+            'sponsors' => $sponsors,
+            'contentPage' => $contentPage,
+            ]);
+    }
 
 
     /**
@@ -74,6 +120,7 @@ class VikaController extends AbstractController
             'contentPage' => $contentPage,
             ]);
     }
+
 
     /**
      * @Route("/vika-{path}-edit", name="VikaContentEdit")
