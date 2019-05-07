@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Repository\ArticleRepository;
+use App\Entity\Article;
 
 
 class HomePageController extends AbstractController
@@ -41,11 +43,16 @@ class HomePageController extends AbstractController
     /**
      * @Route("/home-{path}", name="home_page")
      */
-    public function index(ContentPage $contentPage)
+    public function index(ArticleRepository $repoArticle, ContentPage $contentPage)
     {
-//        return $this->render('home_page/showContent.html.twig');
+        $article = $repoArticle->findBy(
+            [ ],
+            ['id' => 'DESC']
+        );
+        
         return $this->render('home_page/index.html.twig', [
             'contentPage' => $contentPage,
+            'articles' => $article,
         ]);
     }
 

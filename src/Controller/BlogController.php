@@ -25,7 +25,11 @@ class BlogController extends Controller//AbstractController
      */
     public function index(ArticleRepository $repo, Request $request)
     {
-        $allarticles = $repo -> findAll();
+        $allarticles = $repo -> findBy(
+            [ ],
+            ['id' => 'DESC']
+        );
+
         $articles = $this->get('knp_paginator')->paginate(
             $allarticles,
             $request->query->getInt('page',1),
