@@ -162,7 +162,12 @@
                 <div class="container">
                 <div class="row justify-content-end">
                     <div class="col-auto">
+                        {% if idevent.id is defined %}
+                        <a class="btn btn-outline-info"
+                           href="{{ path('preregistration_summary', {'id':user.userConnected.id, 'idevent':  idevent}) }}">Créer event un nouveau membre</a>
+                        {% else %}
                         <button type="submit" class="btn btn-success">Créer un nouveau membre</button>
+                        {% endif %}
                         {{ form_end(formUser) }}
                     </div>
                 </div>

@@ -49,10 +49,10 @@ class MemberController extends AbstractController
 
     /**
      * Ajouter un nouveau user
-     * @Route("/add-member-id={id}-new", name="add_profil", requirements={"id"="\d+"})
-     * @Route("/add-admin-id={id}-new", name="add_admin",  requirements={"id"="\d+"})
+     * @Route("/add-member-id-{id}-new-{idevent}", name="add_profil_event", requirements={"id"="\d+"})
+     * @Route("/add-admin-id-{id}-new-{idevent}", name="add_admin_event",  requirements={"id"="\d+"})
      */
-    public function addUser(UserConnected $userConnected, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    public function addUserEvent(UserConnected $userConnected,$idevent=null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
@@ -86,8 +86,15 @@ class MemberController extends AbstractController
             $this->addUserPhone($user, $phone, $manager);
             $this->addUserPoC($user, $contactList, $PoC, $manager);
 
-
+        if(!$idevent)
+        {
             return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
+        }
+        else
+        {
+            return $this->redirectToRoute('registration_member_lesson', ['id' => $userConnected->getId(),'idevent'=> $idevent]);
+        }
+
         }
 
 
@@ -98,8 +105,24 @@ class MemberController extends AbstractController
             'adressForm' => $formAdress->createView(),
             'cityForm' => $formCity->createView(),
             'PoCForm' => $formPoC->createView(),
-            'ContactListForm' => $formContactList->createView()
+            'ContactListForm' => $formContactList->createView(),
+            'idevent'=> $idevent
         ]);
+    }
+    /**
+     * Ajouter un nouveau user
+     * @Route("/add-member-id={id}-new", name="add_profil", requirements={"id"="\d+"})
+     * @Route("/add-admin-id={id}-new", name="add_admin",  requirements={"id"="\d+"})
+     */
+    public function addUser(UserConnected $userConnected, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
+    {
+        //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
+        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
+
+           return $this->addUserEvent($userConnected, null, $request, $manager, $authChecker);
+
+
+
     }
 
     /**
