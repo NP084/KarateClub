@@ -5,8 +5,9 @@
     </head>
     <body>
         <h1>Villeneuve Karaté do Association</h1>
-        <h2>Fiche d'inscription ........ / ........</h2>
-        <h4>Numéro dossier: ........</h4>
+        <h2>Fiche d'inscription {{ reg.vikaEvent.startdate|date("Y") }} / {{ reg.vikaEvent.enddate|date("Y") }}</h2>
+        <h4>Titre évènement: {{ reg.vikaEvent.title }}</h4>
+        <h4>Numéro dossier: {{ reg.id }}</h4>
         <hr>
         <h3>Informations générales</h3>
         <h4>Nom: {{ user.name }}</h4>
@@ -49,7 +50,7 @@
 
         <h2>Veuillez nous informer en cas de changement d'adresse!</h2>
         <p><strong>Prise en charge médicale:</strong> Autorise la prise en charge médicale pour tout accident survenant
-durant les cours ou les manifestations auxquelles participerait le club.</p>
+durant les cours ou les manifestations auxquelles participerait le club.</p> {{ reg }}
         <p>Personne à prévenir en cas d'accident: ....................................................</p>
         <p><strong>Droit à l'image:</strong> Autorise la publication non commerciale des photos prises lors des différentes
 activités organisées au sein du club ou auxquelles il participe. (oui/non)* Signature : ............................................</p>

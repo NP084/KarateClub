@@ -470,13 +470,15 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/fiche-membre-idUser={id}", name="fiche_membre", requirements={"id"="\d+"})
+     * @Route("/fiche-membre-idUser={id}-idReg={idReg}", name="fiche_membre", requirements={"id"="\d+"})
      */
-    public function HTMLToPDF($id)
+    public function HTMLToPDF($id, $idReg)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->find($id);
         $form = $this->createForm(UserType::class, $user);
+
+        $reg = $entityManager->getRepository(Registration::class)->find($idReg);
 
         $user1 = $user->getUserConnected()->getId();
         $user2 = $entityManager->getRepository(UserConnected::class)->find($user1);
@@ -496,6 +498,7 @@ class RegistrationController extends AbstractController
             'form1' => $form1->createView(),
             'user' => $user,
             'user1' => $user2,
+            'reg' => $reg,
         ]);
 
         // Load HTML to Dompdf
