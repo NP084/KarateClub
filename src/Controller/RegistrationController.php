@@ -126,7 +126,7 @@ class RegistrationController extends AbstractController
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function conditions(User $usr, $idevent, Request $request, ObjectManager $manager)
+    public function conditions(User $usr, $idevent, Request $request, ObjectManager $manager,\Swift_Mailer $mailer)
     {
         $userConnected = $usr->getUserConnected();
         $entityManager = $this->getDoctrine()->getManager();
@@ -143,6 +143,15 @@ class RegistrationController extends AbstractController
             $manager->persist($prereg);
 
             $manager->flush();
+
+            $message = (new \Swift_Message('Fiche de renseignements'))
+                ->setFrom('vi.ka.59@hotmail.fr')
+                ->setTo($userConnected->getEmail())
+                ->setBody("Voici la fiche de renseignements! ", 'text/html')
+                ->attach(\Swift_Attachment::fromPath("./upload/document/fiche  renseignements VIKA.pdf"))
+                ;
+            $mailer->send($message);
+
             return $this->render('registration/confirmation.html.twig', [
                 'user' => $usr,
                 'registration' => $prereg,
