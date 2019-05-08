@@ -283,7 +283,6 @@ class RegistrationController extends AbstractController
 
         }
 
-
         //Ajouter le document le document d'inscription:
         $attachedFile_2 = $this->getDoctrine()
             ->getRepository(AttachedFile::class)
@@ -360,7 +359,7 @@ class RegistrationController extends AbstractController
             'registration' => $registration,
             // pas nécessaire de faire passer le user (on peut le récupérer avec registration.user)
             // pareil pour adresse
-            // 'user' => $user,
+            'user' => $user,
            // 'adress' => $adress,
             'paiements' => $paiementNombre,
             'editRegistration' => $editRegistration,
