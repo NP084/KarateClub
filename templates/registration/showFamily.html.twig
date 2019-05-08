@@ -84,7 +84,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     {% if (is_granted('ROLE_ADMIN') and app.user.id == app.request.get("id")) %}
-                        <h2>Ma famille</h2>
+                        <h2>Choix du membre à inscrire</h2>
                     {% else %}
                         {% if (is_granted('ROLE_ADMIN')) %}
                             {# User est un parent  #}
@@ -149,7 +149,7 @@
                                                                 {% if foo == 1 %}
                                                                     <a class="btn btn-outline-info"
                                                                        href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
-                                                                        Inscrire1
+                                                                        Inscrire
                                                                     </a>
                                                                 {% endif %}
                                                             {% else %}
@@ -177,7 +177,7 @@
                                                                 {% if foo == 1 %}
                                                                     <a class="btn btn-outline-info"
                                                                        href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
-                                                                        Inscrire2
+                                                                        Inscrire
                                                                     </a>
                                                                 {% endif %}
 

@@ -54,7 +54,7 @@
                                     <div class="form-group">
                                         <h3>{{ user.name }} {{ user.firstname }} </h3>
                                         <div class="metadata">Inscrit sur le site depuis
-                                            : {{ user.createdUs |date('d/m/Y') }}
+                                            : {{ user.createdUs |date('d-m-Y') }}
                                         </div>
                                     </div>
                                 </div>
@@ -105,79 +105,80 @@
                                     </div>
                                 </div>
                             {% endif %}
-                        {# parent ou admin qui consulte un User "enfant"     #}
-                        {% if( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <h3> Informations sur le titulaire du compte</h3>
+                            {# parent ou admin qui consulte un User "enfant"     #}
+                            {% if( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <h3> Informations sur le titulaire du compte</h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        {% if (is_granted('ROLE_ADMIN')) %}
-                                            <a class="btn btn-link"
-                                               href="{{ path('admin_show',{'id':user.userConnected.user.id}) }}">
-                                                <h4>{{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }} </h4>
-                                                <span class="sr-only">Voir le profil</span>
-                                            </a>
-                                        {% else %}
-                                            <a class="btn btn-link"
-                                               href="{{ path('profile_show',{'id':user.userConnected.user.id}) }}">
-                                                <h4>{{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }} </h4>
-                                                <span class="sr-only">Voir le profil</span>
-                                            </a>
-                                        {% endif %}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            {% if (is_granted('ROLE_ADMIN')) %}
+                                                <a class="btn btn-link"
+                                                   href="{{ path('admin_show',{'id':user.userConnected.user.id}) }}">
+                                                    <h4>{{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }} </h4>
+                                                    <span class="sr-only">Voir le profil</span>
+                                                </a>
+                                            {% else %}
+                                                <a class="btn btn-link"
+                                                   href="{{ path('profile_show',{'id':user.userConnected.user.id}) }}">
+                                                    <h4>{{ user.userConnected.user.name }} {{ user.userConnected.user.firstname }} </h4>
+                                                    <span class="sr-only">Voir le profil</span>
+                                                </a>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <p>Numéro de fédération : {{ user.userConnected.user.fedNum }} </p>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <p>Numéro de fédération : {{ user.userConnected.user.fedNum }} </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <p> Email : {{ user.userConnected.email }} </p>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <p> Email : {{ user.userConnected.email }} </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <h3> Numéro(s) de téléphone </h3>
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th>Type</th>
-                                                <th>Numéro</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for phone in user.userConnected.user.phones %}
-
-                                            <td>{{ phone.type }}</td>
-                                            <td>{{ phone.num }}</td>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <h3> Numéro(s) de téléphone </h3>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Numéro</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for phone in user.userConnected.user.phones %}
+                                                <tr>
+                                                    <td>{{ phone.type }}</td>
+                                                    <td>{{ phone.num }}</td>
+                                                </tr>
                                                 {% else %}
                                                 <tr>
                                                     <td colspan="10">Aucun numéro de téléphone</td>
                                                 </tr>
-                                            </tbody>
-                                            {% endfor %}
-                                        </table>
+                                                </tbody>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <div class="container-fluid">
@@ -199,13 +200,15 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for phone in user.userConnected.user.phones %}
-                                                <td>{{ phone.type }}</td>
-                                                <td>{{ phone.num }}
-                                                    {% else %}
-                                                    <tr>
-                                                        <td colspan="10">Aucun numéro de téléphone</td>
-                                                    </tr>
+                                                {% for phone in user.phones %}
+                                                <tr>
+                                                    <td>{{ phone.type }}</td>
+                                                    <td>{{ phone.num }}</td>
+                                                </tr>
+                                                {% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun numéro de téléphone</td>
+                                                </tr>
                                                 </tbody>
                                                 {% endfor %}
                                             </table>
@@ -229,19 +232,20 @@
                                             </thead>
                                             <tbody>
                                             {% for adress in user.adress %}
-
-                                            <td>{{ adress.type }}</td>
-                                            <td>{{ adress.num }}
-                                                {% if adress.postBox %}
-                                                    ({{ adress.postBox }})
-                                                {% endif %}
-                                            </td>
-                                            <td>{{ adress.streetName }}</td>
-                                            <td>{{ adress.city.cityName }}
-                                                {% if adress.city.zip %}
-                                                    ({{ adress.city.zip }})
-                                                {% endif %}
-                                            </td>
+                                            <tr>
+                                                <td>{{ adress.type }}</td>
+                                                <td>{{ adress.num }}
+                                                    {% if adress.postBox %}
+                                                        ({{ adress.postBox }})
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ adress.streetName }}</td>
+                                                <td>{{ adress.city.cityName }}
+                                                    {% if adress.city.zip %}
+                                                        ({{ adress.city.zip }})
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
                                             <td>{{ adress.city.country.countryName }}</td>
                                             {% else %}
                                             <tr>
@@ -280,11 +284,13 @@
                                             </thead>
                                             <tbody>
                                             {% for contactList in user.contactLists %}
-                                            <td>{{ contactList.personOfContact.name }}</td>
-                                            <td>{{ contactList.personOfContact.firstName }}</td>
-                                            <td>{{ contactList.personOfContact.num1 }}</td>
-                                            <td>{{ contactList.relation }}</td>
-                                            <td>{{ contactList.info }}</td>
+                                            <tr>
+                                                <td>{{ contactList.personOfContact.name }}</td>
+                                                <td>{{ contactList.personOfContact.firstName }}</td>
+                                                <td>{{ contactList.personOfContact.num1 }}</td>
+                                                <td>{{ contactList.relation }}</td>
+                                                <td>{{ contactList.info }}</td>
+                                            </tr>
                                             {% else %}
                                             <tr>
                                                 <td colspan="10">Aucune personne de contact</td>
