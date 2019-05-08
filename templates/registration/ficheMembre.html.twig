@@ -12,31 +12,57 @@
         <h4>Nom: {{ user.name }}</h4>
         <h4>Prénom: {{ user.firstName }}</h4>
         <h4>Sexe: {{ user.sex }}</h4>
-        <h4>Date de naissance: {{ user.birthdate }}</h4>
-        <h4>Adresse: {# {{ user.adress }} #}</h4>
-        <h4>Téléphone: {# {{ user.phones }} #}</h4> <p>(père-mère-tuteur, si mineur)*</p>
+        <h4>Date de naissance: {{ user.birthdate|date("m/d/Y") }}</h4>
+        <h4>Adresse:
+            <br>
+            {% for adress in user.userconnected.user.adress %}
+                {{ adress.type }}:
+                {{ adress.num }}
+                    {% if adress.postBox %}
+                        BP{{ adress.postBox }}
+                    {% endif %}
+                {{ adress.streetName }},
+                {% if adress.city.zip %}
+                    {{ adress.city.zip }}
+                {% endif %}
+                {{ adress.city.cityName }},
+                {{ adress.city.country.countryName }}
+                <br>
+            {% endfor %}
+        </h4>
+        <h4>Téléphone (père-mère-tuteur)* (si mineur):
+            <br>
+            {% for phone in user.userconnected.user.phones %}
+                {{ phone.type }}:
+                {{ phone.num }}
+                <br>
+            {% endfor %}
+        </h4>
+
         <h4>Grade:  {{ user.belt }} </h4>
-        <h4>Date de l'obtention:  {{ user.receiptDate }} </h4>
+        <h4>Date de l'obtention:  {{ user.receiptDate|date("m/d/Y") }} </h4>
         <h4>Adresse email:  {{ user1.email }} </h4>
-        <p>Représentant légal pour les mineurs(père-mère-tuteur, si mineur)*</p>
-        <h4>Nom: ........</h4>
-        <h4>Prénom: ........</h4>
-        <h2>Veuillez nous informer en cas de changement d'adresse</h2>
-        <p><strong>Prise en charge médicale</strong> autorise la prise en charge médicale pour tout accident survenant
-durant les cours ou les manifestations auxquelles participerait le club</p>
-        <p>Personne à prévenir en cas d'accident: ........</p>
-        <p><strong>Droit à l'image</strong> autorise la publication non commerciale des photos prises lors des différentes
+        <p>Représentant légal pour les mineurs(père-mère-tuteur)* (si mineur)</p>
+
+        <h4>Nom: {{ user.userconnected.user.name }}</h4>
+        <h4>Prénom: {{ user.userconnected.user.firstName }}</h4>
+
+        <h2>Veuillez nous informer en cas de changement d'adresse!</h2>
+        <p><strong>Prise en charge médicale:</strong> Autorise la prise en charge médicale pour tout accident survenant
+durant les cours ou les manifestations auxquelles participerait le club.</p>
+        <p>Personne à prévenir en cas d'accident: ....................................................</p>
+        <p><strong>Droit à l'image:</strong> Autorise la publication non commerciale des photos prises lors des différentes
 activités organisées au sein du club ou auxquelles il participe. (oui/non)* Signature : ............................................</p>
-        <p><strong>Autorisation des parents ou du responsable légal pour les enfants mineurs</strong> J’autorise l'enfant inscrit ci-dessus à pratiquer le karaté do au sein de Villeneuve Karaté do Association –
-VIKA</p>
+        <p><strong>Autorisation des parents ou du responsable légal pour les enfants mineurs:</strong> J’autorise l'enfant inscrit ci-dessus à pratiquer le karaté do au sein de Villeneuve Karaté do Association –
+VIKA.</p>
         <p><strong>Inscription</strong><br> Je soussigné (prénom et nom) : ....................................................................................................
-          (père-mère-tuteur, si mineur) *, reconnais avoir pris connaissance des conditions d’inscription, des horaires des cours et du règlement intérieur
+          (père-mère-tuteur)* (si mineur), reconnais avoir pris connaissance des conditions d’inscription, des horaires des cours et du règlement intérieur
 (ce dernier est disponible sur le site de VIKA et au bureau du Dojo)
 Veuillez écrire manuscritement et intégralement la phrase ci-dessous
-« J'atteste avoir pris connaissance du règlement intérieur de l’association VIKA et en accepte les termes »</p>
+« J'atteste avoir pris connaissance du règlement intérieur de l’association VIKA et en accepte les termes ».</p>
         <p>.......................................................................................................................................................................</p>
         <p>Fait à Villeneuve d'Ascq, le : ..................................... Signature : .....................................</p>
-        <p><strong>La présence de l’adhérent,accompagné de ses parents pour un mineur, est indispensable pour finaliser l’inscription (Photo et cotisation)</strong></p>
+        <p><strong>La présence de l’adhérent, accompagné de ses parents pour un mineur, est indispensable pour finaliser l’inscription (Photo et cotisation).</strong></p>
         <hr>
         <h3>Compétitions</h3>
         <p>Je suis intéressé(e) par la compétition : <strong>Kata (oui/non)*</strong></p>
@@ -52,7 +78,7 @@ Veuillez écrire manuscritement et intégralement la phrase ci-dessous
         <hr>
         <p><strong>(Chèque vacances/ coupon sport)* Montant ........ euros</strong></p>
         <hr>
-        <p>* rayer les mentions inutiles</p>
+        <p>* rayer la(es) mention(s) inutile(s)</p>
         <p>** entourer la mention</p>
     </body>
 </html>
