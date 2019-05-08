@@ -64,25 +64,17 @@
                             </div>
                         </div>
                     </div>
-                    {# Gestion du btn retour : si idevent => retour à la preview avant confirmation d'une inscription à un événement#}
-                    {% if (idevent) %}
+
+                    {% if (is_granted('ROLE_ADMIN')) %}
                         <a class="btn btn-warning"
-                           href="{{ path('preregistration_summary',{'id':contactList.user.id, 'idevent':idevent}) }}">
+                           href="{{ path('admin_edit',{'id':contactList.user.id}) }}">
                             <b>Retour</b>
                         </a>
                     {% else %}
-
-                        {% if (is_granted('ROLE_ADMIN')) %}
-                            <a class="btn btn-warning"
-                               href="{{ path('admin_edit',{'id':contactList.user.id}) }}">
-                                <b>Retour</b>
-                            </a>
-                        {% else %}
-                            <a class="btn btn-warning"
-                               href="{{ path('profile_edit',{'id':contactList.user.id}) }}">
-                                <b>Retour</b>
-                            </a>
-                        {% endif %}
+                        <a class="btn btn-warning"
+                           href="{{ path('profile_edit',{'id':contactList.user.id}) }}">
+                            <b>Retour</b>
+                        </a>
                     {% endif %}
                 </div>
             </div>

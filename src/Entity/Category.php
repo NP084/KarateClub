@@ -43,18 +43,12 @@ class Category
      */
     private $vikaEvents;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Paiement", mappedBy="category")
-     */
-    private $paiements;
-
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->history = new ArrayCollection();
         $this->vikaEvents = new ArrayCollection();
-        $this->paiements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -187,37 +181,6 @@ class Category
             // set the owning side to null (unless already changed)
             if ($priceGrid->getCategory() === $this) {
                 $priceGrid->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Paiement[]
-     */
-    public function getPaiements(): Collection
-    {
-        return $this->paiements;
-    }
-
-    public function addPaiement(Paiement $paiement): self
-    {
-        if (!$this->paiements->contains($paiement)) {
-            $this->paiements[] = $paiement;
-            $paiement->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removePaiement(Paiement $paiement): self
-    {
-        if ($this->paiements->contains($paiement)) {
-            $this->paiements->removeElement($paiement);
-            // set the owning side to null (unless already changed)
-            if ($paiement->getCategory() === $this) {
-                $paiement->setCategory(null);
             }
         }
 

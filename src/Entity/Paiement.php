@@ -21,23 +21,17 @@ class Paiement
      */
     private $amount;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Modality")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $modality;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Registration", inversedBy="paiement")
      * @ORM\JoinColumn(nullable=false)
      */
     private $registration;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="paiements")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $isPaid;
 
     public function getId(): ?int
     {
@@ -56,6 +50,18 @@ class Paiement
         return $this;
     }
 
+    public function getModality(): ?Modality
+    {
+        return $this->modality;
+    }
+
+    public function setModality(?Modality $modality): self
+    {
+        $this->modality = $modality;
+
+        return $this;
+    }
+
     public function getRegistration(): ?Registration
     {
         return $this->registration;
@@ -64,30 +70,6 @@ class Paiement
     public function setRegistration(?Registration $registration): self
     {
         $this->registration = $registration;
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getIsPaid(): ?bool
-    {
-        return $this->isPaid;
-    }
-
-    public function setIsPaid(?bool $isPaid): self
-    {
-        $this->isPaid = $isPaid;
 
         return $this;
     }
