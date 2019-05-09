@@ -62,7 +62,7 @@ class VikaController extends AbstractController
             $sponsors = New Sponsor();
         }
 
-        $form = $this->createForm(SponsorType::class, $personne);
+        $form = $this->createForm(SponsorType::class, $sponsors);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()){
@@ -74,7 +74,7 @@ class VikaController extends AbstractController
             return $this->redirectToRoute('sponsor_index',['path'=>'Sponsor']);
         }
 
-        return $this->render('vika/Encadrementcreate.html.twig', [
+        return $this->render('vika/Sponsorcreate.html.twig', [
             'formSponsor'=>$form->createView(),
             'editMode'=> $sponsors->getId()!==null
         ]);
@@ -93,20 +93,18 @@ class VikaController extends AbstractController
         return $this->redirectToRoute('encadrement_index',['path'=>'Encadrement']);
     }
 
-
-    /**
-     * @Route("/vika%page-{path}", name="sponsor_index")
+/**
+     * Supprime le sponsor.
+     * @Route("/vika-sponsor-delete-{id}", name="sponsors_delete", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
-    public function vikaSponsor(SponsorRepository $repo, ContentPage $contentPage){
+    public function SponsorDelete(Sponsor $sponsor){
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->remove($sponsor);
+        $em->flush();
 
-        $sponsors = $repo -> findAll();
-
-        return $this->render('vika/Sponsorindex.html.twig', [
-            'sponsors' => $sponsors,
-            'contentPage' => $contentPage,
-            ]);
+        return $this->redirectToRoute('sponsor_index',['path'=>'Sponsor']);
     }
-
 
     /**
      * @Route("/vika%page-{path}", name="encadrement_index")
@@ -121,6 +119,18 @@ class VikaController extends AbstractController
             ]);
     }
 
+    /**
+     * @Route("/vika-page-{path}", name="sponsor_index")
+     */
+    public function vikaSponsor(SponsorRepository $repo, ContentPage $contentPage){
+
+        $sponsors = $repo -> findAll();
+
+        return $this->render('vika/Sponsorindex.html.twig', [
+            'sponsors' => $sponsors,
+            'contentPage' => $contentPage,
+            ]);
+    }
 
     /**
      * @Route("/vika-{path}-edit", name="VikaContentEdit")

@@ -31,7 +31,7 @@
                                                     <h5 class="card-title">{{ sponsor.name }}</h5>
                                                     </div>
                                                     <div class="text-center">
-                                                        <img class="embed-responsive-item" src="upload/media/{{ sponsor.logo }}" alt="Card image" style=width:30%>
+                                                        <img class="embed-responsive-item" src="upload/media/{{ sponsor.logo }}" alt="Card image" style=width:50%>
                                                     </div>
                                                     <div class="card-body">
                                                         <p class="card-text">{{ sponsor.description|raw }}</p>
@@ -41,12 +41,12 @@
                                                                 <div class="row justify-content-start">
                                                                         <div class="col-4">
                                                                             <div class="card-footer-content text-muted"> 
-                                                                                <a class="btn btn-primary btn-md" href="{{ path('encadrement_edit', {'id':sponsor.id}) }}" role="button">Editer</a>
+                                                                                <a class="btn btn-primary btn-md" href="{{ path('sponsors_edit', {'id':sponsor.id}) }}" role="button">Editer</a>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-4">
                                                                             <div class="card-footer-content text-muted"> 
-                                                                                <a class="btn btn-primary btn-md" href="{{ path('encadrement_delete', {'id':sponsor.id}) }}" role="button">Supprimer</a>
+                                                                                <a class="btn btn-primary btn-md" href="{{ path('sponsors_delete', {'id':sponsor.id}) }}" role="button">Supprimer</a>
                                                                             </div>
                                                                         </div>
                                                                 </div>
