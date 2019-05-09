@@ -487,6 +487,9 @@ class RegistrationController extends AbstractController
         $user = $entityManager->getRepository(User::class)->find($id);
         $form = $this->createForm(UserType::class, $user);
 
+        $name = $user->getName();
+        $firstName = $user->getFirstName();
+
         $reg = $entityManager->getRepository(Registration::class)->find($idReg);
 
         $user1 = $user->getUserConnected()->getId();
@@ -520,9 +523,9 @@ class RegistrationController extends AbstractController
         $dompdf->render();
 
         // Output the generated PDF to Browser (inline view)
-        $dompdf->stream("Fiche membre de NOM Prénom.pdf", [
-            "Attachment" => false //afficher dans le browser
-            //"Attachment" => true //télécharger directement
+        $dompdf->stream("Fiche membre de ".$name. " ".$firstName, [
+            //"Attachment" => false //afficher dans le browser
+            "Attachment" => true //télécharger directement
         ]);
     }
 }
