@@ -34,6 +34,11 @@ class Paiement
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPaid;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +76,18 @@ class Paiement
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getIsPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(?bool $isPaid): self
+    {
+        $this->isPaid = $isPaid;
 
         return $this;
     }

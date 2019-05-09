@@ -44,6 +44,7 @@ use App\Repository\RegistrationRepository;
 use App\Repository\PaiementRepository;
 use App\Form\DocumentType;
 use App\Form\UserPictureType;
+use App\Form\PaiementManagementType;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -337,6 +338,57 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/paiement-list-{orderby}", name="paiement_view")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function listPaiement(PaiementRepository $repoPaiement, $orderby =null)
+    {
+        //Tableau des payements en attante:
+        $paiement = $repoPaiement->findBy(
+            ['isPaid' => false]
+        );
+        //Tableau des payements clôturés:
+        $paiementValidate = $repoPaiement->findBy(
+            ['isPaid' => true]
+        );
+
+        //Ajouter des nouveaux paiements:
+        //$formPaiement = $this->createForm(PaiementManagementType::class, $paiement);
+        //$formPaiement->handleRequest($request);
+
+        //if ($formPaiement->isSubmitted() && $formPaiement->isValid()) {
+        //    $manager->persist($paiement);
+        //    $manager->flush();
+
+        //    return $this->redirectToRoute('paiement_view');
+        //}
+
+        
+        //$nbPaiement = $repoPaiement->findByNbPaiement($registrationValidate->getId());
+        return $this->render('registration/showPaiement.html.twig', [
+            'paiements' => $paiement,
+            'paiementValidate' => $paiementValidate,
+            'allReg'=>$orderby,
+            //'formPaiementManagement'=>$formPaiement,
+        ]);
+    }
+
+    /**
+     * VALIDATION DU PAYEMENT
+     * @Route("/paiement-validate-{id}", name="paiement_validate", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function validatePaiement(Paiement $paiement, Request $request, ObjectManager $manager)
+    {
+
+        $paiement->setIsPaid(true);
+        $manager->persist($paiement);
+        $manager->flush();
+        return $this->redirectToRoute('paiement_view');
+    }
+
+    /**
      * VALIDATION DU DOSSIER D'INSCRIPTION
      * @Route("/dossier-inscription-valide-{id}", name="registration_validate", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
@@ -494,7 +546,7 @@ class RegistrationController extends AbstractController
         //Conditions pour modifier:
         $editRegistration = false;
 
-        if ($attachedFile_1->getId() and $attachedFile_2->getId() and $user->getImageName()) {
+        if (($attachedFile_1->getId() and $attachedFile_2->getId() and $user->getImageName()) or $registration->getVikaEvent()->getEasyInscription(true) ) {
             $validateRegistration = true;
             if ($registration->getValidateRegistrationDate()) {
                 $editRegistration = true;
@@ -535,7 +587,8 @@ class RegistrationController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Paiement::class);
         $paiementTest = $repo->findOneBy([
             'category' => $paiement->getCategory(),
-            'amount' => $paiement->getAmount()
+            'amount' => $paiement->getAmount(),
+            'isPaid' => $paiement->getIsPaid()
         ]);
         if (!$paiementTest) {
             // enregistre le nouveau paiement dans la DB

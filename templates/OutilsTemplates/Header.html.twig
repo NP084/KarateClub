@@ -22,7 +22,7 @@
                                 <a class="dropdown-item" href="{{ path('VikaContent',{'path':'Philosophie'}) }}">La philosophie</a>
                                 <a class="dropdown-item" href="{{ path('VikaContent',{'path':'Bureau'}) }}">Membres du bureau</a>
                                 <a class="dropdown-item" href="{{ path('encadrement_index',{'path':'Encadrement'}) }}">Encadrement</a>
-                                <a class="dropdown-item" href="#">Sponsors</a>
+                                <a class="dropdown-item" href="{{ path('sponsor_index',{'path':'Sponsor'}) }}">Sponsors</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -62,7 +62,7 @@
                                         Gérer les membres</a>
                                     <a class="dropdown-item" href="{{ path('registration_view')}}">Gérer les préinscriptions</a>
                                     <a class="dropdown-item" href="{{ path('vika_event_index')}}">Gérer les événements</a>
-                                    <a class="dropdown-item" href="#">Gérer les payements</a>
+                                    <a class="dropdown-item" href="{{ path('paiement_view')}}">Gérer les payements</a>
                                     <a class="dropdown-item" href="{{ path('priceGrid_index',
                                         {orderby:'ASC'}) }}">Grille tarifaire</a>
 {#                                    <a class="dropdown-item" href="#">Matériels</a> #}

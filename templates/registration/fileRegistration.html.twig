@@ -43,13 +43,6 @@
                                     <div class="row">
                                         <div class="col">
                                             <br>
-                                            <h6>Statut:
-                                                {% if ((registration.ValidateRegistrationDate |date('d/m/Y')) == true) %}
-                                                Clôturer
-                                                {% else %}
-                                                A traiter
-                                                {% endif %}
-                                            </h6>
                                             <h6>Date de la pré-inscription: {{ registration.registrationDate |date('d/m/Y') }}</h6>
                                             <h6>Date de l'inscription: </h6>
                                             <h6>Evènement: {{ registration.vikaEvent.title }}</h6>
@@ -128,6 +121,9 @@
                                 </div>
                             </div>
                     </div>
+                {#INSCRIPTION SIMPLIFIEE#}
+                {% if registration.vikaEvent.easyInscription == true %}
+                {% else %}
                     {# ADRESSES #}
                     <div class="row justify-content-center">
                         <div class="col-11">
@@ -290,6 +286,7 @@
                             </div>
                         </div>
                     </div>
+                {% endif %}
                     {#FINALISER INSCRIPTION#}
                     <div class="row justify-content-center">
                             <div class="col-11">
@@ -298,6 +295,10 @@
                                         <div class="form-group">
                                             <h3>Finaliser l'inscription</h3>
                                             <br>
+                
+                {#INSCRIPTION SIMPLIFIEE#}
+                {% if registration.vikaEvent.easyInscription == true %}
+                {% else %}
                                             <h6>Ajouter la photo du membre</h6>
                                             <div class="card">
                                                 <div class="card-body">
@@ -308,6 +309,7 @@
                                                         <img class="embed-responsive-rounded"
                                                              src="{{ asset('/upload/user/' ~ registration.user.imageName) }}"
                                                              alt="Card image" width="15%">
+                                                             
                                                     </div>
                                                     <button type="submit" class="btn btn-outline-info">
                                                         Ajouter la photo
@@ -359,7 +361,7 @@
                                                     </button>
                                                 </div>
                                             </div>
-
+                {% endif %}
                                             <h6>Liste des modalités de payement</h6>
                                             <div class="card">
                                                 <div class="card-body">
@@ -381,6 +383,12 @@
                                                                         <td>{{ paiement.id }}</td>
                                                                         <td>{{ paiement.category.title }}</td>
                                                                         <td>{{ paiement.amount }}</td>
+                                                                        {% if paiement.isPaid == true %}
+                                                                        <td>En ordre</td>
+                                                                        {% else %}
+                                                                        <td>En attente</td>
+                                                                        {% endif %}
+                                                                        
                                                                         <td class="align-middle text-right">
                                                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                                                 href="{{ path('paiement_edit', {'id': paiement.id}) }}">
@@ -428,6 +436,12 @@
                                                                                     {{ form_widget(formPaiement.amount) }}
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="col-3">
+                                                                                <div class="form-group">
+                                                                                    <label for="">Statut</label>
+                                                                                    {{ form_widget(formPaiement.isPaid) }}
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="col-auto">
@@ -447,6 +461,7 @@
                             </div>
                     </div>
                 </div>
+                
                 {#VALIDER L'INSCRIPTION#}
                 <div class="container-fluid">
                     <div class="row justify-content-center">

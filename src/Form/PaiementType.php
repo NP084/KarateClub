@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class PaiementType extends AbstractType
 {
@@ -28,6 +29,10 @@ class PaiementType extends AbstractType
                 },
                 'choice_label'=>'title',
             ])
+            ->add('isPaid', CheckboxType::class,[
+                'required'=>false,
+                'label'=> 'payé',
+                ])
         ;
     }
 
