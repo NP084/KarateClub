@@ -178,7 +178,7 @@ class RegistrationController extends AbstractController
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function conditions(User $usr, $idevent, Request $request, ObjectManager $manager,\Swift_Mailer $mailer)
+    public function conditions(User $usr, $idevent, Request $request, ObjectManager $manager)
     {
         $userConnected = $usr->getUserConnected();
         $entityManager = $this->getDoctrine()->getManager();
@@ -195,15 +195,6 @@ class RegistrationController extends AbstractController
             $manager->persist($prereg);
 
             $manager->flush();
-
-            $message = (new \Swift_Message('Fiche de renseignements'))
-                ->setFrom('vi.ka.59@hotmail.fr')
-                ->setTo($userConnected->getEmail())
-                ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                ->attach(\Swift_Attachment::fromPath("./upload/document/fiche  renseignements VIKA.pdf"))
-                ;
-            $mailer->send($message);
-
             return $this->render('registration/confirmation.html.twig', [
                 'user' => $usr,
                 'registration' => $prereg,
@@ -281,7 +272,7 @@ class RegistrationController extends AbstractController
         //    return $this->redirectToRoute('paiement_view');
         //}
 
-
+        
         //$nbPaiement = $repoPaiement->findByNbPaiement($registrationValidate->getId());
         return $this->render('registration/showPaiement.html.twig', [
             'paiements' => $paiement,
@@ -404,6 +395,7 @@ class RegistrationController extends AbstractController
 
         }
 
+
         //Ajouter le document le document d'inscription:
         $attachedFile_2 = $this->getDoctrine()
             ->getRepository(AttachedFile::class)
@@ -487,8 +479,8 @@ class RegistrationController extends AbstractController
             'registration' => $registration,
             // pas nécessaire de faire passer le user (on peut le récupérer avec registration.user)
             // pareil pour adresse
-            'user' => $user,
-           // 'adress' => $adress,
+            // 'user' => $user,
+            // 'adress' => $adress,
             'paiements' => $paiementNombre,
             'editRegistration' => $editRegistration,
         ]);
@@ -598,18 +590,13 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/fiche-membre-idUser={id}-idReg={idReg}", name="fiche_membre", requirements={"id"="\d+"})
+     * @Route("/fiche-membre-idUser={id}", name="fiche_membre", requirements={"id"="\d+"})
      */
-    public function HTMLToPDF($id, $idReg)
+    public function HTMLToPDF($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->find($id);
         $form = $this->createForm(UserType::class, $user);
-
-        $name = $user->getName();
-        $firstName = $user->getFirstName();
-
-        $reg = $entityManager->getRepository(Registration::class)->find($idReg);
 
         $user1 = $user->getUserConnected()->getId();
         $user2 = $entityManager->getRepository(UserConnected::class)->find($user1);
@@ -629,7 +616,6 @@ class RegistrationController extends AbstractController
             'form1' => $form1->createView(),
             'user' => $user,
             'user1' => $user2,
-            'reg' => $reg,
         ]);
 
         // Load HTML to Dompdf
@@ -642,9 +628,9 @@ class RegistrationController extends AbstractController
         $dompdf->render();
 
         // Output the generated PDF to Browser (inline view)
-        $dompdf->stream("Fiche membre de ".$name. " ".$firstName, [
-            //"Attachment" => false //afficher dans le browser
-            "Attachment" => true //télécharger directement
+        $dompdf->stream("Fiche membre de NOM Prénom.pdf", [
+            "Attachment" => false //afficher dans le browser
+            //"Attachment" => true //télécharger directement
         ]);
     }
 }

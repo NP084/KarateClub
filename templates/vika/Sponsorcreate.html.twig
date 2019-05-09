@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block title %}VIKA Sponsors{% endblock %}
+{% block Body %}
+{% if editMode %}
+    <h1>Modifier le sponsor</h1>
+{% else %}
+    <h1>Ajouter un nouveau sponsor</h1>
+{% endif %}
+{{ form_start(formSponsor) }}
+
+<div class="col-6">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="">Nom du sponsor</label>
+                        {{ form_widget(formSponsor.name) }}                     
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="">Description</label>
+                        {{ form_widget(formSponsor.description) }}                     
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="">Nom de l'image</label>
+                        {{ form_widget(formSponsor.imageFile) }}                     
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-md">
+                    {% if editMode %}
+                        Enregister modification(s)
+                    {% else %}
+                        Ajouter
+                    {% endif %}
+            </button>
+        </div>
+        
+    </div>
+</div>
+{{ form_end(formSponsor) }}
+{% endblock %}
