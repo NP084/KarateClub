@@ -173,6 +173,37 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * @Route("/inscription-simplifiée-{id}-{idevent}", name="prereg_simple",requirements={"id"="\d+"})
+     */
+    public function simpleprereg(User $usr, $idevent, ObjectManager $manager)
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Registration::class);
+        $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
+
+
+
+        $prereg = new Registration();
+        $prereg->setVikaEvent($event);
+        $prereg->setUser($usr);
+        $prereg->setConditionRegistration('0');
+        $prereg->setRegistrationDate(new \DateTime('now'));
+        $manager->persist($prereg);
+        $manager->flush();
+
+        $userConnected = $usr->getUserConnected();
+        $users = $userConnected->getUsers();
+
+        $preregs = $repository->findBy(
+            ['vikaEvent' => $idevent]
+        );
+
+
+        return $this->redirectToRoute('registration_member_lesson',['id' => $userConnected->getId(), 'idevent' => $idevent]);
+    }
+
+    /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")

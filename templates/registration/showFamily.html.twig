@@ -88,14 +88,8 @@
                     {% else %}
                         {% if (is_granted('ROLE_ADMIN')) %}
                             {# User est un parent  #}
-                            {% if (userConnected.user.ownerUser
-                                and userConnected.user.ownerUser.id == userConnected.user.userConnected.id) %}
                                 <h2>Famille du membre
-                                    : {{ userConnected.firstName }} {{ userConnected.name }}</h2>
-                            {% else %}
-                                <h2>Famille du membre
-                                    : {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
-                            {% endif %}
+                                     {{ userConnected.user.firstName }} {{ userConnected.user.name }}</h2>
                         {% else %}
                             {# le userConnected consulte son propre profil #}
                             {% if (app.user.id == app.request.get("id")) %}
