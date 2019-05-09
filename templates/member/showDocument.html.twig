@@ -10,41 +10,13 @@
                     {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
                         <h2>Documents personnels </h2>
                         <div>
-
                             <a class="btn btn-primary" href="{{ path('envoyer_fiche', {'idUser':user.id}) }}"
                                class="btn-btn-primary">
                                 <b>Fiche de renseignements</b>
                             </a>
-
-                        {#
-                        <form method="post">
-                            <h1 class="h3 mb-3 font-weight-normal">Recevoir la fiche de renseignements!</h1>
-                            <div class="checkbox mb-3">
-                                <label for="inputEmail" class="sr-only">Email</label>
-                            </div>
-                            <div class="form_group">
-                                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-                            </div>
-                            </br>
-                            <a class="btn btn-primary" href="{{ path('envoyer_fiche', {'idUser':user.id}) }}"
-                               type="submit">
-                                <b>Recevoir la fiche de renseignements</b>
-                            </a>
-                        </form>
-                        #}
                             </br>
                             </br>
                         </div>
-
-                        <div>
-                            <a class="btn btn-primary" href="{{ path('fiche_membre', {'id':user.id}) }}"
-                               class="btn-btn-primary">
-                                <b>Voir ma fiche membre</b>
-                            </a>
-                            </br>
-                            </br>
-                        </div>
-
                     {% else %}
                         <h2>Document du membre {{ user.firstName }} {{ user.name }}</h2>
                     {% endif %}

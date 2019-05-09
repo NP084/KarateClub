@@ -11,21 +11,12 @@
                 <div class="col-auto">
                     <h2>Dossier de pré-inscription</h2>
                 </div>
-                {% if (app.user.id == registration.user.userConnected.id) %}
-                <div class="col-auto">
-                    <a class="btn btn-warning"
-                        href="{{ path('admin_registration', {'id':registration.user.id}) }}" role="button">
-                        Retour
-                    </a>
-                </div>
-                {% else %}
                 <div class="col-auto">
                     <a class="btn btn-warning"
                         href="{{ path('registration_view') }}" role="button">
                         Retour
                     </a>
                 </div>
-                {% endif %}
             </div>
             <div class="card">
                 <div class="container-fluid">
@@ -43,6 +34,13 @@
                                     <div class="row">
                                         <div class="col">
                                             <br>
+                                            <h6>Statut:
+                                                {% if ((registration.ValidateRegistrationDate |date('d/m/Y')) == true) %}
+                                                Clôturer
+                                                {% else %}
+                                                A traiter
+                                                {% endif %}
+                                            </h6>
                                             <h6>Date de la pré-inscription: {{ registration.registrationDate |date('d/m/Y') }}</h6>
                                             <h6>Date de l'inscription: </h6>
                                             <h6>Evènement: {{ registration.vikaEvent.title }}</h6>
@@ -121,9 +119,6 @@
                                 </div>
                             </div>
                     </div>
-                {#INSCRIPTION SIMPLIFIEE#}
-                {% if registration.vikaEvent.easyInscription == true %}
-                {% else %}
                     {# ADRESSES #}
                     <div class="row justify-content-center">
                         <div class="col-11">
@@ -286,7 +281,6 @@
                             </div>
                         </div>
                     </div>
-                {% endif %}
                     {#FINALISER INSCRIPTION#}
                     <div class="row justify-content-center">
                             <div class="col-11">
@@ -295,10 +289,6 @@
                                         <div class="form-group">
                                             <h3>Finaliser l'inscription</h3>
                                             <br>
-                
-                {#INSCRIPTION SIMPLIFIEE#}
-                {% if registration.vikaEvent.easyInscription == true %}
-                {% else %}
                                             <h6>Ajouter la photo du membre</h6>
                                             <div class="card">
                                                 <div class="card-body">
@@ -309,7 +299,6 @@
                                                         <img class="embed-responsive-rounded"
                                                              src="{{ asset('/upload/user/' ~ registration.user.imageName) }}"
                                                              alt="Card image" width="15%">
-                                                             
                                                     </div>
                                                     <button type="submit" class="btn btn-outline-info">
                                                         Ajouter la photo
@@ -340,6 +329,13 @@
                                                 </div>
                                             </div>
                                             <h6>Ajouter le document d'inscription</h6>
+                                            <div>
+                                                <a class="btn btn-primary" href="{{ path('fiche_membre', {'id':user.id, 'idReg':registration.id}) }}">
+                                                    <b>Imprimer la fiche membre</b>
+                                                </a>
+                                                </br>
+                                                </br>
+                                            </div>
                                             <div class="card">
                                                 <div class="card-body">
                                                     {{ form_start(formAttachedFile_2) }}
@@ -361,7 +357,7 @@
                                                     </button>
                                                 </div>
                                             </div>
-                {% endif %}
+
                                             <h6>Liste des modalités de payement</h6>
                                             <div class="card">
                                                 <div class="card-body">
@@ -381,14 +377,8 @@
                                                                     {% for paiement in paiements %}
                                                                     <tr>
                                                                         <td>{{ paiement.id }}</td>
-                                                                        <td>{{ paiement.category.title }}</td>
+                                                                        <td>{{ paiement.modality.name }}</td>
                                                                         <td>{{ paiement.amount }}</td>
-                                                                        {% if paiement.isPaid == true %}
-                                                                        <td>En ordre</td>
-                                                                        {% else %}
-                                                                        <td>En attente</td>
-                                                                        {% endif %}
-                                                                        
                                                                         <td class="align-middle text-right">
                                                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                                                 href="{{ path('paiement_edit', {'id': paiement.id}) }}">
@@ -427,19 +417,13 @@
                                                                             <div class="col-3">
                                                                                 <div class="form-group">
                                                                                     <label for="">Modalité</label>
-                                                                                    {{ form_widget(formPaiement.category) }}
+                                                                                    {{ form_widget(formPaiement.modality) }}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-3">
                                                                                 <div class="form-group">
                                                                                     <label for="">Montant</label>
                                                                                     {{ form_widget(formPaiement.amount) }}
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-3">
-                                                                                <div class="form-group">
-                                                                                    <label for="">Statut</label>
-                                                                                    {{ form_widget(formPaiement.isPaid) }}
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -461,7 +445,6 @@
                             </div>
                     </div>
                 </div>
-                
                 {#VALIDER L'INSCRIPTION#}
                 <div class="container-fluid">
                     <div class="row justify-content-center">
@@ -486,6 +469,7 @@
                                                 {% endif %}
                                             </a>
                                             {% else %}
+
                                             {% endif %}
                                         </div>
                                     </div>
