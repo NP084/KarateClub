@@ -72,7 +72,7 @@ class Registration
     private $paiement;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="registration")
+     * @ORM\OneToMany(targetEntity="App\Entity\AttachedFile", mappedBy="registration", cascade={"persist", "remove"}, orphanRemoval=true )
      */
     private $attachedFiles;
 
@@ -81,6 +81,11 @@ class Registration
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $validateRegistration_date;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isValidated;
 
 
 
@@ -276,6 +281,18 @@ class Registration
     public function setValidateRegistrationDate(?\DateTimeInterface $validateRegistration_date): self
     {
         $this->validateRegistration_date = $validateRegistration_date;
+
+        return $this;
+    }
+
+    public function getIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(?bool $isValidated): self
+    {
+        $this->isValidated = $isValidated;
 
         return $this;
     }

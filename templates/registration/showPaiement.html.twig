@@ -1,0 +1,230 @@
+{% extends "base.html.twig" %}
+{% block title %}Liste des payements{% endblock %}
+
+{% block Body %}
+
+    {% if (is_granted('ROLE_ADMIN')) %}
+
+        <div class="container-fluid">
+            {#LISTE DES PRE-INSCRIPTIONS#}
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h2>Liste des payements en attente</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Numéro de payement</th>
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th>Nom de l'évènement</th>
+                                                <th>Date de fin de l'évènement</th>
+                                                <th>Modalité</th>
+                                                <th>Montant</th>
+                                                <th>Contrôle</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {#{{ form_start(formPaiementManagement) }}#}
+                                            {% for paiement in paiements %}
+                                                <tr>
+                                                    <td>{{ paiement.registration.id }}</td>
+                                                    <td>{{ paiement.registration.user.name }}</td>
+                                                    <td>{{ paiement.registration.user.firstname }}</td>
+                                                    <td>{{ paiement.registration.vikaEvent.title }}</td>
+                                                    <td>{{ (paiement.registration.vikaEvent.endDate |date('d/m/Y')) }}</td>
+                                                    <td>{{ paiement.category.title }}</td>
+                                                    <td>{{ paiement.Amount }}</td>
+                                                    
+                                                    <td>
+                                                        <a class="btn btn-outline-warning" 
+                                                            href="{{ path('paiement_validate', {'id': paiement.id}) }}">
+                                                            <label>Payé
+                                                            </label>
+                                                        </a>
+                                                    </td>
+                                
+                                                    <td class="align-middle text-right">
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                        href="{{ path('dossier_inscription', {'id': paiement.registration.id}) }}">
+                                                            <i class="oi oi-document"></i>
+                                                             <span class="sr-only">Dossier d'inscription</span>
+                                                         </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                        href="{{ path('paiement_edit', {'id': paiement.id}) }}">
+                                                            <i class="fa fa-pencil">
+                                                            </i>
+                                                            <span class="sr-only">Modifier</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                        href="{{ path('paiement_remove', {'id':paiement.id}) }}">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                            <span class="sr-only">Supprimer</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun payement en attente</td>
+                                                </tr>
+                                            {% endfor %}
+                                            {#{{ form_end(formPaiementManagement) }}#}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {#LISTE DES INSCRIPTIONS#}
+            
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <h2>Liste des payements clôturés </h2>
+
+                            {% if allReg %}
+                                <a id="allReg" name="allReg" class="btn btn-primary" methods="GET"
+                                href="{{ path('paiement_view') }}"><label>Payements clôturés liés à un évènement en cours
+                                    </label>
+                                </a>
+                            {% else %}
+                                <a id="allReg" name="allReg" class="btn btn-outline-primary" methods="GET"
+                                href="{{ path('paiement_view', {orderby:'allReg'}) }}"><label>Historique des payements clôturés
+                                    </label>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Numéro de payement</th>
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th>Nom de l'évènement</th>
+                                                <th>Date de fin de l'évènement</th>
+                                                <th>Modalité</th>
+                                                <th>Montant</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for paiementValidate in paiementValidate %}
+                                                {% if allReg == false %}
+                                                    {% if  ((paiementValidate.registration.vikaEvent.endDate |date('Y-m-d')) > ("now"|date("Y-m-d"))) %}
+                                                        <tr>
+                                                            <td>{{ paiementValidate.id }}</td>
+                                                            <td>{{ paiementValidate.registration.user.name }}</td>
+                                                            <td>{{ paiementValidate.registration.user.firstname }}</td>
+                                                            <td>{{ paiementValidate.registration.vikaEvent.title }}</td>
+                                                            <td>{{ (paiementValidate.registration.vikaEvent.endDate |date('d/m/Y')) }}</td>
+                                                            <td>{{ paiementValidate.category.title }}</td>
+                                                            <td>{{ paiementValidate.Amount }}</td>
+                                                                
+                                                            <td class="align-middle text-right">
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                href="{{ path('dossier_inscription', {'id': paiementValidate.registration.id}) }}">
+                                                                    <i class="oi oi-document"></i>
+                                                                    <span class="sr-only">Dossier d'inscription</span>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                href="{{ path('paiement_edit', {'id': paiementValidate.id}) }}">
+                                                                    <i class="fa fa-pencil">
+                                                                    </i>
+                                                                    <span class="sr-only">Modifier</span>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                id="deleteReg"
+                                                                href="{{ path('paiement_remove', {'id':paiementValidate.id}) }}">
+                                                                    <i class="fa fa-trash-o">
+                                                                    </i>
+                                                                    <span class="sr-only">Supprimer</span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if  ((paiementValidate.registration.vikaEvent.endDate |date('Y-m-d')) < ("now"|date("Y-m-d"))) %}
+                                                        <tr>
+                                                                <td>{{ paiementValidate.id }}</td>
+                                                                <td>{{ paiementValidate.registration.user.name }}</td>
+                                                                <td>{{ paiementValidate.registration.user.firstname }}</td>
+                                                                <td>{{ paiementValidate.registration.vikaEvent.title }}</td>
+                                                                <td>{{ (paiementValidate.registration.vikaEvent.endDate |date('d/m/Y')) }}</td>
+                                                                <td>{{ paiementValidate.category.title }}</td>
+                                                                <td>{{ paiementValidate.Amount }}</td>
+
+                                                                <td class="align-middle text-right">
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                href="{{ path('dossier_inscription', {'id': paiementValidate.registration.id}) }}">
+                                                                    <i class="oi oi-document"></i>
+                                                                    <span class="sr-only">Dossier d'inscription</span>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                href="{{ path('paiement_edit', {'id': paiementValidate.id}) }}">
+                                                                    <i class="fa fa-pencil">
+                                                                    </i>
+                                                                    <span class="sr-only">Modifier</span>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                id="deleteReg"
+                                                                href="{{ path('paiement_remove', {'id':paiementValidate.id}) }}">
+                                                                    <i class="fa fa-trash-o">
+                                                                    </i>
+                                                                    <span class="sr-only">Supprimer</span>
+                                                                </a>
+                                                                </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun dossier d'inscription</td>
+                                                </tr>
+                                                {#   {% if registrationValidate |length > 1 %}
+                                                {% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun dossier d'inscription</td>
+                                                </tr>
+                                                {% endif %}#}
+                                           {% endfor %}
+                                            {#{% else %}
+                                                <tr>
+                                                    <td colspan="10">Aucun dossier d'inscription</td>
+                                                </tr>
+                                            {% endfor %}#}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    {% endif %}
+
+    <script type="text/javascript">
+        document.querySelector("#deleteReg").addEventListener("click", function (event) {
+            if (!confirm('Veuillez confirmer la suppression cette inscription svp?')) event.preventDefault();
+        }, false);
+    </script>
+
+
+
+{% endblock %}

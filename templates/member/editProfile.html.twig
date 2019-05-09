@@ -21,7 +21,7 @@
 
 {% block Body %}
 
-<div class="container-fluid">
+    <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10">
             {# Admin ou si la personne connectée est le parent du profil consulté #}
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     {% if is_granted('ROLE_ADMIN') %}
-                    {{ form_start(formUser) }}
+                        {{ form_start(formUser) }}
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
@@ -223,34 +223,34 @@
                             {% set diff = date("now").diff(user.birthdate) %}
                             {% set age = diff.days/365 %}
                             {% if (age<13) %}
-                            <div class="col">
-                                <div class="form-group">
-                                    {% if (user.belt) %}
-                                        <h4> Grade</h4>
-                                        <p>{{ user.belt }}
-                                            {% if (user.bars) %}
-                                            avec {{ user.bars }} barette(s)
-                                            {% endif %}, reçu
-                                            le {{ user.receiptDate |date('d/m/Y') }}</p>
-                                    {% endif %}
+                                <div class="col">
+                                    <div class="form-group">
+                                        {% if (user.belt) %}
+                                            <h4> Grade</h4>
+                                            <p>{{ user.belt }}
+                                                {% if (user.bars) %}
+                                                avec {{ user.bars }} barette(s)
+                                                {% endif %}, reçu
+                                                le {{ user.receiptDate |date('d/m/Y') }}</p>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            </div>
                             {% else %}
-                            <div class="col">
-                                <div class="form-group">
-                                    {% if (user.belt) %}
-                                        <h4> Grade</h4>
-                                        <p>{{ user.belt }}, reçu
-                                            le {{ user.receiptDate |date('d/m/Y') }}</p>
-                                    {% endif %}
+                                <div class="col">
+                                    <div class="form-group">
+                                        {% if (user.belt) %}
+                                            <h4> Grade</h4>
+                                            <p>{{ user.belt }}, reçu
+                                                le {{ user.receiptDate |date('d/m/Y') }}</p>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            </div>
                             {% endif %}
                         </div>
                     {% endif %}
 
                     {# parent ou admin qui consulte un User "enfant" #}
-                   {% if( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
+                    {% if( (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and (user.ownerUser == false)) %}
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -304,13 +304,14 @@
                                         </thead>
                                         <tbody>
                                         {% for phone in user.userConnected.user.phones %}
-
-                                        <td>{{ phone.type }}</td>
-                                        <td>{{ phone.num }}
-                                            {% else %}
-                                            <tr>
-                                                <td colspan="10">Aucun numéro de téléphone</td>
-                                            </tr>
+                                        <tr>
+                                            <td>{{ phone.type }}</td>
+                                            <td>{{ phone.num }}</td>
+                                        </tr>
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="10">Aucun numéro de téléphone</td>
+                                        </tr>
                                         </tbody>
                                         {% endfor %}
                                     </table>
@@ -318,7 +319,7 @@
 
                             </div>
                         </div>
-                   {% endif %}
+                    {% endif %}
                 </div>
             </div>
             {% if is_granted('ROLE_ADMIN') %}
@@ -575,7 +576,7 @@
                                             <th>Numéro</th>
                                             <th>Relation</th>
                                             <th>Informations</th>
-                                            <th></th>
+                                            <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -595,7 +596,7 @@
                                                         </i>
                                                         <span class="sr-only">Modifier</span>
                                                     </a>
-                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deletePoc"
                                                        href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -608,7 +609,7 @@
                                                         </i>
                                                         <span class="sr-only">Modifier</span>
                                                     </a>
-                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deletePoc"
                                                        href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -691,13 +692,14 @@
     {% endif %}
 
     <script type="text/javascript">
-        document.querySelector("#deleteRel").addEventListener("click", function(event){
+        document.querySelector("#deleteRel").addEventListener("click", function (event) {
             if (!confirm('Veuillez confirmer la suppression svp?')) event.preventDefault();
         }, false);
-    </script>    <script type="text/javascript">
-        document.querySelector("#deleteRel").addEventListener("click", function(event){
+    </script>
+    <script type="text/javascript">
+        document.querySelector("#deletePoc").addEventListener("click", function (event) {
             if (!confirm('Veuillez confirmer la suppression svp?')) event.preventDefault();
         }, false);
     </script>
 
-    {% endblock %}
+{% endblock %}

@@ -44,21 +44,13 @@ use App\Repository\RegistrationRepository;
 use App\Repository\PaiementRepository;
 use App\Form\DocumentType;
 use App\Form\UserPictureType;
+use App\Form\PaiementManagementType;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
 class RegistrationController extends AbstractController
 {
-    /**
-     * @Route("/registration", name="registration")
-     */
-    public function index()
-    {
-        return $this->render('registration/showContent.html.twig', [
-            'controller_name' => 'RegistrationController',
-        ]);
-    }
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
@@ -80,18 +72,78 @@ class RegistrationController extends AbstractController
      * @Route("/preregistration-user-summary-{id}-{idevent}", name="preregistration_summary", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function preregistrationSummary(User $usr, $idevent)
+    public function preregistrationSummary(User $usr, $idevent, Request $request, ObjectManager $manager)
     {
+        // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
+        $phone = new Phone();
+        $formPhone = $this->createForm(PhoneType::class, $phone);
+        $formPhone->handleRequest($request);
+
+        if ($formPhone->isSubmitted() && $formPhone->isValid()) {
+            // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
+            $this->forward('App\Controller\MemberController::addUserPhone', [
+                'user' => $usr,
+                'phone' => $phone,
+                'manager' => $manager,
+            ]);
+            return $this->redirectToRoute('preregistration_summary',
+                ['id' => $usr->getId(), 'idevent' => $idevent]);
+        }
+
+        // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
+        $adress = new Adress();
+        $formAdress = $this->createForm(AdressType::class, $adress);
+        $formAdress->handleRequest($request);
+        $city = new City();
+        $formCity = $this->createForm(CityType::class, $city);
+        $formCity->handleRequest($request);
+
+        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
+        if ($formAdress->isSubmitted() && $formAdress->isValid()) {
+            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+            $this->forward('App\Controller\MemberController::addUserAdress', [
+                'user' => $usr,
+                'adress' => $adress,
+                'city' => $city,
+                'manager' => $manager,
+            ]);
+            return $this->redirectToRoute('preregistration_summary',
+                ['id' => $usr->getId(), 'idevent' => $idevent]);
+        }
+
+        // Formulaire Personne de contact
+        $PoC = new PersonOfContact();
+        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
+        $formPoC->handleRequest($request);
+        $contactList = new ContactList();
+        $formContactList = $this->createForm(ContactListType::class, $contactList);
+        $formContactList->handleRequest($request);
+
+        // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
+        if ($formPoC->isSubmitted() && $formPoC->isValid()) {
+            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+            $this->forward('App\Controller\MemberController::addUserPoC', [
+                'user' => $usr,
+                'contactList' => $contactList,
+                'PoC' => $PoC,
+                'manager' => $manager,
+            ]);
+            return $this->redirectToRoute('preregistration_summary',
+                ['id' => $usr->getId(), 'idevent' => $idevent]);
+        }
 
         return $this->render('registration/preregistrationSummary.html.twig', [
 
             'user' => $usr,
 //            'userConnected' => $userConnected,
             'idevent' => $idevent,
-
+            'phoneForm' => $formPhone->createView(),
+            'adressForm' => $formAdress->createView(),
+            'cityForm' => $formCity->createView(),
+            'PoCForm' => $formPoC->createView(),
+            'ContactListForm' => $formContactList->createView()
         ]);
     }
-
 
 
     /**
@@ -175,23 +227,82 @@ class RegistrationController extends AbstractController
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/registration-list", name="registration_view")
+     * @Route("/registration-list-{orderby}", name="registration_view")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function listRegistration(PaiementRepository $repoPaiement, RegistrationRepository $repoRegistration, VikaEventRepository $repoVikaEvent)
+    public function listRegistration(RegistrationRepository $repoRegistration, $orderby =null)
     {
         //Tableau Pré-inscription:
         $registration = $repoRegistration->findBy(
             ['validateRegistration_date' => null]
         );
         //Tableau Inscription:
-        $registrationValidate = $repoRegistration->findByValidateRegistration();
+        if (!$orderby) {
+            $registrationValidate = $repoRegistration->findByValidateRegistration();
+        }elseif($orderby =='allReg'){
+            $registrationValidate = $repoRegistration->findBy(
+                ['isValidated' => true]
+            );
+        }
+
         //$nbPaiement = $repoPaiement->findByNbPaiement($registrationValidate->getId());
         return $this->render('registration/showContent.html.twig', [
             'controller_name' => 'Liste des dossiers de préinscription',
             'registrations' => $registration,
             'registrationsValidate' => $registrationValidate,
+            'allReg'=>$orderby,
         ]);
+    }
+
+    /**
+     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * @Route("/paiement-list-{orderby}", name="paiement_view")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function listPaiement(PaiementRepository $repoPaiement, $orderby =null)
+    {
+        //Tableau des payements en attante:
+        $paiement = $repoPaiement->findBy(
+            ['isPaid' => false]
+        );
+        //Tableau des payements clôturés:
+        $paiementValidate = $repoPaiement->findBy(
+            ['isPaid' => true]
+        );
+
+        //Ajouter des nouveaux paiements:
+        //$formPaiement = $this->createForm(PaiementManagementType::class, $paiement);
+        //$formPaiement->handleRequest($request);
+
+        //if ($formPaiement->isSubmitted() && $formPaiement->isValid()) {
+        //    $manager->persist($paiement);
+        //    $manager->flush();
+
+        //    return $this->redirectToRoute('paiement_view');
+        //}
+
+
+        //$nbPaiement = $repoPaiement->findByNbPaiement($registrationValidate->getId());
+        return $this->render('registration/showPaiement.html.twig', [
+            'paiements' => $paiement,
+            'paiementValidate' => $paiementValidate,
+            'allReg'=>$orderby,
+            //'formPaiementManagement'=>$formPaiement,
+        ]);
+    }
+
+    /**
+     * VALIDATION DU PAYEMENT
+     * @Route("/paiement-validate-{id}", name="paiement_validate", requirements={"id"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function validatePaiement(Paiement $paiement, Request $request, ObjectManager $manager)
+    {
+
+        $paiement->setIsPaid(true);
+        $manager->persist($paiement);
+        $manager->flush();
+        return $this->redirectToRoute('paiement_view');
     }
 
     /**
@@ -202,7 +313,8 @@ class RegistrationController extends AbstractController
     public function validateRegistration(Registration $registration, Request $request, ObjectManager $manager)
     {
 
-        $registration->setValidateRegistrationDate(new \DateTime());
+        $registration->setValidateRegistrationDate(new \DateTime())
+                     ->setIsValidated(true);
         $manager->persist($registration);
         $manager->flush();
         return $this->redirectToRoute('registration_view');
@@ -212,7 +324,7 @@ class RegistrationController extends AbstractController
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function viewRegistration(RegistrationRepository $repoRegistration, PaiementRepository $repo, Registration $registration, Request $request, ObjectManager $manager)
+    public function viewRegistration(Registration $registration, PaiementRepository $repo, Request $request, ObjectManager $manager)
     {
         //Obtenir la liste des paiements associés:
         $paiementNombre = $repo->findBy(
@@ -254,8 +366,8 @@ class RegistrationController extends AbstractController
             ->getRepository(AttachedFile::class)
             ->findOneBy(
                 ['registration' => $registration,
-                    'title'=> 'Certificat médical',
-                    'member'=>$registration->getUser()]
+                    'title' => 'Certificat médical',
+                    'member' => $registration->getUser()]
             );
 
         if (!$attachedFile_1) {
@@ -276,7 +388,7 @@ class RegistrationController extends AbstractController
             $manager->persist($attachedFile_1);
             $manager->flush();
             //supprime les lignes dans AttachedFile si DocName est null (qd on supprime la pièce jointe)
-            if ($attachedFile_1->getDocname()==null){
+            if ($attachedFile_1->getDocname() == null) {
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->remove($attachedFile_1);
                 $em->flush();
@@ -297,8 +409,8 @@ class RegistrationController extends AbstractController
             ->getRepository(AttachedFile::class)
             ->findOneBy(
                 ['registration' => $registration,
-                    'title'=> 'Document inscription',
-                    'member'=>$registration->getUser()]
+                    'title' => 'Document inscription',
+                    'member' => $registration->getUser()]
             );
 
         if (!$attachedFile_2) {
@@ -318,7 +430,7 @@ class RegistrationController extends AbstractController
             $manager->persist($attachedFile_2);
             $manager->flush();
             //supprime les lignes dans AttachedFile si DocName est null (qd on supprime la pièce jointe)
-            if ($attachedFile_2->getDocname()==null){
+            if ($attachedFile_2->getDocname() == null) {
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->remove($attachedFile_2);
                 $em->flush();
@@ -350,13 +462,20 @@ class RegistrationController extends AbstractController
         //Conditions pour modifier:
         $editRegistration = false;
 
-   /*     if ($registration->getMedicalCertificate() == true && $registration->getConditionRegistrationDocument() == true && $user->getImageName() == true) {
+        if (($attachedFile_1->getId() and $attachedFile_2->getId() and $user->getImageName()) or $registration->getVikaEvent()->getEasyInscription(true) ) {
             $validateRegistration = true;
-            $verifEdit = $repoRegistration->findByEditRegistration($registration->getId());
-            if ($verifEdit == $registration) {
+            if ($registration->getValidateRegistrationDate()) {
                 $editRegistration = true;
             }
-        }*/
+        }
+
+        /*     if ($registration->getMedicalCertificate() == true && $registration->getConditionRegistrationDocument() == true && $user->getImageName() == true) {
+                 $validateRegistration = true;
+                 $verifEdit = $repoRegistration->findByEditRegistration($registration->getId());
+                 if ($verifEdit == $registration) {
+                     $editRegistration = true;
+                 }
+             }*/
 
         return $this->render('registration/fileRegistration.html.twig', [
             'formPaiement' => $formPaiement->createView(),
@@ -383,16 +502,17 @@ class RegistrationController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(Paiement::class);
         $paiementTest = $repo->findOneBy([
-            'modality' => $paiement->getModality(),
-            'amount' => $paiement->getAmount()
+            'category' => $paiement->getCategory(),
+            'amount' => $paiement->getAmount(),
+            'isPaid' => $paiement->getIsPaid()
         ]);
         if (!$paiementTest) {
-            // enregistre le nouveau numéro dans la DB
+            // enregistre le nouveau paiement dans la DB
             $manager->persist($paiement);
             $registration->addPaiement($paiement);
             $manager->flush();
         } else {
-            // associe le n° existant à cet user
+            // associe le n° existant à cette registration
             $registration->addPaiement($paiementTest);
             $manager->flush();
         }
@@ -443,7 +563,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/envoyer_fiche-idUser={idUser}", name="envoyer_fiche")
      */
-    public function envoyerFiche(Request $request,\Swift_Mailer $mailer, $idUser)
+    public function envoyerFiche(Request $request, \Swift_Mailer $mailer, $idUser)
     {
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
@@ -465,14 +585,13 @@ class RegistrationController extends AbstractController
                 /*->setTo($user->getEmail())*/
                 ->setTo($user3->getEmail())
                 ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                ->attach(\Swift_Attachment::fromPath("./upload/document/fiche  renseignements VIKA.pdf"))
-                ;
+                ->attach(\Swift_Attachment::fromPath("./upload/document/fiche  renseignements VIKA.pdf"));
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
 
             return $this->redirectToRoute('member_document', [
                 'id' => $idUser,
-              ]);
+            ]);
 
         }
         return $this->render('registration/fiche.html.twig');
