@@ -18,7 +18,8 @@ class DocumentForRegType extends AbstractType
                 'required'=>false,
             ])
             ->add('docFile', VichImageType::class, [
-                'required'=> false
+                'required'=> false,
+                'image_uri' => true,
             ]);
         ;
     }
