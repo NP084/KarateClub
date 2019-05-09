@@ -74,63 +74,66 @@ class RegistrationController extends AbstractController
      */
     public function preregistrationSummary(User $usr, $idevent, Request $request, ObjectManager $manager)
     {
-        // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
-        $phone = new Phone();
-        $formPhone = $this->createForm(PhoneType::class, $phone);
-        $formPhone->handleRequest($request);
 
-        if ($formPhone->isSubmitted() && $formPhone->isValid()) {
-            // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
-            $this->forward('App\Controller\MemberController::addUserPhone', [
-                'user' => $usr,
-                'phone' => $phone,
-                'manager' => $manager,
-            ]);
-            return $this->redirectToRoute('preregistration_summary',
-                ['id' => $usr->getId(), 'idevent' => $idevent]);
-        }
 
-        // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
-        $adress = new Adress();
-        $formAdress = $this->createForm(AdressType::class, $adress);
-        $formAdress->handleRequest($request);
-        $city = new City();
-        $formCity = $this->createForm(CityType::class, $city);
-        $formCity->handleRequest($request);
+           // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
+           $phone = new Phone();
+           $formPhone = $this->createForm(PhoneType::class, $phone);
+           $formPhone->handleRequest($request);
 
-        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-        if ($formAdress->isSubmitted() && $formAdress->isValid()) {
-            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->forward('App\Controller\MemberController::addUserAdress', [
-                'user' => $usr,
-                'adress' => $adress,
-                'city' => $city,
-                'manager' => $manager,
-            ]);
-            return $this->redirectToRoute('preregistration_summary',
-                ['id' => $usr->getId(), 'idevent' => $idevent]);
-        }
+           if ($formPhone->isSubmitted() && $formPhone->isValid()) {
+               // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
+               $this->forward('App\Controller\MemberController::addUserPhone', [
+                   'user' => $usr,
+                   'phone' => $phone,
+                   'manager' => $manager,
+               ]);
+               return $this->redirectToRoute('preregistration_summary',
+                   ['id' => $usr->getId(), 'idevent' => $idevent]);
+           }
 
-        // Formulaire Personne de contact
-        $PoC = new PersonOfContact();
-        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
-        $formPoC->handleRequest($request);
-        $contactList = new ContactList();
-        $formContactList = $this->createForm(ContactListType::class, $contactList);
-        $formContactList->handleRequest($request);
+           // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
+           $adress = new Adress();
+           $formAdress = $this->createForm(AdressType::class, $adress);
+           $formAdress->handleRequest($request);
+           $city = new City();
+           $formCity = $this->createForm(CityType::class, $city);
+           $formCity->handleRequest($request);
 
-        // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
-        if ($formPoC->isSubmitted() && $formPoC->isValid()) {
-            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->forward('App\Controller\MemberController::addUserPoC', [
-                'user' => $usr,
-                'contactList' => $contactList,
-                'PoC' => $PoC,
-                'manager' => $manager,
-            ]);
-            return $this->redirectToRoute('preregistration_summary',
-                ['id' => $usr->getId(), 'idevent' => $idevent]);
-        }
+           // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
+           if ($formAdress->isSubmitted() && $formAdress->isValid()) {
+               // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+               $this->forward('App\Controller\MemberController::addUserAdress', [
+                   'user' => $usr,
+                   'adress' => $adress,
+                   'city' => $city,
+                   'manager' => $manager,
+               ]);
+               return $this->redirectToRoute('preregistration_summary',
+                   ['id' => $usr->getId(), 'idevent' => $idevent]);
+           }
+
+           // Formulaire Personne de contact
+           $PoC = new PersonOfContact();
+           $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
+           $formPoC->handleRequest($request);
+           $contactList = new ContactList();
+           $formContactList = $this->createForm(ContactListType::class, $contactList);
+           $formContactList->handleRequest($request);
+
+           // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
+           if ($formPoC->isSubmitted() && $formPoC->isValid()) {
+               // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+               $this->forward('App\Controller\MemberController::addUserPoC', [
+                   'user' => $usr,
+                   'contactList' => $contactList,
+                   'PoC' => $PoC,
+                   'manager' => $manager,
+               ]);
+               return $this->redirectToRoute('preregistration_summary',
+                   ['id' => $usr->getId(), 'idevent' => $idevent]);
+           }
+
 
         return $this->render('registration/preregistrationSummary.html.twig', [
 
