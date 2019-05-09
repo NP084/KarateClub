@@ -23,6 +23,23 @@
 
 
 {% block Body %}
+    {% if  idevent.easyinscription %}
+<div class="card">
+    <!-- .card-header -->
+    <div class="card-header">
+        <!-- .steps -->
+        <div class="steps" role="tablist">
+            <ul>
+                <li class="active" data-target="#test-l-1">
+                    <a class="step-trigger" tabindex="-1">
+                        <span class="step-indicator step-indicator-icon"><i class="oi oi-people"></i></span>
+                        <span class="d-none d-sm-inline">Inscription Rapide</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    {% else %}
 <div class="card">
     <!-- .card-header -->
     <div class="card-header">
@@ -58,7 +75,7 @@
         </div>
         <!-- /.steps -->
         <!--Error1-->
-
+{% endif %}
         <div class="modal fade" id="error1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              xmlns="http://www.w3.org/1999/html">
             <div class="modal-dialog" role="document">
@@ -143,7 +160,7 @@
                                                                 {% if foo == 1 %}
                                                                    {% if  idevent.easyinscription %}
                                                                        <a class="btn btn-outline-info"
-                                                                          href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                          href="{{ path('prereg_simple', {'id':user.id, 'idevent':  idevent.id}) }}">
                                                                            InscrireSimplifiée
                                                                        </a>
                                                                        {% else %}
@@ -177,10 +194,18 @@
                                                                     {% endif %}
                                                                 {% endfor %}
                                                                 {% if foo == 1 %}
-                                                                    <a class="btn btn-outline-info"
-                                                                       href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
-                                                                        Inscrire
-                                                                    </a>
+                                                                    {% if  idevent.easyinscription %}
+                                                                        <a class="btn btn-outline-info"
+                                                                           href="{{ path('prereg_simple', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                            InscrireSimplifiée
+                                                                        </a>
+                                                                    {% else %}
+
+                                                                        <a class="btn btn-outline-info"
+                                                                           href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                            Inscrire
+                                                                        </a>
+                                                                    {% endif %}
                                                                 {% endif %}
 
 
@@ -212,11 +237,18 @@
                                                                     {% endif %}
                                                                 {% endfor %}
                                                                 {% if foo == 1 %}
-                                                                    <a class="btn btn-outline-info"
-                                                                       href="{{ path('preregistration_summary', {'id':user.id, 'idevent':  idevent.id}) }}">
-                                                                        {#                                                                           href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent.id}) }}">#}
-                                                                        Inscrire
-                                                                    </a>
+                                                                    {% if  idevent.easyinscription %}
+                                                                        <a class="btn btn-outline-info"
+                                                                           href="{{ path('prereg_simple', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                            InscrireSimplifiée
+                                                                        </a>
+                                                                    {% else %}
+
+                                                                        <a class="btn btn-outline-info"
+                                                                           href="{{ path('verify_profile', {'id':user.id, 'idevent':  idevent.id}) }}">
+                                                                            Inscrire
+                                                                        </a>
+                                                                    {% endif %}
                                                                 {% endif %}
                                                             {% else %}
                                                                 <a class="btn btn-outline-info"
