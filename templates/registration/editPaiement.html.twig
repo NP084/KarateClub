@@ -15,13 +15,19 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="">Modalité</label>
-                                {{ form_widget(formPaiement.modality) }}
+                                {{ form_widget(formPaiement.category) }}
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="">Montant</label>
                                 {{ form_widget(formPaiement.amount) }}
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="">Statut</label>
+                                {{ form_widget(formPaiement.isPaid) }}
                             </div>
                         </div>
                     </div>

@@ -4,13 +4,11 @@
         <title>Fiche membre</title>
     </head>
     <body>
-        <img src="Logo_Vika.png" alt="Logo VIKA" style="height: 50px; width: auto;">
-        <center><h1 style="border-style: solid;">Villeneuve Karaté do Association</h1></center>
-        <h2>Fiche d'inscription {{ reg.vikaEvent.startdate|date("Y") }} / {{ reg.vikaEvent.enddate|date("Y") }}</h2>
-        <h4>Titre évènement: {{ reg.vikaEvent.title }}</h4>
-        <h4>Numéro dossier: {{ reg.id }}</h4>
+        <h1>Villeneuve Karaté do Association</h1>
+        <h2>Fiche d'inscription ........ / ........</h2>
+        <h4>Numéro dossier: ........</h4>
         <hr>
-        <center><h3 style="border-style: solid;">Informations générales</h3></center>
+        <h3>Informations générales</h3>
         <h4>Nom: {{ user.name }}</h4>
         <h4>Prénom: {{ user.firstName }}</h4>
         <h4>Sexe: {{ user.sex }}</h4>
@@ -40,64 +38,38 @@
                 <br>
             {% endfor %}
         </h4>
+
         <h4>Grade:  {{ user.belt }} </h4>
         <h4>Date de l'obtention:  {{ user.receiptDate|date("m/d/Y") }} </h4>
         <h4>Adresse email:  {{ user1.email }} </h4>
-        <center style="border-style: dotted;">
-            <p>Représentant légal pour les mineurs(père-mère-tuteur)* (si mineur)</p>
-            <h4>Nom: {{ user.userconnected.user.name }}</h4>
-            <h4>Prénom: {{ user.userconnected.user.firstName }}</h4>
-        </center>
+        <p>Représentant légal pour les mineurs(père-mère-tuteur)* (si mineur)</p>
+
+        <h4>Nom: {{ user.userconnected.user.name }}</h4>
+        <h4>Prénom: {{ user.userconnected.user.firstName }}</h4>
+
         <h2>Veuillez nous informer en cas de changement d'adresse!</h2>
-        <div style="border-style: dotted; padding: 10px;">
         <p><strong>Prise en charge médicale:</strong> Autorise la prise en charge médicale pour tout accident survenant
 durant les cours ou les manifestations auxquelles participerait le club.</p>
-        {% if 'medicalCare' == true %}
-            <b>OUI</b>
-        {% else %}
-            <b>NON</b>
-        {% endif %}
-        <p>Personne à prévenir en cas d'accident: </p> <h4>{{ user.userconnected.user.name }} {{ user.userconnected.user.firstName }}</h4>
-        </div>
-        </br>
-        <p></p>
-        </br>
-        <div style="border-style: dotted; padding: 10px;">
+        <p>Personne à prévenir en cas d'accident: ....................................................</p>
         <p><strong>Droit à l'image:</strong> Autorise la publication non commerciale des photos prises lors des différentes
-activités organisées au sein du club ou auxquelles il participe.</p>
-        {% if 'ImageDiffusion' == true %}
-            <b>OUI</b>
-        {% else %}
-            <b>NON</b>
-        {% endif %}
-        </div>
-        </br>
-        <p></p>
-        </br>
-        <div style="border-style: dotted; padding: 10px;">
+activités organisées au sein du club ou auxquelles il participe. (oui/non)* Signature : ............................................</p>
         <p><strong>Autorisation des parents ou du responsable légal pour les enfants mineurs:</strong> J’autorise l'enfant inscrit ci-dessus à pratiquer le karaté do au sein de Villeneuve Karaté do Association –
 VIKA.</p>
-        <p><strong>Inscription</strong><br> Je soussigné (prénom et nom)(père-mère-tuteur)* (si mineur) : ...........................................................................................................................................................
-          <br>, reconnais avoir pris connaissance des conditions d’inscription, des horaires des cours et du règlement intérieur
-(ce dernier est disponible sur le site de VIKA et au bureau du Dojo)<br><br>
-        {% if 'ConditionRegistration' == true %}
-            <b>OUI</b>
-        {% else %}
-            <b>NON</b>
-        {% endif %}<br><br>
+        <p><strong>Inscription</strong><br> Je soussigné (prénom et nom) : ....................................................................................................
+          (père-mère-tuteur)* (si mineur), reconnais avoir pris connaissance des conditions d’inscription, des horaires des cours et du règlement intérieur
+(ce dernier est disponible sur le site de VIKA et au bureau du Dojo)
 Veuillez écrire manuscritement et intégralement la phrase ci-dessous
 « J'atteste avoir pris connaissance du règlement intérieur de l’association VIKA et en accepte les termes ».</p>
         <p>.......................................................................................................................................................................</p>
-        <p>Fait à Villeneuve d'Ascq, le : .....................................<br>Signature : .....................................</p>
-        </div>
+        <p>Fait à Villeneuve d'Ascq, le : ..................................... Signature : .....................................</p>
         <p><strong>La présence de l’adhérent, accompagné de ses parents pour un mineur, est indispensable pour finaliser l’inscription (Photo et cotisation).</strong></p>
         <hr>
-        <center><h3 style="border-style: solid;">Compétitions</h3></center>
+        <h3>Compétitions</h3>
         <p>Je suis intéressé(e) par la compétition : <strong>Kata (oui/non)*</strong></p>
         <p>Je suis intéressé(e) par la compétition : <strong>Combat (oui/non)*</strong></p>
         <p><strong>Demande de passeport ........ euros (oui/non)*</strong></p>
         <hr>
-        <center><h3 style="border-style: solid;">A remplir par l'association</h3></center>
+        <h3>A remplir par l'association</h3>
         <p><strong>Autorisation parentale pour les mineurs (oui)**</strong></p>
         <p><strong>Certificat médical (à fournir en septembre ........) (oui)**</strong></p>
         <p><strong>Une enveloppe timbrée (oui)**</strong></p>

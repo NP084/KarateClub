@@ -5,7 +5,7 @@
     {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id) %}
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     {#Si admin ou parent qui consulte son propre profil#}
                     {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
                         <h2>Parcours personnel </h2>
