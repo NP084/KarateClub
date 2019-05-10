@@ -60,7 +60,9 @@
                                 </div>
                                 <div class="col-2">
                                     <div class="card-footer-content text-muted">
-                                        <a class="btn btn-primary btn-md" href="{{ path('gallery_delete',{'id':gallery.id})}}" role="button">Supprimer</a>
+                                        <a class="btn btn-primary btn-md"
+                                           onclick="return confirm('Veuillez confirmer la suppression de cette galerie photo svp?');"
+                                           href="{{ path('gallery_delete',{'id':gallery.id})}}" role="button">Supprimer</a>
                                     </div>
                                 </div>
                             {% else %}
@@ -72,6 +74,5 @@
             {% endfor %}
         </div>
     </div>
-
 
 {% endblock %}

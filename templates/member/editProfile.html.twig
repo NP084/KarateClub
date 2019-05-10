@@ -364,14 +364,16 @@
                                             <td>{{ phone.num }}</td>
                                             <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
-                                                <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                   onclick="return confirm('Veuillez confirmer la suppression du numéro de téléphone svp?');"
                                                    href="{{ path('remove_phone_admin',{'idPhone':phone.id, 'id':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>
                                                     <span class="sr-only">Supprimer</span>
                                                 </a>
                                                 {% else %}
-                                                <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                   onclick="return confirm('Veuillez confirmer la suppression du numéro de téléphone svp?');"
                                                    href="{{ path('remove_phone',{'idPhone':phone.id, 'id':user.id}) }}">
                                                     <i class="fa fa-trash-o">
                                                     </i>
@@ -460,14 +462,16 @@
                                             <td>{{ adress.city.country.countryName }}</td>
                                             <td class="align-middle text-right">
                                                 {% if (is_granted('ROLE_ADMIN')) %}
-                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       onclick="return confirm('Veuillez confirmer la suppression de l\'adresse svp?');"
                                                        href="{{ path('remove_adress_admin',{'idAdress':adress.id, 'id':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
                                                         <span class="sr-only">Supprimer</span>
                                                     </a>
                                                 {% else %}
-                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       onclick="return confirm('Veuillez confirmer la suppression de l\'adresse svp?');"
                                                        href="{{ path('remove_adress',{'idAdress':adress.id, 'id':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -596,7 +600,8 @@
                                                         </i>
                                                         <span class="sr-only">Modifier</span>
                                                     </a>
-                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deletePoc"
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       onclick="return confirm('Veuillez confirmer la suppression de la personne de contact svp?');"
                                                        href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -609,7 +614,8 @@
                                                         </i>
                                                         <span class="sr-only">Modifier</span>
                                                     </a>
-                                                    <a class="btn btn-sm btn-icon btn-secondary" id="deletePoc"
+                                                    <a class="btn btn-sm btn-icon btn-secondary"
+                                                       onclick="return confirm('Veuillez confirmer la suppression de la personne de contact svp?');"
                                                        href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':user.id}) }}">
                                                         <i class="fa fa-trash-o">
                                                         </i>
@@ -658,7 +664,8 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     {{ form_label(ContactListForm.relation, 'Relation (parent, amis...)') }}
-                                    {{ (form_widget(ContactListForm.relation) ) }}                               </div>
+                                    {{ (form_widget(ContactListForm.relation) ) }}
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -667,7 +674,8 @@
                                     {{ (form_label(ContactListForm.info,
                                         'Information complémentaire') ) }}
                                     {{ (form_widget(ContactListForm.info,
-                                        { 'attr': {'rows' : '4' }} )) }}                                         </div>
+                                        { 'attr': {'rows' : '4' }} )) }}
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -690,16 +698,5 @@
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}
-
-    <script type="text/javascript">
-        document.querySelector("#deleteRel").addEventListener("click", function (event) {
-            if (!confirm('Veuillez confirmer la suppression svp?')) event.preventDefault();
-        }, false);
-    </script>
-    <script type="text/javascript">
-        document.querySelector("#deletePoc").addEventListener("click", function (event) {
-            if (!confirm('Veuillez confirmer la suppression svp?')) event.preventDefault();
-        }, false);
-    </script>
 
 {% endblock %}
