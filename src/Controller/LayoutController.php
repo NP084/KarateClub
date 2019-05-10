@@ -37,47 +37,28 @@ class LayoutController extends AbstractController
 
     /**
      * AJOUT DE CONTACT
-     * @Route("/admin-contact-new", name="load_admin_contact")
+     * @Route("/admin-contact-new", name="new_admin_contact")
      */
-    public function ajoutContact(AttachedFile $attachedFile = null, Request $request)
+    public function ajoutContact(Request $request, ContactClub $contactClub)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($idUser);
+      $entityManager = $this->getDoctrine()->getManager();
+      //$contact = $entityManager->getRepository(ContactClub::class)->find($idContact);
+      //$contact = $entityManager->getRepository(ContactClub::class);
 
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du user pour lequel on crée ou édite un doc
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $user->getUserConnected()->getId()) {
+      $contactClub =  new ContactClub();
 
-            if (!$attachedFile) {
-                $attachedFile = new AttachedFile();
-            }
-            $form = $this->createForm(DocumentType::class, $attachedFile);
-            $form->handleRequest($request);
+      $form = $this->createForm(ContactClubType::class, $contactClub);
+      $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($attachedFile);
-                $attachedFile->setMember($user);
-                $entityManager->flush();
+      if ($form->isSubmitted() && $form->isValid()) {
+          $entityManager->persist($contactClub);
+          $entityManager->flush();
+          return $this->redirectToRoute('contact_club');
+      }
 
-                if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                    return $this->redirectToRoute('admin_document', [
-                        'id' => $user->getId(),
-                    ]);
-                } else {
-                    return $this->redirectToRoute('member_document', [
-                        'id' => $user->getId(),
-                    ]);
-                }
-            }
-            return $this->render('member/documentEdit.html.twig', [
-                'formPicture' => $form->createView(),
-                'editMode' => $user->getImageName() !== null,
-                'user' => $user,
-            ]);
-        } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
-        }
+      return $this->render('OutilsTemplates/contactNew.html.twig', [
+          'form' => $form->createView(),
+          ]);
     }
 
     /**
@@ -95,15 +76,12 @@ class LayoutController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($contact);
             $entityManager->flush();
+            return $this->redirectToRoute('contact_club');
         }
 
         return $this->render('OutilsTemplates/contactEdit.html.twig', [
             'form' => $form->createView(),
             ]);
-
-        //} else {
-        //    return $this->redirectToRoute('home_page', ['path' => 'accueil']);
-        //}
     }
 
     /**
@@ -121,8 +99,6 @@ class LayoutController extends AbstractController
 
         return $this->redirectToRoute('contact_club');
     }
-
-
 
     /**
      * @Route("/layout", name="layout")
