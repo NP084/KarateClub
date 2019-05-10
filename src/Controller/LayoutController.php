@@ -13,9 +13,22 @@ class LayoutController extends AbstractController
     public function footerAction(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $contacts = $entityManager->getRepository(ContactClub::class)->find(2);
+        $contacts = $entityManager->getRepository(ContactClub::class)->findAll();
 
         return $this->render('OutilsTemplates/Footer.html.twig', [
+            'contacts' => $contacts,
+        ]);
+    }
+
+    /**
+     * @Route("/contact-club", name="contact_club")
+     */
+    public function contactclub()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $contacts = $entityManager->getRepository(ContactClub::class)->findAll();
+
+        return $this->render('OutilsTemplates/ContactClub.html.twig', [
             'contacts' => $contacts,
         ]);
     }

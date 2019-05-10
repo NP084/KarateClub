@@ -15,21 +15,36 @@
             </div>
             <div class="col-4">
                 {% if (is_granted('ROLE_ADMIN')) %}
-                    <h1>Editer contact</h1>
+                    <a class="btn btn-primary" href="{{ path('contact_club') }}">
+                        <b>Modifier le(s) contact(s)</b>
+                    </a>
                 {% endif %}
-
+                <h5>Contact</h5>
+                {% for contact in contacts %}
+                    <ul class="list-unstyled">
+                        <li><strong>{{ contact.firstName }} {{ contact.name }}</strong></li>
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;"> {{ contact.num }}</font>
+                        </font>
+                        <br>
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;"> {{ contact.email }}</font>
+                        </font>
+                    </ul>
+                {% endfor %}
+                {#
                 <h5>Contact</h5>
                 <ul class="list-unstyled">
-                    <li><strong>{{ contacts.firstName }} {{ contacts.name }}</strong></li>
+                    <li><strong>{{ contact.firstName }} {{ contact.name }}</strong></li>
                     <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;"> {{ contacts.num }}</font>
+                        <font style="vertical-align: inherit;"> {{ contact.num }}</font>
                     </font>
                     <br>
                     <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;"> {{ contacts.email }}</font>
+                        <font style="vertical-align: inherit;"> {{ contact.email }}</font>
                     </font>
                 </ul>
-                
+                #}
             </div>
             <div class="col-4">
                 <h5><a class="text-muted">Maps</a></h5>
