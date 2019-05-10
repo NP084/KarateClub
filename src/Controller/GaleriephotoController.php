@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Gallery;
 use App\Entity\Media;
 use App\Form\GalleryType;
+use App\Form\GalleryHomeType;
 use App\Form\MediaType;
 use App\Repository\GalleryRepository;
 use App\Repository\MediaRepository;
@@ -24,12 +25,12 @@ class GaleriephotoController extends AbstractController
     {
         //Affiche les galeries dans l'ordre décroissant de leur création (nouveaux en haut)
         $galleries = $repo->findBy(
-            [ ],
-            ['id'=>'DESC']
+            [],
+            ['id' => 'DESC']
         );
-       // $galleries = $repo->findAll();
+        // $galleries = $repo->findAll();
         return $this->render('galeriephoto/index.html.twig', [
-            'galleries'=>$galleries,
+            'galleries' => $galleries,
         ]);
     }
 
@@ -38,7 +39,8 @@ class GaleriephotoController extends AbstractController
      * @Route("/gallery-delete-{id}", name="gallery_delete", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function GalleryDelete($id){
+    public function GalleryDelete($id)
+    {
         $em = $this->getDoctrine()->getEntityManager();
         $gallery = $em->getRepository(Gallery::class)->find($id);
         $em->remove($gallery);
@@ -58,17 +60,26 @@ class GaleriephotoController extends AbstractController
         if (!$galerie) {
             $galerie = new Gallery();
         }
-
-        $form = $this->createForm(GalleryType::class, $galerie);
+//        Si name = Carrousel => on travaille sur le carrousel de la page d'accueil (prendre le type GalleryHomeType qui ne demande pas le nom et la description)
+        if ($galerie->getName() == 'Carrousel') {
+            $form = $this->createForm(GalleryHomeType::class, $galerie);
+        } else {
+            $form = $this->createForm(GalleryType::class, $galerie);
+        }
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+//            si name est vide : galerie de la page d'accueil => on enregistre le nom et la description dans le controller
+          /*  if (!$galerie->getName() or $galerie->getName()=='Carrousel') {
+                $galerie->setName('Carrousel')
+                    ->setDescription('Galerie photo de la page d\'accueil');
+            }*/
             $medias = $galerie->getMedia();
-            foreach ($medias as $media){
+            foreach ($medias as $media) {
                 $manager->persist($media);
                 $media->setGallery($galerie);
                 $manager->flush();
-                if ($media->getImageName()==null){
+                if ($media->getImageName() == null) {
                     $em = $this->getDoctrine()->getEntityManager();
                     $em->remove($media);
                     $em->flush();
@@ -81,11 +92,14 @@ class GaleriephotoController extends AbstractController
                 $manager->persist($galerie);
                 $manager->flush();
             }
+
             return $this->redirectToRoute('galeriephoto');
+
         }
 
         return $this->render('galeriephoto/create.html.twig', [
             'formGaleriephoto' => $form->createView(),
+            'galerie'          => $galerie,
             //    'formMedia'=>$formMedia->createView(),
             'editMode' => $galerie->getId() !== null
         ]);
@@ -94,9 +108,10 @@ class GaleriephotoController extends AbstractController
     /**
      * @Route("/gallery-view-{id}", name="gallery_show", requirements={"idCL"="\d+"})
      */
-    public function galerieShow(Gallery $galerie,Request $request){
+    public function galerieShow(Gallery $galerie, Request $request)
+    {
 
-        return $this->render('galeriephoto/galerieshow.html.twig',[
+        return $this->render('galeriephoto/galerieshow.html.twig', [
             'galerie' => $galerie
         ]);
     }

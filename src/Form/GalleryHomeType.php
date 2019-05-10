@@ -10,17 +10,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
-class GalleryType extends AbstractType
+
+
+class GalleryHomeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('imageFile', VichImageType::class, [
-                'required'=> false,
-                'image_uri' => false,
-            ])
             ->add('media', CollectionType::class, [
                 'entry_type'    => MediaType::class,
                 'entry_options' => ['label' => false],
