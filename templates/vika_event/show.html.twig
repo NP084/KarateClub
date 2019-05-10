@@ -9,20 +9,20 @@
             <div class="col-md-10">
                 <h1> {{ vikaEvent.title }}
                     {% if (is_granted('ROLE_ADMIN')) %}
-                    <a class="btn btn-sm btn-icon btn-secondary"
-                       href="{{ path('vika_event_edit', {'id': vikaEvent.id}) }}">
-                        <i class="fa fa-pencil">
-                        </i>
-                        <span class="sr-only">Modifier</span>
-                    </a>
+                        <a class="btn btn-sm btn-icon btn-secondary"
+                           href="{{ path('vika_event_edit', {'id': vikaEvent.id}) }}">
+                            <i class="fa fa-pencil">
+                            </i>
+                            <span class="sr-only">Modifier</span>
+                        </a>
                     {% endif %}
                 </h1>
                 <div class="row">
                     {% if (is_granted('ROLE_ADMIN')) %}
-                    <a href="{{ path('vika_event_index') }}"
-                       class="btn-btn-primary">
-                        <span class="badge badge-pill badge-warning">Liste des activités</span>
-                    </a>
+                        <a href="{{ path('vika_event_index') }}"
+                           class="btn-btn-primary">
+                            <span class="badge badge-pill badge-warning">Liste des activités</span>
+                        </a>
                     {% endif %}
                 </div>
                 <div class="card">
@@ -40,39 +40,67 @@
                              alt="Card image" width="80%">
                     </div>
                     {#                    </figure>#}
-                    <div class="card-body">
-                        <h6>Titulaire de l'événement</h6>
-                        <p class="card-text">
-                            {{ vikaEvent.owner }}</p>
-                    </div>
-
-
-                    <div class="card-body">
-                        <h6>Date de début</h6>
-                        <p class="card-text">
-                            {{ vikaEvent.startDate |date('d/m/Y H:i:s') }}
-                        </p>
-                    </div>
-
-                    <div class="card-body">
-                        <h6>Date de fin</h6>
-                        <p class="card-text">
-                            {{ vikaEvent.endDate |date('d/m/Y H:i:s') }}
-                        </p>
-                    </div>
-                    <div class="card-body">
-                        <h6>Capacité</h6>
-                        <p class="card-text">
-                        <td>{{ vikaEvent.capacity }}</td>
-                        </p>
-                    </div>
 
                     <div class="card-body">
                         <h6>Description</h6>
-                        <p class="card-text">
-                            {{ vikaEvent.info|raw }}
-                        </p>
                     </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">
+                                {{ vikaEvent.info|raw }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <h6>Titulaire de l'événement :</h6>
+                            </div>
+                            <div class="col-3">
+                                <p class="card-text">
+                                    {{ vikaEvent.owner }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <h6>Date de début:</h6>
+                            </div>
+                            <div class="col-2">
+                                <p class="card-text">
+                                    {{ vikaEvent.startDate |date('d/m/Y H:i') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <h6>Date de fin:</h6>
+                            </div>
+                            <div class="col-2">
+                                <p class="card-text">
+                                    {{ vikaEvent.endDate |date('d/m/Y H:i') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <h6>Capacité :</h6>
+                            </div>
+                            <div class="col-2">
+                                <p class="card-text">
+                                <td>{{ vikaEvent.capacity }} personnes</td>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     {#                   liste des prix#}
                     <div class="card-body">
@@ -120,13 +148,13 @@
                    href="{{ path('registration_member_lesson', {'idevent':vikaEvent.id, 'id':user.id}) }}"
                    role="button">S'inscrire</a>
                 {% else %}
-                <div class ='row'>
+                <div class='row'>
                     <div class="col-1">
-                    <a class="btn btn-primary btn-md"
-                       href="{{ path('registration_member_lesson', {'idevent':vikaEvent.id, 'id':user.id}) }}"
-                       role="button">S'inscrire</a>
+                        <a class="btn btn-primary btn-md"
+                           href="{{ path('registration_member_lesson', {'idevent':vikaEvent.id, 'id':user.id}) }}"
+                           role="button">S'inscrire</a>
                     </div>
-                {% endif %}
+                    {% endif %}
                     {% if (is_granted('ROLE_ADMIN')) %}
                         {{ include('vika_event/_delete_form.html.twig') }}
                     {% endif %}

@@ -2,7 +2,6 @@
 
 
 {% block Body %}
-    <h2>Bienvenue dans la galerie photo</h2>
     <div class="container">
         {% if (is_granted('ROLE_ADMIN')) %}
             <div class="row">
@@ -30,6 +29,7 @@
 
     <br><br>
     <div class="container">
+        <h2>Bienvenue dans la galerie photo</h2>
         <div class="row justify-content-md-center">
             {% for gallery in galleries %}
                 {% if gallery.name == 'Carrousel' and is_granted('ROLE_ADMIN') %}

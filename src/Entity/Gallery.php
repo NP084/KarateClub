@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * @ORM\Entity(repositoryClass="App\Repository\GalleryRepository")
  * @UniqueEntity(
  *  fields={"name"},
- *  message="Cette galerie existe déjà !"
+ *  message="Ce nom de galerie existe déjà !"
  * )
  * @Vich\Uploadable
  */

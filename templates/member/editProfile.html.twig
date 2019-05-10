@@ -664,17 +664,17 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     {{ form_label(ContactListForm.relation, 'Relation (parent, amis...)') }}
-                                    {{ (form_widget(ContactListForm.relation) ) }}
+                                    {{ form_widget(ContactListForm.relation)  }}
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    {{ (form_label(ContactListForm.info,
-                                        'Information complémentaire') ) }}
-                                    {{ (form_widget(ContactListForm.info,
-                                        { 'attr': {'rows' : '4' }} )) }}
+                                    {{ form_label(ContactListForm.info,
+                                        'Information complémentaire')  }}
+                                    {{ form_widget(ContactListForm.info,
+                                        { 'attr': {'rows' : '4' }} ) }}
                                 </div>
                             </div>
                         </div>
