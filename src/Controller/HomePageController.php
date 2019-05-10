@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ContentPage;
+use App\Entity\ContactClub;
 use App\Form\ContentType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,14 +46,18 @@ class HomePageController extends AbstractController
      */
     public function index(ArticleRepository $repoArticle, ContentPage $contentPage)
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $contacts = $entityManager->getRepository(ContactClub::class)->find(1);
+
         $article = $repoArticle->findBy(
             [ ],
             ['id' => 'DESC']
         );
-        
+
         return $this->render('home_page/index.html.twig', [
             'contentPage' => $contentPage,
             'articles' => $article,
+            'contacts' => $contacts,
         ]);
     }
 
