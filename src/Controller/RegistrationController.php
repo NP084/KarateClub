@@ -223,6 +223,8 @@ class RegistrationController extends AbstractController
 //        $entityManager = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository(Registration::class);
         $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
+        $doc = $entityManager->getRepository(AttachedFile::class)->findOneByTitle("Fiche renseignements VIKA admin");
+        $doc1 = $doc->getDocname();
 
 
             $preregs = $repository->findBy(
@@ -247,7 +249,7 @@ class RegistrationController extends AbstractController
                 ->setFrom('vi.ka.59@hotmail.fr')
                 ->setTo($userConnected->getEmail())
                 ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                ->attach(\Swift_Attachment::fromPath("./upload/document/fiche  renseignements VIKA.pdf"))
+                ->attach(\Swift_Attachment::fromPath("./upload/document/".$doc1))
                 ;
             $mailer->send($message);
 
@@ -669,6 +671,9 @@ class RegistrationController extends AbstractController
             $user2 = $user1->getUserConnected()->getId();
             $user3 = $entityManager->getRepository(UserConnected::class)->find($user2);
 
+            $doc = $entityManager->getRepository(AttachedFile::class)->findOneByTitle("Fiche renseignements VIKA admin");
+            $doc1 = $doc->getDocname();
+
             /* @var $user User */
             /*if ($user === null) {
                 $this->addFlash('danger', 'Email Inconnu');
@@ -681,7 +686,7 @@ class RegistrationController extends AbstractController
                 /*->setTo($user->getEmail())*/
                 ->setTo($user3->getEmail())
                 ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                ->attach(\Swift_Attachment::fromPath("./upload/document/fiche  renseignements VIKA.pdf"));
+                ->attach(\Swift_Attachment::fromPath("./upload/document/".$doc1));
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
 

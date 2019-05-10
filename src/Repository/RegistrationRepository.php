@@ -64,6 +64,7 @@ class RegistrationRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
     /*
     public function findOneBySomeField($value): ?Registration
     {
@@ -75,4 +76,15 @@ class RegistrationRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findOneByTitle($value): ?Registration
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.title = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 }
