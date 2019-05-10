@@ -25,7 +25,7 @@ class VikaController extends AbstractController
     /**
      * @Route("/vika-encadrement-new", name="encadrement_create")
      * @Route("/vika-encadrement-{id}-edit", name="encadrement_edit", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function form(Encadrement $personne=null, Request $request, ObjectManager $manager ){
 
@@ -54,7 +54,7 @@ class VikaController extends AbstractController
     /**
      * @Route("/vika-sponsors-new", name="sponsors_create")
      * @Route("/vika-sponsors-{id}-edit", name="sponsors_edit", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function formSponsors(Sponsor $sponsors=null, Request $request, ObjectManager $manager ){
 
@@ -83,7 +83,7 @@ class VikaController extends AbstractController
     /**
      * Supprime l'entraineur.
      * @Route("/vika-encadrement-delete-{id}", name="encadrement_delete", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function EncadrementDelete(Encadrement $personne){
         $em = $this->getDoctrine()->getEntityManager();
@@ -96,7 +96,7 @@ class VikaController extends AbstractController
 /**
      * Supprime le sponsor.
      * @Route("/vika-sponsor-delete-{id}", name="sponsors_delete", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function SponsorDelete(Sponsor $sponsor){
         $em = $this->getDoctrine()->getEntityManager();
@@ -134,7 +134,7 @@ class VikaController extends AbstractController
 
     /**
      * @Route("/vika-{path}-edit", name="VikaContentEdit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager ){
 

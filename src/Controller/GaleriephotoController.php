@@ -37,7 +37,7 @@ class GaleriephotoController extends AbstractController
     /**
      * Supprime la galerie photo.
      * @Route("/gallery-delete-{id}", name="gallery_delete", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function GalleryDelete($id)
     {
@@ -53,7 +53,7 @@ class GaleriephotoController extends AbstractController
     /**
      * @Route("/gallery-new", name="galeriephoto_create")
      * @Route("/gallery-{id}-edit", name="gallery_edit", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function form(Gallery $galerie = null, Request $request, ObjectManager $manager)
     {

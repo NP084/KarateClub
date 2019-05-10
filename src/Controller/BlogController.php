@@ -51,7 +51,7 @@ class BlogController extends Controller//AbstractController
     /**
     * @Route("/blog-new", name="blog_create")
     * @Route("/blog-{id}-edit", name="blog_edit", requirements={"id"="\d+"})
-    * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
     */
     public function form(Article $article=null, Request $request, ObjectManager $manager){
 
@@ -82,7 +82,7 @@ class BlogController extends Controller//AbstractController
     /**
      * Supprime l'article.
      * @Route("/blog-delete-{id}", name="blog_delete", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Article $article){
         $em = $this->getDoctrine()->getEntityManager();

@@ -26,7 +26,7 @@ class PriceGridController extends AbstractController
      * VIA LE FORMULAIRE D'EDITION DE L'EVENEMENT
      * @Route("-new", name="price_grid_new")
      * @Route("-{id}-edit-{route}", name="price_grid_edit", methods={"GET","POST"}, requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, PriceGrid $priceGrid = null, bool $route=null): Response
     {
@@ -60,7 +60,7 @@ class PriceGridController extends AbstractController
 
     /**
     * @Route("-list-{orderby}", name="priceGrid_index", methods={"GET"})
-    * @Security("has_role('ROLE_ADMIN')")
+    * @Security("is_granted('ROLE_ADMIN')")
      */
     public function index(PriceGridRepository $repo, $orderby=null, ObjectManager $manager, Request $request): Response
      {
@@ -103,7 +103,7 @@ class PriceGridController extends AbstractController
     /**
      * SUPPRIME UN TARIF DE LA DB
      * @Route("-{id}-{route}", name="price_grid_delete", methods={"DELETE"}, requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, PriceGrid $priceGrid, bool $route=null): Response
     {

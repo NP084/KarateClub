@@ -38,8 +38,9 @@ class LayoutController extends AbstractController
     /**
      * AJOUT DE CONTACT
      * @Route("/admin-contact-new", name="new_admin_contact")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function ajoutContact(Request $request, ContactClub $contactClub = null)
+    public function ajoutContact(Request $request)
     {
       $entityManager = $this->getDoctrine()->getManager();
       //$contact = $entityManager->getRepository(ContactClub::class)->find($idContact);
@@ -64,6 +65,7 @@ class LayoutController extends AbstractController
     /**
      * MODIFICATION DE CONTACT
      * @Route("/admin-contact-idContact={idContact}-edit", name="edit_admin_contact")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function editerContact($idContact, Request $request)
     {
@@ -87,7 +89,7 @@ class LayoutController extends AbstractController
     /**
      * SUPPRIMER UN CONTACT
      * @Route("/admin-contact-idContact={idContact}-remove", name="remove_admin_contact", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function supprimerContact($idContact)
     {

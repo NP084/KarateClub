@@ -49,13 +49,13 @@ class MemberController extends AbstractController
 
     /**
      * Ajouter un nouveau user
-     * @Route("/add-member-id-{id}-new-{idevent}", name="add_profil_event", requirements={"id"="\d+"})
-     * @Route("/add-admin-id-{id}-new-{idevent}", name="add_admin_event",  requirements={"id"="\d+"})
+     * @Route("/member-add-id-{id}-new-{idevent}", name="add_profil_event", requirements={"id"="\d+"})
+     * @Route("/admin-add-id-{id}-new-{idevent}", name="add_admin_event",  requirements={"id"="\d+"})
      */
     public function addUserEvent(UserConnected $userConnected, $idevent = null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
+        //      * @Security("is_granted('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
         $user = new User();
         $formUser = $this->createForm(AddUserType::class, $user);
         $formUser->handleRequest($request);
@@ -114,7 +114,7 @@ class MemberController extends AbstractController
     public function addUser(UserConnected $userConnected, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
         //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
+        //      * @Security("is_granted('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
 
         return $this->addUserEvent($userConnected, null, $request, $manager, $authChecker);
 
@@ -123,7 +123,7 @@ class MemberController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/verify-user-profile-{id}-{idevent}", name="verify_profile", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function verifyProfile(User $usr, Request $request, ObjectManager $manager, $idevent, AuthorizationCheckerInterface $authChecker)
     {
@@ -199,7 +199,7 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-edit", name="profile_edit", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-edit", name="admin_edit",  requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function profileEdit(User $usr, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
@@ -285,7 +285,7 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}", name="profile_show",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}", name="admin_show",  requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function profileShow(User $usr)
     {
@@ -321,7 +321,7 @@ class MemberController extends AbstractController
      * Supprime un numéro de téléphone d'un user. (le numéro reste dans la DB)
      * @Route("/member-removePhone-idPhone={idPhone}-idUser={id}-{idevent}", name="remove_phone", requirements={"id"="\d+"})
      * @Route("/admin-removePhone-idPhone={idPhone}-idUser={id}-{idevent}", name="remove_phone_admin", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function removeUserPhone(User $usr, $idPhone, $idevent = null, AuthorizationCheckerInterface $authChecker)
     {
@@ -347,7 +347,7 @@ class MemberController extends AbstractController
      * Supprime une adresse d'un user. (l'adresse reste dans la DB)
      * @Route("/member-removeAdress-idAdress={idAdress}-idUser={id}-{idevent}", name="remove_adress", requirements={"id"="\d+"})
      * @Route("/admin-removeAdress-idAdress={idAdress}-idUser={id}-{idevent}", name="remove_adress_admin", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function removeUserAdress(User $usr, $idAdress, $idevent = null, AuthorizationCheckerInterface $authChecker)
     {
@@ -418,7 +418,7 @@ class MemberController extends AbstractController
     /**
      * @Route("/admin-id={id}-idHist={idHist}-history-edit", name="admin_history_edit",  requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history-new", name="admin_history_new",  requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function editHistory(User $user, $idHist = null, Request $request, ObjectManager $manager)
     {
@@ -447,7 +447,7 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-history", name="profile_history", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-history", name="admin_history",  requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function showHistory(User $usr)
     {
@@ -499,7 +499,7 @@ class MemberController extends AbstractController
     /**
      * Supprime une ligne d'historique de contact.
      * @Route("/admin-remove_history-id={id}-idUser={idUser}", name="remove_history_admin", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function removeHistory(History $history, $idUser)
     {
@@ -516,7 +516,7 @@ class MemberController extends AbstractController
      * Supprime une personne de contact.
      * @Route("/member-removePoC-idCL={idCL}-idUser={id}-{idevent}", name="remove_PoC", requirements={"idCL"="\d+"})
      * @Route("/admin-removePoC-idCL={idCL}-idUser={id}-{idevent}", name="remove_PoC_admin", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function removePoC(User $usr, $idCL, $idevent = null, AuthorizationCheckerInterface $authChecker)
     {
@@ -587,7 +587,7 @@ class MemberController extends AbstractController
      * @Route("/member-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}-{idevent}", name="edit_PoC", requirements={"id"="\d+"})
      * @Route("/admin-editPoC-id={id}-idCL={idCL}-idPoC={idPoC}-{idevent}", name="edit_PoC_admin", requirements={"id"="\d+"})
      * @ParamConverter("contactList", options={"id"="idCL"})
-     * @Security("has_role('ROLE_ADMIN') or user.getUser().getId() == contactList.getUser().getuserConnected().getUser().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getUser().getId() == contactList.getUser().getuserConnected().getUser().getId()")
      */
     public function editPoC(User $user, $idPoC, ContactList $contactList, $idevent = null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
@@ -622,7 +622,7 @@ class MemberController extends AbstractController
 
     /**
      * @Route("/admin-id={id}-idReg={idReg}-registration-edit", name="admin_registration_edit",  requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function editRegistration(User $user, $idReg, Request $request, ObjectManager $manager)
     {
@@ -647,7 +647,7 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-registration", name="member_registration", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-registration", name="admin_registration",  requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function showRegistration(User $usr){
         $idevent=true;
@@ -669,7 +669,7 @@ class MemberController extends AbstractController
     /**
      * Supprime une ligne des inscriptions de contact.
      * @Route("/admin-remove_registration-id={id}-idUser={idUser}-{idevent}", name="remove_registration_admin", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function removeRegistration(Registration $registration, $idUser, $idevent = null)
     {
@@ -691,7 +691,7 @@ class MemberController extends AbstractController
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/member-family-{id}", name="view_family", requirements={"idCL"="\d+"})
      * @Route("/admin-family-{id}", name="admin_family", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
     public function indexFamily(UserConnected $userConnected)
     {
@@ -706,7 +706,7 @@ class MemberController extends AbstractController
     /**
      * @Route("/member-id={id}-document", name="member_document", requirements={"id"="\d+"})
      * @Route("/admin-id={id}-document", name="admin_document",  requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function showDocument(User $usr)
     {
@@ -766,7 +766,7 @@ class MemberController extends AbstractController
     /**
      * Supprime un document.
      * @Route("/admin-remove_document-id={id}-idUser={idUser}", name="remove_document_admin", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function removeDoc(AttachedFile $doc, $idUser)
     {
@@ -782,7 +782,7 @@ class MemberController extends AbstractController
     /**
      * Affiche un document.
      * @Route("/admin-afficher_document-id={id}-idUser={idUser}", name="afficher_document_admin", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function afficherDoc(AttachedFile $doc, $idUser)
     {

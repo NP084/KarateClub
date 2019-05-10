@@ -58,7 +58,7 @@ class VikaEventController extends AbstractController
     /**
      * AFFICHLE LA LISTE DES EVENEMENTS (VUE ADMIN)
      * @Route("-list", name="vika_event_index", methods={"GET"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function index(VikaEventRepository $vikaEventRepository, Request $request): Response
     {
@@ -127,7 +127,7 @@ class VikaEventController extends AbstractController
      * CREATION ET EDITION D'UN EVENEMENT - PERMET AUSSI D'AJOUTER PLS TARIFS
      * @Route("-new", name="vika_event_new", methods={"GET","POST"})
      * @Route("-{id}-edit", name="vika_event_edit", methods={"GET","POST"}, requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, VikaEvent $vikaEvent = null, ObjectManager $manager): Response
     {
@@ -173,7 +173,7 @@ class VikaEventController extends AbstractController
     /**
      * SUPPRIME UN EVENEMENT - SES TARFIS SONT éGALEMENT SUPPRIMé
      * @Route("-{id}-delete", name="vika_event_delete", methods={"DELETE"}, requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, VikaEvent $vikaEvent): Response
     {

@@ -55,7 +55,7 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/registration-user-family-{id}", name="registration_view_family", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
     public function indexFamily(UserConnected $userConnected)
     {
@@ -70,7 +70,7 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/preregistration-user-summary-{id}-{idevent}", name="preregistration_summary", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function preregistrationSummary(User $usr, $idevent, Request $request, ObjectManager $manager)
     {
@@ -152,7 +152,7 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/registration-user-family-{id}-{idevent}", name="registration_member_lesson", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == userConnected.getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
     public function lessonsMember(UserConnected $userConnected, $idevent)
     {
@@ -210,7 +210,7 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
     public function conditions(User $usr, $idevent, Request $request, ObjectManager $manager,\Swift_Mailer $mailer)
     {
@@ -325,7 +325,7 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/registration-list-{orderby}", name="registration_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function listRegistration(RegistrationRepository $repoRegistration, $orderby =null)
     {
@@ -354,7 +354,7 @@ class RegistrationController extends AbstractController
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/paiement-list-{orderby}", name="paiement_view")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function listPaiement(PaiementRepository $repoPaiement, $orderby =null)
     {
@@ -391,7 +391,7 @@ class RegistrationController extends AbstractController
     /**
      * VALIDATION DU PAYEMENT
      * @Route("/paiement-validate-{id}", name="paiement_validate", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function validatePaiement(Paiement $paiement, Request $request, ObjectManager $manager)
     {
@@ -405,7 +405,7 @@ class RegistrationController extends AbstractController
     /**
      * VALIDATION DU DOSSIER D'INSCRIPTION
      * @Route("/dossier-inscription-valide-{id}", name="registration_validate", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function validateRegistration(Registration $registration, Request $request, ObjectManager $manager)
     {
@@ -419,7 +419,7 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/dossier-inscription-{id}", name="dossier_inscription", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function viewRegistration(Registration $registration, PaiementRepository $repo, Request $request, ObjectManager $manager)
     {
@@ -618,12 +618,12 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/paiement-id={id}-edit", name="paiement_edit", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function paiementEdit(Paiement $paiement, Request $request, ObjectManager $manager)
     {
 //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        //      * @Security("has_role('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
+        //      * @Security("is_granted('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
         $formPaiement = $this->createForm(PaiementType::class, $paiement);
         $formPaiement->handleRequest($request);
         $registration = $paiement->getRegistration();
@@ -644,7 +644,7 @@ class RegistrationController extends AbstractController
     /**
      * Supprimer la modalité de payement
      * @Route("/paiement-remove={id}", name="paiement_remove", requirements={"id"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function removePaiement(Paiement $paiement)
     {

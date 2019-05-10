@@ -20,7 +20,7 @@ class HomePageController extends AbstractController
 
     /**
      * @Route("/admin-edit-{path}", name="home_pageedit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function vikacreate(ContentPage $content, Request $request, ObjectManager $manager)
     {

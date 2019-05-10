@@ -19,7 +19,7 @@ class AdminVikaController extends AbstractController
     /**
      * LISTE DE TOUS LES UTILISATEURS DU SITE
      * @Route("/vikaUsers-{orderby}", name="admin_users")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function index(UserRepository $repo, $orderby=null, Request $request, ObjectManager $manager)
     {
@@ -133,39 +133,39 @@ class AdminVikaController extends AbstractController
     /**
      * AJOUT/MODIFICATION DE LA PHOTO DE PROFIL D'UN UTILISATEUR
      * @Route("/picture%member-{id}", name="admin_picture_user", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function form(User $user, Request $request, ObjectManager $manager){
+    public function form(User $usr, Request $request, ObjectManager $manager){
 
-        $form = $this->createForm(UserPictureType::class, $user);
+        $form = $this->createForm(UserPictureType::class, $usr);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $manager->persist($user);
+            $manager->persist($usr);
             $manager->flush();
-            return $this->redirectToRoute('admin_edit',['id'=>$user->getId()]);
+            return $this->redirectToRoute('admin_edit',['id'=>$usr->getId()]);
         }
 
         return $this->render('admin_vika/pictureEdit.html.twig', [
             'formPicture'=>$form->createView(),
-            'editMode'=> $user->getImageName()!==null
+            'editMode'=> $usr->getImageName()!==null
         ]);
     }
 
     /**
      * MODIFICATION DU STATUT ISACTIVE
      * @Route("/changeIsActiveStatus%member-{id}", name="admin_changeIsActive", requirements={"idCL"="\d+"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function editIsActiveStatus(User $user, Request $request, ObjectManager $manager){
+    public function editIsActiveStatus(User $usr, Request $request, ObjectManager $manager){
 
-        if ($user->getIsActive()==true){
-            $user->setIsActive(false);
+        if ($usr->getIsActive()==true){
+            $usr->setIsActive(false);
         }
         else{
-            $user->setIsActive(true);
+            $usr->setIsActive(true);
         }
-            $manager->persist($user);
+            $manager->persist($usr);
             $manager->flush();
 
 
