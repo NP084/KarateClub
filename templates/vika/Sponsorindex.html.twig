@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+
+{% block Body %}
+<h2>{{ contentPage.title }}</h2>
+
+        <div class="row justify-content-md-center">
+            <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                        <p class="card-text"> 
+                                {{ contentPage.content | raw }}                            
+                        </p>
+                        {% if (is_granted('ROLE_ADMIN'))%}
+                        <div class="row">
+                            <div class="col-auto">
+                                <a class="btn btn-primary btn-md" href="{{ path('VikaContentEdit', {'path':'Sponsor'}) }}" role="button">Editer</a>
+                            </div>
+                            <div class="col-auto">
+                                <a class="btn btn-primary btn-md" href="{{ path('sponsors_create') }}" role="button">Ajouter un sponsor</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        </div><!-- /.card-body -->
+                        <div class="card-footer">
+                            <div class="card-footer-content">
+                                    <div class="row justify-content-md-center">
+                                            {% for sponsor in sponsors %}
+                                            <div class="col-4">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                    <h5 class="card-title">{{ sponsor.name }}</h5>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <img class="embed-responsive-item" src="upload/media/{{ sponsor.logo }}" alt="Card image" style=width:50%>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text">{{ sponsor.description|raw }}</p>
+                                                    </div>
+                                                        {% if (is_granted('ROLE_ADMIN'))%}
+                                                        <div class="card-footer">
+                                                                <div class="row justify-content-start">
+                                                                        <div class="col-4">
+                                                                            <div class="card-footer-content text-muted"> 
+                                                                                <a class="btn btn-primary btn-md" href="{{ path('sponsors_edit', {'id':sponsor.id}) }}" role="button">Editer</a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-4">
+                                                                            <div class="card-footer-content text-muted"> 
+                                                                                <a class="btn btn-primary btn-md" href="{{ path('sponsors_delete', {'id':sponsor.id}) }}" role="button">Supprimer</a>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        {% else %}
+                                                        {% endif %}
+                                                    
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    
+
+
+
+
+    
+
+{% endblock %}

@@ -38,53 +38,51 @@
                         <div class="card-body">
                             <div class="row justify-content-md-center">
                                 <!-- Inserer boucle ici-->
-                                <div class="col-lg-5">
-                                    <div class="card">
-                                        <!-- .card-header -->
-                                        <div class="card-body">
-                                            <h5 class="card-title"> Special title treatment </h5>
-                                            <h6 class="card-subtitle text-muted"> Support card subtitle </h6>
-                                        </div><!-- /.card-body -->
-                                        <!-- 16:9 aspect ratio -->
-                                        <figure class="embed-responsive embed-responsive-16by9 mb-0">
-                                            <img class="embed-responsive-item" src="looper/dist/assets/images/dummy/img-1.jpg" alt="Card image">
-                                        </figure><!-- /.embed-responsive -->
-                                        <!-- .card-body -->
-                                        <div class="card-body">
-                                            <p class="card-text"> 
-                                                Blanditiis architecto quaerat fugit sit ab veritatis ipsam assumenda doloremque repellendus expedita. 
-                                                <a href="#" class="mention">@stilearningTwit</a>
-                                                . 
-                                                <a href="#" class="hashtag">#looper</a>
-                                                <a href="#" class="hashtag">#admin</a><br>
-                                            <time datetime="2018-02-12">Feb 12, 2018 at 08:19pm</time>
-                                            </p>
-                                        </div><!-- /.card-body -->
-                                    </div>
-                                </div>
-                                <div class="col-lg-5">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title"> Special title treatment </h5>
-                                                    <h6 class="card-subtitle text-muted"> Support card subtitle </h6>
-                                                </div><!-- /.card-body -->
-                                                <!-- 16:9 aspect ratio -->
-                                                <figure class="embed-responsive embed-responsive-16by9 mb-0">
-                                                    <img class="embed-responsive-item" src="looper/dist/assets/images/dummy/img-1.jpg" alt="Card image">
-                                                </figure><!-- /.embed-responsive -->
-                                                <!-- .card-body -->
-                                                <div class="card-body">
-                                                    <p class="card-text"> 
-                                                        Blanditiis architecto quaerat fugit sit ab veritatis ipsam assumenda doloremque repellendus expedita. 
-                                                        <a href="#" class="mention">@stilearningTwit</a>
-                                                        . 
-                                                        <a href="#" class="hashtag">#looper</a>
-                                                        <a href="#" class="hashtag">#admin</a><br>
-                                                    <time datetime="2018-02-12">Feb 12, 2018 at 08:19pm</time>
-                                                    </p>
-                                                </div><!-- /.card-body -->
+                                {% set nbr = 0 %}
+                                {% for article in articles %}
+
+                                {% set nbr = nbr + 1 %}
+                                    {% if nbr < 3 %}
+                                    
+                                    <div class="col-lg-5">
+                                        <div class="card">
+                                            <!-- .card-header -->
+                                            <div class="card-body">
+                                                <h5 class="card-title"> {{ article.title }} </h5>
+                                            </div><!-- /.card-body -->
+                                            <!-- 16:9 aspect ratio -->
+                                            <figure class="embed-responsive embed-responsive-16by9 mb-0">
+                                                <img class="embed-responsive-item" src="{{ asset('/upload/media/' ~ article.imageName)}}" alt="Card image">
+                                            </figure>
+                                            <!-- .card-body -->
+                                            <div class="card-body">
+                                                <p class="card-text">
+                                                    {{ article.content|raw }}
+                                                </p>
                                             </div>
-                                </div>
+                                            <div class="card-footer">
+                                                    <div class="card-footer-content text-muted">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="metadata">Ecrit le {{ article.createdAt |date('d/m/Y')}} à {{article.createdAt |date('H:i')}} dans la catégorie {{article.category.title}}</div>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <div class="card-footer-content text-muted">
+                                                                    <a class="btn btn-primary btn-md" href="{{ path('blog_show', {'id':article.id}) }}" role="button">Lire la suite</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>                                
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                        
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

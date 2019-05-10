@@ -47,6 +47,12 @@
                                                             </i>
                                                             <span class="sr-only">Supprimer</span>
                                                         </a>
+                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                           href="{{ path('fiche_membre', {'id':registration.user.id, 'idReg':registration.id}) }}">
+                                                            <i class="fa fa-file">
+                                                            </i>
+                                                            <span class="sr-only">Imprimer fiche</span>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             {% else %}

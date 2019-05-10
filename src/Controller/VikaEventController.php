@@ -116,8 +116,10 @@ class VikaEventController extends AbstractController
      */
     public function show(VikaEvent $vikaEvent): Response
     {
+
         return $this->render('vika_event/show.html.twig', [
             'vikaEvent' => $vikaEvent,
+            'user'=>$this->getUser()
         ]);
     }
 

@@ -74,63 +74,66 @@ class RegistrationController extends AbstractController
      */
     public function preregistrationSummary(User $usr, $idevent, Request $request, ObjectManager $manager)
     {
-        // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
-        $phone = new Phone();
-        $formPhone = $this->createForm(PhoneType::class, $phone);
-        $formPhone->handleRequest($request);
 
-        if ($formPhone->isSubmitted() && $formPhone->isValid()) {
-            // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
-            $this->forward('App\Controller\MemberController::addUserPhone', [
-                'user' => $usr,
-                'phone' => $phone,
-                'manager' => $manager,
-            ]);
-            return $this->redirectToRoute('preregistration_summary',
-                ['id' => $usr->getId(), 'idevent' => $idevent]);
-        }
 
-        // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
-        $adress = new Adress();
-        $formAdress = $this->createForm(AdressType::class, $adress);
-        $formAdress->handleRequest($request);
-        $city = new City();
-        $formCity = $this->createForm(CityType::class, $city);
-        $formCity->handleRequest($request);
+           // création d'un Form pour éventuellement enregistrer un nouveau numéro de téléphone
+           $phone = new Phone();
+           $formPhone = $this->createForm(PhoneType::class, $phone);
+           $formPhone->handleRequest($request);
 
-        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-        if ($formAdress->isSubmitted() && $formAdress->isValid()) {
-            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->forward('App\Controller\MemberController::addUserAdress', [
-                'user' => $usr,
-                'adress' => $adress,
-                'city' => $city,
-                'manager' => $manager,
-            ]);
-            return $this->redirectToRoute('preregistration_summary',
-                ['id' => $usr->getId(), 'idevent' => $idevent]);
-        }
+           if ($formPhone->isSubmitted() && $formPhone->isValid()) {
+               // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
+               $this->forward('App\Controller\MemberController::addUserPhone', [
+                   'user' => $usr,
+                   'phone' => $phone,
+                   'manager' => $manager,
+               ]);
+               return $this->redirectToRoute('preregistration_summary',
+                   ['id' => $usr->getId(), 'idevent' => $idevent]);
+           }
 
-        // Formulaire Personne de contact
-        $PoC = new PersonOfContact();
-        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
-        $formPoC->handleRequest($request);
-        $contactList = new ContactList();
-        $formContactList = $this->createForm(ContactListType::class, $contactList);
-        $formContactList->handleRequest($request);
+           // création d'un Form pour éventuellement enregistrer une nouvelle adresse et/ou nouvelle ville
+           $adress = new Adress();
+           $formAdress = $this->createForm(AdressType::class, $adress);
+           $formAdress->handleRequest($request);
+           $city = new City();
+           $formCity = $this->createForm(CityType::class, $city);
+           $formCity->handleRequest($request);
 
-        // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
-        if ($formPoC->isSubmitted() && $formPoC->isValid()) {
-            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->forward('App\Controller\MemberController::addUserPoC', [
-                'user' => $usr,
-                'contactList' => $contactList,
-                'PoC' => $PoC,
-                'manager' => $manager,
-            ]);
-            return $this->redirectToRoute('preregistration_summary',
-                ['id' => $usr->getId(), 'idevent' => $idevent]);
-        }
+           // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
+           if ($formAdress->isSubmitted() && $formAdress->isValid()) {
+               // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+               $this->forward('App\Controller\MemberController::addUserAdress', [
+                   'user' => $usr,
+                   'adress' => $adress,
+                   'city' => $city,
+                   'manager' => $manager,
+               ]);
+               return $this->redirectToRoute('preregistration_summary',
+                   ['id' => $usr->getId(), 'idevent' => $idevent]);
+           }
+
+           // Formulaire Personne de contact
+           $PoC = new PersonOfContact();
+           $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
+           $formPoC->handleRequest($request);
+           $contactList = new ContactList();
+           $formContactList = $this->createForm(ContactListType::class, $contactList);
+           $formContactList->handleRequest($request);
+
+           // Formulaire d'ajout d'une nouvelle personne de contact a été envoyé :
+           if ($formPoC->isSubmitted() && $formPoC->isValid()) {
+               // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+               $this->forward('App\Controller\MemberController::addUserPoC', [
+                   'user' => $usr,
+                   'contactList' => $contactList,
+                   'PoC' => $PoC,
+                   'manager' => $manager,
+               ]);
+               return $this->redirectToRoute('preregistration_summary',
+                   ['id' => $usr->getId(), 'idevent' => $idevent]);
+           }
+
 
         return $this->render('registration/preregistrationSummary.html.twig', [
 
@@ -174,6 +177,37 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * @Route("/inscription-simplifiée-{id}-{idevent}", name="prereg_simple",requirements={"id"="\d+"})
+     */
+    public function simpleprereg(User $usr, $idevent, ObjectManager $manager)
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Registration::class);
+        $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
+
+
+
+        $prereg = new Registration();
+        $prereg->setVikaEvent($event);
+        $prereg->setUser($usr);
+        $prereg->setConditionRegistration('0');
+        $prereg->setRegistrationDate(new \DateTime('now'));
+        $manager->persist($prereg);
+        $manager->flush();
+
+        $userConnected = $usr->getUserConnected();
+        $users = $userConnected->getUsers();
+
+        $preregs = $repository->findBy(
+            ['vikaEvent' => $idevent]
+        );
+
+
+        return $this->redirectToRoute('registration_member_lesson',['id' => $userConnected->getId(), 'idevent' => $idevent]);
+    }
+
+    /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
      * @Security("has_role('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
@@ -186,6 +220,19 @@ class RegistrationController extends AbstractController
         $prereg = new Registration();
         $form = $this->createForm(PreregistrationType::class, $prereg);
         $form->handleRequest($request);
+//        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Registration::class);
+        $event = $entityManager->getRepository(VikaEvent::class)->find($idevent);
+
+
+            $preregs = $repository->findBy(
+            ['vikaEvent' => $idevent]
+        );
+        $attachedFile_1 = $this->getDoctrine()
+            ->getRepository(AttachedFile::class)
+            ->findOneBy(
+                ['title' => 'CG']
+            );
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -220,10 +267,58 @@ class RegistrationController extends AbstractController
             'user' => $usr,
 //            'userConnected' => $userConnected,
             'idevent' => $event,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'preregs'=>$preregs,
+            'AttachedFile' => $attachedFile_1
         ]);
     }
 
+
+
+    /**
+     * Conditions générales
+     * @Route("/conditions-générales", name="general_conditions")
+     */
+    public function conditionsGenerales(Request $request, ObjectManager $manager)
+    {
+        $attachedFile_1 = $this->getDoctrine()
+            ->getRepository(AttachedFile::class)
+            ->findOneBy(
+                ['title' => 'CG']
+            );
+
+        if (!$attachedFile_1) {
+            $attachedFile_1 = new AttachedFile();
+        }
+        $formAttachedFile_1 = $this->createForm(DocumentForRegType::class, $attachedFile_1);
+        $formAttachedFile_1->handleRequest($request);
+
+
+        if ($formAttachedFile_1->isSubmitted() && $formAttachedFile_1->isValid()) {
+
+            if (!$attachedFile_1->getId()) {
+                $attachedFile_1->setDatecreat(new \DateTime());
+            }
+            $attachedFile_1->setTitle('CG');
+            $attachedFile_1->setRegistration(null);
+            $attachedFile_1->setMember(null);
+            $manager->persist($attachedFile_1);
+            $manager->flush();
+            //supprime les lignes dans AttachedFile si DocName est null (qd on supprime la pièce jointe)
+            if ($attachedFile_1->getDocname() == null) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->remove($attachedFile_1);
+                $em->flush();
+            }
+
+
+        }
+        return $this->render('registration/conditionsGenerales.html.twig', [
+            'formAttachedFile_1' => $formAttachedFile_1->createView(),
+            'AttachedFile' => $attachedFile_1
+
+        ]);
+    }
 
     /**
      * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
@@ -404,6 +499,7 @@ class RegistrationController extends AbstractController
 
         }
 
+
         //Ajouter le document le document d'inscription:
         $attachedFile_2 = $this->getDoctrine()
             ->getRepository(AttachedFile::class)
@@ -488,7 +584,7 @@ class RegistrationController extends AbstractController
             // pas nécessaire de faire passer le user (on peut le récupérer avec registration.user)
             // pareil pour adresse
             'user' => $user,
-           // 'adress' => $adress,
+            // 'adress' => $adress,
             'paiements' => $paiementNombre,
             'editRegistration' => $editRegistration,
         ]);

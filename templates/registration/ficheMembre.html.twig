@@ -50,40 +50,39 @@
         </center>
         <h2>Veuillez nous informer en cas de changement d'adresse!</h2>
         <div style="border-style: dotted; padding: 10px;">
-        <p><strong>Prise en charge médicale:</strong> Autorise la prise en charge médicale pour tout accident survenant
-durant les cours ou les manifestations auxquelles participerait le club.</p>
-        {% if 'medicalCare' == true %}
-            <b>OUI</b>
-        {% else %}
-            <b>NON</b>
-        {% endif %}
-        <p>Personne à prévenir en cas d'accident: </p> <h4>{{ user.userconnected.user.name }} {{ user.userconnected.user.firstName }}</h4>
-        </div>
-        </br>
-        <p></p>
-        </br>
+        <p><strong>Prise en charge médicale:</strong> Autorise la prise en charge médicale pour tout accident survenant durant les cours ou les manifestations auxquelles participerait le club.</p>
+                  {% if 'medicalCare' == true %}
+                      <b>OUI</b>
+                  {% else %}
+                      <b>NON</b>
+                  {% endif %}
+                  <p>Personne à prévenir en cas d'accident: </p> <h4>{{ user.userconnected.user.name }} {{ user.userconnected.user.firstName }}</h4>
+                  </div>
+                  </br>
+                  <p></p>
+                  </br>
         <div style="border-style: dotted; padding: 10px;">
         <p><strong>Droit à l'image:</strong> Autorise la publication non commerciale des photos prises lors des différentes
-activités organisées au sein du club ou auxquelles il participe.</p>
-        {% if 'ImageDiffusion' == true %}
-            <b>OUI</b>
-        {% else %}
-            <b>NON</b>
-        {% endif %}
-        </div>
-        </br>
-        <p></p>
-        </br>
+          activités organisées au sein du club ou auxquelles il participe.</p>
+                  {% if 'ImageDiffusion' == true %}
+                      <b>OUI</b>
+                  {% else %}
+                      <b>NON</b>
+                  {% endif %}
+                  </div>
+                  </br>
+                  <p></p>
+                  </br>
         <div style="border-style: dotted; padding: 10px;">
         <p><strong>Autorisation des parents ou du responsable légal pour les enfants mineurs:</strong> J’autorise l'enfant inscrit ci-dessus à pratiquer le karaté do au sein de Villeneuve Karaté do Association –
 VIKA.</p>
         <p><strong>Inscription</strong><br> Je soussigné (prénom et nom)(père-mère-tuteur)* (si mineur) : ...........................................................................................................................................................
-          <br>, reconnais avoir pris connaissance des conditions d’inscription, des horaires des cours et du règlement intérieur
-(ce dernier est disponible sur le site de VIKA et au bureau du Dojo)<br><br>
+        <br>, reconnais avoir pris connaissance des conditions d’inscription, des horaires des cours et du règlement intérieur
+        (ce dernier est disponible sur le site de VIKA et au bureau du Dojo)<br><br>
         {% if 'ConditionRegistration' == true %}
-            <b>OUI</b>
+        <b>OUI</b>
         {% else %}
-            <b>NON</b>
+        <b>NON</b>
         {% endif %}<br><br>
 Veuillez écrire manuscritement et intégralement la phrase ci-dessous
 « J'atteste avoir pris connaissance du règlement intérieur de l’association VIKA et en accepte les termes ».</p>

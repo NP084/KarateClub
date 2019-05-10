@@ -295,7 +295,7 @@
                                         <div class="form-group">
                                             <h3>Finaliser l'inscription</h3>
                                             <br>
-                
+
                 {#INSCRIPTION SIMPLIFIEE#}
                 {% if registration.vikaEvent.easyInscription == true %}
                 {% else %}
@@ -309,7 +309,7 @@
                                                         <img class="embed-responsive-rounded"
                                                              src="{{ asset('/upload/user/' ~ registration.user.imageName) }}"
                                                              alt="Card image" width="15%">
-                                                             
+
                                                     </div>
                                                     <button type="submit" class="btn btn-outline-info">
                                                         Ajouter la photo
@@ -340,13 +340,6 @@
                                                 </div>
                                             </div>
                                             <h6>Ajouter le document d'inscription</h6>
-                                            <div>
-                                                <a class="btn btn-primary" href="{{ path('fiche_membre', {'id':user.id, 'idReg':registration.id}) }}">
-                                                    <b>Imprimer la fiche membre</b>
-                                                </a>
-                                                </br>
-                                                </br>
-                                            </div>
                                             <div class="card">
                                                 <div class="card-body">
                                                     {{ form_start(formAttachedFile_2) }}
@@ -395,7 +388,7 @@
                                                                         {% else %}
                                                                         <td>En attente</td>
                                                                         {% endif %}
-                                                                        
+
                                                                         <td class="align-middle text-right">
                                                                                 <a class="btn btn-sm btn-icon btn-secondary"
                                                                                 href="{{ path('paiement_edit', {'id': paiement.id}) }}">
@@ -468,7 +461,7 @@
                             </div>
                     </div>
                 </div>
-                
+
                 {#VALIDER L'INSCRIPTION#}
                 <div class="container-fluid">
                     <div class="row justify-content-center">
