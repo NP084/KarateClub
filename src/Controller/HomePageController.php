@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ContentPage;
 use App\Entity\ContactClub;
 use App\Form\ContentType;
+use App\Repository\GalleryRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,8 +45,11 @@ class HomePageController extends AbstractController
     /**
      * @Route("/home-{path}", name="home_page")
      */
-    public function index(ArticleRepository $repoArticle, ContentPage $contentPage)
+    public function index(ArticleRepository $repoArticle, GalleryRepository $galleryRepo, ContentPage $contentPage)
     {
+        $carrousel = $galleryRepo ->findOneBy(
+            ['name'=>'Carrousel']
+        );
         $article = $repoArticle->findBy(
             [ ],
             ['id' => 'DESC']
@@ -54,6 +58,7 @@ class HomePageController extends AbstractController
         return $this->render('home_page/index.html.twig', [
             'contentPage' => $contentPage,
             'articles' => $article,
+            'galerie'=> $carrousel,
         ]);
     }
 

@@ -11,46 +11,65 @@
         {% form_theme formGaleriephoto 'jquery.collection.html.twig' %}
     #}
 
-<h1> Création d'une nouvelle galerie photo </h1>
 
-{{ form_start(formGaleriephoto) }}
+    {{ form_start(formGaleriephoto) }}
+    {% if (galerie.name != "Carrousel") %}
+        {% if editMode %}
+            <h1> Modification de la galerie photo : </h1>
+            <h2>{{ galerie.name }} </h2>
+        {% else %}
+            <h1> Nouvelle galerie photo </h1>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="">Titre de la galerie</label>
+            {{ form_widget(formGaleriephoto.name) }}
+        </div>
+
+        <div class="form-group">
+            <label for="">Description</label>
+            {{ form_widget(formGaleriephoto.description) }}
+        </div>
+
+        <div class="form-group">
+            <label for="">Photo d'avatar</label>
+            {{ form_widget(formGaleriephoto.imageFile) }}
+            <img class="embed-responsive-rounded"
+                 src="{{ asset('/upload/galerie/' ~ galerie.avatarName) }}"
+                 alt="Card image" width="40%">
+        </div>
+
+        {% else %}
+            {% if editMode %}
+                <h1> Modification du carrousel de la page d'accueil </h1>
+            {% else %}
+                <h1> Création du carrousel de la page d'accueil </h1>
+            {% endif %}
+    {% endif %}
 
     <div class="form-group">
-        <label for="">Titre de la galerie</label>
-        {{ form_widget(formGaleriephoto.name) }}
-    </div>
-
-    <div class="form-group">
-        <label for="">Description</label>
-        {{ form_widget(formGaleriephoto.description) }}
-    </div>
-
-    <div class="form-group">
-        <label for="">Photo d'avatar</label>
-        {{ form_widget(formGaleriephoto.imageFile) }}
-    </div>
-
-    <div class="form-group">
-            {{ form_label(formGaleriephoto.media, 'Ajouter des photos') }}
+        {{ form_label(formGaleriephoto.media, 'Ajouter des photos') }}
     </div>
 
     <ul class="medias" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}">
-        {% for media in formGaleriephoto.media %}
-            <li> {{ form_widget(media.imageFile) }} </li>
-            <p></p>
-        {% endfor %}
+        <div class="row">
+            {% for media in formGaleriephoto.media %}
+                    <li> {{ form_widget(media.imageFile) }} </li>
+            {% endfor %}
+        </div>
+
     </ul>
 
     <button type="submit" class="btn btn-primary">
-        {%if editMode %}
+        {% if editMode %}
             Enregister modification(s)
         {% else %}
-            Ajouter l'article
+            Ajouter la galerie photo
         {% endif %}
     </button>
 
 
-{{ form_end(formGaleriephoto)}}
+    {{ form_end(formGaleriephoto) }}
 
 
 {% endblock %}

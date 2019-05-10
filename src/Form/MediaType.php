@@ -15,8 +15,9 @@ class MediaType extends AbstractType
         $builder
        //     ->add('imageName')
               ->add('imageFile', VichImageType::class, [
-            'required'=> false
-        ]);
+            'required'=> false,
+           'image_uri' => true,
+       ]);
        //     ->add('updatedImage');
 
     }

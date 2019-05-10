@@ -40,7 +40,8 @@
                                                                 </i>
                                                                 <span class="sr-only">Modifier</span>
                                                             </a>
-                                                            <a class="btn btn-sm btn-icon btn-secondary" id="deleteHist"
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               onclick="return confirm('Veuillez confirmer la suppression de cette ligne d\'historique svp?');"
                                                                href="{{ path('remove_history_admin',{'id':history.id, 'idUser':user.id}) }}">
                                                                 <i class="fa fa-trash-o">
                                                                 </i>
@@ -89,12 +90,6 @@
     {% else %}
         <h2> Vous n'êtes pas autorisé à accéder à cette page </h2>
     {% endif %}
-
-    <script type="text/javascript">
-        document.querySelector("#deleteHist").addEventListener("click", function(event){
-            if (!confirm('Veuillez confirmer la suppression de la ligne d\'historique svp?')) event.preventDefault();
-        }, false);
-    </script>
 
 {% endblock %}
 

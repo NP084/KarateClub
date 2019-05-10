@@ -2,76 +2,125 @@
 
 
 {% block Body %}
-<h2>Bienvenue dans la galerie photo</h2>
-<div class="container">
-        {% if (is_granted('ROLE_ADMIN'))%}
-        <div class="row">
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="tile tile-img tile-lg">
-                            <img src="Logo_Vika.png" alt="" style="height: 35px;width: auto;">
+    <h2>Bienvenue dans la galerie photo</h2>
+    <div class="container">
+        {% if (is_granted('ROLE_ADMIN')) %}
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="tile tile-img tile-lg">
+                                <img src="Logo_Vika.png" alt="" style="height: 35px;width: auto;">
+                            </div>
+                            Nouvelle galerie photo
                         </div>
-                        Nouvelle galerie photo
-                    </div>
-                    <div class="card-body">
-                        <a class="btn btn-primary btn-block btn-xl" href="{{ path('galeriephoto_create')}}" role="button">Ajouter</a>
+                        <div class="card-body">
+                            <a class="btn btn-primary btn-block btn-xl" href="{{ path('galeriephoto_create') }}"
+                               role="button">Ajouter</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         {% endif %}
-    
+
         <div class="row justify-content-md-center">
 
         </div>
-</div>
+    </div>
 
     <br><br>
     <div class="container">
         <div class="row justify-content-md-center">
             {% for gallery in galleries %}
-            <div class="col-6">
-                <div class="card">
-                    <!-- .card-header -->
-                    <div class="card-body">
-                        <h5 class="card-title">{{ gallery.name }}</h5>
-                    </div>
-                    <figure class="embed-responsive embed-responsive-16by9 mb-0">
-                            <img class="embed-responsive-item" src="{{ asset('/upload/galerie/' ~ gallery.avatarName)}}" alt="Card image">
-                    </figure> 
-                    <div class="card-body">
-                        <p class="card-text">
-                            {{ gallery.description|raw }}
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-footer-content text-muted">
-                                    <a class="btn btn-primary btn-md" href="{{ path('gallery_show',{'id':gallery.id})}}" role="button">Consulter</a>
+                {% if gallery.name == 'Carrousel' and is_granted('ROLE_ADMIN') %}
+                    <div class="col-6">
+                        <div class="card">
+                            <!-- .card-header -->
+                            <div class="card-body">
+                                <h5 class="card-title">{{ gallery.name }}</h5>
+                            </div>
+                            <figure class="embed-responsive embed-responsive-16by9 mb-0">
+                                <img class="embed-responsive-item"
+                                     src="{{ asset('/upload/galerie/' ~ gallery.avatarName) }}" alt="Card image">
+                            </figure>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    {{ gallery.description|raw }}
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card-footer-content text-muted">
+                                            <a class="btn btn-primary btn-md"
+                                               href="{{ path('gallery_show',{'id':gallery.id}) }}" role="button">Consulter</a>
+                                        </div>
+                                    </div>
+                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                        <div class="col-2">
+                                            <div class="card-footer-content text-muted">
+                                                <a class="btn btn-primary btn-md"
+                                                   href="{{ path('gallery_edit',{'id':gallery.id}) }}" role="button">Editer</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="card-footer-content text-muted">
+                                                <a class="btn btn-primary btn-md"
+                                                   onclick="return confirm('Veuillez confirmer la suppression de cette galerie photo svp?');"
+                                                   href="{{ path('gallery_delete',{'id':gallery.id}) }}" role="button">Supprimer</a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
-                            {% if (is_granted('ROLE_ADMIN'))%}
-                                <div class="col-2">
-                                    <div class="card-footer-content text-muted">
-                                        <a class="btn btn-primary btn-md" href="{{ path('gallery_edit',{'id':gallery.id})}}" role="button">Editer</a>
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="card-footer-content text-muted">
-                                        <a class="btn btn-primary btn-md" href="{{ path('gallery_delete',{'id':gallery.id})}}" role="button">Supprimer</a>
-                                    </div>
-                                </div>
-                            {% else %}
-                            {% endif %}
                         </div>
                     </div>
-                </div>
-            </div>
+                {% elseif (gallery.name != 'Carrousel') %}
+                    <div class="col-6">
+                        <div class="card">
+                            <!-- .card-header -->
+                            <div class="card-body">
+                                <h5 class="card-title">{{ gallery.name }}</h5>
+                            </div>
+                            <figure class="embed-responsive embed-responsive-16by9 mb-0">
+                                <img class="embed-responsive-item"
+                                     src="{{ asset('/upload/galerie/' ~ gallery.avatarName) }}" alt="Card image">
+                            </figure>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    {{ gallery.description|raw }}
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card-footer-content text-muted">
+                                            <a class="btn btn-primary btn-md"
+                                               href="{{ path('gallery_show',{'id':gallery.id}) }}" role="button">Consulter</a>
+                                        </div>
+                                    </div>
+                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                        <div class="col-2">
+                                            <div class="card-footer-content text-muted">
+                                                <a class="btn btn-primary btn-md"
+                                                   href="{{ path('gallery_edit',{'id':gallery.id}) }}" role="button">Editer</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="card-footer-content text-muted">
+                                                <a class="btn btn-primary btn-md"
+                                                   onclick="return confirm('Veuillez confirmer la suppression de cette galerie photo svp?');"
+                                                   href="{{ path('gallery_delete',{'id':gallery.id}) }}" role="button">Supprimer</a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
-
 
 {% endblock %}
