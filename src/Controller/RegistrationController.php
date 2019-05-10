@@ -435,7 +435,7 @@ class RegistrationController extends AbstractController
 
         if ($formPaiement->isSubmitted() && $formPaiement->isValid()) {
             $manager->persist($paiement);
-            // si changement de grade, on l'ajoute à l'historique du user
+            // si changement de grade, on l'ajoute à l'historique du usr
             $this->addPaiementRegistration($registration, $paiement, $manager);
             $manager->flush();
 
@@ -444,9 +444,9 @@ class RegistrationController extends AbstractController
 
 
         //Informations de l'USER:
-        $user = $registration->getUser();
+        $usr = $registration->getUser();
         //Informations sur l'adresse du USER:
-        $adress = $user->getAdress();
+        $adress = $usr->getAdress();
         /*
                 //Ajouter le document le certificat médical:
                 $attachedFile_1 = null;
@@ -481,7 +481,7 @@ class RegistrationController extends AbstractController
             }
             $attachedFile_1->setTitle('Certificat médical');
             $attachedFile_1->setRegistration($registration);
-            $attachedFile_1->setMember($user);
+            $attachedFile_1->setMember($usr);
             $manager->persist($attachedFile_1);
             $manager->flush();
             //supprime les lignes dans AttachedFile si DocName est null (qd on supprime la pièce jointe)
@@ -524,7 +524,7 @@ class RegistrationController extends AbstractController
             }
             $attachedFile_2->setTitle('Document inscription');
             $attachedFile_2->setRegistration($registration);
-            $attachedFile_2->setMember($user);
+            $attachedFile_2->setMember($usr);
             $manager->persist($attachedFile_2);
             $manager->flush();
             //supprime les lignes dans AttachedFile si DocName est null (qd on supprime la pièce jointe)
@@ -546,11 +546,11 @@ class RegistrationController extends AbstractController
         }
 
         //Ajouter la photo du membre:
-        $formPicture = $this->createForm(UserPictureType::class, $user);
+        $formPicture = $this->createForm(UserPictureType::class, $usr);
         $formPicture->handleRequest($request);
 
         if ($formPicture->isSubmitted() && $formPicture->isValid()) {
-            $manager->persist($user);
+            $manager->persist($usr);
             $manager->flush();
             return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
         }
@@ -560,14 +560,14 @@ class RegistrationController extends AbstractController
         //Conditions pour modifier:
         $editRegistration = false;
 
-        if (($attachedFile_1->getId() and $attachedFile_2->getId() and $user->getImageName()) or $registration->getVikaEvent()->getEasyInscription(true) ) {
+        if (($attachedFile_1->getId() and $attachedFile_2->getId() and $usr->getImageName()) or $registration->getVikaEvent()->getEasyInscription(true) ) {
             $validateRegistration = true;
             if ($registration->getValidateRegistrationDate()) {
                 $editRegistration = true;
             }
         }
 
-        /*     if ($registration->getMedicalCertificate() == true && $registration->getConditionRegistrationDocument() == true && $user->getImageName() == true) {
+        /*     if ($registration->getMedicalCertificate() == true && $registration->getConditionRegistrationDocument() == true && $usr->getImageName() == true) {
                  $validateRegistration = true;
                  $verifEdit = $repoRegistration->findByEditRegistration($registration->getId());
                  if ($verifEdit == $registration) {
@@ -580,12 +580,12 @@ class RegistrationController extends AbstractController
             'formAttachedFile_1' => $formAttachedFile_1->createView(),
             'formAttachedFile_2' => $formAttachedFile_2->createView(),
             'formPicture' => $formPicture->createView(),
-            'editModePicture' => $user->getImageName() !== null,
+            'editModePicture' => $usr->getImageName() !== null,
             'validateRegistration' => $validateRegistration,
             'registration' => $registration,
-            // pas nécessaire de faire passer le user (on peut le récupérer avec registration.user)
+            // pas nécessaire de faire passer le usr (on peut le récupérer avec registration.usr)
             // pareil pour adresse
-            'user' => $user,
+            'user' => $usr,
             // 'adress' => $adress,
             'paiements' => $paiementNombre,
             'editRegistration' => $editRegistration,
@@ -704,15 +704,15 @@ class RegistrationController extends AbstractController
     public function HTMLToPDF($id, $idReg)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($id);
-        $form = $this->createForm(UserType::class, $user);
+        $usr = $entityManager->getRepository(User::class)->find($id);
+        $form = $this->createForm(UserType::class, $usr);
 
-        $name = $user->getName();
-        $firstName = $user->getFirstName();
+        $name = $usr->getName();
+        $firstName = $usr->getFirstName();
 
         $reg = $entityManager->getRepository(Registration::class)->find($idReg);
 
-        $user1 = $user->getUserConnected()->getId();
+        $user1 = $usr->getUserConnected()->getId();
         $user2 = $entityManager->getRepository(UserConnected::class)->find($user1);
         $form1 = $this->createForm(RegistrationType::class, $user2);
 
@@ -728,7 +728,7 @@ class RegistrationController extends AbstractController
             'title' => "Fiche membre",
             'form' => $form->createView(),
             'form1' => $form1->createView(),
-            'user' => $user,
+            'user' => $usr,
             'user1' => $user2,
             'reg' => $reg,
         ]);

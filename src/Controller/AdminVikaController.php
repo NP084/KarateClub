@@ -101,9 +101,9 @@ class AdminVikaController extends AbstractController
             $users = $repo->findBy(
                 ['isActive' => true]
             );
-            foreach ($users as $user){
-                $user->setIsActive(false);
-                $manager->persist($user);
+            foreach ($users as $usr){
+                $usr->setIsActive(false);
+                $manager->persist($usr);
                 $manager->flush();
             }
 

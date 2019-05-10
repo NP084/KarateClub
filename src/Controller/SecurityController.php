@@ -22,25 +22,25 @@ class SecurityController extends AbstractController
     * @Route("/inscription", name="security_registration")
     */
     public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder){
-        $user = new UserConnected();
+        $usr = new UserConnected();
 
-        $formReg = $this->createForm(RegistrationType::class, $user);
+        $formReg = $this->createForm(RegistrationType::class, $usr);
         $formReg->handleRequest($request);
 
-        $user2 = new User();
+        $usr2 = new User();
 
-        $formUser = $this->createForm(UserForRegType::class, $user2);
+        $formUser = $this->createForm(UserForRegType::class, $usr2);
         $formUser->handleRequest($request);
 
         if($formReg->isSubmitted() && $formReg->isValid()){
-            $hash = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($hash);
+            $hash = $encoder->encodePassword($usr, $usr->getPassword());
+            $usr->setPassword($hash);
 
-            $user->setUser($user2);
-            $user->addUser($user2);
+            $usr->setUser($usr2);
+            $usr->addUser($usr2);
 
-            $manager->persist($user);
-            $manager->persist($user2);
+            $manager->persist($usr);
+            $manager->persist($usr2);
             $manager->flush();
             return $this->redirectToRoute('validation');
         }
@@ -85,15 +85,15 @@ class SecurityController extends AbstractController
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
             $entityManager = $this->getDoctrine()->getManager();
-            $user = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email);
-            /* @var $user User */
-            if ($user === null) {
+            $usr = $entityManager->getRepository(UserConnected::class)->findOneByEmail($email);
+            /* @var $usr User */
+            if ($usr === null) {
                 $this->addFlash('danger', 'Email Inconnu');
                 return $this->redirectToRoute('security_registration');
             }
             $token = $tokenGenerator->generateToken();
             try{
-                $user->setResetToken($token);
+                $usr->setResetToken($token);
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
@@ -102,7 +102,7 @@ class SecurityController extends AbstractController
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
             $message = (new \Swift_Message('Mot de passe VIKA'))
                 ->setFrom('vi.ka.59@hotmail.fr')
-                ->setTo($user->getEmail())
+                ->setTo($usr->getEmail())
                 ->setBody("Voici le lien pour entrer votre nouveau mot de passe : " . $url, 'text/html');
             $mailer->send($message);
             $this->addFlash('notice', 'Mail envoyé');
@@ -118,14 +118,14 @@ class SecurityController extends AbstractController
     {
         if ($request->isMethod('POST')) {
             $entityManager = $this->getDoctrine()->getManager();
-            $user = $entityManager->getRepository(UserConnected::class)->findOneByResetToken($token);
-            /* @var $user User */
-            if ($user === null) {
+            $usr = $entityManager->getRepository(UserConnected::class)->findOneByResetToken($token);
+            /* @var $usr User */
+            if ($usr === null) {
                 $this->addFlash('danger', 'Token Inconnu');
                 return $this->redirectToRoute('home');
             }
-            $user->setResetToken(null);
-            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+            $usr->setResetToken(null);
+            $usr->setPassword($passwordEncoder->encodePassword($usr, $request->request->get('password')));
             $entityManager->flush();
             $this->addFlash('notice', 'Mot de passe mis à jour');
             return $this->redirectToRoute('home');
