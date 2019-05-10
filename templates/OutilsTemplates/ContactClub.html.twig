@@ -8,8 +8,10 @@
                     {#Si admin ou parent qui consulte son propre profil#}
                     {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
                         <h2>Editer les contacts</h2>
+                    {#
                     {% else %}
-                        <h2>Editer les contacts 2</h2>
+                        <h2>Editer les contacts</h2>
+                    #}
                     {% endif %}
                     <div class="card">
                         <div class="card-body">
@@ -19,42 +21,34 @@
                                         <table class="table">
                                             <thead>
                                             <tr>
-                                                <th>Titre</th>
-                                                <th>Description</th>
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th>Téléphone</th>
+                                                <th>Email</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for attachedFile in user.attachedFiles %}
+                                            {% for contact in contacts %}
                                                 <tr>
-                                                    <td>{{ attachedFile.title }}</td>
-                                                    <td>{{ attachedFile.description }}</td>
+                                                    <td>{{ contact.name }}</td>
+                                                    <td>{{ contact.firstName }}</td>
+                                                    <td>{{ contact.num }}</td>
+                                                    <td>{{ contact.email }}</td>
                                                     {% if (is_granted('ROLE_ADMIN')) %}
-
                                                         <td class="align-middle text-right">
-
                                                             <a class="btn btn-sm btn-icon btn-secondary"
-                                                               href="{{ path('edit_admin_document',{'idUser': user.id, 'id':attachedFile.id}) }}">
+                                                               href="{{ path('edit_admin_contact', {'idContact': contact.id}) }}">
                                                                 <i class="fa fa-pencil">
                                                                 </i>
                                                                 <span class="sr-only">Modifier</span>
                                                             </a>
-
                                                             <a class="btn btn-sm btn-icon btn-secondary"
-                                                               href="{{ path('remove_document_admin',{'idUser': user.id, 'id':attachedFile.id}) }}">
+                                                               href="{{ path('remove_admin_contact', {'idContact': contact.id}) }}">
                                                                 <i class="fa fa-trash-o">
                                                                 </i>
                                                                 <span class="sr-only">Supprimer</span>
                                                             </a>
-                                                            <!--
-                                                            <a class="btn btn-sm btn-icon btn-secondary"
-                                                               href="{{ path('afficher_document_admin',{'idUser': user.id, 'id':attachedFile.id}) }}">
-                                                                <i class="far fa-eye">
-                                                                </i>
-                                                                <span class="sr-only">Afficher</span>
-                                                            </a>
-                                                            -->
                                                         </td>
-
                                                     {% endif %}
                                                 </tr>
                                             {% else %}
@@ -70,26 +64,30 @@
                         </div>
                     </div>
                     {% if (is_granted('ROLE_ADMIN')) %}
-                        <a class="btn btn-primary" href="{{ path('load_admin_document', {'idUser':user.id}) }}"
+                        <a class="btn btn-primary" href="{{ path('load_admin_contact') }}"
                            class="btn-btn-primary">
-                            <b>Nouveau document</b>
+                            <b>Nouveau contact</b>
                         </a>
                         {#admin consulte un autre profil que le sien => retour vers la liste de users#}
+                        {#
                         {% if (app.user.id != user.userConnected.id) %}
                             <a class="btn btn-warning"
                                href="{{ path('admin_users', {orderBy: 'ASC'}) }}">
                                 <b>Retour</b>
                             </a>
                         {% endif %}
+                        #}
+                    {#
                     {% else %}
                         <a class="btn btn-primary" href="{{  path('load_member_document', {'idUser':user.id})}}"
                            class="btn-btn-primary">
-                            <b>Nouveau document</b>
+                            <b>Nouveau contact</b>
                         </a>
                         <a class="btn btn-warning"
                            href="{{ path('view_family',{'id':user.userConnected.id}) }}">
                             <b>Retour</b>
                         </a>
+                    #}
                     {% endif %}
                 </div>
             </div>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use App\Entity\ContactClub;
 
@@ -32,6 +33,114 @@ class LayoutController extends AbstractController
             'contacts' => $contacts,
         ]);
     }
+
+    /**
+     * AJOUT DE CONTACT
+     * @Route("/admin-contact-new", name="load_admin_contact")
+     */
+    public function ajoutContact(AttachedFile $attachedFile = null, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $usr = $this->getUser();
+        //la personne connectée = l'id du parent du user pour lequel on crée ou édite un doc
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
+            or $usr->getId() == $user->getUserConnected()->getId()) {
+
+            if (!$attachedFile) {
+                $attachedFile = new AttachedFile();
+            }
+            $form = $this->createForm(DocumentType::class, $attachedFile);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($attachedFile);
+                $attachedFile->setMember($user);
+                $entityManager->flush();
+
+                if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                    return $this->redirectToRoute('admin_document', [
+                        'id' => $user->getId(),
+                    ]);
+                } else {
+                    return $this->redirectToRoute('member_document', [
+                        'id' => $user->getId(),
+                    ]);
+                }
+            }
+            return $this->render('member/documentEdit.html.twig', [
+                'formPicture' => $form->createView(),
+                'editMode' => $user->getImageName() !== null,
+                'user' => $user,
+            ]);
+        } else {
+            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        }
+    }
+
+    /**
+     * MODIFICATION DE CONTACT
+     * @Route("/admin-contact-idContact={idContact}-edit", name="edit_admin_contact")
+     */
+    public function nouveauContact(AttachedFile $attachedFile = null, $idContact, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $usr = $this->getUser();
+        //la personne connectée = l'id du parent du user pour lequel on crée ou édite un doc
+        if (true === $authChecker->isGranted('ROLE_ADMIN')
+            or $usr->getId() == $user->getUserConnected()->getId()) {
+
+            if (!$attachedFile) {
+                $attachedFile = new AttachedFile();
+            }
+            $form = $this->createForm(DocumentType::class, $attachedFile);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($attachedFile);
+                $attachedFile->setMember($user);
+                $entityManager->flush();
+
+                if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                    return $this->redirectToRoute('admin_document', [
+                        'id' => $user->getId(),
+                    ]);
+                } else {
+                    return $this->redirectToRoute('member_document', [
+                        'id' => $user->getId(),
+                    ]);
+                }
+            }
+            return $this->render('member/documentEdit.html.twig', [
+                'formPicture' => $form->createView(),
+                'editMode' => $user->getImageName() !== null,
+                'user' => $user,
+            ]);
+        } else {
+            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        }
+    }
+
+    /**
+     * Supprime un contact.
+     * @Route("/admin-contact-idContact={idContact}-remove", name="remove_admin_contact", requirements={"idCL"="\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function supprimerContact($idContact)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($idUser);
+
+        $user->removeAttachedFile($doc);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_document', ['id' => $user->getId()]);
+    }
+
+
 
     /**
      * @Route("/layout", name="layout")
