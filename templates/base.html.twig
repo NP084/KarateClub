@@ -86,7 +86,12 @@
                 </div>
             </div><!-- /.page -->
         </div><!-- /.wrapper -->
+        {#
         {% include "OutilsTemplates/Footer.html.twig" %}
+        #}
+
+        {{ render(controller('App\\Controller\\LayoutController::footerAction')) }}
+
     </main>
 </div>
 

@@ -46,9 +46,6 @@ class HomePageController extends AbstractController
      */
     public function index(ArticleRepository $repoArticle, ContentPage $contentPage)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $contacts = $entityManager->getRepository(ContactClub::class)->find(1);
-
         $article = $repoArticle->findBy(
             [ ],
             ['id' => 'DESC']
@@ -57,7 +54,6 @@ class HomePageController extends AbstractController
         return $this->render('home_page/index.html.twig', [
             'contentPage' => $contentPage,
             'articles' => $article,
-            'contacts' => $contacts,
         ]);
     }
 
