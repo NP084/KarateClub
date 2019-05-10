@@ -39,7 +39,7 @@ class LayoutController extends AbstractController
      * AJOUT DE CONTACT
      * @Route("/admin-contact-new", name="new_admin_contact")
      */
-    public function ajoutContact(Request $request, ContactClub $contactClub)
+    public function ajoutContact(Request $request, ContactClub $contactClub = null)
     {
       $entityManager = $this->getDoctrine()->getManager();
       //$contact = $entityManager->getRepository(ContactClub::class)->find($idContact);
