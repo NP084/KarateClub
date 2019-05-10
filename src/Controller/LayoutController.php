@@ -125,19 +125,19 @@ class LayoutController extends AbstractController
     }
 
     /**
-     * Supprime un contact.
+     * SUPPRIMER UN CONTACT
      * @Route("/admin-contact-idContact={idContact}-remove", name="remove_admin_contact", requirements={"idCL"="\d+"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function supprimerContact($idContact)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($idUser);
+        $contact = $entityManager->getRepository(ContactClub::class)->find($idContact);
 
-        $user->removeAttachedFile($doc);
+        $entityManager->remove($contact);
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_document', ['id' => $user->getId()]);
+        return $this->redirectToRoute('contact_club');
     }
 
 
