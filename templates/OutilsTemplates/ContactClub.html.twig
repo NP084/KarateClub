@@ -5,13 +5,8 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    {#Si admin ou parent qui consulte son propre profil#}
                     {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
                         <h2>Editer les contacts</h2>
-                    {#
-                    {% else %}
-                        <h2>Editer les contacts</h2>
-                    #}
                     {% endif %}
                     <div class="card">
                         <div class="card-body">
@@ -68,26 +63,6 @@
                            class="btn-btn-primary">
                             <b>Nouveau contact</b>
                         </a>
-                        {#admin consulte un autre profil que le sien => retour vers la liste de users#}
-                        {#
-                        {% if (app.user.id != user.userConnected.id) %}
-                            <a class="btn btn-warning"
-                               href="{{ path('admin_users', {orderBy: 'ASC'}) }}">
-                                <b>Retour</b>
-                            </a>
-                        {% endif %}
-                        #}
-                    {#
-                    {% else %}
-                        <a class="btn btn-primary" href="{{  path('load_member_document', {'idUser':user.id})}}"
-                           class="btn-btn-primary">
-                            <b>Nouveau contact</b>
-                        </a>
-                        <a class="btn btn-warning"
-                           href="{{ path('view_family',{'id':user.userConnected.id}) }}">
-                            <b>Retour</b>
-                        </a>
-                    #}
                     {% endif %}
                 </div>
             </div>

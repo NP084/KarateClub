@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use App\Entity\ContactClub;
+use App\Form\ContactClubType;
 
 class LayoutController extends AbstractController
 {
@@ -83,45 +84,26 @@ class LayoutController extends AbstractController
      * MODIFICATION DE CONTACT
      * @Route("/admin-contact-idContact={idContact}-edit", name="edit_admin_contact")
      */
-    public function nouveauContact(AttachedFile $attachedFile = null, $idContact, Request $request)
+    public function editerContact($idContact, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->find($idUser);
+        $contact = $entityManager->getRepository(ContactClub::class)->find($idContact);
 
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du user pour lequel on crée ou édite un doc
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $user->getUserConnected()->getId()) {
+        $form = $this->createForm(ContactClubType::class, $contact);
+        $form->handleRequest($request);
 
-            if (!$attachedFile) {
-                $attachedFile = new AttachedFile();
-            }
-            $form = $this->createForm(DocumentType::class, $attachedFile);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($attachedFile);
-                $attachedFile->setMember($user);
-                $entityManager->flush();
-
-                if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                    return $this->redirectToRoute('admin_document', [
-                        'id' => $user->getId(),
-                    ]);
-                } else {
-                    return $this->redirectToRoute('member_document', [
-                        'id' => $user->getId(),
-                    ]);
-                }
-            }
-            return $this->render('member/documentEdit.html.twig', [
-                'formPicture' => $form->createView(),
-                'editMode' => $user->getImageName() !== null,
-                'user' => $user,
-            ]);
-        } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($contact);
+            $entityManager->flush();
         }
+
+        return $this->render('OutilsTemplates/contactEdit.html.twig', [
+            'form' => $form->createView(),
+            ]);
+
+        //} else {
+        //    return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        //}
     }
 
     /**

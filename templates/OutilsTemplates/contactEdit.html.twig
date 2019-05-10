@@ -1,0 +1,74 @@
+{% extends 'base.html.twig'%}
+
+{% block Body %}
+    {% if (is_granted('ROLE_ADMIN') or app.user.id == user.userConnected.id or app.user.id == app.request.get("id")) %}
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>
+                    Modification d'un contact
+                    {# Ajouter un nouveau document #}
+                </h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ form_start(form) }}
+                                    <div class="form-group">
+                                        {{ form_label(form.name, 'Nom') }}
+                                        {{ form_widget(form.name) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ form_label(form.firstName, 'Prénom') }}
+                                    {{ form_widget(form.firstName) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ form_label(form.num, 'Téléphone') }}
+                                    {{ form_widget(form.num) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ form_label(form.email, 'Email') }}
+                                    {{ form_widget(form.email) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-outline-info">
+                                        Enregistrer modification
+                                        {# Ajouter le document #}
+                                    </button>
+                                    <a class="btn btn-primary" href="{{ path('contact_club') }}">
+                                        <b>Retour</b>
+                                    </a>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <p>Vous n'êtes pas autorisé à accéder à cette page</p>
+    {% endif %}
+
+{% endblock %}
