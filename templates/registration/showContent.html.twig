@@ -126,7 +126,7 @@
                                                                     <span class="sr-only">Voir dossier</span>
                                                                 </a>
                                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                                   id="deleteReg"
+                                                                   id="deleteReg" onclick="return test();"
                                                                    href="{{ path('remove_registration_admin', {'id':registrationValidate.id, 'idUser':registrationValidate.user.id}) }}">
                                                                     <i class="fa fa-trash-o">
                                                                     </i>
@@ -157,7 +157,7 @@
                                                                     <span class="sr-only">Voir dossier</span>
                                                                 </a>
                                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                                   id="deleteReg"
+                                                                   id="deleteReg" onclick="return test();"
                                                                    href="{{ path('remove_registration_admin', {'id':registrationValidate.id, 'idUser':registrationValidate.user.id}) }}">
                                                                     <i class="fa fa-trash-o">
                                                                     </i>
@@ -196,9 +196,10 @@
     {% endif %}
 
     <script type="text/javascript">
-        document.querySelector("#deleteReg").addEventListener("click", function (event) {
-            if (!confirm('Veuillez confirmer la suppression cette inscription svp?')) event.preventDefault();
-        }, false);
+        function test() {
+            confirm('Etes vous certain de vouloir supprimer cette inscription?');
+        }
+        //if (!confirm('Veuillez confirmer la suppression cette inscription svp!!?')) event.preventDefault();
     </script>
 
 {% endblock %}
