@@ -27,7 +27,7 @@ class BlogController extends Controller//AbstractController
     {
         $allarticles = $repo -> findBy(
             [ ],
-            ['id' => 'DESC']
+            ['createdAt' => 'DESC']
         );
 
         $articles = $this->get('knp_paginator')->paginate(
@@ -64,9 +64,9 @@ class BlogController extends Controller//AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            if (!$article->getId()){
+//            if (!$article->getId()){
                 $article->setCreatedAt(new \DateTime());
-            }
+//            }
             $manager->persist($article);
             $manager->flush();
             return $this->redirectToRoute('blog_show',['id'=>$article->getId()]);
