@@ -11,23 +11,16 @@
             {% for media in galerie.media %}
                 {% if foo == 1 %}
                     <div class="carousel-item active">
-                        <img src="{{ asset('/upload/galerie/' ~ media.imageName) }}"
-                             class="embed-responsive-rounded" style="width:640px;height:360px" alt="" width="100%">
-                        {#            <div class="carousel-caption d-none d-md-block">
-                                        <h5>First slide label</h5>
-                                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                                    </div>#}
-                    </div>
                 {% else %}
                     <div class="carousel-item">
-                        <img src="{{ asset('/upload/galerie/' ~ media.imageName) }}"
-                             class="embed-responsive-rounded align-content-center" style="width:640px;height:360px" alt="" width="100%">
+                {% endif %}
+                    <img src="{{ asset('/upload/galerie/' ~ media.imageName) }}"
+                         class="embed-responsive-rounded" style="width:640px;height:360px" alt="" width="100%">
                         {#            <div class="carousel-caption d-none d-md-block">
                                         <h5>First slide label</h5>
                                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                                     </div>#}
                     </div>
-                {% endif %}
                 {% set foo = foo + 1 %}
             {% endfor %}
 
