@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\ContentPage;
 use App\Entity\ContactClub;
 use App\Form\ContentType;
@@ -50,14 +51,19 @@ class HomePageController extends AbstractController
         $carrousel = $galleryRepo ->findOneBy(
             ['name'=>'Carrousel']
         );
-        $article = $repoArticle->findBy(
-            [ ],
-            ['id' => 'DESC']
+        $repo = $this->getDoctrine()
+            ->getRepository(Category::class);
+        $category = $repo->findOneBy([
+            'title' => "Homepage",
+        ]);
+        $articles = $repoArticle->findBy(
+            ['category' => $category],
+            ['createdAt' => 'DESC']
         );
 
         return $this->render('home_page/index.html.twig', [
             'contentPage' => $contentPage,
-            'articles' => $article,
+            'articles' => $articles,
             'galerie'=> $carrousel,
         ]);
     }
