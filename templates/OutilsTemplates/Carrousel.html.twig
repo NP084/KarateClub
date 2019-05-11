@@ -14,6 +14,7 @@
                 {% else %}
                     <div class="carousel-item">
                 {% endif %}
+                        <div class="row justify-content-md-center">
                     <img src="{{ asset('/upload/galerie/' ~ media.imageName) }}"
                          class="embed-responsive-rounded" style="width:640px;height:360px" alt="" width="100%">
                         {#            <div class="carousel-caption d-none d-md-block">
@@ -23,7 +24,7 @@
                     </div>
                 {% set foo = foo + 1 %}
             {% endfor %}
-
+                    </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
