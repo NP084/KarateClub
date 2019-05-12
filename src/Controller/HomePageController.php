@@ -13,8 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Repository\ArticleRepository;
+use App\Repository\SponsorRepository;
 use App\Entity\Article;
-
+use App\Entity\Sponsor;
 
 class HomePageController extends AbstractController
 {
@@ -46,7 +47,7 @@ class HomePageController extends AbstractController
     /**
      * @Route("/home-{path}", name="home_page")
      */
-    public function index(ArticleRepository $repoArticle, GalleryRepository $galleryRepo, ContentPage $contentPage)
+    public function index(SponsorRepository $repoSponsor, ArticleRepository $repoArticle, GalleryRepository $galleryRepo, ContentPage $contentPage)
     {
         $carrousel = $galleryRepo ->findOneBy(
             ['name'=>'Carrousel']
@@ -61,10 +62,16 @@ class HomePageController extends AbstractController
             ['createdAt' => 'DESC']
         );
 
+        $sponsors = $repoSponsor->findBy(
+            [],
+            ['datecreat' => 'DESC']
+        );
+
         return $this->render('home_page/index.html.twig', [
             'contentPage' => $contentPage,
             'articles' => $articles,
             'galerie'=> $carrousel,
+            'sponsors' => $sponsors,
         ]);
     }
 
