@@ -87,7 +87,11 @@ class MemberController extends AbstractController
             $this->addUserPoC($usr, $contactList, $PoC, $manager);
 
             if (!$idevent) {
-                return $this->redirectToRoute('registration_view_family', ['id' => $userConnected->getId()]);
+                if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                    return $this->redirectToRoute('admin_family', ['id' => $userConnected->getId()]);
+                }else{
+                    return $this->redirectToRoute('view_family', ['id' => $userConnected->getId()]);
+                }
             } else {
                 return $this->redirectToRoute('registration_member_lesson', ['id' => $userConnected->getId(), 'idevent' => $idevent]);
             }
