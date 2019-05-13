@@ -42,29 +42,6 @@
                                         {{ article.content|raw }}
                                     </p>
                                 </div>
-                                <div class="card-footer">
-                                    <div class="card-footer-content text-muted">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="metadata">Ecrit
-                                                    le {{ article.createdAt |date('d/m/Y') }}
-                                                    à {{ article.createdAt |date('H:i') }} dans la
-                                                    catégorie {{ article.category.title }}</div>
-                                            </div>
-                                        </div>
-
-                                        {#<div class="row">
-                                            <div class="col-4">
-                                                <div class="card-footer-content text-muted">
-                                                    <a class="btn btn-primary btn-md"
-                                                       href="{{ path('blog_show', {'id':article.id}) }}"
-                                                       role="button">Lire
-                                                        la suite</a>
-                                                </div>
-                                            </div>
-                                        </div>#}
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
