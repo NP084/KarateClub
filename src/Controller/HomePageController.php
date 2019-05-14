@@ -7,6 +7,7 @@ use App\Entity\ContentPage;
 use App\Entity\ContactClub;
 use App\Form\ContentType;
 use App\Repository\GalleryRepository;
+use App\Repository\VikaEventRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +48,7 @@ class HomePageController extends AbstractController
     /**
      * @Route("/home-{path}", name="home_page")
      */
-    public function index(SponsorRepository $repoSponsor, ArticleRepository $repoArticle, GalleryRepository $galleryRepo, ContentPage $contentPage)
+    public function index(VikaEventRepository $repoEvent,SponsorRepository $repoSponsor, ArticleRepository $repoArticle, GalleryRepository $galleryRepo, ContentPage $contentPage)
     {
         $carrousel = $galleryRepo ->findOneBy(
             ['name'=>'Carrousel']
@@ -67,11 +68,17 @@ class HomePageController extends AbstractController
             ['datecreat' => 'DESC']
         );
 
+        $event = $repoEvent->findBy(
+            [],
+            ['createdEv' => 'DESC']
+        );
+
         return $this->render('home_page/index.html.twig', [
             'contentPage' => $contentPage,
             'articles' => $articles,
             'galerie'=> $carrousel,
             'sponsors' => $sponsors,
+            'vikaEvents' => $event
         ]);
     }
 
