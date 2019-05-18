@@ -561,7 +561,7 @@ class RegistrationController extends AbstractController
             'registration' => $registration,
             // pas nécessaire de faire passer le usr (on peut le récupérer avec registration.usr)
             // pareil pour adresse
-              'user' => $usr,
+             // 'user' => $usr,
             // 'adress' => $adress,
             'paiements' => $paiementNombre,
             'editRegistration' => $editRegistration,

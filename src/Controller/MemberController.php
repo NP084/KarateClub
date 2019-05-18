@@ -623,7 +623,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/member-id}-registration", name="member_registration", requirements={"id"="\d+"})
+     * @Route("/member-{id}-registration", name="member_registration", requirements={"id"="\d+"})
      * @Route("/admin-{id}-registration", name="admin_registration",  requirements={"id"="\d+"})
      * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
