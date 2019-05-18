@@ -54,7 +54,6 @@ class AttachedFile
      *     mimeTypes = {
      *     "application/pdf",
      *     })
-
      */
     private $docFile;
 
