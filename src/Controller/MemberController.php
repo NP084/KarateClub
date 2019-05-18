@@ -705,41 +705,33 @@ class MemberController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $usr = $entityManager->getRepository(User::class)->find($idUser);
-
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du usr pour lequel on crée ou édite un doc
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $usr->getUserConnected()->getId()) {
-
-            if (!$attachedFile) {
-                $attachedFile = new AttachedFile();
-            }
-            $form = $this->createForm(DocumentType::class, $attachedFile);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($attachedFile);
-                $attachedFile->setMember($usr);
-                $entityManager->flush();
-
-                if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                    return $this->redirectToRoute('admin_document', [
-                        'id' => $usr->getId(),
-                    ]);
-                } else {
-                    return $this->redirectToRoute('member_document', [
-                        'id' => $usr->getId(),
-                    ]);
-                }
-            }
-            return $this->render('member/documentEdit.html.twig', [
-                'formPicture' => $form->createView(),
-                'editMode' => $usr->getImageName() !== null,
-                'user' => $usr,
-            ]);
-        } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        
+        if (!$attachedFile) {
+            $attachedFile = new AttachedFile();
         }
+        $form = $this->createForm(DocumentType::class, $attachedFile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($attachedFile);
+            $attachedFile->setMember($usr);
+            $entityManager->flush();
+
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin_document', [
+                    'id' => $usr->getId(),
+                ]);
+            } else {
+                return $this->redirectToRoute('member_document', [
+                    'id' => $usr->getId(),
+                ]);
+            }
+        }
+        return $this->render('member/documentEdit.html.twig', [
+            'formPicture' => $form->createView(),
+            'editMode' => $usr->getImageName() !== null,
+            'user' => $usr,
+        ]);
     }
 
     /**
