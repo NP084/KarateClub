@@ -59,12 +59,10 @@
                             </div>
 
                             <ul class="medias" data-prototype="{{ form_widget(formGaleriephoto.media.vars.prototype)|e('html_attr') }}">
-                                <div class="row">
                                     {% for media in formGaleriephoto.media %}
-                                        <li> {{ form_widget(media.imageFile) }} </li>
+                                        <li> {{ form_label(media.imageFile, 'Photo', {'label_attr':{'class':'control-label'}}) }}
+                                            {{ form_widget(media.imageFile, {'attr':{'class':'control-label'}}) }} </li>
                                     {% endfor %}
-                                </div>
-
                             </ul>
                             <button type="submit" class="btn btn-primary">
                                 {% if editMode %}
