@@ -3,10 +3,16 @@
 
 {% block Body %}
 <div class="container-fluid">
+    <h2>{{ contentPage.title }}</h2>
+    <h4>{{ contentPage.subtitle }}</h4>
+
     <div class="card">
+
         <!-- .card-body -->
+
+
         <div class="card-body">
-            <h2>{{ contentPage.title }}</h2>
+
             <div class="content">
                 {{ contentPage.content | raw }}
             </div>
