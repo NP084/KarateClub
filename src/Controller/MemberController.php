@@ -744,7 +744,7 @@ class MemberController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($attachedFile);
-                $attachedFile->setMember($usr);
+                $attachedFile->setMember($usr->getUser());
                 $entityManager->flush();
 
                 if (true === $authChecker->isGranted('ROLE_ADMIN')) {
@@ -759,7 +759,7 @@ class MemberController extends AbstractController
             }
             return $this->render('member/documentEdit.html.twig', [
                 'formPicture' => $form->createView(),
-                'editMode' => $usr->getImageName() !== null,
+                'editMode' => $usr->getUser()->getImageName() !== null,
                 'user' => $usr,
             ]);
         } else {
