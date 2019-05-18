@@ -284,7 +284,9 @@ class MemberController extends AbstractController
             'num' => $phone->getNum()
         ]);
         if (!$phoneTest) {
-            // enregistre le nouveau numéro dans la DB
+            // enregistre le nouveau numéro dans la DB en supprimant les espaces
+            $num = str_replace(' ','',$phone->getNum());
+            $phone->setNum($num);
             $manager->persist($phone);
             $usr->addPhone($phone);
             $manager->flush();
@@ -530,33 +532,38 @@ class MemberController extends AbstractController
         ]);
         // si personne de contact n'existe pas : on crée une nouvelle personne dans la DB
         if (!$PoCTest) {
-            // enregistre le nouveau numéro dans la DB
+            // enregistre le nouveau numéro dans la DB en supprimant les espaces
+            $num = str_replace(' ','',$PoC->getNum1());
+            $PoC->setNum1($num);
             $manager->persist($PoC);
             $manager->flush();
+            $PoC_tmp=$PoC;
+        }else{
+            $PoC_tmp=$PoCTest;
         }
-
         $repoCL = $this->getDoctrine()
             ->getRepository(ContactList::class);
         $contactListTest = $repoCL->findOneBy([
-            'relation' => $contactList->getRelation(),
-            'info' => $contactList->getInfo(),
+            'user' => $usr,
+            'personOfContact' => $PoC_tmp,
+ //           'relation'=>$contactList->getRelation(),
+  //          'info'=>$contactList->getInfo(),
         ]);
-        // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
+        // instance contactListTest n'existe pas : création d'une nouvelle contactList dans la DB
         if (!$contactListTest) {
             $manager->persist($contactList);
             if (!$PoCTest) {
                 // si personne de contact n'existait pas => associe la personne qui vient d'être créée ($PoC)
                 $contactList->setPersonOfContact($PoC);
             } else {
-                // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
+                // sinon => associe la PoC qui a été trouvée dans le test
                 $contactList->setPersonOfContact($PoCTest);
             }
             $usr->addContactList($contactList);
             $manager->flush();
         } else {
-            // associe l'adresse existante à cet user
-            $usr->addContactList($contactListTest);
-            $manager->flush();
+          //  $usr->addContactList($contactListTest);
+            $manager->persist($contactListTest);
         }
     }
 

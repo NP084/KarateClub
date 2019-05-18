@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    {#Si admin ou parent qui consulte son propre profil#}
-                    {% if (is_granted('ROLE_ADMIN') or app.user.user.id == app.request.get("id")) %}
-                        <h2>Mes inscriptions </h2>
-                    {% else %}
+                    {% if (is_granted('ROLE_ADMIN') and app.user.user.id != app.request.get("id")) %}
                         <h2>Inscription de {{ user.firstName }} {{ user.name }}</h2>
+                    {% else %}
+                        <h2>Mes inscriptions </h2>
                     {% endif %}
+
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
