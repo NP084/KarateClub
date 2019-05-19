@@ -54,8 +54,6 @@ class MemberController extends AbstractController
      */
     public function addUserEvent(UserConnected $userConnected, $idevent = null, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
-        //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        //      * @Security("is_granted('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
         $usr = new User();
         $formUser = $this->createForm(AddUserType::class, $usr);
         $formUser->handleRequest($request);
@@ -89,13 +87,12 @@ class MemberController extends AbstractController
             if (!$idevent) {
                 if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                     return $this->redirectToRoute('admin_family', ['id' => $userConnected->getId()]);
-                }else{
+                } else {
                     return $this->redirectToRoute('view_family', ['id' => $userConnected->getId()]);
                 }
             } else {
                 return $this->redirectToRoute('registration_member_lesson', ['id' => $userConnected->getId(), 'idevent' => $idevent]);
             }
-
         }
 
         return $this->render('member/addUser.html.twig', [
@@ -117,11 +114,7 @@ class MemberController extends AbstractController
      */
     public function addUser(UserConnected $userConnected, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
-        //        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        //      * @Security("is_granted('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
-
         return $this->addUserEvent($userConnected, null, $request, $manager, $authChecker);
-
     }
 
     /**
@@ -131,73 +124,55 @@ class MemberController extends AbstractController
      */
     public function verifyProfile(User $usr, Request $request, ObjectManager $manager, $idevent, AuthorizationCheckerInterface $authChecker)
     {
-        if($usr == $usr->getUserConnected()) {
-//        $formUser = $this->createForm(AddUserType::class, $usr);
-//        $formUser->handleRequest($request);
-            $adress = new Adress();
-            $formAdress = $this->createForm(AdressType::class, $adress);
-            $formAdress->handleRequest($request);
-            $city = new City();
-            $formCity = $this->createForm(CityType::class, $city);
-            $formCity->handleRequest($request);
-            $phone = new Phone();
-            $formPhone = $this->createForm(PhoneType::class, $phone);
-            $formPhone->handleRequest($request);
-            $PoC = new PersonOfContact();
-            $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
-            $formPoC->handleRequest($request);
-            $contactList = new ContactList();
-            $formContactList = $this->createForm(ContactListType::class, $contactList);
-            $formContactList->handleRequest($request);
+        $adress = new Adress();
+        $formAdress = $this->createForm(AdressType::class, $adress);
+        $formAdress->handleRequest($request);
+        $city = new City();
+        $formCity = $this->createForm(CityType::class, $city);
+        $formCity->handleRequest($request);
+        $phone = new Phone();
+        $formPhone = $this->createForm(PhoneType::class, $phone);
+        $formPhone->handleRequest($request);
+        $PoC = new PersonOfContact();
+        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
+        $formPoC->handleRequest($request);
+        $contactList = new ContactList();
+        $formContactList = $this->createForm(ContactListType::class, $contactList);
+        $formContactList->handleRequest($request);
 
-            // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-//        if ($formUser->isSubmitted() && $formUser->isValid()) {
-//            $manager->persist($usr);
-//            return $this->redirectToRoute('registration_view_family', ['id' => $usr->getUserConnected()->getId()]);
-//        }
+        if ($formPhone->isSubmitted() && $formPhone->isValid()) {
+            // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
+            $this->addUserPhone($usr, $phone, $manager);
+        }
 
+        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
+        if ($formAdress->isSubmitted() && $formAdress->isValid()) {
+            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+            $this->addUserAdress($usr, $adress, $city, $manager);
+        }
 
-            if ($formPhone->isSubmitted() && $formPhone->isValid()) {
-                // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
-                $this->addUserPhone($usr, $phone, $manager);
+        if ($formPoC->isSubmitted() && $formPoC->isValid()) {
+            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+            $this->addUserPoC($usr, $contactList, $PoC, $manager);
+        }
+        if ($formPhone->isSubmitted() || $formAdress->isSubmitted() || $formPoC->isSubmitted()) {
 
-            }
-
-            // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-            if ($formAdress->isSubmitted() && $formAdress->isValid()) {
-                // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-                $this->addUserAdress($usr, $adress, $city, $manager);
-
-            }
-
-            if ($formPoC->isSubmitted() && $formPoC->isValid()) {
-                // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-                $this->addUserPoC($usr, $contactList, $PoC, $manager);
-
-            }
-            if ($formPhone->isSubmitted() || $formAdress->isSubmitted() || $formPoC->isSubmitted()) {
-
-                return $this->redirectToRoute('condition_view_family', [
-                    'id' => $usr->getId(),
-                    'idevent' => $idevent,
-                ]);
-            }
-
-            return $this->render('member/completeUser.html.twig', ['user' => $usr,
-//'formUser' => $formUser->createView(),
-                'phoneForm' => $formPhone->createView(),
-                'adressForm' => $formAdress->createView(),
-                'cityForm' => $formCity->createView(),
-                'PoCForm' => $formPoC->createView(),
-                'ContactListForm' => $formContactList->createView(),
+            return $this->redirectToRoute('condition_view_family', [
+                'id' => $usr->getId(),
                 'idevent' => $idevent,
-                'user' => $usr
             ]);
         }
-        else {
-            return $this->redirectToRoute('preregistration_summary',
-                ['id' => $usr->getId(), 'idevent' => $idevent]);
-        }
+
+        return $this->render('member/completeUser.html.twig', ['user' => $usr,
+//'formUser' => $formUser->createView(),
+            'phoneForm' => $formPhone->createView(),
+            'adressForm' => $formAdress->createView(),
+            'cityForm' => $formCity->createView(),
+            'PoCForm' => $formPoC->createView(),
+            'ContactListForm' => $formContactList->createView(),
+            'idevent' => $idevent,
+            'user' => $usr
+        ]);
     }
 
     /**
@@ -207,7 +182,6 @@ class MemberController extends AbstractController
      */
     public function profileEdit(User $usr, Request $request, ObjectManager $manager, AuthorizationCheckerInterface $authChecker)
     {
-//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
         $formUser = $this->createForm(UserType::class, $usr);
         $formUser->handleRequest($request);
 
@@ -310,7 +284,9 @@ class MemberController extends AbstractController
             'num' => $phone->getNum()
         ]);
         if (!$phoneTest) {
-            // enregistre le nouveau numéro dans la DB
+            // enregistre le nouveau numéro dans la DB en supprimant les espaces
+            $num = str_replace(' ','',$phone->getNum());
+            $phone->setNum($num);
             $manager->persist($phone);
             $usr->addPhone($phone);
             $manager->flush();
@@ -556,33 +532,38 @@ class MemberController extends AbstractController
         ]);
         // si personne de contact n'existe pas : on crée une nouvelle personne dans la DB
         if (!$PoCTest) {
-            // enregistre le nouveau numéro dans la DB
+            // enregistre le nouveau numéro dans la DB en supprimant les espaces
+            $num = str_replace(' ','',$PoC->getNum1());
+            $PoC->setNum1($num);
             $manager->persist($PoC);
             $manager->flush();
+            $PoC_tmp=$PoC;
+        }else{
+            $PoC_tmp=$PoCTest;
         }
-
         $repoCL = $this->getDoctrine()
             ->getRepository(ContactList::class);
         $contactListTest = $repoCL->findOneBy([
-            'relation' => $contactList->getRelation(),
-            'info' => $contactList->getInfo(),
+            'user' => $usr,
+            'personOfContact' => $PoC_tmp,
+ //           'relation'=>$contactList->getRelation(),
+  //          'info'=>$contactList->getInfo(),
         ]);
-        // instance adressTest n'existe pas : création d'une nouvelle adresse dans la DB
+        // instance contactListTest n'existe pas : création d'une nouvelle contactList dans la DB
         if (!$contactListTest) {
             $manager->persist($contactList);
             if (!$PoCTest) {
                 // si personne de contact n'existait pas => associe la personne qui vient d'être créée ($PoC)
                 $contactList->setPersonOfContact($PoC);
             } else {
-                // sinon => associe la ville qui a été trouvée dans le test ($cityTest)
+                // sinon => associe la PoC qui a été trouvée dans le test
                 $contactList->setPersonOfContact($PoCTest);
             }
             $usr->addContactList($contactList);
             $manager->flush();
         } else {
-            // associe l'adresse existante à cet user
-            $usr->addContactList($contactListTest);
-            $manager->flush();
+          //  $usr->addContactList($contactListTest);
+            $manager->persist($contactListTest);
         }
     }
 
@@ -649,15 +630,16 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/member-id}-registration", name="member_registration", requirements={"id"="\d+"})
+     * @Route("/member-{id}-registration", name="member_registration", requirements={"id"="\d+"})
      * @Route("/admin-{id}-registration", name="admin_registration",  requirements={"id"="\d+"})
      * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
-    public function showRegistration(User $usr){
-        $idevent=true;
+    public function showRegistration(User $usr)
+    {
+        $idevent = true;
         return $this->render('member/showRegistrations.html.twig', [
             'user' => $usr,
-            'idevent'=>$idevent
+            'idevent' => $idevent
         ]);
     }
 
@@ -682,7 +664,7 @@ class MemberController extends AbstractController
 
         $usr->removeRegistration($registration);
         $entityManager->flush();
-        $userCnt =$this->getUser();
+        $userCnt = $this->getUser();
 
         if (($userCnt->getId() == $usr->getUserConnected()->getId())) {
             return $this->redirectToRoute('admin_registration', ['id' => $usr->getId()]);
@@ -730,41 +712,33 @@ class MemberController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $usr = $entityManager->getRepository(User::class)->find($idUser);
-
-        $usr = $this->getUser();
-        //la personne connectée = l'id du parent du usr pour lequel on crée ou édite un doc
-        if (true === $authChecker->isGranted('ROLE_ADMIN')
-            or $usr->getId() == $usr->getUserConnected()->getId()) {
-
-            if (!$attachedFile) {
-                $attachedFile = new AttachedFile();
-            }
-            $form = $this->createForm(DocumentType::class, $attachedFile);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($attachedFile);
-                $attachedFile->setMember($usr);
-                $entityManager->flush();
-
-                if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                    return $this->redirectToRoute('admin_document', [
-                        'id' => $usr->getId(),
-                    ]);
-                } else {
-                    return $this->redirectToRoute('member_document', [
-                        'id' => $usr->getId(),
-                    ]);
-                }
-            }
-            return $this->render('member/documentEdit.html.twig', [
-                'formPicture' => $form->createView(),
-                'editMode' => $usr->getImageName() !== null,
-                'user' => $usr,
-            ]);
-        } else {
-            return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+        
+        if (!$attachedFile) {
+            $attachedFile = new AttachedFile();
         }
+        $form = $this->createForm(DocumentType::class, $attachedFile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($attachedFile);
+            $attachedFile->setMember($usr);
+            $entityManager->flush();
+
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin_document', [
+                    'id' => $usr->getId(),
+                ]);
+            } else {
+                return $this->redirectToRoute('member_document', [
+                    'id' => $usr->getId(),
+                ]);
+            }
+        }
+        return $this->render('member/documentEdit.html.twig', [
+            'formPicture' => $form->createView(),
+            'editMode' => $usr->getImageName() !== null,
+            'user' => $usr,
+        ]);
     }
 
     /**

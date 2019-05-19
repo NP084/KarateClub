@@ -8,9 +8,11 @@
             <div class="col-md-6">
                 <h2>
                     {%if editMode %}
-                        Modification de la photo de profil
+                        Modification de la photo de profil :
+                        <p>{{ user.firstName }} {{ user.name }} </p>
                     {% else %}
-                        Ajouter une photo de profil
+                        <p>Ajouter une photo de profil : </p>
+                        <p>{{ user.firstName }} {{ user.name }} </p>
                     {% endif %}
                 </h2>
                 <div class="card">
@@ -22,6 +24,9 @@
 
                                     <div class="form-group">
                                         {{ form_widget(formPicture.imageFile) }}
+                                        <img class="embed-responsive-rounded"
+                                             src="{{ asset('/upload/user/' ~ user.imageName) }}"
+                                             alt="Card image" width="30%">
                                     </div>
                                 </div>
                             </div>

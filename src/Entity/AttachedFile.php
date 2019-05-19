@@ -51,11 +51,9 @@ class AttachedFile
      * @Vich\UploadableField(mapping="document_picture", fileNameProperty="docname")
      * @var File
      * @Assert\File(
-     *     maxSize="5242880",
      *     mimeTypes = {
      *     "application/pdf",
      *     })
-
      */
     private $docFile;
 
