@@ -23,11 +23,6 @@ class Kernel extends BaseKernel
                 yield new $class();
             }
         }
-        $bundles = array(
-            // ...
-            new benmacha\DiagramBundle\DiagramBundle(),
-            // ...
-        );
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
@@ -50,5 +45,4 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
     }
-
 }
