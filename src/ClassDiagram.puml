@@ -1,0 +1,217 @@
+@startuml
+
+
+User <|-- Member
+Category <|-- Article_Cat
+Category <|-- Event_Cat
+Category <|-- Eqmt_Cat
+
+Media <|-- Video
+Media <|-- Picture
+
+Adress "0..*"--"1..*" Member:Live >
+Adress "1..*"--o City
+Country o- "1..*"City
+Phone "0..*"--"1..*" Member :Have >
+
+
+User "0..1"--"0..*"  Comment : Write >
+Comment "0..*"--o  Article : About >
+Article "0..*"--"0..*" Media: Contains >
+Article_Cat o--"0..*" Article
+
+Member "1"--"0..*" Registration : Register >
+Registration -- Event : For_an >
+Event -- Cost: Cost >
+Event "0..*"--"0..*" Media:Contains >
+Event_Cat o--"0..*" Event
+Registration "0..*"--"0..*" Cost: Have_fee >
+Registration "0..*"--"0..*" Status : Have >
+Registration o-- AttachedFile
+
+
+Member "1"--"0..*" Rental: Make >
+Rental "0..*"--"0..*" Equipment : Of_an >
+Equipment "0..*" -- "0..*" Media: Illustrated_by >
+Eqmt_Cat o-- "0..*" Equipment
+
+Member o--"0..*" AttachedFile
+
+Member "1..*"--"0..*" PersonOfContact
+class Equipment{
+    Int id
+    String title
+    String size
+    String description
+    Int hourPrice
+    Int dayPrice
+}
+
+class User{
+    Int id
+    String username
+    String email
+    String password
+    Date createdUser
+    ---
+    getId()
+    getUsername()
+    setUsername()
+    getCreatedUser()
+    setCreatedUser()
+    getEmail()
+    setEmail()
+    getPassword()
+    setPassword()
+    ---
+    getPhone()
+    addPhone()
+    removePhone()
+    getAdress()
+    addAdress()
+    removeAdress()
+}
+
+class Member{
+    String name
+    String firstName
+    String birthday
+    String belt
+    -String image
+    Date createdMember
+    getName()
+    setName()
+    getFirstname()
+    setFirstname()
+    getBirthday()
+    setBirthday()
+    getBelt()
+    setBelt()
+    setMember()
+    getCreatedMember()
+    setCreatedMember()
+}
+
+
+class Article{
+    Int id
+    String title
+    Text content
+    String image
+    Date createdAt
+    ---
+    getId()
+    getTitle()
+    setTitle()
+    getContent()
+    setContent()
+    getImage()
+    setImage()
+    getCreatedAt()
+    setCreatedAt()
+    ---
+    getCategory()
+    setCategory()
+    getComments()
+    addComment()
+    removeComment()
+
+}
+
+class Comment{
+    Int id
+    Text content
+    Date createdAt
+    ---
+    getId()
+    getContent()
+    setContent()
+    getCreatedAt()
+    setCreatedAt()
+    -removeComment()
+    ---
+    getArticle()
+    setArticle()
+    getUser()
+    setUser()
+}
+
+class Event{
+    Date startEvent
+    Date endEvent
+}
+
+class Adress{
+    Int id
+    String type
+    String num
+    String postBox
+    String streetName
+    ---
+    getId()
+    getType()
+    setTyoe()
+    getNum()
+    setNum()
+    getPostBox()
+    setPostBox()
+    getStreetName()
+    setStreetName()
+    ---
+    getUsers()
+    addUser()
+    removeUser()
+    getCity()
+    setCity()
+}
+
+class City{
+    Int id
+    String zip
+    String cityName
+    ---
+    getId()
+    getZip()
+    setZip()
+    getCityName()
+    setCityName()
+    ---
+    getCountry()
+    setCountry()
+    getAdresses()
+    addAdress()
+    removeAdress()
+
+}
+
+class Country{
+    Int id
+    String countryName
+    ---
+    getId()
+    getCountryName()
+    setCountryName()
+    ---
+    getCity()
+    addCity()
+    removeCity()
+}
+
+class Phone{
+    int id
+    String type
+    String num
+    ----
+    getId()
+    getType()
+    setType()
+    getNum()
+    setNum()
+    ---
+    getUser()
+    addUser()
+    removeUser()
+}
+
+
+@enduml
