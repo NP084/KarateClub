@@ -1,7 +1,0 @@
-@startuml
-class OneClass {
-}
-class TwoClass {
-}
-class TwoClass extends OneClass
-@enduml
