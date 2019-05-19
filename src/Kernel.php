@@ -45,12 +45,4 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
     }
-    protected function configureContainer2(ContainerBuilder $container, LoaderInterface $loader)
-    {
-        // ...
-
-        // Execute this pass after ALL other passes, so the container can be dumped when asked.
-        $container->setParameter('container.dumper.graphivz.enable', 'dev' === $this->environment && $this->debug);
-        $container->addCompilerPass(new DumpGraphContainerPass(), 'removing', -2048);
-    }
 }
