@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
+    'benmacha\\DiagramBundle\\' => array($vendorDir . '/benmacha/diagram-bundle'),
     'Zend\\EventManager\\' => array($vendorDir . '/zendframework/zend-eventmanager/src'),
     'Zend\\Code\\' => array($vendorDir . '/zendframework/zend-code/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
@@ -75,6 +76,8 @@ return array(
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'PackageVersions\\' => array($vendorDir . '/ocramius/package-versions/src/PackageVersions'),
+    'Onurb\\Doctrine\\ORMMetadataGrapher\\' => array($vendorDir . '/onurb/doctrine-metadata-grapher/lib/Onurb/Doctrine/ORMMetadataGrapher'),
+    'Onurb\\Bundle\\YumlBundle\\' => array($vendorDir . '/onurb/doctrine-yuml-bundle/lib/Onurb/Bundle/YumlBundle'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Knp\\Bundle\\PaginatorBundle\\' => array($vendorDir . '/knplabs/knp-paginator-bundle'),
     'FontLib\\' => array($vendorDir . '/phenx/php-font-lib/src/FontLib'),

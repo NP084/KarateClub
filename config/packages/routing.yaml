@@ -2,3 +2,7 @@ framework:
     router:
         strict_requirements: ~
         utf8: true
+benmacha_diagram:
+    resource: "@DiagramBundle/Controller/"
+    type:     annotation
+    prefix:   /diagram
