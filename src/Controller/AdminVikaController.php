@@ -147,6 +147,7 @@ class AdminVikaController extends AbstractController
         }
 
         return $this->render('admin_vika/pictureEdit.html.twig', [
+            'user'=>$usr,
             'formPicture'=>$form->createView(),
             'editMode'=> $usr->getImageName()!==null
         ]);

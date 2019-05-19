@@ -33,7 +33,7 @@ class AddUserType extends AbstractType
                 ],
             ])
             ->add('birthdate', DateType::class, [
-                'years' => range(1900, date('Y')-14),
+                'years' => range(1900, date('Y')-5),
                 'format' => 'dd-MM-yyyy',
             ])
         ;

@@ -32,7 +32,20 @@
                                                     <td>{{ registration.id }}</td>
                                                     <td>{{ registration.user.name }}</td>
                                                     <td>{{ registration.user.firstname }}</td>
-                                                    <td>{{ registration.vikaEvent.title }}</td>
+                                                    {% if registration.vikaEvent.Category.title == "Cours" %}
+                                                    <td><p class="text-warning">{{ registration.vikaEvent.title }}</p></td>
+                                                    {% else %}
+                                                        {% if registration.vikaEvent.Category.title == "Stages" %}
+                                                        <td><p class="text-danger">{{ registration.vikaEvent.title }}</p></td>
+                                                        {% else %}
+                                                            {% if registration.vikaEvent.Category.title == "Compétitions" %}
+                                                            <td><p class="text-success">{{ registration.vikaEvent.title }}</p></td>
+                                                            {% else %}
+                                                            <td>{{ registration.vikaEvent.title }}</td>
+                                                            {% endif %}                                                           
+                                                        {% endif %}                                                      
+                                                    {% endif %}
+
                                                     <td>{{ (registration.registrationDate |date('d/m/Y')) }}</td>
                                                     <td class="align-middle text-right">
                                                         <a class="btn btn-sm btn-icon btn-secondary"

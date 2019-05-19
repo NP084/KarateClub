@@ -17,6 +17,7 @@ class MediaType extends AbstractType
               ->add('imageFile', VichImageType::class, [
             'required'=> false,
            'image_uri' => true,
+           'attr'=>['class'=>'form-control']
        ]);
        //     ->add('updatedImage');
 
