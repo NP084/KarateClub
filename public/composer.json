@@ -1,8 +1,0 @@
-{
-    "require": {
-        "davidfuhr/php-plantumlwriter": "^1.6"
-    },
-    "require-dev": {
-        "kherge/box": "~2.0"
-    }
-}

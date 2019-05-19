@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="527de116-c4bc-4a64-8a38-d97f19c85f0e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/WriteCommand.puml" beforeDir="false" />
-    </list>
+    <list default="true" id="527de116-c4bc-4a64-8a38-d97f19c85f0e" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +79,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/Entity/Adress.php" />
         <option value="$PROJECT_DIR$/src/Entity/Phone.php" />
         <option value="$PROJECT_DIR$/src/Entity/Child.php" />
         <option value="$PROJECT_DIR$/templates/registration/preregistration.html.twig" />
@@ -132,7 +130,6 @@
         <option value="$PROJECT_DIR$/src/Kernel.php" />
         <option value="$PROJECT_DIR$/config/packages/routing.yaml" />
         <option value="$PROJECT_DIR$/src/ClassDiagram.puml" />
-        <option value="$PROJECT_DIR$/public/WriteCommand.puml" />
       </list>
     </option>
   </component>
@@ -291,12 +288,6 @@
             <path>
               <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
               <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="KarateClub" type="b2602c69:ProjectViewProjectNode" />
-              <item name="KarateClub" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -432,12 +423,12 @@
       <workItem from="1558268670468" duration="1217000" />
       <workItem from="1558270469537" duration="1362000" />
       <workItem from="1558272711294" duration="898000" />
-      <workItem from="1558273626056" duration="2511000" />
+      <workItem from="1558273626056" duration="1389000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="317518000" />
+    <option name="totallyTimeSpent" value="316396000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -455,7 +446,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.4301192" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.21885157" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -485,6 +476,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/templates/registration/fileRegistration.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="335" column="84" selection-start-line="335" selection-start-column="72" selection-end-line="335" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/registration/ficheMembre.html.twig">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -913,9 +911,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/WriteCommand.puml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Adress.puml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
