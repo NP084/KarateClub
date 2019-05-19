@@ -26,6 +26,7 @@ class ApplicationDescription
 
     private $application;
     private $namespace;
+    private $showHidden;
 
     /**
      * @var array
@@ -42,10 +43,11 @@ class ApplicationDescription
      */
     private $aliases;
 
-    public function __construct(Application $application, $namespace = null)
+    public function __construct(Application $application, string $namespace = null, bool $showHidden = false)
     {
         $this->application = $application;
         $this->namespace = $namespace;
+        $this->showHidden = $showHidden;
     }
 
     /**
@@ -90,16 +92,16 @@ class ApplicationDescription
 
     private function inspectApplication()
     {
-        $this->commands = array();
-        $this->namespaces = array();
+        $this->commands = [];
+        $this->namespaces = [];
 
         $all = $this->application->all($this->namespace ? $this->application->findNamespace($this->namespace) : null);
         foreach ($this->sortCommands($all) as $namespace => $commands) {
-            $names = array();
+            $names = [];
 
             /** @var Command $command */
             foreach ($commands as $name => $command) {
-                if (!$command->getName()) {
+                if (!$command->getName() || (!$this->showHidden && $command->isHidden())) {
                     continue;
                 }
 
@@ -112,17 +114,14 @@ class ApplicationDescription
                 $names[] = $name;
             }
 
-            $this->namespaces[$namespace] = array('id' => $namespace, 'commands' => $names);
+            $this->namespaces[$namespace] = ['id' => $namespace, 'commands' => $names];
         }
     }
 
-    /**
-     * @return array
-     */
-    private function sortCommands(array $commands)
+    private function sortCommands(array $commands): array
     {
-        $namespacedCommands = array();
-        $globalCommands = array();
+        $namespacedCommands = [];
+        $globalCommands = [];
         foreach ($commands as $name => $command) {
             $key = $this->application->extractNamespace($name, 1);
             if (!$key) {

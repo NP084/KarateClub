@@ -1,5 +1,0 @@
-{
-    "require": {
-        "davidfuhr/php-plantumlwriter": "^1.6"
-    }
-}
