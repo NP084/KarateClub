@@ -11,18 +11,21 @@
 
 namespace Symfony\Component\Console\Input;
 
+use Symfony\Component\Console\Descriptor\TextDescriptor;
+use Symfony\Component\Console\Descriptor\XmlDescriptor;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\LogicException;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * A InputDefinition represents a set of valid command line arguments and options.
  *
  * Usage:
  *
- *     $definition = new InputDefinition([
+ *     $definition = new InputDefinition(array(
  *         new InputArgument('name', InputArgument::REQUIRED),
  *         new InputOption('foo', 'f', InputOption::VALUE_REQUIRED),
- *     ]);
+ *     ));
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
@@ -38,7 +41,7 @@ class InputDefinition
     /**
      * @param array $definition An array of InputArgument and InputOption instance
      */
-    public function __construct(array $definition = [])
+    public function __construct(array $definition = array())
     {
         $this->setDefinition($definition);
     }
@@ -48,8 +51,8 @@ class InputDefinition
      */
     public function setDefinition(array $definition)
     {
-        $arguments = [];
-        $options = [];
+        $arguments = array();
+        $options = array();
         foreach ($definition as $item) {
             if ($item instanceof InputOption) {
                 $options[] = $item;
@@ -67,9 +70,9 @@ class InputDefinition
      *
      * @param InputArgument[] $arguments An array of InputArgument objects
      */
-    public function setArguments($arguments = [])
+    public function setArguments($arguments = array())
     {
-        $this->arguments = [];
+        $this->arguments = array();
         $this->requiredCount = 0;
         $this->hasOptional = false;
         $this->hasAnArrayArgument = false;
@@ -81,7 +84,7 @@ class InputDefinition
      *
      * @param InputArgument[] $arguments An array of InputArgument objects
      */
-    public function addArguments($arguments = [])
+    public function addArguments($arguments = array())
     {
         if (null !== $arguments) {
             foreach ($arguments as $argument) {
@@ -191,7 +194,7 @@ class InputDefinition
      */
     public function getArgumentDefaults()
     {
-        $values = [];
+        $values = array();
         foreach ($this->arguments as $argument) {
             $values[$argument->getName()] = $argument->getDefault();
         }
@@ -204,10 +207,10 @@ class InputDefinition
      *
      * @param InputOption[] $options An array of InputOption objects
      */
-    public function setOptions($options = [])
+    public function setOptions($options = array())
     {
-        $this->options = [];
-        $this->shortcuts = [];
+        $this->options = array();
+        $this->shortcuts = array();
         $this->addOptions($options);
     }
 
@@ -216,7 +219,7 @@ class InputDefinition
      *
      * @param InputOption[] $options An array of InputOption objects
      */
-    public function addOptions($options = [])
+    public function addOptions($options = array())
     {
         foreach ($options as $option) {
             $this->addOption($option);
@@ -322,7 +325,7 @@ class InputDefinition
      */
     public function getOptionDefaults()
     {
-        $values = [];
+        $values = array();
         foreach ($this->options as $option) {
             $values[$option->getName()] = $option->getDefault();
         }
@@ -357,7 +360,7 @@ class InputDefinition
      */
     public function getSynopsis($short = false)
     {
-        $elements = [];
+        $elements = array();
 
         if ($short && $this->getOptions()) {
             $elements[] = '[options]';
@@ -382,21 +385,64 @@ class InputDefinition
             $elements[] = '[--]';
         }
 
-        $tail = '';
         foreach ($this->getArguments() as $argument) {
             $element = '<'.$argument->getName().'>';
-            if ($argument->isArray()) {
-                $element .= '...';
+            if (!$argument->isRequired()) {
+                $element = '['.$element.']';
+            } elseif ($argument->isArray()) {
+                $element .= ' ('.$element.')';
             }
 
-            if (!$argument->isRequired()) {
-                $element = '['.$element;
-                $tail .= ']';
+            if ($argument->isArray()) {
+                $element .= '...';
             }
 
             $elements[] = $element;
         }
 
-        return implode(' ', $elements).$tail;
+        return implode(' ', $elements);
+    }
+
+    /**
+     * Returns a textual representation of the InputDefinition.
+     *
+     * @return string A string representing the InputDefinition
+     *
+     * @deprecated since version 2.3, to be removed in 3.0.
+     */
+    public function asText()
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.3 and will be removed in 3.0.', E_USER_DEPRECATED);
+
+        $descriptor = new TextDescriptor();
+        $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true);
+        $descriptor->describe($output, $this, array('raw_output' => true));
+
+        return $output->fetch();
+    }
+
+    /**
+     * Returns an XML representation of the InputDefinition.
+     *
+     * @param bool $asDom Whether to return a DOM or an XML string
+     *
+     * @return string|\DOMDocument An XML string representing the InputDefinition
+     *
+     * @deprecated since version 2.3, to be removed in 3.0.
+     */
+    public function asXml($asDom = false)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.3 and will be removed in 3.0.', E_USER_DEPRECATED);
+
+        $descriptor = new XmlDescriptor();
+
+        if ($asDom) {
+            return $descriptor->getInputDefinitionDocument($this);
+        }
+
+        $output = new BufferedOutput();
+        $descriptor->describe($output, $this);
+
+        return $output->fetch();
     }
 }

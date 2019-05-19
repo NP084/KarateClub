@@ -60,11 +60,10 @@ class XmlDescriptor extends Descriptor
 
         $commandXML->setAttribute('id', $command->getName());
         $commandXML->setAttribute('name', $command->getName());
-        $commandXML->setAttribute('hidden', $command->isHidden() ? 1 : 0);
 
         $commandXML->appendChild($usagesXML = $dom->createElement('usages'));
 
-        foreach (array_merge([$command->getSynopsis()], $command->getAliases(), $command->getUsages()) as $usage) {
+        foreach (array_merge(array($command->getSynopsis()), $command->getAliases(), $command->getUsages()) as $usage) {
             $usagesXML->appendChild($dom->createElement('usage', $usage));
         }
 
@@ -100,7 +99,7 @@ class XmlDescriptor extends Descriptor
 
         $rootXml->appendChild($commandsXML = $dom->createElement('commands'));
 
-        $description = new ApplicationDescription($application, $namespace, true);
+        $description = new ApplicationDescription($application, $namespace);
 
         if ($namespace) {
             $commandsXML->setAttribute('namespace', $namespace);
@@ -130,7 +129,7 @@ class XmlDescriptor extends Descriptor
     /**
      * {@inheritdoc}
      */
-    protected function describeInputArgument(InputArgument $argument, array $options = [])
+    protected function describeInputArgument(InputArgument $argument, array $options = array())
     {
         $this->writeDocument($this->getInputArgumentDocument($argument));
     }
@@ -138,7 +137,7 @@ class XmlDescriptor extends Descriptor
     /**
      * {@inheritdoc}
      */
-    protected function describeInputOption(InputOption $option, array $options = [])
+    protected function describeInputOption(InputOption $option, array $options = array())
     {
         $this->writeDocument($this->getInputOptionDocument($option));
     }
@@ -146,7 +145,7 @@ class XmlDescriptor extends Descriptor
     /**
      * {@inheritdoc}
      */
-    protected function describeInputDefinition(InputDefinition $definition, array $options = [])
+    protected function describeInputDefinition(InputDefinition $definition, array $options = array())
     {
         $this->writeDocument($this->getInputDefinitionDocument($definition));
     }
@@ -154,7 +153,7 @@ class XmlDescriptor extends Descriptor
     /**
      * {@inheritdoc}
      */
-    protected function describeCommand(Command $command, array $options = [])
+    protected function describeCommand(Command $command, array $options = array())
     {
         $this->writeDocument($this->getCommandDocument($command));
     }
@@ -162,7 +161,7 @@ class XmlDescriptor extends Descriptor
     /**
      * {@inheritdoc}
      */
-    protected function describeApplication(Application $application, array $options = [])
+    protected function describeApplication(Application $application, array $options = array())
     {
         $this->writeDocument($this->getApplicationDocument($application, isset($options['namespace']) ? $options['namespace'] : null));
     }
@@ -188,7 +187,10 @@ class XmlDescriptor extends Descriptor
         $this->write($dom->saveXML());
     }
 
-    private function getInputArgumentDocument(InputArgument $argument): \DOMDocument
+    /**
+     * @return \DOMDocument
+     */
+    private function getInputArgumentDocument(InputArgument $argument)
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -200,7 +202,7 @@ class XmlDescriptor extends Descriptor
         $descriptionXML->appendChild($dom->createTextNode($argument->getDescription()));
 
         $objectXML->appendChild($defaultsXML = $dom->createElement('defaults'));
-        $defaults = \is_array($argument->getDefault()) ? $argument->getDefault() : (\is_bool($argument->getDefault()) ? [var_export($argument->getDefault(), true)] : ($argument->getDefault() ? [$argument->getDefault()] : []));
+        $defaults = \is_array($argument->getDefault()) ? $argument->getDefault() : (\is_bool($argument->getDefault()) ? array(var_export($argument->getDefault(), true)) : ($argument->getDefault() ? array($argument->getDefault()) : array()));
         foreach ($defaults as $default) {
             $defaultsXML->appendChild($defaultXML = $dom->createElement('default'));
             $defaultXML->appendChild($dom->createTextNode($default));
@@ -209,7 +211,10 @@ class XmlDescriptor extends Descriptor
         return $dom;
     }
 
-    private function getInputOptionDocument(InputOption $option): \DOMDocument
+    /**
+     * @return \DOMDocument
+     */
+    private function getInputOptionDocument(InputOption $option)
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -229,7 +234,7 @@ class XmlDescriptor extends Descriptor
         $descriptionXML->appendChild($dom->createTextNode($option->getDescription()));
 
         if ($option->acceptValue()) {
-            $defaults = \is_array($option->getDefault()) ? $option->getDefault() : (\is_bool($option->getDefault()) ? [var_export($option->getDefault(), true)] : ($option->getDefault() ? [$option->getDefault()] : []));
+            $defaults = \is_array($option->getDefault()) ? $option->getDefault() : (\is_bool($option->getDefault()) ? array(var_export($option->getDefault(), true)) : ($option->getDefault() ? array($option->getDefault()) : array()));
             $objectXML->appendChild($defaultsXML = $dom->createElement('defaults'));
 
             if (!empty($defaults)) {

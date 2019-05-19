@@ -11,13 +11,12 @@
 
 namespace Symfony\Component\Console\Helper;
 
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\StreamableInputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
@@ -66,19 +65,45 @@ class QuestionHelper extends Helper
             return $default;
         }
 
-        if ($input instanceof StreamableInputInterface && $stream = $input->getStream()) {
-            $this->inputStream = $stream;
-        }
-
         if (!$question->getValidator()) {
             return $this->doAsk($output, $question);
         }
 
-        $interviewer = function () use ($output, $question) {
-            return $this->doAsk($output, $question);
+        $that = $this;
+
+        $interviewer = function () use ($output, $question, $that) {
+            return $that->doAsk($output, $question);
         };
 
         return $this->validateAttempts($interviewer, $output, $question);
+    }
+
+    /**
+     * Sets the input stream to read from when interacting with the user.
+     *
+     * This is mainly useful for testing purpose.
+     *
+     * @param resource $stream The input stream
+     *
+     * @throws InvalidArgumentException In case the stream is not a resource
+     */
+    public function setInputStream($stream)
+    {
+        if (!\is_resource($stream)) {
+            throw new InvalidArgumentException('Input stream must be a valid resource.');
+        }
+
+        $this->inputStream = $stream;
+    }
+
+    /**
+     * Returns the helper's input stream.
+     *
+     * @return resource
+     */
+    public function getInputStream()
+    {
+        return $this->inputStream;
     }
 
     /**
@@ -90,21 +115,15 @@ class QuestionHelper extends Helper
     }
 
     /**
-     * Prevents usage of stty.
-     */
-    public static function disableStty()
-    {
-        self::$stty = false;
-    }
-
-    /**
      * Asks the question to the user.
+     *
+     * This method is public for PHP 5.3 compatibility, it should be private.
      *
      * @return bool|mixed|string|null
      *
      * @throws RuntimeException In case the fallback is deactivated and the response cannot be hidden
      */
-    private function doAsk(OutputInterface $output, Question $question)
+    public function doAsk(OutputInterface $output, Question $question)
     {
         $this->writePrompt($output, $question);
 
@@ -134,10 +153,6 @@ class QuestionHelper extends Helper
             $ret = trim($this->autocomplete($output, $question, $inputStream, \is_array($autocomplete) ? $autocomplete : iterator_to_array($autocomplete, false)));
         }
 
-        if ($output instanceof ConsoleSectionOutput) {
-            $output->addContent($ret);
-        }
-
         $ret = \strlen($ret) > 0 ? $ret : $question->getDefault();
 
         if ($normalizer = $question->getNormalizer()) {
@@ -155,7 +170,7 @@ class QuestionHelper extends Helper
         $message = $question->getQuestion();
 
         if ($question instanceof ChoiceQuestion) {
-            $maxWidth = max(array_map([$this, 'strlen'], array_keys($question->getChoices())));
+            $maxWidth = max(array_map(array($this, 'strlen'), array_keys($question->getChoices())));
 
             $messages = (array) $question->getQuestion();
             foreach ($question->getChoices() as $key => $value) {
@@ -191,8 +206,11 @@ class QuestionHelper extends Helper
      * @param OutputInterface $output
      * @param Question        $question
      * @param resource        $inputStream
+     * @param array           $autocomplete
+     *
+     * @return string
      */
-    private function autocomplete(OutputInterface $output, Question $question, $inputStream, array $autocomplete): string
+    private function autocomplete(OutputInterface $output, Question $question, $inputStream, array $autocomplete)
     {
         $ret = '';
 
@@ -307,9 +325,11 @@ class QuestionHelper extends Helper
      * @param OutputInterface $output      An Output instance
      * @param resource        $inputStream The handler resource
      *
+     * @return string The answer
+     *
      * @throws RuntimeException In case the fallback is deactivated and the response cannot be hidden
      */
-    private function getHiddenResponse(OutputInterface $output, $inputStream): string
+    private function getHiddenResponse(OutputInterface $output, $inputStream)
     {
         if ('\\' === \DIRECTORY_SEPARATOR) {
             $exe = __DIR__.'/../Resources/bin/hiddeninput.exe';
@@ -371,7 +391,7 @@ class QuestionHelper extends Helper
      *
      * @throws \Exception In case the max number of attempts has been reached and no valid response has been given
      */
-    private function validateAttempts(callable $interviewer, OutputInterface $output, Question $question)
+    private function validateAttempts($interviewer, OutputInterface $output, Question $question)
     {
         $error = null;
         $attempts = $question->getMaxAttempts();
@@ -381,7 +401,7 @@ class QuestionHelper extends Helper
             }
 
             try {
-                return $question->getValidator()($interviewer());
+                return \call_user_func($question->getValidator(), $interviewer());
             } catch (RuntimeException $e) {
                 throw $e;
             } catch (\Exception $error) {
@@ -407,7 +427,7 @@ class QuestionHelper extends Helper
         if (file_exists('/usr/bin/env')) {
             // handle other OSs with bash/zsh/ksh/csh if available to hide the answer
             $test = "/usr/bin/env %s -c 'echo OK' 2> /dev/null";
-            foreach (['bash', 'zsh', 'ksh', 'csh'] as $sh) {
+            foreach (array('bash', 'zsh', 'ksh', 'csh') as $sh) {
                 if ('OK' === rtrim(shell_exec(sprintf($test, $sh)))) {
                     self::$shell = $sh;
                     break;
@@ -420,8 +440,10 @@ class QuestionHelper extends Helper
 
     /**
      * Returns whether Stty is available or not.
+     *
+     * @return bool
      */
-    private function hasSttyAvailable(): bool
+    private function hasSttyAvailable()
     {
         if (null !== self::$stty) {
             return self::$stty;

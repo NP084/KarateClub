@@ -156,56 +156,6 @@ class OutputFormatterTest extends TestCase
         $this->assertEquals("\033[34;41msome text\033[39;49m", $formatter->format('<fg=blue;bg=red>some text</fg=blue;bg=red>'));
     }
 
-    /**
-     * @param string      $tag
-     * @param string|null $expected
-     * @param string|null $input
-     *
-     * @dataProvider provideInlineStyleOptionsCases
-     */
-    public function testInlineStyleOptions($tag, $expected = null, $input = null)
-    {
-        $styleString = substr($tag, 1, -1);
-        $formatter = new OutputFormatter(true);
-        $method = new \ReflectionMethod($formatter, 'createStyleFromString');
-        $method->setAccessible(true);
-        $result = $method->invoke($formatter, $styleString);
-        if (null === $expected) {
-            $this->assertFalse($result);
-            $expected = $tag.$input.'</'.$styleString.'>';
-            $this->assertSame($expected, $formatter->format($expected));
-        } else {
-            /* @var OutputFormatterStyle $result */
-            $this->assertInstanceOf(OutputFormatterStyle::class, $result);
-            $this->assertSame($expected, $formatter->format($tag.$input.'</>'));
-            $this->assertSame($expected, $formatter->format($tag.$input.'</'.$styleString.'>'));
-        }
-    }
-
-    public function provideInlineStyleOptionsCases()
-    {
-        return [
-            ['<unknown=_unknown_>'],
-            ['<unknown=_unknown_;a=1;b>'],
-            ['<fg=green;>', "\033[32m[test]\033[39m", '[test]'],
-            ['<fg=green;bg=blue;>', "\033[32;44ma\033[39;49m", 'a'],
-            ['<fg=green;options=bold>', "\033[32;1mb\033[39;22m", 'b'],
-            ['<fg=green;options=reverse;>', "\033[32;7m<a>\033[39;27m", '<a>'],
-            ['<fg=green;options=bold,underscore>', "\033[32;1;4mz\033[39;22;24m", 'z'],
-            ['<fg=green;options=bold,underscore,reverse;>', "\033[32;1;4;7md\033[39;22;24;27m", 'd'],
-        ];
-    }
-
-    public function provideInlineStyleTagsWithUnknownOptions()
-    {
-        return [
-            ['<options=abc;>', 'abc'],
-            ['<options=abc,def;>', 'abc'],
-            ['<fg=green;options=xyz;>', 'xyz'],
-            ['<fg=green;options=efg,abc>', 'efg'],
-        ];
-    }
-
     public function testNonStyleTag()
     {
         $formatter = new OutputFormatter(true);
@@ -321,25 +271,6 @@ more text
 </info>
 EOF
         ));
-    }
-
-    public function testFormatAndWrap()
-    {
-        $formatter = new OutputFormatter(true);
-
-        $this->assertSame("fo\no\e[37;41mb\e[39;49m\n\e[37;41mar\e[39;49m\nba\nz", $formatter->formatAndWrap('foo<error>bar</error> baz', 2));
-        $this->assertSame("pr\ne \e[37;41m\e[39;49m\n\e[37;41mfo\e[39;49m\n\e[37;41mo \e[39;49m\n\e[37;41mba\e[39;49m\n\e[37;41mr \e[39;49m\n\e[37;41mba\e[39;49m\n\e[37;41mz\e[39;49m \npo\nst", $formatter->formatAndWrap('pre <error>foo bar baz</error> post', 2));
-        $this->assertSame("pre\e[37;41m\e[39;49m\n\e[37;41mfoo\e[39;49m\n\e[37;41mbar\e[39;49m\n\e[37;41mbaz\e[39;49m\npos\nt", $formatter->formatAndWrap('pre <error>foo bar baz</error> post', 3));
-        $this->assertSame("pre \e[37;41m\e[39;49m\n\e[37;41mfoo \e[39;49m\n\e[37;41mbar \e[39;49m\n\e[37;41mbaz\e[39;49m \npost", $formatter->formatAndWrap('pre <error>foo bar baz</error> post', 4));
-        $this->assertSame("pre \e[37;41mf\e[39;49m\n\e[37;41moo ba\e[39;49m\n\e[37;41mr baz\e[39;49m\npost", $formatter->formatAndWrap('pre <error>foo bar baz</error> post', 5));
-
-        $formatter = new OutputFormatter();
-
-        $this->assertSame("fo\nob\nar\nba\nz", $formatter->formatAndWrap('foo<error>bar</error> baz', 2));
-        $this->assertSame("pr\ne \nfo\no \nba\nr \nba\nz \npo\nst", $formatter->formatAndWrap('pre <error>foo bar baz</error> post', 2));
-        $this->assertSame("pre\nfoo\nbar\nbaz\npos\nt", $formatter->formatAndWrap('pre <error>foo bar baz</error> post', 3));
-        $this->assertSame("pre \nfoo \nbar \nbaz \npost", $formatter->formatAndWrap('pre <error>foo bar baz</error> post', 4));
-        $this->assertSame("pre f\noo ba\nr baz\npost", $formatter->formatAndWrap('pre <error>foo bar baz</error> post', 5));
     }
 }
 
