@@ -44,6 +44,7 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
             'Symfony\\Flex\\' => 13,
             'Symfony\\Contracts\\' => 18,
             'Symfony\\Component\\Yaml\\' => 23,
+            'Symfony\\Component\\Workflow\\' => 27,
             'Symfony\\Component\\WebLink\\' => 26,
             'Symfony\\Component\\VarExporter\\' => 30,
             'Symfony\\Component\\VarDumper\\' => 28,
@@ -202,6 +203,10 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Symfony\\Component\\Workflow\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/workflow',
         ),
         'Symfony\\Component\\WebLink\\' => 
         array (
