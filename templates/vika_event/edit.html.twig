@@ -70,9 +70,11 @@
                                 <div class="form-group">
                                     <h6>{{ form_label(form.imageFile, 'Photo d\'illustration') }}</h6>
                                     {{ form_widget(form.imageFile) }}
-                                    <img class="embed-responsive-rounded"
-                                         src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
-                                         alt="Card image" width="100%">
+                                    {% if vikaEvent and vikaEvent.imageName %}
+                                        <img class="embed-responsive-rounded"
+                                             src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
+                                             alt="Card image" width="100%">
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
