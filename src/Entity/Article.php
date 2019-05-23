@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
@@ -81,9 +80,6 @@ class Article
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
      */
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -95,50 +91,32 @@ class Article
         }
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setImageName(?string $imageName): void
     {
         $this->imageName = $imageName;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -146,17 +124,11 @@ class Article
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -164,17 +136,11 @@ class Article
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -182,17 +148,11 @@ class Article
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setCategory(?Category $category): self
     {
         $this->category = $category;

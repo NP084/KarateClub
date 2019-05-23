@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -62,9 +61,6 @@ class Encadrement
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
      */
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -76,34 +72,22 @@ class Encadrement
         }
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -111,17 +95,11 @@ class Encadrement
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -129,33 +107,21 @@ class Encadrement
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getImagename(): ?string
     {
         return $this->imagename;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setImagename(?string $imagename): void
     {
         $this->imagename = $imagename;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getDatecreat(): ?\DateTimeInterface
     {
         return $this->datecreat;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setDatecreat(\DateTimeInterface $datecreat): self
     {
         $this->datecreat = $datecreat;

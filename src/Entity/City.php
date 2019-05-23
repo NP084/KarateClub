@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -44,33 +43,21 @@ class City
      */
     private $adresses;
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getZip(): ?string
     {
         return $this->zip;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setZip(string $zip): self
     {
         $this->zip = $zip;
@@ -78,17 +65,11 @@ class City
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getCityName(): ?string
     {
         return $this->cityName;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setCityName(string $cityName): self
     {
         $this->cityName = $cityName;
@@ -96,17 +77,11 @@ class City
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getCountry(): ?Country
     {
         return $this->country;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setCountry(?Country $country): self
     {
         $this->country = $country;
@@ -117,17 +92,11 @@ class City
     /**
      * @return Collection|Adress[]
      */
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getAdresses(): Collection
     {
         return $this->adresses;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function addAdress(Adress $adress): self
     {
         if (!$this->adresses->contains($adress)) {
@@ -138,9 +107,6 @@ class City
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function removeAdress(Adress $adress): self
     {
         if ($this->adresses->contains($adress)) {

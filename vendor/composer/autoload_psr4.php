@@ -75,8 +75,6 @@ return array(
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'PackageVersions\\' => array($vendorDir . '/ocramius/package-versions/src/PackageVersions'),
-    'Onurb\\Doctrine\\ORMMetadataGrapher\\' => array($vendorDir . '/onurb/doctrine-metadata-grapher/lib/Onurb/Doctrine/ORMMetadataGrapher'),
-    'Onurb\\Bundle\\YumlBundle\\' => array($vendorDir . '/onurb/doctrine-yuml-bundle/lib/Onurb/Bundle/YumlBundle'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Knp\\Bundle\\PaginatorBundle\\' => array($vendorDir . '/knplabs/knp-paginator-bundle'),
     'FontLib\\' => array($vendorDir . '/phenx/php-font-lib/src/FontLib'),

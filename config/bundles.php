@@ -19,5 +19,4 @@ return [
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     CalendarBundle\CalendarBundle::class => ['all' => true],
-    Onurb\Bundle\YumlBundle\OnurbYumlBundle::class => ['all' => true],
 ];

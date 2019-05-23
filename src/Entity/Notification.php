@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NotificationRepository")
@@ -39,33 +38,21 @@ class Notification
      */
     private $user;
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function __construct()
     {
         $this->user = new ArrayCollection();
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -73,17 +60,11 @@ class Notification
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setContent(?string $content): self
     {
         $this->content = $content;
@@ -91,17 +72,11 @@ class Notification
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getNotifDate(): ?\DateTimeInterface
     {
         return $this->notifDate;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setNotifDate(\DateTimeInterface $notifDate): self
     {
         $this->notifDate = $notifDate;
@@ -112,17 +87,11 @@ class Notification
     /**
      * @return Collection|User[]
      */
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getUser(): Collection
     {
         return $this->user;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function addUser(User $user): self
     {
         if (!$this->user->contains($user)) {
@@ -132,9 +101,6 @@ class Notification
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function removeUser(User $user): self
     {
         if ($this->user->contains($user)) {

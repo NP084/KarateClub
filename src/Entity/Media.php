@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -45,25 +44,16 @@ class Media
      */
     private $updatedImage;
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setImageName(?string $imageName): void
     {
         $this->imageName = $imageName;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getImageName(): ?string
     {
         return $this->imageName;
@@ -71,9 +61,6 @@ class Media
 
     /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
-     */
-      /**
-     * @Grapher\IsDisplayedMethod()
      */
     public function setImageFile(?File $imageFile = null): void
     {
@@ -86,26 +73,17 @@ class Media
         }
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getGallery(): ?Gallery
     {
         return $this->gallery;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setGallery(?Gallery $gallery): self
     {
         $this->gallery = $gallery;
@@ -113,17 +91,11 @@ class Media
         return $this;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function getUpdatedImage(): ?\DateTimeInterface
     {
         return $this->updatedImage;
     }
 
-      /**
-     * @Grapher\IsDisplayedMethod()
-     */
     public function setUpdatedImage(\DateTimeInterface $updatedImage): self
     {
         $this->updatedImage = $updatedImage;

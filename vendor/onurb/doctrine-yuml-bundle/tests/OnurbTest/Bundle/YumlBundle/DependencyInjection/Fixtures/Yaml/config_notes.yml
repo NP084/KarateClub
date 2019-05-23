@@ -1,6 +1,0 @@
-parameters:
-#    ...
-
-    onurb_yuml.notes:
-        My\Class: "My note"
-        My\OtherClass: "My other note"
