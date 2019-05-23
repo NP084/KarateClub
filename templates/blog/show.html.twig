@@ -2,39 +2,44 @@
 
 {% block Content %}
 
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h5 class="card-title">{{ article.title }}
-                {% if (is_granted('ROLE_ADMIN')) %}
-                    <a class="btn btn-sm btn-icon btn-secondary"
-                       href="{{ path('blog_edit',{'id':article.id}) }}">
-                        <i class="fa fa-pencil">
-                        </i>
-                        <span class="sr-only">Modifier son profil</span>
-                    </a>
-                {% endif %}
-            </h5>
-            <div class="card">
-                <div class="card-body">
-                    <figure class="embed-responsive embed-responsive-16by9 mb-0">
-                        <img class="embed-responsive-item" src="{{ asset('/upload/media/' ~ article.imageName) }}" alt="Card image">
-                    </figure>
-                </div>
-
-                <div class="card-body">
-                    <p class="card-text">
-                        {{ article.content|raw }}
-                    </p>
-                </div>
-                <div class="card-footer">
-                        <div class="card-footer-content text-muted">
-                            <div class="metadata">Ecrit le {{ article.createdAt |date('d/m/Y')}} à {{article.createdAt |date('H:i')}} dans la catégorie {{article.category.title}}</div>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h5 class="card-title">{{ article.title }}
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <a class="btn btn-sm btn-icon btn-secondary"
+                           href="{{ path('blog_edit',{'id':article.id}) }}">
+                            <i class="fa fa-pencil">
+                            </i>
+                            <span class="sr-only">Modifier son profil</span>
+                        </a>
+                    {% endif %}
+                </h5>
+                <div class="card">
+                    <div class="card-body">
+                        {#                    <figure class="embed-responsive embed-responsive-16by9 mb-0">#}
+                        <div class="row justify-content-md-center">
+                            <img class="embed-responsive-item" src="{{ asset('/upload/media/' ~ article.imageName) }}"
+                                 alt="Card image">
+                            {#                    </figure>#}
                         </div>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="card-text">
+                            {{ article.content|raw }}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-content text-muted">
+                            <div class="metadata">Ecrit le {{ article.createdAt |date('d/m/Y') }}
+                                à {{ article.createdAt |date('H:i') }} dans la
+                                catégorie {{ article.category.title }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 {% endblock %}

@@ -14,7 +14,7 @@ class UserPictureType extends AbstractType
     {
         $builder
             ->add('imageFile', VichImageType::class, [
-                'required'=> true,
+                'required'=> false,
                 'image_uri' => false,
             ]);
         ;
