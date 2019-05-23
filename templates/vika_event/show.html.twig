@@ -143,25 +143,29 @@
                     </div>
                 </div>
                 {% if user is not null %}
-                    {% if vikaEvent.easyinscription %}
-                        <a class="btn btn-primary btn-md"
-                           href="{{ path('registration_member_lesson', {'idevent':vikaEvent.id, 'id':user.id}) }}"
-                           role="button">S'inscrire</a>
-                    {% else %}
-                        <div class='row'>
-                        <div class="col-1">
+                    {% if vikaEvent.inscription %}
+                        {% if vikaEvent.easyinscription %}
                             <a class="btn btn-primary btn-md"
                                href="{{ path('registration_member_lesson', {'idevent':vikaEvent.id, 'id':user.id}) }}"
                                role="button">S'inscrire</a>
-                        </div>
+                        {% else %}
+                            <div class='row'>
+                            <div class="col-1">
+                                <a class="btn btn-primary btn-md"
+                                   href="{{ path('registration_member_lesson', {'idevent':vikaEvent.id, 'id':user.id}) }}"
+                                   role="button">S'inscrire</a>
+                            </div>
+                        {% endif %}
                     {% endif %}
                     {% if (is_granted('ROLE_ADMIN')) %}
                         {{ include('vika_event/_delete_form.html.twig') }}
                     {% endif %}
 
                     </div>
-                    {% else %}
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#seConnecter">S'inscrire</button>
+                {% else %}
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#seConnecter">
+                        S'inscrire
+                    </button>
                 {% endif %}
 
             </div>
