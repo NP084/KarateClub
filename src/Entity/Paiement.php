@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PaiementRepository")
@@ -39,16 +40,25 @@ class Paiement
      */
     private $isPaid;
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getAmount(): ?float
     {
         return $this->amount;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
@@ -56,11 +66,17 @@ class Paiement
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getRegistration(): ?Registration
     {
         return $this->registration;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setRegistration(?Registration $registration): self
     {
         $this->registration = $registration;
@@ -68,11 +84,17 @@ class Paiement
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
@@ -80,11 +102,17 @@ class Paiement
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getIsPaid(): ?bool
     {
         return $this->isPaid;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setIsPaid(?bool $isPaid): self
     {
         $this->isPaid = $isPaid;

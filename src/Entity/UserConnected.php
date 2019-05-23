@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -73,6 +74,9 @@ class UserConnected implements UserInterface, \Serializable
     /**
     * @return string
     */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getResetToken(): string
     {
         return $this->resetToken;
@@ -81,11 +85,17 @@ class UserConnected implements UserInterface, \Serializable
     /**
     * @param string $resetToken
     */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setResetToken(?string $resetToken): void
     {
         $this->resetToken = $resetToken;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function __construct()
     {
         /*
@@ -99,6 +109,9 @@ class UserConnected implements UserInterface, \Serializable
     }
 
     /** @see \Serializable::serialize() */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function serialize()
     {
         return serialize(array(
@@ -110,6 +123,9 @@ class UserConnected implements UserInterface, \Serializable
     }
 
     /** @see \Serializable::unserialize() */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function unserialize($serialized)
     {
         list (
@@ -120,14 +136,23 @@ class UserConnected implements UserInterface, \Serializable
             ) = unserialize($serialized, array('allowed_classes' => false));
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function eraseCredentials(){
 
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getSalt(){
 
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getRoles(){
         if ($this->email == "admin@admin.com") {
             return ['ROLE_ADMIN'];
@@ -139,16 +164,25 @@ class UserConnected implements UserInterface, \Serializable
 
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -159,17 +193,26 @@ class UserConnected implements UserInterface, \Serializable
     /** La fonction getUsername est obligatoire pr implémenter l'interface
      * elle retourne l'email qui fait office de username dans le login
     */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getUsername(): ?string
     {
         return $this->email;
     }
 
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -180,11 +223,17 @@ class UserConnected implements UserInterface, \Serializable
     /**
      * @return Collection|User[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getUsers(): Collection
     {
         return $this->users;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addUser(User $user): self
     {
         if (!$this->users->contains($user)) {
@@ -195,6 +244,9 @@ class UserConnected implements UserInterface, \Serializable
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeUser(User $user): self
     {
         if ($this->users->contains($user)) {
@@ -208,11 +260,17 @@ class UserConnected implements UserInterface, \Serializable
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setUser(User $user): self
     {
         $this->user = $user;
@@ -220,11 +278,17 @@ class UserConnected implements UserInterface, \Serializable
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getGdpr(): ?bool
     {
         return $this->gdpr;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setGdpr(?bool $gdpr): self
     {
         $this->gdpr = $gdpr;

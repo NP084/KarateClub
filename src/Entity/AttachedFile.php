@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -68,21 +69,33 @@ class AttachedFile
     private $registration;
 
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -90,11 +103,17 @@ class AttachedFile
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getMember(): ?User
     {
         return $this->member;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setMember(?User $member): self
     {
         $this->member = $member;
@@ -102,11 +121,17 @@ class AttachedFile
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -114,11 +139,17 @@ class AttachedFile
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getDocname(): ?string
     {
         return $this->docname;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getDocFile(): ?File
     {
         return $this->docFile;
@@ -133,6 +164,9 @@ class AttachedFile
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $docFile
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setDocFile(?File $docFile = null): void
     {
         $this->docFile = $docFile;
@@ -144,16 +178,25 @@ class AttachedFile
         }
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setDocname(?string $docname): void
     {
         $this->docname = $docname;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getDatecreat(): ?\DateTimeInterface
     {
         return $this->datecreat;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setDatecreat(\DateTimeInterface $datecreat): self
     {
         $this->datecreat = $datecreat;
@@ -161,11 +204,17 @@ class AttachedFile
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getRegistration(): ?Registration
     {
         return $this->registration;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setRegistration(?Registration $registration): self
     {
         $this->registration = $registration;

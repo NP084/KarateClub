@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdressRepository")
@@ -50,21 +51,33 @@ class Adress
     private $city;
 
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function __construct()
     {
         $this->users = new ArrayCollection();
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -72,11 +85,17 @@ class Adress
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getNum(): ?string
     {
         return $this->num;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setNum(string $num): self
     {
         $this->num = $num;
@@ -84,11 +103,17 @@ class Adress
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getPostBox(): ?string
     {
         return $this->postBox;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setPostBox(?string $postBox): self
     {
         $this->postBox = $postBox;
@@ -96,11 +121,17 @@ class Adress
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getStreetName(): ?string
     {
         return $this->streetName;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setStreetName(string $streetName): self
     {
         $this->streetName = $streetName;
@@ -111,11 +142,17 @@ class Adress
     /**
      * @return Collection|User[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getUsers(): Collection
     {
         return $this->users;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addUser(User $user): self
     {
         if (!$this->users->contains($user)) {
@@ -126,6 +163,9 @@ class Adress
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeUser(User $user): self
     {
         if ($this->users->contains($user)) {
@@ -136,11 +176,17 @@ class Adress
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getCity(): ?City
     {
         return $this->city;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setCity(?City $city): self
     {
         $this->city = $city;
@@ -148,6 +194,9 @@ class Adress
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function __toString()
     {
         return $this->streetname;

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 
 
 /**
@@ -34,21 +35,33 @@ class Phone
      */
     private $user;
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function __construct()
     {
         $this->user = new ArrayCollection();
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -56,11 +69,17 @@ class Phone
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getNum(): ?string
     {
         return $this->num;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setNum(string $num): self
     {
         $this->num = $num;
@@ -71,11 +90,17 @@ class Phone
     /**
      * @return Collection|User[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getUser(): Collection
     {
         return $this->user;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addUser(User $user): self
     {
         if (!$this->user->contains($user)) {
@@ -85,6 +110,9 @@ class Phone
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeUser(User $user): self
     {
         if ($this->user->contains($user)) {

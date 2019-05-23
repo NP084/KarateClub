@@ -10,6 +10,7 @@
         "friendsofsymfony/user-bundle": "~2.0",
         "knplabs/knp-paginator-bundle": "^3.0",
         "ninsuo/symfony-collection": "^2.1",
+        "onurb/doctrine-yuml-bundle": "^1.1",
         "sensio/framework-extra-bundle": "^5.3",
         "symfony/asset": "4.2.*",
         "symfony/console": "4.2.*",

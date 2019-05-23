@@ -106,6 +106,11 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
             'PhpParser\\' => 10,
             'PackageVersions\\' => 16,
         ),
+        'O' => 
+        array (
+            'Onurb\\Doctrine\\ORMMetadataGrapher\\' => 34,
+            'Onurb\\Bundle\\YumlBundle\\' => 24,
+        ),
         'M' => 
         array (
             'Monolog\\' => 8,
@@ -434,6 +439,14 @@ class ComposerStaticInit87ac96c90488e522c2c4ad3e5c029e5f
         'PackageVersions\\' => 
         array (
             0 => __DIR__ . '/..' . '/ocramius/package-versions/src/PackageVersions',
+        ),
+        'Onurb\\Doctrine\\ORMMetadataGrapher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/onurb/doctrine-metadata-grapher/lib/Onurb/Doctrine/ORMMetadataGrapher',
+        ),
+        'Onurb\\Bundle\\YumlBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/onurb/doctrine-yuml-bundle/lib/Onurb/Bundle/YumlBundle',
         ),
         'Monolog\\' => 
         array (

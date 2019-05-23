@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -38,16 +39,25 @@ class ContactClub
      */
     private $email;
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -55,11 +65,17 @@ class ContactClub
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
@@ -67,11 +83,17 @@ class ContactClub
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getNum(): ?string
     {
         return $this->num;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setNum(?string $num): self
     {
         $this->num = $num;
@@ -79,11 +101,17 @@ class ContactClub
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -78,6 +79,9 @@ class Gallery
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -89,6 +93,9 @@ class Gallery
         }
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getImageFile(): ?File
     {
         return $this->imageFile;
@@ -96,22 +103,34 @@ class Gallery
 
 
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function __construct()
     {
         $this->media = new ArrayCollection();
         $this->createdGal = new \DateTime();
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -119,11 +138,17 @@ class Gallery
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setDescription(?string $description): self
     {
         $this->description = $description;
@@ -134,11 +159,17 @@ class Gallery
     /**
      * @return Collection|Media[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getMedia(): Collection
     {
         return $this->media;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addMedium(Media $medium): self
     {
         if (!$this->media->contains($medium)) {
@@ -149,6 +180,9 @@ class Gallery
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeMedium(Media $medium): self
     {
         if ($this->media->contains($medium)) {
@@ -162,22 +196,34 @@ class Gallery
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getAvatarName(): ?string
     {
         return $this->avatarName;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setAvatarName(?string $avatarName): void
     {
         $this->avatarName = $avatarName;
 
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getDateCreat(): ?\DateTimeInterface
     {
         return $this->dateCreat;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setDateCreat(?\DateTimeInterface $dateCreat): self
     {
         $this->dateCreat = $dateCreat;
@@ -185,11 +231,17 @@ class Gallery
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getCreatedGal(): ?\DateTimeInterface
     {
         return $this->createdGal;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setCreatedGal(\DateTimeInterface $createdGal): self
     {
         $this->createdGal = $createdGal;

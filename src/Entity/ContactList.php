@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContactListRepository")
@@ -38,16 +39,25 @@ class ContactList
      */
     private $personOfContact;
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getRelation(): ?string
     {
         return $this->relation;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setRelation(string $relation): self
     {
         $this->relation = $relation;
@@ -55,11 +65,17 @@ class ContactList
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getInfo(): ?string
     {
         return $this->info;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setInfo(?string $info): self
     {
         $this->info = $info;
@@ -67,11 +83,17 @@ class ContactList
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -79,11 +101,17 @@ class ContactList
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getPersonOfContact(): ?PersonOfContact
     {
         return $this->personOfContact;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setPersonOfContact(?PersonOfContact $personOfContact): self
     {
         $this->personOfContact = $personOfContact;

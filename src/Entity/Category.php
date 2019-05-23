@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -49,6 +50,9 @@ class Category
     private $paiements;
 
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -57,16 +61,25 @@ class Category
         $this->paiements = new ArrayCollection();
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -74,11 +87,17 @@ class Category
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setDescription(?string $description): self
     {
         $this->description = $description;
@@ -89,11 +108,17 @@ class Category
     /**
      * @return Collection|Article[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getArticles(): Collection
     {
         return $this->articles;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
@@ -104,6 +129,9 @@ class Category
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeArticle(Article $article): self
     {
         if ($this->articles->contains($article)) {
@@ -120,11 +148,17 @@ class Category
     /**
      * @return Collection|History[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getHistory(): Collection
     {
         return $this->history;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addHistory(History $history): self
     {
         if (!$this->history->contains($history)) {
@@ -135,6 +169,9 @@ class Category
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeHistory(History $history): self
     {
         if ($this->history->contains($history)) {
@@ -151,11 +188,17 @@ class Category
     /**
      * @return Collection|VikaEvent[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getVikaEvents(): Collection
     {
         return $this->vikaEvents;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addVikaEvent(VikaEvent $vikaEvent): self
     {
         if (!$this->vikaEvents->contains($vikaEvent)) {
@@ -166,6 +209,9 @@ class Category
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeVikaEvent(VikaEvent $vikaEvent): self
     {
         if ($this->vikaEvents->contains($vikaEvent)) {
@@ -180,6 +226,9 @@ class Category
     }
 
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removePriceGrid(PriceGrid $priceGrid): self
     {
         if ($this->priceGrids->contains($priceGrid)) {
@@ -196,11 +245,17 @@ class Category
     /**
      * @return Collection|Paiement[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getPaiements(): Collection
     {
         return $this->paiements;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addPaiement(Paiement $paiement): self
     {
         if (!$this->paiements->contains($paiement)) {
@@ -211,6 +266,9 @@ class Category
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removePaiement(Paiement $paiement): self
     {
         if ($this->paiements->contains($paiement)) {

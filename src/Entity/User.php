@@ -5,11 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 use Symfony\Component\Validator\Constraints as Assert;
 //use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -151,6 +153,9 @@ class User
     private $bars;
 
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function __construct()
     {
         $this->phones = new ArrayCollection();
@@ -166,11 +171,17 @@ class User
         $this->notifications = new ArrayCollection();
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setImageName(?string $imageName): void
     {
         $this->imageName = $imageName;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getImageName(): ?string
     {
         return $this->imageName;
@@ -178,6 +189,9 @@ class User
 
     /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+     */
+      /**
+     * @Grapher\IsDisplayedMethod()
      */
     public function setImageFile(?File $imageFile = null): void
     {
@@ -190,11 +204,19 @@ class User
         }
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
-
+    /**
+     * @Grapher\IsDisplayedMethod()
+     */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -203,11 +225,17 @@ class User
     /**
      * @return Collection|Phone[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getPhones(): Collection
     {
         return $this->phones;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addPhone(Phone $phone): self
     {
         if (!$this->phones->contains($phone)) {
@@ -218,6 +246,9 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removePhone(Phone $phone): self
     {
         if ($this->phones->contains($phone)) {
@@ -231,11 +262,17 @@ class User
     /**
      * @return Collection|Adress[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getAdress(): Collection
     {
         return $this->adress;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addAdress(Adress $adress): self
     {
         if (!$this->adress->contains($adress)) {
@@ -245,6 +282,9 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeAdress(Adress $adress): self
     {
         if ($this->adress->contains($adress)) {
@@ -254,11 +294,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getBelt(): ?string
     {
         return $this->belt;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setBelt(?string $belt): self
     {
         $this->belt = $belt;
@@ -266,11 +312,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getReceiptDate(): ?\DateTimeInterface
     {
         return $this->receiptDate;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setReceiptDate(?\DateTimeInterface $receiptDate): self
     {
         $this->receiptDate = $receiptDate;
@@ -281,11 +333,17 @@ class User
     /**
      * @return Collection|AttachedFile[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getAttachedFiles(): Collection
     {
         return $this->attachedFiles;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addAttachedFile(AttachedFile $attachedFile): self
     {
         if (!$this->attachedFiles->contains($attachedFile)) {
@@ -296,6 +354,9 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeAttachedFile(AttachedFile $attachedFile): self
     {
         if ($this->attachedFiles->contains($attachedFile)) {
@@ -312,11 +373,17 @@ class User
     /**
      * @return Collection|Registration[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getRegistration(): Collection
     {
         return $this->registration;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addRegistration(Registration $registration): self
     {
         if (!$this->registration->contains($registration)) {
@@ -327,6 +394,9 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeRegistration(Registration $registration): self
     {
         if ($this->registration->contains($registration)) {
@@ -343,11 +413,17 @@ class User
     /**
      * @return Collection|History[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getHistories(): Collection
     {
         return $this->histories;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addHistory(History $history): self
     {
         if (!$this->histories->contains($history)) {
@@ -358,6 +434,9 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeHistory(History $history): self
     {
         if ($this->histories->contains($history)) {
@@ -371,11 +450,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getSex(): ?string
     {
         return $this->sex;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setSex(string $sex): self
     {
         $this->sex = $sex;
@@ -386,11 +471,17 @@ class User
     /**
      * @return Collection|ContactList[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getContactLists(): Collection
     {
         return $this->contactLists;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addContactList(ContactList $contactList): self
     {
         if (!$this->contactLists->contains($contactList)) {
@@ -401,6 +492,9 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeContactList(ContactList $contactList): self
     {
         if ($this->contactLists->contains($contactList)) {
@@ -414,11 +508,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getUserConnected(): ?UserConnected
     {
         return $this->userConnected;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setUserConnected(?UserConnected $userConnected): self
     {
         $this->userConnected = $userConnected;
@@ -426,11 +526,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getOwnerUser(): ?UserConnected
     {
         return $this->ownerUser;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setOwnerUser(UserConnected $ownerUser): self
     {
         $this->ownerUser = $ownerUser;
@@ -443,11 +549,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getCreatedUs(): ?\DateTimeInterface
     {
         return $this->createdUs;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setCreatedUs(\DateTimeInterface $createdUs): self
     {
         $this->createdUs = $createdUs;
@@ -455,11 +567,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setName(?string $name): self
     {
         $this->name = $name;
@@ -467,11 +585,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
@@ -479,11 +603,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getBirthdate(): ?\DateTimeInterface
     {
         return $this->birthdate;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setBirthdate(\DateTimeInterface $birthdate): self
     {
         $this->birthdate = $birthdate;
@@ -494,11 +624,17 @@ class User
     /**
      * @return Collection|Notification[]
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getNotifications(): Collection
     {
         return $this->notifications;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function addNotification(Notification $notification): self
     {
         if (!$this->notifications->contains($notification)) {
@@ -509,6 +645,9 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function removeNotification(Notification $notification): self
     {
         if ($this->notifications->contains($notification)) {
@@ -519,11 +658,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getFedNum(): ?string
     {
         return $this->fedNum;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setFedNum(?string $fedNum): self
     {
         $this->fedNum = $fedNum;
@@ -531,22 +676,34 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getIsActive(): ?bool
     {
         return $this->isActive;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setIsActive(?bool $isActive): self
     {
         $this->isActive = $isActive;
 
         return $this;
     }
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getIsTrial(): ?bool
     {
         return $this->isTrial;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setIsTrial(?bool $isTrial): self
     {
         $this->isTrial = $isTrial;
@@ -554,11 +711,17 @@ class User
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getBars(): ?int
     {
         return $this->bars;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setBars(?int $bars): self
     {
         $this->bars = $bars;

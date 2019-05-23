@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PriceGridRepository")
@@ -44,21 +45,33 @@ class PriceGrid
      */
     private $vikaEvent;
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function __construct()
     {
 
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getPrice(): ?float
     {
         return $this->price;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setPrice(float $price): self
     {
         $this->price = $price;
@@ -66,11 +79,17 @@ class PriceGrid
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getPublic(): ?string
     {
         return $this->public;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setPublic(string $public): self
     {
         $this->public = $public;
@@ -78,11 +97,17 @@ class PriceGrid
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getInfo(): ?string
     {
         return $this->info;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setInfo(?string $info): self
     {
         $this->info = $info;
@@ -90,11 +115,17 @@ class PriceGrid
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getLabel(): ?string
     {
         return $this->label;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setLabel(string $label): self
     {
         $this->label = $label;
@@ -102,11 +133,17 @@ class PriceGrid
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getVikaEvent(): ?VikaEvent
     {
         return $this->vikaEvent;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setVikaEvent(?VikaEvent $vikaEvent): self
     {
         $this->vikaEvent = $vikaEvent;

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Onurb\Doctrine\ORMMetadataGrapher\Mapping as Grapher;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -62,6 +63,9 @@ class Sponsor
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
      */
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -73,21 +77,33 @@ class Sponsor
         }
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -95,11 +111,17 @@ class Sponsor
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setDescription(?string $description): self
     {
         $this->description = $description;
@@ -107,21 +129,33 @@ class Sponsor
         return $this;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getLogo(): ?string
     {
         return $this->logo;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setLogo(?string $logo): void
     {
         $this->logo = $logo;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function getDatecreat(): ?\DateTimeInterface
     {
         return $this->datecreat;
     }
 
+      /**
+     * @Grapher\IsDisplayedMethod()
+     */
     public function setDatecreat(\DateTimeInterface $datecreat): self
     {
         $this->datecreat = $datecreat;
