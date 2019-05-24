@@ -50,7 +50,7 @@ class LoadSiteController extends AbstractController
     public function loadGallery(GalleryRepository $repo, ObjectManager $manager)
     {
         $test =$repo->findByName(
-            ['name'=>'Rencontre 2014 Aikido, Tai Jitsu']
+            ['name'=>'Stage H.Delage 2017']
         );
         if (!$test){
             $gallery = new Gallery();
@@ -119,7 +119,7 @@ class LoadSiteController extends AbstractController
             $manager->persist($gallery);
 
             $gallery = new Gallery();
-            $gallery->setName('Passage Ceintures Noires de Juin 2016')
+            $gallery->setName('Passage des Ceintures Noires de Juin 2016')
                 ->setDescription('');
 
             for ($k = 1; $k <= 4; $k++) {
@@ -145,6 +145,7 @@ class LoadSiteController extends AbstractController
                     //   $manager->persist($media);
                 }
             }
+            $manager->persist($gallery);
 
             $gallery = new Gallery();
             $gallery->setName('Rentrée Baby 2017/2018')
@@ -157,7 +158,7 @@ class LoadSiteController extends AbstractController
                 $gallery->addMedium($media);
                 //  $manager->persist($media);
             }
-            // $manager->persist($gallery);
+             $manager->persist($gallery);
 
             $manager->flush();
         }

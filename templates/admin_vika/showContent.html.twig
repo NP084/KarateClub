@@ -59,11 +59,11 @@
                                    href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Actifs</label>
                                 </a>
                             </div>
-                            <div class="col-md col-lg">
+                    {#        <div class="col-md col-lg">
                                 <a id="isTrial" name="isActive" class="btn btn-outline-primary" methods="GET"
                                    href="{{ path('admin_users', {orderby:'isTrial'}) }}"><label>Cours d'essai</label>
                                 </a>
-                            </div>
+                            </div>#}
 
                         {% elseif (isTrialMode==true) %}
                             <div class="col-2">
@@ -71,11 +71,11 @@
                                    href="{{ path('admin_users', {orderby:'isActive'}) }}"><label>Actifs</label>
                                 </a>
                             </div>
-                            <div class="col-md col-lg">
+                    {#        <div class="col-md col-lg">
                                 <a id="isTrial" name="isTrial" class="btn btn-primary" methods="GET"
                                    href="{{ path('admin_users', {orderby:'ASC'}) }}"><label>Cours d'essai</label>
                                 </a>
-                            </div>
+                            </div>#}
                         {% elseif (resetIsActiveMode==true) %}
                             <div class="col-5">
                                 <h5>Liste des utilisateurs dont le statut "Membre actif" a été remis à zéro</h5>
@@ -86,11 +86,11 @@
                                    href="{{ path('admin_users', {orderby:'isActive'}) }}"><label>Actifs</label>
                                 </a>
                             </div>
-                            <div class="col-md col-lg">
+                       {#     <div class="col-md col-lg">
                                 <a id="isTrial" name="isActive" class="btn btn-outline-primary" methods="GET"
                                    href="{{ path('admin_users', {orderby:'isTrial'}) }}"><label>Cours d'essai</label>
                                 </a>
-                            </div>
+                            </div>#}
 
                         {% endif %}
                     </div>
