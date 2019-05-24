@@ -27,10 +27,12 @@
                 <div class="card-body">
                 <h5 class="card-title">{{ article.title }}</h5>
                 </div>
+                {% if (article.imageName) %}
                 <!-- 16:9 aspect ratio -->
                 <figure class="embed-responsive embed-responsive-16by9 mb-0">
                     <img class="embed-responsive-item" src="{{ asset('/upload/media/' ~ article.imageName)}}" alt="Card image">
                 </figure>
+                {% endif %}
 
                 <div class="card-body">
                 <p class="card-text">

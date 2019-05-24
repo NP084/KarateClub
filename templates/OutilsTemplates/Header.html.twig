@@ -1,88 +1,102 @@
 <html>
-    <header class="app-header app-header-dark">
-        <!-- .top-bar -->
-        <div class="top-bar-list">
-            <!-- .top-bar-brand -->
-            <div class="top-bar-brand bg-transparent">
-                <!-- toggle menu -->
-                <a href="{{ path('home_page', {'path':'accueil'}) }}"><img src="Logo_Vika.png" alt="" style="height: 52px;width: auto;"></a>
-            </div><!-- /.top-bar-list -->
+<header class="app-header app-header-dark">
+    <!-- .top-bar -->
+    <div class="top-bar-list">
+        <!-- .top-bar-brand -->
+        <div class="top-bar-brand bg-transparent">
+            <!-- toggle menu -->
+            <a href="{{ path('home_page', {'path':'accueil'}) }}"><img src="Logo_Vika.png" alt=""
+                                                                       style="height: 52px;width: auto;"></a>
+        </div><!-- /.top-bar-list -->
 
-            <!-- .navbar -->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a class="navbar-brand" href="{{ path('home_page', {'path':'accueil'}) }}">Accueil</a> <!-- toggle menu -->
-                <button class="hamburger hamburger hamburger-squeeze hamburger-toggle d-lg-none" type="button" data-toggle="collapse" data-target="#navbarColor2" aria-controls="navbarColor2" aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>
-                <!-- .navbar-collapse -->
-                <div class="collapse navbar-collapse" id="navbarColor2">
-                    <!-- .navbar-nav -->
-                    <ul class="navbar-nav mr-auto">
+        <!-- .navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="{{ path('home_page', {'path':'accueil'}) }}">Accueil</a> <!-- toggle menu -->
+            <button class="hamburger hamburger hamburger-squeeze hamburger-toggle d-lg-none" type="button"
+                    data-toggle="collapse" data-target="#navbarColor2" aria-controls="navbarColor2"
+                    aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger-box"><span
+                            class="hamburger-inner"></span></span></button>
+            <!-- .navbar-collapse -->
+            <div class="collapse navbar-collapse" id="navbarColor2">
+                <!-- .navbar-nav -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#" role="button">Vika<span
+                                    class="caret"></span></a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('VikaContent',{'path':'Philosophie'}) }}">La
+                                philosophie</a>
+                            <a class="dropdown-item" href="{{ path('VikaContent',{'path':'Bureau'}) }}">Membres du
+                                bureau</a>
+                            <a class="dropdown-item" href="{{ path('encadrement_index',{'path':'Encadrement'}) }}">Encadrement</a>
+                            <a class="dropdown-item" href="{{ path('sponsor_index',{'path':'Sponsor'}) }}">Sponsors</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#" role="button">Activités<span
+                                    class="caret"></span></a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'all'}) }}">Tous les
+                                événements</a>
+                            <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Cours'}) }}">Cours</a>
+                            <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Stage'}) }}">Stages</a>
+                            <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Compétition'}) }}">Compétitions</a>
+                            <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Interclub'}) }}">Interclub</a>
+                            <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Autre'}) }}">Autres</a>
+                            {#                                    <a class="dropdown-item" href="#">Matériels</a>#}
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#" role="button">Actualités<span
+                                    class="caret"></span></a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('blog') }}">Publications</a>
+                            <a class="dropdown-item" href="{{ path('galeriephoto') }}">Galerie photo</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('VikaContent',{'path':'suivi'}) }}">Suivi pédagogique</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('VikaContent',{'path':'contact'}) }}">Contact</a>
+                    </li>
+                    {% if (is_granted('ROLE_ADMIN')) %}
                         <li class="nav-item dropdown">
-                            <a class="nav-link" data-toggle="dropdown" href="#" role="button">Vika<span class="caret"></span></a>
+                            <a class="nav-link" data-toggle="dropdown" href="#" role="button">Administration<span
+                                        class="caret"></span></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ path('VikaContent',{'path':'Philosophie'}) }}">La philosophie</a>
-                                <a class="dropdown-item" href="{{ path('VikaContent',{'path':'Bureau'}) }}">Membres du bureau</a>
-                                <a class="dropdown-item" href="{{ path('encadrement_index',{'path':'Encadrement'}) }}">Encadrement</a>
-                                <a class="dropdown-item" href="{{ path('sponsor_index',{'path':'Sponsor'}) }}">Sponsors</a>
+                                <a class="dropdown-item" href="{{ path('admin_users', {orderby:'ASC'}) }}">
+                                    Gérer les membres</a>
+                                <a class="dropdown-item" href="{{ path('registration_view') }}">Gérer les
+                                    préinscriptions</a>
+                                <a class="dropdown-item" href="{{ path('vika_event_index') }}">Gérer les événements</a>
+                                <a class="dropdown-item" href="{{ path('paiement_view') }}">Gérer les payements</a>
+                                <a class="dropdown-item" href="{{ path('priceGrid_index',
+                                    {orderby:'ASC'}) }}">Grille tarifaire</a>
+                                {#                                    <a class="dropdown-item" href="#">Matériels</a> #}
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                                <a class="nav-link" data-toggle="dropdown" href="#" role="button">Activités<span class="caret"></span></a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'all'})
-                                    }}">Tous les événements</a>
-                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Cours'}) }}">Cours</a>
-                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Stage'}) }}">Stages</a>
-                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Compétition'})
-                                    }}">Compétitions</a>
-                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Interclub'})
-                                    }}">Interclub</a>
-                                    <a class="dropdown-item" href="{{ path('vika_event_showList',{'cat':'Autre'})
-                                    }}">Autres</a>
-{#                                    <a class="dropdown-item" href="#">Matériels</a>#}
-                                </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                                <a class="nav-link" data-toggle="dropdown" href="#" role="button">Actualités<span class="caret"></span></a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ path('blog')}}">Publications</a>
-                                    <a class="dropdown-item" href="{{ path('galeriephoto')}}">Galerie photo</a>
-                                </div>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="{{ path('VikaContent',{'path':'suivi'})}}">Suivi pédagogique</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('VikaContent',{'path':'contact'}) }}">Contact</a>
-                        </li>
-                        {% if (is_granted('ROLE_ADMIN')) %}
-                        <li class="nav-item dropdown">
-                                <a class="nav-link" data-toggle="dropdown" href="#" role="button">Administration<span class="caret"></span></a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ path('admin_users', {orderby:'ASC'}) }}">
-                                        Gérer les membres</a>
-                                    <a class="dropdown-item" href="{{ path('registration_view')}}">Gérer les préinscriptions</a>
-                                    <a class="dropdown-item" href="{{ path('vika_event_index')}}">Gérer les événements</a>
-                                    <a class="dropdown-item" href="{{ path('paiement_view')}}">Gérer les payements</a>
-                                    <a class="dropdown-item" href="{{ path('priceGrid_index',
-                                        {orderby:'ASC'}) }}">Grille tarifaire</a>
-{#                                    <a class="dropdown-item" href="#">Matériels</a> #}
-                                </div>
-                        </li>
-                        {% endif %}
+                    {% endif %}
 
-                    </ul><!-- /.navbar-nav -->
-                </div><!-- /.navbar-collapse -->
-            </nav><!-- /.navbar -->
+                </ul><!-- /.navbar-nav -->
+            </div><!-- /.navbar-collapse -->
+        </nav><!-- /.navbar -->
 
-            <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
+        <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
             <!-- Ajouter condition sinon bouton connexion -->
-                {% if not app.user%}
-                {% else %}
+            {% if not app.user %}
+            {% else %}
                 <!-- .btn-account -->
                 <div class="dropdown">
-                    <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{{ vich_uploader_asset(app.user.getUser(), 'imageFile') }}" alt=" " width="42" /></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ app.user.user.firstname }} {{ app.user.user.name }} </font></font></span>
+                    <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img
+                                    src="{{ vich_uploader_asset(app.user.getUser(), 'imageFile') }}" alt=" "
+                                    width="42"/></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span
+                                    class="account-name"><font style="vertical-align: inherit;"><font
+                                            style="vertical-align: inherit;">{{ app.user.user.firstname }} {{ app.user.user.name }} </font></font></span>
                           {% if is_granted('ROLE_ADMIN') %}
-                        <span class="account-description"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Administrateur</font></font></span></span>
+                        <span class="account-description"><font style="vertical-align: inherit;"><font
+                                        style="vertical-align: inherit;">Administrateur</font></font></span></span>
                         {% endif %}
                     </button>
                     <div class="dropdown-arrow dropdown-arrow-left">
@@ -99,28 +113,32 @@
                                 <span class="dropdown-icon oi oi-person"></span> Mon profil</a>
                         {% endif %}
 
-                        <a class="dropdown-item" href="{{ path('security_logout') }}"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
-                    </div><!-- /.dropdown-menu -->
+                        <a class="dropdown-item" href="{{ path('security_logout') }}"><span
+                                    class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                        {#<div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
+                    </div><!-- /.dropdown-menu -->#}
+                    </div>
                 </div><!-- /.btn-account -->
-                {% endif %}
+            {% endif %}
 
-                <!-- Bouton Se connecter -->
-                {% if not app.user%}
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#seConnecter">Connexion</button>
-                    {#<a href="{{ path('security_login') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Connexion</a>#}
+            <!-- Bouton Se connecter -->
+            {% if not app.user %}
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#seConnecter">
+                    Connexion
+                </button>
+                {#<a href="{{ path('security_login') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Connexion</a>#}
                 {#{% else %}
                     <a href="{{ path('security_logout') }}" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Déconnexion</a>#}
-                {% endif %}
+            {% endif %}
 
 
-                <!-- Logo Social -->
-                <div class="social">
-                        <ul>
-                            <li><a href="https://www.facebook.com"><i class="fa fa-lg fa-facebook"></i></a></li>
-                        </ul>
-                </div>
+            <!-- Logo Social -->
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/VIKA-Villeneuve-Karaté-Do-Association-1184356578397727/"><i class="fa fa-lg fa-facebook"></i></a></li>
+                </ul>
             </div>
-        </div><!-- /.top-bar -->
-    </header><!-- /.app-header -->
+        </div>
+    </div><!-- /.top-bar -->
+</header><!-- /.app-header -->
 </html>

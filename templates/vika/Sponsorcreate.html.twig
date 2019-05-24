@@ -28,14 +28,21 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <label for="">Nom de l'image</label>
                         {{ form_widget(formSponsor.imageFile) }}                     
                     </div>
+                    {% if (sponsor.logo) %}
+                        <img class="embed-responsive-rounded"
+                             src="{{ asset('/upload/media/' ~ sponsor.logo) }}"
+                             alt="Card image" width="30%">
+                    {% endif %}
                 </div>
             </div>
+
             <button type="submit" class="btn btn-primary btn-md">
                     {% if editMode %}
                         Enregister modification(s)

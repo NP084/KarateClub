@@ -56,27 +56,28 @@ class VikaController extends AbstractController
      * @Route("/vika-sponsors-{id}-edit", name="sponsors_edit", requirements={"id"="\d+"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function formSponsors(Sponsor $sponsors=null, Request $request, ObjectManager $manager ){
+    public function formSponsors(Sponsor $sponsor=null, Request $request, ObjectManager $manager ){
 
-        if (!$sponsors) {
-            $sponsors = New Sponsor();
+        if (!$sponsor) {
+            $sponsor = New Sponsor();
         }
 
-        $form = $this->createForm(SponsorType::class, $sponsors);
+        $form = $this->createForm(SponsorType::class, $sponsor);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()){
-            if (!$sponsors->getId()){
-                $sponsors->setDatecreat(new \DateTime());
+            if (!$sponsor->getId()){
+                $sponsor->setDatecreat(new \DateTime());
             }
-            $manager->persist($sponsors);
+            $manager->persist($sponsor);
             $manager->flush();
             return $this->redirectToRoute('sponsor_index',['path'=>'Sponsor']);
         }
 
         return $this->render('vika/Sponsorcreate.html.twig', [
+            'sponsor'=>$sponsor,
             'formSponsor'=>$form->createView(),
-            'editMode'=> $sponsors->getId()!==null
+            'editMode'=> $sponsor->getId()!==null
         ]);
     }
 

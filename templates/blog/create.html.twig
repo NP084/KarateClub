@@ -39,6 +39,11 @@
             <div class="form-group">
                 <label for="">Sélectionnez une image</label>
                 {{ form_widget(formArticle.imageFile) }}
+                {% if (article.imageName) %}
+                    <img class="embed-responsive-rounded"
+                         src="{{ asset('/upload/media/' ~ article.imageName) }}"
+                         alt="Card image" width="20%">
+                {% endif %}
             </div>
         </div>
     </div>

@@ -10,11 +10,13 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ vikaEvent.title }}</h5>
                         </div>
+                        {% if vikaEvent and vikaEvent.imageName %}
                         <div class="card-body">
-                            <img class="embed-responsive-rounded"
-                                 src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
-                                 alt="Card image" width="100%">
+                                <img class="embed-responsive-rounded"
+                                     src="{{ asset('/upload/vikaEvent/' ~ vikaEvent.imageName) }}"
+                                     alt="Card image" width="100%">
                         </div>
+                        {% endif %}
                         <div class="card-body">
                             <p class="card-text">
                                 {{ vikaEvent.owner }}
