@@ -68,17 +68,17 @@ class HomePageController extends AbstractController
             ['datecreat' => 'DESC']
         );
 
-        $event = $repoEvent->findBy(
+       /* $event = $repoEvent->findBy(
             [],
             ['createdEv' => 'DESC']
-        );
+        );*/
 
         return $this->render('home_page/index.html.twig', [
             'contentPage' => $contentPage,
             'articles' => $articles,
             'galerie'=> $carrousel,
             'sponsors' => $sponsors,
-            'vikaEvents' => $event
+          //  'vikaEvents' => $event
         ]);
     }
 

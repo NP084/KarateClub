@@ -12,10 +12,15 @@
                 <div class="card-body">
                     <div class="row justify-content-md-center">
                         <div class="col-lg-5">
-                            <div class="card">
+{#                            <div class="card">#}
                                 <div class="text-center">
-                                    <img src="{{ asset('/upload/media/' ~ sponsor.logo) }}" alt="Bootstrap" class="img-rounded" height="50 px">
-                                </div>
+                                    {% if sponsor.description %}
+                                    <a href="https://{{ sponsor.description }}">
+                                    <img src="{{ asset('/upload/media/' ~ sponsor.logo) }}" alt="Bootstrap" class="img-rounded" height="50 px"></a>
+                                    {% else %}
+                                        <img src="{{ asset('/upload/media/' ~ sponsor.logo) }}" alt="Bootstrap" class="img-rounded" height="50 px">
+                                    {% endif %}
+{#                                </div>#}
                             </div>
                         </div>
                     </div>
@@ -24,7 +29,7 @@
         {% set foo = foo + 1 %}
         {% endfor %}
 
-    
+
     </div>
         <a class="carousel-control-prev" href="#carouselExampleCaptions3" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -34,6 +39,6 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-    
+
 </div>
 </html>
