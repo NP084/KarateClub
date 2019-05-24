@@ -318,12 +318,11 @@ class LoadSiteController extends AbstractController
         $manager->persist($bureau);
 
         $bureau = new ContentPage();
-        $bureauContent = '<h2>Contact</h2>
-<p>VIKA est le nouveau club de Karaté de Villeneuve d\'Ascq. Il vous propose au DOJO de Valmy :</p>';
+        $bureauContent = '<p>VIKA est une association loi 1901, déclarée en préfecture sous le N° W595007200, affiliée à la Fédération Française de Karaté et Disciplines Associées sous le N° 0590711, et agréée <em>Jeunesse et Sports</em> sous le N°59 S 8062</p>';
 
-        $bureau->setTitle('Contact')
+        $bureau->setTitle('Information')
             ->setContent($bureauContent)
-            ->setPath('contact');
+            ->setPath('information');
         $manager->persist($bureau);
 
         $manager->flush();
