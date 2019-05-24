@@ -16,8 +16,9 @@
     {{ form_row(formUser.birthdate, {'label': 'Date de naissance', 'attr': {'placeholder':'Date de naissance...'}}) }}
     {{ form_row(formReg.password, {'label': 'Mot de passe', 'attr': {'placeholder':'Mot de passe...'}}) }}
     {{ form_row(formReg.confirm_password, {'label': 'Confirmez le mot de passe', 'attr': {'placeholder':'Confirmez svp...'}}) }}
-    {{ form_row(formReg.gdpr, {'label': 'En cochant, je confirme accepter les conditions GPDR !ENCORE METTRE LE LIEN', 'attr': {'placeholder':'Confirmez svp...'}}) }}
-
+    {{ form_row(formReg.gdpr, {'label': 'En cochant, je confirme accepter les conditions GPDR', 'attr': {'placeholder':'Confirmez svp...'}}) }}
+        <a class="btn btn-link"
+           href="{{ asset('/upload/document/' ~ AttachedFile.docname) }}">Voir nos conditions générales</a>
 
     <div id="aff">
         <button type="submit" id="affiche" class="btn btn-success">

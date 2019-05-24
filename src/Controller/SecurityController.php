@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\AttachedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,6 +32,11 @@ class SecurityController extends AbstractController
 
         $formUser = $this->createForm(UserForRegType::class, $usr2);
         $formUser->handleRequest($request);
+        $attachedFile_1 = $this->getDoctrine()
+            ->getRepository(AttachedFile::class)
+            ->findOneBy(
+                ['title' => 'CG']
+            );
 
         if($formReg->isSubmitted() && $formReg->isValid()){
             $hash = $encoder->encodePassword($usr, $usr->getPassword());
@@ -47,7 +53,8 @@ class SecurityController extends AbstractController
 
             return $this->render('security/registration.html.twig', [
                 'formReg' => $formReg->createView(),
-                'formUser' => $formUser->createView()
+                'formUser' => $formUser->createView(),
+                'AttachedFile' => $attachedFile_1
             ]);
 
         }
