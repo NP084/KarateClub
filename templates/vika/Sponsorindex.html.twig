@@ -54,7 +54,7 @@
                                                     </div>
                                                     <div class="col-4">
                                                         <div class="card-footer-content text-muted">
-                                                            <a class="btn btn-primary btn-md"
+                                                            <a class="btn btn-primary btn-md" onclick="return confirm('Veuillez confirmer la suppression du sponsor svp?');"
                                                                href="{{ path('sponsors_delete', {'id':sponsor.id}) }}"
                                                                role="button">Supprimer</a>
                                                         </div>

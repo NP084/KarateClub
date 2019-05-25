@@ -41,9 +41,11 @@
                                 <div class="form-group">
                                     <label for="">Photo d'avatar</label>
                                     {{ form_widget(formGaleriephoto.imageFile) }}
+                                    {% if galerie.avatarName %}
                                     <img class="embed-responsive-rounded"
                                          src="{{ asset('/upload/galerie/' ~ galerie.avatarName) }}"
                                          alt="Card image" width="40%">
+                                    {% endif %}
                                 </div>
 
                             {% else %}
