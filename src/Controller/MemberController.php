@@ -118,7 +118,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * VERIFICATION DES DONNEES DE L'UTILISATEUR
      * @Route("/verify-user-profile-{id}-{idevent}", name="verify_profile", requirements={"idevent"="\d+"})
      * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
