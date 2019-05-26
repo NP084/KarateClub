@@ -56,6 +56,7 @@
         {% endif %}
     {% endfor %}
     {% if foo == 1 %}
+    {% if ((user.phones|length > 0 ) and (user.contactLists|length > 0) and (user.adress|length > 0 )) %}
     <h2> Conditions générales </h2>
     <div class="card">
     <div class="card-body">
@@ -98,7 +99,19 @@
     </div>
     {{ form_end(form) }}
 
-
+{% else %}
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <div align="center">Veuillez compléter vos données à sur l'écran précédent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
 {% endif %}
 
 

@@ -46,13 +46,19 @@
                 <h7>
                     <div class="row">
                         <div class="col-md-11">
-                            <div class="text-perso">Veuillez svp vérifier l'exactitude de vos données personnelles, et dans le cas contraire,  les mettre à jour dans le formulaire ci-dessous.
+                            <div class="text-perso">Veuillez svp vérifier l'exactitude de vos données personnelles, et dans le cas contraire,  les mettre à jour dans le formulaire ci-dessous. Pour cela veuillez supprimer les données non exactes avant de corriger.
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
-                                <a class="btn btn-outline-info"
-                                   href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                                {% if ((user.phones|length > 0 ) and (user.contactLists|length > 0) and (user.adress|length > 0 )) %}
+
+                                    <a class="btn btn-outline-info"
+                                       href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                                {% else %}
+                                    <a class="btn btn-outline-info disabled"
+                                       href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -337,8 +343,14 @@
                         </div>
                     </div>
                 </div>
+                {% if ((user.phones|length > 0 ) and (user.contactLists|length > 0) and (user.adress|length > 0 )) %}
+
                 <a class="btn btn-outline-info"
                    href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                {% else %}
+                <a class="btn btn-outline-info disabled"
+                   href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                {% endif %}
             </div>
 
         </div>
