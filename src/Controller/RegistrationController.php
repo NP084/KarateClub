@@ -68,7 +68,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * AFFICHAGE DES DONNEES D'UTILISATEUR
      * @Route("/preregistration-user-summary-{id}-{idevent}", name="preregistration_summary", requirements={"id"="\d+"})
      * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
@@ -82,7 +82,7 @@ class RegistrationController extends AbstractController
         if ($formPhone->isSubmitted() && $formPhone->isValid()) {
             // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
             $this->forward('App\Controller\MemberController::addUserPhone', [
-                'user' => $usr,
+                'usr' => $usr,
                 'phone' => $phone,
                 'manager' => $manager,
             ]);
@@ -102,7 +102,7 @@ class RegistrationController extends AbstractController
         if ($formAdress->isSubmitted() && $formAdress->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
             $this->forward('App\Controller\MemberController::addUserAdress', [
-                'user' => $usr,
+                'usr' => $usr,
                 'adress' => $adress,
                 'city' => $city,
                 'manager' => $manager,
@@ -123,7 +123,7 @@ class RegistrationController extends AbstractController
         if ($formPoC->isSubmitted() && $formPoC->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
             $this->forward('App\Controller\MemberController::addUserPoC', [
-                'user' => $usr,
+                'usr' => $usr,
                 'contactList' => $contactList,
                 'PoC' => $PoC,
                 'manager' => $manager,
@@ -145,7 +145,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * CHOIX DU MEMBRE A INSCRIRE
      * @Route("/registration-user-family-{id}-{idevent}", name="registration_member_lesson", requirements={"id"="\d+"})
      * @Security("is_granted('ROLE_ADMIN') or user.getId() == userConnected.getId()")
      */
@@ -170,6 +170,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * ENREGISTREMENT DIRECT (SIMPLIFIEE)
      * @Route("/inscription-simplifiée-{id}-{idevent}", name="prereg_simple",requirements={"id"="\d+"})
      */
     public function simpleprereg(User $usr, $idevent, ObjectManager $manager)
@@ -197,7 +198,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * ACCEPTATION DES CONDITIONS GENERALES
      * @Route("/condition-user-family-{id}-{idevent}", name="condition_view_family", requirements={"id"="\d+"})
      * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
      */
@@ -223,20 +224,29 @@ class RegistrationController extends AbstractController
             );
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $repo = $this->getDoctrine()
+                ->getRepository(Registration::class);
+            $preregTest = $repo->findOneBy([
+                'user' => $usr,
+                'vikaEvent' => $event
+            ]);
+            if (!$preregTest) {
+                $prereg->setVikaEvent($event);
+                $prereg->setUser($usr);
+                $prereg->setRegistrationDate(new \DateTime('now'));
+                $manager->persist($prereg);
 
-            $prereg->setVikaEvent($event);
-            $prereg->setUser($usr);
-            $prereg->setRegistrationDate(new \DateTime('now'));
-            $manager->persist($prereg);
+                $manager->flush();
 
-            $manager->flush();
-
-            $message = (new \Swift_Message('Fiche de renseignements'))
-                ->setFrom('vi.ka.59@hotmail.fr')
-                ->setTo($userConnected->getEmail())
-                ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                ->attach(\Swift_Attachment::fromPath("./upload/document/" . $doc1));
-            $mailer->send($message);
+                $message = (new \Swift_Message('Fiche de renseignements'))
+                    ->setFrom('vi.ka.59@hotmail.fr')
+                    ->setTo($userConnected->getEmail())
+                    ->setBody("Voici la fiche de renseignements! ", 'text/html')
+                    ->attach(\Swift_Attachment::fromPath("./upload/document/" . $doc1));
+                $mailer->send($message);
+            }
+            else
+                $prereg = $preregTest;
 
             return $this->render('registration/confirmation.html.twig', [
                 'user' => $usr,
@@ -258,7 +268,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * Conditions générales
+     * AJOUT DOCUMENT CONDITIONS GENERALES
      * @Route("/conditions-générales", name="general_conditions")
      */
     public function conditionsGenerales(Request $request, ObjectManager $manager)
@@ -301,7 +311,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * LISTE DES INSCRIPTIONS
      * @Route("/registration-list-{orderby}", name="registration_view")
      * @Security("is_granted('ROLE_ADMIN')")
      */
@@ -330,13 +340,13 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
+     * LISTE DES PAIEMENTS
      * @Route("/paiement-list-{orderby}", name="paiement_view")
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function listPaiement(PaiementRepository $repoPaiement, $orderby = null)
     {
-        //Tableau des payements en attante:
+        //Tableau des payements en attente:
         $paiement = $repoPaiement->findBy(
             ['isPaid' => false]
         );
@@ -367,7 +377,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * VALIDATION DU PAYEMENT
+     * VALIDATION DU PAIEMENT
      * @Route("/paiement-validate-{id}", name="paiement_validate", requirements={"id"="\d+"})
      * @Security("is_granted('ROLE_ADMIN')")
      */

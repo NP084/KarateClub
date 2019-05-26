@@ -117,63 +117,76 @@ class MemberController extends AbstractController
         return $this->addUserEvent($userConnected, null, $request, $manager, $authChecker);
     }
 
-    /**
-     * MEMBRES DE LA FAMILLE D'UN UTILISATEUR DU SITE
-     * @Route("/verify-user-profile-{id}-{idevent}", name="verify_profile", requirements={"idevent"="\d+"})
-     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
-     */
-    public function verifyProfile(User $usr, Request $request, ObjectManager $manager, $idevent, AuthorizationCheckerInterface $authChecker)
-    {
-        $adress = new Adress();
-        $formAdress = $this->createForm(AdressType::class, $adress);
-        $formAdress->handleRequest($request);
-        $city = new City();
-        $formCity = $this->createForm(CityType::class, $city);
-        $formCity->handleRequest($request);
-        $phone = new Phone();
-        $formPhone = $this->createForm(PhoneType::class, $phone);
-        $formPhone->handleRequest($request);
-        $PoC = new PersonOfContact();
-        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
-        $formPoC->handleRequest($request);
-        $contactList = new ContactList();
-        $formContactList = $this->createForm(ContactListType::class, $contactList);
-        $formContactList->handleRequest($request);
-
-        if ($formPhone->isSubmitted() && $formPhone->isValid()) {
-            // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
-            $this->addUserPhone($usr, $phone, $manager);
-        }
-
-        // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-        if ($formAdress->isSubmitted() && $formAdress->isValid()) {
-            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->addUserAdress($usr, $adress, $city, $manager);
-        }
-
-        if ($formPoC->isSubmitted() && $formPoC->isValid()) {
-            // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-            $this->addUserPoC($usr, $contactList, $PoC, $manager);
-        }
-        if ($formPhone->isSubmitted() || $formAdress->isSubmitted() || $formPoC->isSubmitted()) {
-
-            return $this->redirectToRoute('condition_view_family', [
-                'id' => $usr->getId(),
-                'idevent' => $idevent,
-            ]);
-        }
-
-        return $this->render('member/completeUser.html.twig', ['user' => $usr,
-//'formUser' => $formUser->createView(),
-            'phoneForm' => $formPhone->createView(),
-            'adressForm' => $formAdress->createView(),
-            'cityForm' => $formCity->createView(),
-            'PoCForm' => $formPoC->createView(),
-            'ContactListForm' => $formContactList->createView(),
-            'idevent' => $idevent,
-            'user' => $usr
-        ]);
-    }
+//    /**
+//     * VERIFICATION DES DONNEES DE L'UTILISATEUR
+//     * @Route("/verify-user-profile-{id}-{idevent}", name="verify_profile", requirements={"idevent"="\d+"})
+//     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
+//     */
+//    public function verifyProfile(User $usr, Request $request, ObjectManager $manager, $idevent, AuthorizationCheckerInterface $authChecker)
+//    {
+//        $adress = new Adress();
+//        $formAdress = $this->createForm(AdressType::class, $adress);
+//        $formAdress->handleRequest($request);
+//        $city = new City();
+//        $formCity = $this->createForm(CityType::class, $city);
+//        $formCity->handleRequest($request);
+//        $phone = new Phone();
+//        $formPhone = $this->createForm(PhoneType::class, $phone);
+//        $formPhone->handleRequest($request);
+//        $PoC = new PersonOfContact();
+//        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
+//        $formPoC->handleRequest($request);
+//        $contactList = new ContactList();
+//        $formContactList = $this->createForm(ContactListType::class, $contactList);
+//        $formContactList->handleRequest($request);
+//
+//
+//        if ($formPhone->isSubmitted() || $formAdress->isSubmitted() || $formPoC->isSubmitted()) {
+//
+//            if ($formPhone->isSubmitted() && $formPhone->isValid()) {
+//                // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
+//                $this->addUserPhone($usr, $phone, $manager);
+//            }
+//
+//            // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
+//            if ($formAdress->isSubmitted() && $formAdress->isValid()) {
+//                // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+//                $this->addUserAdress($usr, $adress, $city, $manager);
+//            }
+//
+//            if ($formPoC->isSubmitted() && $formPoC->isValid()) {
+//                // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
+//                $this->addUserPoC($usr, $contactList, $PoC, $manager);
+//            }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//            return $this->redirectToRoute('condition_view_family', [
+//                'id' => $usr->getId(),
+//                'idevent' => $idevent,
+//            ]);
+//        }
+//
+//        return $this->render('member/completeUser.html.twig', ['user' => $usr,
+////'formUser' => $formUser->createView(),
+//            'phoneForm' => $formPhone->createView(),
+//            'adressForm' => $formAdress->createView(),
+//            'cityForm' => $formCity->createView(),
+//            'PoCForm' => $formPoC->createView(),
+//            'ContactListForm' => $formContactList->createView(),
+//            'idevent' => $idevent,
+//            'user' => $usr
+//        ]);
+//    }
 
     /**
      * @Route("/member-{id}-edit", name="profile_edit", requirements={"id"="\d+"})

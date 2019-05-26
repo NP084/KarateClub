@@ -4,59 +4,63 @@
 {% block title %}Dossier de pré-inscription{% endblock %}
 {% block Body %}
 
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="row justify-content-between">
-                <div class="col-auto">
-                    <h2>Dossier de pré-inscription</h2>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row justify-content-between">
+                    <div class="col-auto">
+                        <h2>Dossier de pré-inscription</h2>
+                    </div>
+                    {% if (app.user.id == registration.user.userConnected.id) %}
+                        <div class="col-auto">
+                            <a class="btn btn-warning"
+                               href="{{ path('admin_registration', {'id':registration.user.id}) }}" role="button">
+                                Retour
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="col-auto">
+                            <a class="btn btn-warning"
+                               href="{{ path('registration_view') }}" role="button">
+                                Retour
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
-                {% if (app.user.id == registration.user.userConnected.id) %}
-                <div class="col-auto">
-                    <a class="btn btn-warning"
-                        href="{{ path('admin_registration', {'id':registration.user.id}) }}" role="button">
-                        Retour
-                    </a>
-                </div>
-                {% else %}
-                <div class="col-auto">
-                    <a class="btn btn-warning"
-                        href="{{ path('registration_view') }}" role="button">
-                        Retour
-                    </a>
-                </div>
-                {% endif %}
-            </div>
-            <div class="card">
-                <div class="container-fluid">
-                    {# INFORMATIONS GENERALES #}
-                    <div class="row justify-content-center">
-                        <div class="col-11">
-                            <br>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h3>N°dossier: {{ registration.id }}</h3>
+                <div class="card">
+                    <div class="container-fluid">
+                        {# INFORMATIONS GENERALES #}
+                        <div class="row justify-content-center">
+                            <div class="col-11">
+                                <br>
+                                <h3>N°dossier: {{ registration.id }}</h3>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <br>
-                                            <h6>Date de la pré-inscription: {{ registration.registrationDate |date('d/m/Y') }}</h6>
-                                            <h6>Date de l'inscription: </h6>
-                                            <h6>Evènement: {{ registration.vikaEvent.title }}</h6>
-                                            <h6>Inscrit par : {{ registration.user.userConnected.user.name }} {{ registration.user.userConnected.user.name }}</h6>
-                                            <h6>Email: {{ registration.user.userConnected.email }}</h6>
-                                            <br>
+                                        <div class="row">
+                                            <div class="col">
+                                                <br>
+                                                <h6>Date de la
+                                                    pré-inscription: {{ registration.registrationDate |date('d/m/Y') }}</h6>
+                                                <h6>Date de l'inscription: </h6>
+                                                <h6>Evènement: {{ registration.vikaEvent.title }}</h6>
+                                                <h6>Inscrit par
+                                                    : {{ registration.user.userConnected.user.name }} {{ registration.user.userConnected.user.name }}</h6>
+                                                <h6>Email: {{ registration.user.userConnected.email }}</h6>
+                                                <br>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <p><em>Remarque du membre:</em></p>
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <p>{{ registration.remark }}</p>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p><em>Remarque du membre:</em></p>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <p>{{ registration.remark }}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -65,28 +69,29 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="container-fluid">
-                    {# INFORMATIONS GENERALES #}
-                    <div class="row justify-content-center">
-                        <div class="col-11">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <h3>Informations générales</h3>
-                                                <p>Nom: {{ registration.user.name }}</p>
-                                                <p>Prénom: {{ registration.user.firstname }}</p>
-                                                <p>Sexe: {{ registration.user.sex }}</p>
-                                                <p>Date de naissance: {{ registration.user.birthdate |date('d/m/Y') }}</p>
-                                                <p>Numéro de la fédération: {{ registration.user.fedNum }}</p>
-                                                <p>Grade: {{ registration.user.belt }}</p>
+                    <div class="container-fluid">
+                        {# INFORMATIONS GENERALES #}
+                        <div class="row justify-content-center">
+                            <div class="col-11">
+                                <h3>Informations générales</h3>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+
+                                                    <p>Nom: {{ registration.user.name }}</p>
+                                                    <p>Prénom: {{ registration.user.firstname }}</p>
+                                                    <p>Sexe: {{ registration.user.sex }}</p>
+                                                    <p>Date de
+                                                        naissance: {{ registration.user.birthdate |date('d/m/Y') }}</p>
+                                                    <p>Numéro de la fédération: {{ registration.user.fedNum }}</p>
+                                                    <p>Grade: {{ registration.user.belt }}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <br>
-                                    <br>
+                                        <br>
+                                        <br>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
@@ -120,248 +125,265 @@
                                     </div>
                                 </div>
                             </div>
-                    </div>
-                {#INSCRIPTION SIMPLIFIEE#}
-                {% if registration.vikaEvent.easyInscription == true %}
-                {% else %}
-                    {# ADRESSES #}
-                    <div class="row justify-content-center">
-                        <div class="col-11">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <h3>Adresses</h3>
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Type</th>
-                                                            <th>Numéro</th>
-                                                            <th>Rue</th>
-                                                            <th>Ville</th>
-                                                            <th>Pays</th>
-                                                            <th></th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {% for adress in registration.user.adress %}
-                                                        <tr>
-                                                            <td>{{ adress.type }}</td>
-                                                            <td>{{ adress.num }}
-                                                                {% if adress.postBox %}
-                                                                    (BP:{{ adress.postBox }})
-                                                                {% endif %}
-                                                            </td>
-                                                            <td>{{ adress.streetName }}</td>
-                                                            <td>{{ adress.city.cityName }}
-                                                                {% if adress.city.zip %}
-                                                                    ({{ adress.city.zip }})
-                                                                {% endif %}
-                                                            </td>
-                                                            <td>{{ adress.city.country.countryName }}</td>
-                                                        </tr>
-                                                        {% else %}
-                                                        <tr>
-                                                            <td colspan="10">Aucune adresse</td>
-                                                        </tr>
-                                                        </tbody>
-                                                        {% endfor %}
-                                                    </table>
+                        </div>
+                        {#INSCRIPTION SIMPLIFIEE#}
+                        {% if registration.vikaEvent.easyInscription == true %}
+                        {% else %}
+                            {# ADRESSES #}
+                            <div class="row justify-content-center">
+                                <div class="col-11">
+                                    <h3>Adresses</h3>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Type</th>
+                                                                <th>Numéro</th>
+                                                                <th>Rue</th>
+                                                                <th>Ville</th>
+                                                                <th>Pays</th>
+                                                                <th></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for adress in registration.user.adress %}
+                                                            <tr>
+                                                                <td>{{ adress.type }}</td>
+                                                                <td>{{ adress.num }}
+                                                                    {% if adress.postBox %}
+                                                                        (BP:{{ adress.postBox }})
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>{{ adress.streetName }}</td>
+                                                                <td>{{ adress.city.cityName }}
+                                                                    {% if adress.city.zip %}
+                                                                        ({{ adress.city.zip }})
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>{{ adress.city.country.countryName }}</td>
+                                                            </tr>
+                                                            {% else %}
+                                                            <tr>
+                                                                <td colspan="10">Aucune adresse</td>
+                                                            </tr>
+                                                            </tbody>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {#PERSONNES DE CONTACT #}
-                    <div class="row justify-content-center">
-                            <div class="col-11">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                                                    <div class="col">
-                                                                        <div class="form-group">
-                                                                            <h3>Point de contact</h3>
-                                                                            <table class="table">
-                                                                                <thead>
-                                                                                <tr>
-                                                                                    <th>Nom</th>
-                                                                                    <th>Prénom</th>
-                                                                                    <th>Numéro</th>
-                                                                                    <th>Relation</th>
-                                                                                    <th>Informations</th>
-                                                                                    <th></th>
-                                                                                </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                {% for contactList in registration.user.contactLists %}
-                                                                                <tr>
-                                                                                    <td>{{ contactList.personOfContact.name }}</td>
-                                                                                    <td>{{ contactList.personOfContact.firstName }}</td>
-                                                                                    <td>{{ contactList.personOfContact.num1 }}</td>
-                                                                                    <td>{{ contactList.relation }}</td>
-                                                                                    <td>{{ contactList.info }}</td>
-
-                                                                                    <td class="align-middle text-right">
-                                                                                        {% if (is_granted('ROLE_ADMIN')) %}
-                                                                                            <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                            href="{{ path('edit_PoC_admin',{'id':registration.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
-                                                                                                <i class="fa fa-pencil">
-                                                                                                </i>
-                                                                                                <span class="sr-only">Modifier</span>
-                                                                                            </a>
-                                                                                            <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                            href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':registration.user.id}) }}">
-                                                                                                <i class="fa fa-trash-o">
-                                                                                                </i>
-                                                                                                <span class="sr-only">Supprimer</span>
-                                                                                            </a>
-                                                                                        {% else %}
-                                                                                            <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                            href="{{ path('edit_PoC',{'id':registration.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
-                                                                                                <i class="fa fa-pencil">
-                                                                                                </i>
-                                                                                                <span class="sr-only">Modifier</span>
-                                                                                            </a>
-                                                                                            <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                            href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':registration.user.id}) }}">
-                                                                                                <i class="fa fa-trash-o">
-                                                                                                </i>
-                                                                                                <span class="sr-only">Supprimer</span>
-                                                                                            </a>
-                                                                                        {% endif %}
-                                                                                    </td>
-                                                                                </tr>
-                                                                                {% else %}
-                                                                                <tr>
-                                                                                    <td colspan="10">Aucune personne de contact</td>
-                                                                                </tr>
-                                                                                </tbody>
-                                                                                {% endfor %}
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                    </div>
-                    {#CONDITIONS GENERALES#}
-                    <div class="row justify-content-center">
-                        <div class="col-11">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <h3>Conditions générales</h3>
-                                                    <br>
-                                                    <p>Prise en charge médicale:
-                                                    {% if (registration.MedicalCare == true) %}
-                                                            <b>OUI</b>
-                                                        {% else %}
-                                                            <b>NON</b>
-                                                    {% endif %}
-                                                    </p>
-                                                    <p>Accepte le droit à l'image:
-                                                        {% if (registration.ImageDiffusion == true) %}
-                                                            <b>OUI</b>
-                                                        {% else %}
-                                                            <b>NON</b>
-                                                    {% endif %}
-                                                    </p>
-                                                    <p>Accepte les conditions générales du club:
-                                                        {% if (registration.ConditionRegistration == true) %}
-                                                            <b>OUI</b>
-                                                        {% else %}
-                                                            <b>NON</b>
-                                                        {% endif %}
-                                                    </p>
+                            {#PERSONNES DE CONTACT #}
+                            <div class="row justify-content-center">
+                                <div class="col-11">
+                                    <h3>Point de contact</h3>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Nom</th>
+                                                                <th>Prénom</th>
+                                                                <th>Numéro</th>
+                                                                <th>Relation</th>
+                                                                <th>Informations</th>
+                                                                <th></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for contactList in registration.user.contactLists %}
+                                                            <tr>
+                                                                <td>{{ contactList.personOfContact.name }}</td>
+                                                                <td>{{ contactList.personOfContact.firstName }}</td>
+                                                                <td>{{ contactList.personOfContact.num1 }}</td>
+                                                                <td>{{ contactList.relation }}</td>
+                                                                <td>{{ contactList.info }}</td>
+
+                                                                <td class="align-middle text-right">
+                                                                    {% if (is_granted('ROLE_ADMIN')) %}
+                                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                                           href="{{ path('edit_PoC_admin',{'id':registration.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                                            <i class="fa fa-pencil">
+                                                                            </i>
+                                                                            <span class="sr-only">Modifier</span>
+                                                                        </a>
+                                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                                           onclick="return confirm('Veuillez confirmer la suppression de cette inscription svp?');"
+                                                                           href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':registration.user.id}) }}">
+                                                                            <i class="fa fa-trash-o">
+                                                                            </i>
+                                                                            <span class="sr-only">Supprimer</span>
+                                                                        </a>
+                                                                    {% else %}
+                                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                                           href="{{ path('edit_PoC',{'id':registration.user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id}) }}">
+                                                                            <i class="fa fa-pencil">
+                                                                            </i>
+                                                                            <span class="sr-only">Modifier</span>
+                                                                        </a>
+                                                                        <a class="btn btn-sm btn-icon btn-secondary"
+                                                                           onclick="return confirm('Veuillez confirmer la suppression de cette inscription svp?');"
+                                                                           href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':registration.user.id}) }}">
+                                                                            <i class="fa fa-trash-o">
+                                                                            </i>
+                                                                            <span class="sr-only">Supprimer</span>
+                                                                        </a>
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                            {% else %}
+                                                            <tr>
+                                                                <td colspan="10">Aucune personne de contact</td>
+                                                            </tr>
+                                                            </tbody>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                {% endif %}
-                    {#FINALISER INSCRIPTION#}
-                    <div class="row justify-content-center">
+                            {#CONDITIONS GENERALES#}
+                            <div class="row justify-content-center">
+                                <div class="col-11">
+                                    <h3>Conditions générales</h3>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+
+                                                        <br>
+                                                        <p>Prise en charge médicale:
+                                                            {% if (registration.MedicalCare == true) %}
+                                                                <b>OUI</b>
+                                                            {% else %}
+                                                                <b>NON</b>
+                                                            {% endif %}
+                                                        </p>
+                                                        <p>Accepte le droit à l'image:
+                                                            {% if (registration.ImageDiffusion == true) %}
+                                                                <b>OUI</b>
+                                                            {% else %}
+                                                                <b>NON</b>
+                                                            {% endif %}
+                                                        </p>
+                                                        <p>Accepte les conditions générales du club:
+                                                            {% if (registration.ConditionRegistration == true) %}
+                                                                <b>OUI</b>
+                                                            {% else %}
+                                                                <b>NON</b>
+                                                            {% endif %}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {#FINALISER INSCRIPTION#}
+                        <div class="row justify-content-center">
                             <div class="col-11">
+                                <h3>Finaliser l'inscription</h3>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <h3>Finaliser l'inscription</h3>
+
                                             <br>
 
-                {#INSCRIPTION SIMPLIFIEE#}
-                {% if registration.vikaEvent.easyInscription == true %}
-                {% else %}
-                                            <h6>Ajouter la photo du membre</h6>
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    {{ form_start(formPicture) }}
-                                                    <div class="form-group">
-                                                        <label for="">Nom de la photo:</label>
-                                                        {{ form_widget(formPicture.imageFile) }}
-                                                        <img class="embed-responsive-rounded"
-                                                             src="{{ asset('/upload/user/' ~ registration.user.imageName) }}"
-                                                             alt="Card image" width="15%">
+                                            {#INSCRIPTION SIMPLIFIEE#}
+                                            {% if registration.vikaEvent.easyInscription == true %}
+                                            {% else %}
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <h6>Ajouter la photo du membre</h6>
 
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                {{ form_start(formPicture) }}
+                                                                <div class="form-group">
+                                                                    <label for="">Nom de la photo:</label>
+                                                                    {{ form_widget(formPicture.imageFile) }}
+                                                                    <img class="embed-responsive-rounded"
+                                                                         src="{{ asset('/upload/user/' ~ registration.user.imageName) }}"
+                                                                         alt="Card image" width="15%">
+
+                                                                </div>
+                                                                <button type="submit" class="btn btn-outline-info">
+                                                                    Ajouter la photo
+                                                                </button>
+                                                                {{ form_end(formPicture) }}
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <button type="submit" class="btn btn-outline-info">
-                                                        Ajouter la photo
-                                                    </button>
-                                                    {{ form_end(formPicture) }}
+                                                    <div class="col-4">
+                                                        <h6>Ajouter le certificat médical</h6>
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                {{ form_start(formAttachedFile_1) }}
+                                                                {#         <div class="form-group">
+                                                                             <label for="">Nom du document:</label>
+                                                                             {{ form_widget(formAttachedFile_1.title) }}
+                                                                         </div>#}
+                                                                <div class="form-group">
+                                                                    <label for="">Description:</label>
+                                                                    {{ form_widget(formAttachedFile_1.description) }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="">Sélectionner la pièce-jointe (<2Mo)
+                                                                        :</label>
+                                                                    {{ form_widget(formAttachedFile_1.docFile) }}
+                                                                </div>
+                                                                <button type="submit" class="btn btn-outline-info">
+                                                                    Ajouter le document
+                                                                    {{ form_end(formAttachedFile_1) }}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <h6>Ajouter le document d'inscription</h6>
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                {{ form_start(formAttachedFile_2) }}
+                                                                {#        <div class="form-group">
+                                                                            <label for="">Nom du document:</label>
+                                                                            {{ form_widget(formAttachedFile_2.title) }}
+                                                                        </div>#}
+                                                                <div class="form-group">
+                                                                    <label for="">Description:</label>
+                                                                    {{ form_widget(formAttachedFile_2.description) }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="">Sélectionner la pièce-jointe (<2Mo)
+                                                                        :</label>
+                                                                    {{ form_widget(formAttachedFile_2.docFile) }}
+                                                                </div>
+                                                                <button type="submit" class="btn btn-outline-info">
+                                                                    Ajouter le document
+                                                                    {{ form_end(formAttachedFile_2) }}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <h6>Ajouter le certificat médical</h6>
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    {{ form_start(formAttachedFile_1) }}
-                                           {#         <div class="form-group">
-                                                        <label for="">Nom du document:</label>
-                                                        {{ form_widget(formAttachedFile_1.title) }}
-                                                    </div>#}
-                                                    <div class="form-group">
-                                                        <label for="">Description:</label>
-                                                        {{ form_widget(formAttachedFile_1.description) }}
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Sélectionner la pièce-jointe (<2Mo) :</label>
-                                                        {{ form_widget(formAttachedFile_1.docFile) }}
-                                                    </div>
-                                                    <button type="submit" class="btn btn-outline-info">
-                                                        Ajouter le document
-                                                        {{ form_end(formAttachedFile_1) }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <h6>Ajouter le document d'inscription</h6>
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    {{ form_start(formAttachedFile_2) }}
-                                            {#        <div class="form-group">
-                                                        <label for="">Nom du document:</label>
-                                                        {{ form_widget(formAttachedFile_2.title) }}
-                                                    </div>#}
-                                                    <div class="form-group">
-                                                        <label for="">Description:</label>
-                                                        {{ form_widget(formAttachedFile_2.description) }}
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Sélectionner la pièce-jointe (<2Mo) :</label>
-                                                        {{ form_widget(formAttachedFile_2.docFile) }}
-                                                    </div>
-                                                    <button type="submit" class="btn btn-outline-info">
-                                                        Ajouter le document
-                                                        {{ form_end(formAttachedFile_2) }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                {% endif %}
+                                            {% endif %}
                                             <h6>Liste des modalités de payement</h6>
                                             <div class="card">
                                                 <div class="card-body">
@@ -370,47 +392,50 @@
                                                             <div class="form-group">
                                                                 <table class="table">
                                                                     <thead>
-                                                                        <tr>
-                                                                            <th>N° de payement</th>
-                                                                            <th>Modalité</th>
-                                                                            <th>Montant</th>
-                                                                            <th>Statut</th>
-                                                                        </tr>
+                                                                    <tr>
+                                                                        <th>N° de payement</th>
+                                                                        <th>Modalité</th>
+                                                                        <th>Montant</th>
+                                                                        <th>Statut</th>
+                                                                    </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                     {% for paiement in paiements %}
-                                                                    <tr>
-                                                                        <td>{{ paiement.id }}</td>
-                                                                        <td>{{ paiement.category.title }}</td>
-                                                                        <td>{{ paiement.amount }}</td>
-                                                                        {% if paiement.isPaid == true %}
-                                                                        <td>En ordre</td>
-                                                                        {% else %}
-                                                                        <td>En attente</td>
-                                                                        {% endif %}
+                                                                        <tr>
+                                                                            <td>{{ paiement.id }}</td>
+                                                                            <td>{{ paiement.category.title }}</td>
+                                                                            <td>{{ paiement.amount }}</td>
+                                                                            {% if paiement.isPaid == true %}
+                                                                                <td>En ordre</td>
+                                                                            {% else %}
+                                                                                <td>En attente</td>
+                                                                            {% endif %}
 
-                                                                        <td class="align-middle text-right">
+                                                                            <td class="align-middle text-right">
                                                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                href="{{ path('paiement_edit', {'id': paiement.id}) }}">
+                                                                                   href="{{ path('paiement_edit', {'id': paiement.id}) }}">
                                                                                     <i class="fa fa-pencil">
                                                                                     </i>
                                                                                     <span class="sr-only">Modifier</span>
                                                                                 </a>
                                                                                 <a class="btn btn-sm btn-icon btn-secondary"
-                                                                                    href="{{ path('paiement_remove', {'id': paiement.id}) }}">
+                                                                                   onclick="return confirm('Veuillez confirmer la suppression de cette inscription svp?');"
+                                                                                   href="{{ path('paiement_remove', {'id': paiement.id}) }}">
                                                                                     <i class="fa fa-trash-o">
                                                                                     </i>
                                                                                     <span class="sr-only">Supprimer</span>
                                                                                 </a>
 
-                                                                        </td>
-                                                                    </tr>
+                                                                            </td>
+                                                                        </tr>
                                                                     {% else %}
-                                                                    <tr>
-                                                                        <td colspan="10">Aucune modalité de payement encodée</td>
-                                                                    </tr>
+                                                                        <tr>
+                                                                            <td colspan="10">Aucune modalité de payement
+                                                                                encodée
+                                                                            </td>
+                                                                        </tr>
                                                                     {% endfor %}
-                                                                </tbody>
+                                                                    </tbody>
                                                                 </table>
                                                             </div>
                                                         </div>
@@ -419,38 +444,38 @@
                                                     <br>
                                                     <div class="card">
                                                         <div class="card-header">
-                                                                <p><b>Ajouter des payements</b></p>
+                                                            <p><b>Ajouter des payements</b></p>
                                                         </div>
                                                         <div class="card-body">
-                                                                    {{ form_start(formPaiement) }}
-                                                                        <div class="row align-items-end">
-                                                                            <div class="col-3">
-                                                                                <div class="form-group">
-                                                                                    <label for="">Modalité</label>
-                                                                                    {{ form_widget(formPaiement.category) }}
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-3">
-                                                                                <div class="form-group">
-                                                                                    <label for="">Montant</label>
-                                                                                    {{ form_widget(formPaiement.amount) }}
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-3">
-                                                                                <div class="form-group">
-                                                                                    <label for="">Statut</label>
-                                                                                    {{ form_widget(formPaiement.isPaid) }}
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-auto">
-                                                                                <button type="submit" class="btn btn-outline-info">
-                                                                                    Ajouter un nouveau payement
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    {{ form_end(formPaiement) }}
+                                                            {{ form_start(formPaiement) }}
+                                                            <div class="row align-items-end">
+                                                                <div class="col-3">
+                                                                    <div class="form-group">
+                                                                        <label for="">Modalité</label>
+                                                                        {{ form_widget(formPaiement.category) }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <div class="form-group">
+                                                                        <label for="">Montant</label>
+                                                                        {{ form_widget(formPaiement.amount) }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <div class="form-group">
+                                                                        <label for="">Statut</label>
+                                                                        {{ form_widget(formPaiement.isPaid) }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-auto">
+                                                                    <button type="submit" class="btn btn-outline-info">
+                                                                        Ajouter un nouveau payement
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            {{ form_end(formPaiement) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -459,34 +484,30 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
 
-                {#VALIDER L'INSCRIPTION#}
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col-11">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row justify-content-between">
-                                        <div class="col-auto">
-                                            <a class="btn btn-primary"
-                                                href="#" role="button">
-                                                Supprimer l'inscription
-                                            </a>
-                                        </div>
-                                        <div class="col-auto">
-                                            {% if (validateRegistration == true) %}
-                                             <a class="btn btn-primary"
-                                                href="{{ path('registration_validate', {'id':registration.id}) }}" role="button">
-                                                {% if editRegistration == true %}
-                                                Modifier l'inscription
+                    {#VALIDER L'INSCRIPTION#}
+                    <div class="container-fluid">
+                        <div class="row justify-content-center">
+                            <div class="col-11">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row justify-content-between">
+                                            <div class="col-auto">
+                                                {% if (validateRegistration == true) %}
+                                                    <a class="btn btn-primary"
+                                                       href="{{ path('registration_validate', {'id':registration.id}) }}"
+                                                       role="button">
+                                                        {% if editRegistration == true %}
+                                                            Modifier l'inscription
+                                                        {% else %}
+                                                            Valider l'inscription
+                                                        {% endif %}
+                                                    </a>
                                                 {% else %}
-                                                Valider l'inscription
                                                 {% endif %}
-                                            </a>
-                                            {% else %}
-                                            {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -497,6 +518,5 @@
             </div>
         </div>
     </div>
-</div>
 
 {% endblock %}

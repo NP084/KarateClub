@@ -46,13 +46,19 @@
                 <h7>
                     <div class="row">
                         <div class="col-md-11">
-                            <div class="text-perso">Veuillez svp vérifier l'exactitude de vos données personnelles, et dans le cas contraire,  les mettre à jour dans le formulaire ci-dessous.
+                            <div class="text-perso">Veuillez svp vérifier l'exactitude de vos données personnelles, et dans le cas contraire,  les mettre à jour dans le formulaire ci-dessous. Pour cela veuillez supprimer les données non exactes avant de corriger.
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
-                                <a class="btn btn-outline-info"
-                                   href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                                {% if ((user.phones|length > 0 ) and (user.contactLists|length > 0) and (user.adress|length > 0 )) %}
+
+                                    <a class="btn btn-outline-info"
+                                       href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                                {% else %}
+                                    <a class="btn btn-outline-info disabled"
+                                       href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -283,12 +289,12 @@
                                                 <td>{{ contactList.relation }}</td>
                                                 <td class="align-middle text-right">
                                                     {% if (is_granted('ROLE_ADMIN')) %}
-                                                        <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">
-                                                            <i class="fa fa-pencil">
-                                                            </i>
-                                                            <span class="sr-only">Modifier</span>
-                                                        </a>
+{#                                                        <a class="btn btn-sm btn-icon btn-secondary"#}
+{#                                                           href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">#}
+{#                                                            <i class="fa fa-pencil">#}
+{#                                                            </i>#}
+{#                                                            <span class="sr-only">Modifier</span>#}
+{#                                                        </a>#}
                                                         <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                            href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':user.id, 'idevent':idevent}) }}">
                                                             <i class="fa fa-trash-o">
@@ -296,12 +302,12 @@
                                                             <span class="sr-only">Supprimer</span>
                                                         </a>
                                                     {% else %}
-                                                        <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">
-                                                            <i class="fa fa-pencil">
-                                                            </i>
-                                                            <span class="sr-only">Modifier</span>
-                                                        </a>
+{#                                                        <a class="btn btn-sm btn-icon btn-secondary"#}
+{#                                                           href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">#}
+{#                                                            <i class="fa fa-pencil">#}
+{#                                                            </i>#}
+{#                                                            <span class="sr-only">Modifier</span>#}
+{#                                                        </a>#}
                                                         <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                            href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':user.id, 'idevent':idevent}) }}">
                                                             <i class="fa fa-trash-o">
@@ -337,8 +343,14 @@
                         </div>
                     </div>
                 </div>
+                {% if ((user.phones|length > 0 ) and (user.contactLists|length > 0) and (user.adress|length > 0 )) %}
+
                 <a class="btn btn-outline-info"
                    href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                {% else %}
+                <a class="btn btn-outline-info disabled"
+                   href="{{ path('condition_view_family', {'id':user.id, 'idevent':  idevent}) }}">Continuer</a>
+                {% endif %}
             </div>
 
         </div>
