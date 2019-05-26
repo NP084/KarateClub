@@ -289,12 +289,12 @@
                                                 <td>{{ contactList.relation }}</td>
                                                 <td class="align-middle text-right">
                                                     {% if (is_granted('ROLE_ADMIN')) %}
-                                                        <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">
-                                                            <i class="fa fa-pencil">
-                                                            </i>
-                                                            <span class="sr-only">Modifier</span>
-                                                        </a>
+{#                                                        <a class="btn btn-sm btn-icon btn-secondary"#}
+{#                                                           href="{{ path('edit_PoC_admin',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">#}
+{#                                                            <i class="fa fa-pencil">#}
+{#                                                            </i>#}
+{#                                                            <span class="sr-only">Modifier</span>#}
+{#                                                        </a>#}
                                                         <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                            href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':user.id, 'idevent':idevent}) }}">
                                                             <i class="fa fa-trash-o">
@@ -302,12 +302,12 @@
                                                             <span class="sr-only">Supprimer</span>
                                                         </a>
                                                     {% else %}
-                                                        <a class="btn btn-sm btn-icon btn-secondary"
-                                                           href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">
-                                                            <i class="fa fa-pencil">
-                                                            </i>
-                                                            <span class="sr-only">Modifier</span>
-                                                        </a>
+{#                                                        <a class="btn btn-sm btn-icon btn-secondary"#}
+{#                                                           href="{{ path('edit_PoC',{'id':user.id, 'idCL':contactList.id, 'idPoC':contactList.personOfContact.id, 'idevent':idevent}) }}">#}
+{#                                                            <i class="fa fa-pencil">#}
+{#                                                            </i>#}
+{#                                                            <span class="sr-only">Modifier</span>#}
+{#                                                        </a>#}
                                                         <a class="btn btn-sm btn-icon btn-secondary" id="deleteRel"
                                                            href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':user.id, 'idevent':idevent}) }}">
                                                             <i class="fa fa-trash-o">
