@@ -33,11 +33,12 @@
                         <div class="row justify-content-center">
                             <div class="col-11">
                                 <br>
+                                <h3>N°dossier: {{ registration.id }}</h3>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col">
-                                                <h3>N°dossier: {{ registration.id }}</h3>
+
                                             </div>
                                         </div>
                                         <div class="row">
@@ -72,12 +73,13 @@
                         {# INFORMATIONS GENERALES #}
                         <div class="row justify-content-center">
                             <div class="col-11">
+                                <h3>Informations générales</h3>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <h3>Informations générales</h3>
+
                                                     <p>Nom: {{ registration.user.name }}</p>
                                                     <p>Prénom: {{ registration.user.firstname }}</p>
                                                     <p>Sexe: {{ registration.user.sex }}</p>
@@ -130,12 +132,13 @@
                             {# ADRESSES #}
                             <div class="row justify-content-center">
                                 <div class="col-11">
+                                    <h3>Adresses</h3>
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-group">
-                                                        <h3>Adresses</h3>
+
                                                         <table class="table">
                                                             <thead>
                                                             <tr>
@@ -181,12 +184,13 @@
                             {#PERSONNES DE CONTACT #}
                             <div class="row justify-content-center">
                                 <div class="col-11">
+                                    <h3>Point de contact</h3>
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-group">
-                                                        <h3>Point de contact</h3>
+
                                                         <table class="table">
                                                             <thead>
                                                             <tr>
@@ -254,12 +258,13 @@
                             {#CONDITIONS GENERALES#}
                             <div class="row justify-content-center">
                                 <div class="col-11">
+                                    <h3>Conditions générales</h3>
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-group">
-                                                        <h3>Conditions générales</h3>
+
                                                         <br>
                                                         <p>Prise en charge médicale:
                                                             {% if (registration.MedicalCare == true) %}
@@ -293,10 +298,11 @@
                         {#FINALISER INSCRIPTION#}
                         <div class="row justify-content-center">
                             <div class="col-11">
+                                <h3>Finaliser l'inscription</h3>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <h3>Finaliser l'inscription</h3>
+
                                             <br>
 
                                             {#INSCRIPTION SIMPLIFIEE#}
