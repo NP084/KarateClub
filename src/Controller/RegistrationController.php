@@ -224,20 +224,29 @@ class RegistrationController extends AbstractController
             );
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $repo = $this->getDoctrine()
+                ->getRepository(Registration::class);
+            $preregTest = $repo->findOneBy([
+                'user' => $usr,
+                'vikaEvent' => $event
+            ]);
+            if (!$preregTest) {
+                $prereg->setVikaEvent($event);
+                $prereg->setUser($usr);
+                $prereg->setRegistrationDate(new \DateTime('now'));
+                $manager->persist($prereg);
 
-            $prereg->setVikaEvent($event);
-            $prereg->setUser($usr);
-            $prereg->setRegistrationDate(new \DateTime('now'));
-            $manager->persist($prereg);
+                $manager->flush();
 
-            $manager->flush();
-
-            $message = (new \Swift_Message('Fiche de renseignements'))
-                ->setFrom('vi.ka.59@hotmail.fr')
-                ->setTo($userConnected->getEmail())
-                ->setBody("Voici la fiche de renseignements! ", 'text/html')
-                ->attach(\Swift_Attachment::fromPath("./upload/document/" . $doc1));
-            $mailer->send($message);
+                $message = (new \Swift_Message('Fiche de renseignements'))
+                    ->setFrom('vi.ka.59@hotmail.fr')
+                    ->setTo($userConnected->getEmail())
+                    ->setBody("Voici la fiche de renseignements! ", 'text/html')
+                    ->attach(\Swift_Attachment::fromPath("./upload/document/" . $doc1));
+                $mailer->send($message);
+            }
+            else
+                $prereg = $preregTest;
 
             return $this->render('registration/confirmation.html.twig', [
                 'user' => $usr,
