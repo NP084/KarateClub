@@ -82,7 +82,7 @@ class RegistrationController extends AbstractController
         if ($formPhone->isSubmitted() && $formPhone->isValid()) {
             // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
             $this->forward('App\Controller\MemberController::addUserPhone', [
-                'user' => $usr,
+                'usr' => $usr,
                 'phone' => $phone,
                 'manager' => $manager,
             ]);
@@ -102,7 +102,7 @@ class RegistrationController extends AbstractController
         if ($formAdress->isSubmitted() && $formAdress->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
             $this->forward('App\Controller\MemberController::addUserAdress', [
-                'user' => $usr,
+                'usr' => $usr,
                 'adress' => $adress,
                 'city' => $city,
                 'manager' => $manager,
@@ -123,7 +123,7 @@ class RegistrationController extends AbstractController
         if ($formPoC->isSubmitted() && $formPoC->isValid()) {
             // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
             $this->forward('App\Controller\MemberController::addUserPoC', [
-                'user' => $usr,
+                'usr' => $usr,
                 'contactList' => $contactList,
                 'PoC' => $PoC,
                 'manager' => $manager,

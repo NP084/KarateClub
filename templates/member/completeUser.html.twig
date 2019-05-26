@@ -38,7 +38,7 @@
                                 </div>
                             {% endif %}
                             {# Adresse #}
-                            {% if user.Adress|length < 1 %}
+                            {% if user.adress|length < 1 %}
                                 {{ form_start(adressForm) }}
                                 <h4>Adresse</h4>
                                 <div class="card">
@@ -151,7 +151,6 @@
                                     {{ form_end(adressForm) }}
                                 {% endif %}
                                 {% if user.contactLists|length < 1 %}
-
                                     {{ form_end(PoCForm) }}
                                 {% endif %}
                             </div>
