@@ -220,6 +220,7 @@
                                                                             <span class="sr-only">Modifier</span>
                                                                         </a>
                                                                         <a class="btn btn-sm btn-icon btn-secondary"
+                                                                           onclick="return confirm('Veuillez confirmer la suppression de cette inscription svp?');"
                                                                            href="{{ path('remove_PoC_admin',{'idCL':contactList.id, 'id':registration.user.id}) }}">
                                                                             <i class="fa fa-trash-o">
                                                                             </i>
@@ -233,6 +234,7 @@
                                                                             <span class="sr-only">Modifier</span>
                                                                         </a>
                                                                         <a class="btn btn-sm btn-icon btn-secondary"
+                                                                           onclick="return confirm('Veuillez confirmer la suppression de cette inscription svp?');"
                                                                            href="{{ path('remove_PoC',{'idCL':contactList.id, 'id':registration.user.id}) }}">
                                                                             <i class="fa fa-trash-o">
                                                                             </i>
@@ -417,6 +419,7 @@
                                                                                     <span class="sr-only">Modifier</span>
                                                                                 </a>
                                                                                 <a class="btn btn-sm btn-icon btn-secondary"
+                                                                                   onclick="return confirm('Veuillez confirmer la suppression de cette inscription svp?');"
                                                                                    href="{{ path('paiement_remove', {'id': paiement.id}) }}">
                                                                                     <i class="fa fa-trash-o">
                                                                                     </i>
@@ -491,12 +494,6 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row justify-content-between">
-                                            <div class="col-auto">
-                                                <a class="btn btn-primary"
-                                                   href="#" role="button">
-                                                    Supprimer l'inscription
-                                                </a>
-                                            </div>
                                             <div class="col-auto">
                                                 {% if (validateRegistration == true) %}
                                                     <a class="btn btn-primary"
