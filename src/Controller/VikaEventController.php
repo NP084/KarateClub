@@ -186,25 +186,3 @@ class VikaEventController extends AbstractController
         return $this->redirectToRoute('vika_event_index');
     }
 }
-
-/*
- */
-/*public function new(Request $request): Response
-    {
-        $vikaEvent = new VikaEvent();
-        $form = $this->createForm(VikaEventType::class, $vikaEvent);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($vikaEvent);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('vika_event_index');
-        }
-
-        return $this->render('vika_event/new.html.twig', [
-            'vikaEvent' => $vikaEvent,
-            'form' => $form->createView(),
-        ]);
-    }*/

@@ -117,77 +117,6 @@ class MemberController extends AbstractController
         return $this->addUserEvent($userConnected, null, $request, $manager, $authChecker);
     }
 
-//    /**
-//     * VERIFICATION DES DONNEES DE L'UTILISATEUR
-//     * @Route("/verify-user-profile-{id}-{idevent}", name="verify_profile", requirements={"idevent"="\d+"})
-//     * @Security("is_granted('ROLE_ADMIN') or user.getId() == usr.getUserConnected().getId()")
-//     */
-//    public function verifyProfile(User $usr, Request $request, ObjectManager $manager, $idevent, AuthorizationCheckerInterface $authChecker)
-//    {
-//        $adress = new Adress();
-//        $formAdress = $this->createForm(AdressType::class, $adress);
-//        $formAdress->handleRequest($request);
-//        $city = new City();
-//        $formCity = $this->createForm(CityType::class, $city);
-//        $formCity->handleRequest($request);
-//        $phone = new Phone();
-//        $formPhone = $this->createForm(PhoneType::class, $phone);
-//        $formPhone->handleRequest($request);
-//        $PoC = new PersonOfContact();
-//        $formPoC = $this->createForm(PersonOfContactType::class, $PoC);
-//        $formPoC->handleRequest($request);
-//        $contactList = new ContactList();
-//        $formContactList = $this->createForm(ContactListType::class, $contactList);
-//        $formContactList->handleRequest($request);
-//
-//
-//        if ($formPhone->isSubmitted() || $formAdress->isSubmitted() || $formPoC->isSubmitted()) {
-//
-//            if ($formPhone->isSubmitted() && $formPhone->isValid()) {
-//                // appel à la fonction qui insère le n° de téléphone dans la DB et l'associe au user
-//                $this->addUserPhone($usr, $phone, $manager);
-//            }
-//
-//            // Formulaire d'ajout d'une nouvelle adresse a été envoyé :
-//            if ($formAdress->isSubmitted() && $formAdress->isValid()) {
-//                // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-//                $this->addUserAdress($usr, $adress, $city, $manager);
-//            }
-//
-//            if ($formPoC->isSubmitted() && $formPoC->isValid()) {
-//                // appel à la fonction qui insère nouvelle adresse dans la DB et l'associe au user
-//                $this->addUserPoC($usr, $contactList, $PoC, $manager);
-//            }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//            return $this->redirectToRoute('condition_view_family', [
-//                'id' => $usr->getId(),
-//                'idevent' => $idevent,
-//            ]);
-//        }
-//
-//        return $this->render('member/completeUser.html.twig', ['user' => $usr,
-////'formUser' => $formUser->createView(),
-//            'phoneForm' => $formPhone->createView(),
-//            'adressForm' => $formAdress->createView(),
-//            'cityForm' => $formCity->createView(),
-//            'PoCForm' => $formPoC->createView(),
-//            'ContactListForm' => $formContactList->createView(),
-//            'idevent' => $idevent,
-//            'user' => $usr
-//        ]);
-//    }
-
     /**
      * @Route("/member-{id}-edit", name="profile_edit", requirements={"id"="\d+"})
      * @Route("/admin-{id}-edit", name="admin_edit",  requirements={"id"="\d+"})
@@ -559,8 +488,7 @@ class MemberController extends AbstractController
         $contactListTest = $repoCL->findOneBy([
             'user' => $usr,
             'personOfContact' => $PoC_tmp,
- //           'relation'=>$contactList->getRelation(),
-  //          'info'=>$contactList->getInfo(),
+
         ]);
         // instance contactListTest n'existe pas : création d'une nouvelle contactList dans la DB
         if (!$contactListTest) {
@@ -575,7 +503,6 @@ class MemberController extends AbstractController
             $usr->addContactList($contactList);
             $manager->flush();
         } else {
-          //  $usr->addContactList($contactListTest);
             $manager->persist($contactListTest);
         }
     }
@@ -784,47 +711,4 @@ class MemberController extends AbstractController
             'user' => $usr,
         ]);
     }
-
-
-    /*    /**
-         * @Route("/member-id={id}-resetpassword", name="member_reset_password",  requirements={"id"="\d+"})
-         * @Route("/admin-id={id}-history", name="admin_reset_password",  requirements={"id"="\d+"})
-         */
-    /*
-    public function resetPassword(Request $request)
-    {
-       $em = $this->getDoctrine()->getManager();
-     $user = $this->getUser();
-       $form = $this->createForm(ResetPasswordType::class, $user);
-     //dump($request->request);die();
-
-       $form->handleRequest($request);
-       if ($form->isSubmitted() && $form->isValid()) {
-
-           $passwordEncoder = $this->get('security.password_encoder');
-           //dump($request->request);die();
-           //echo "<script>alert(\"Je suis ici\")</script>";
-           $oldPassword = $request->request->get('member_reset_password')['ancienMotDePasse'];
-
-           // Si l'ancien mot de passe est bon
-           if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
-               $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
-               $user->setPassword($newEncodedPassword);
-
-               $em->persist($user);
-               $em->flush();
-
-               $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
-
-               return $this->redirectToRoute('profile_edit');
-           } else {
-               $form->addError(new FormError('Ancien mot de passe incorrect'));
-           }
-       }
-
-       return $this->render('member/resetPassword.html.twig', array(
-           'form' => $form->createView(),
-       ));
-    }
-    */
 }

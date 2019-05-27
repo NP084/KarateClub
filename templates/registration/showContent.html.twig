@@ -9,6 +9,7 @@
             {#LISTE DES PRE-INSCRIPTIONS#}
             <div class="row justify-content-center">
                 <div class="col-md-10">
+{#                     Search est vrai si l'utilisateur trie sur le nom de l'event ou le user#}
                     {% if (search) %}
                         <h3>Résultats de recherche dans les pré-inscriptions</h3>
                     {% else %}
@@ -244,18 +245,7 @@
                                                 <tr>
                                                     <td colspan="10">Aucun dossier d'inscription</td>
                                                 </tr>
-                                                {#   {% if registrationValidate |length > 1 %}
-                                                   {% else %}
-                                                   <tr>
-                                                       <td colspan="10">Aucun dossier d'inscription</td>
-                                                   </tr>
-                                                   {% endif %}#}
                                             {% endfor %}
-                                            {#{% else %}
-                                                <tr>
-                                                    <td colspan="10">Aucun dossier d'inscription</td>
-                                                </tr>
-                                            {% endfor %}#}
                                             </tbody>
                                         </table>
                                     </div>

@@ -74,15 +74,12 @@ class SecurityController extends AbstractController
 
     }
 
-
-
     /**
     * @Route("/deconnexion", name="security_logout")
     */
     public function logout(){
         return $this->redirectToRoute();
     }
-
 
     /**
      * @Route("/forgotten_password", name="app_forgotten_password")
@@ -142,13 +139,3 @@ class SecurityController extends AbstractController
     }
 
 }
-
-    // /**
-    //  * @Route("/security", name="security")
-    //  */
-    // public function index()
-    // {
-    //     return $this->render('security/showContent.html.twig', [
-    //         'controller_name' => 'SecurityController',
-    //     ]);
-    // }

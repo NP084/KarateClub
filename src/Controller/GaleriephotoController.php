@@ -69,11 +69,6 @@ class GaleriephotoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            si name est vide : galerie de la page d'accueil => on enregistre le nom et la description dans le controller
-          /*  if (!$galerie->getName() or $galerie->getName()=='Carrousel') {
-                $galerie->setName('Carrousel')
-                    ->setDescription('Galerie photo de la page d\'accueil');
-            }*/
             $medias = $galerie->getMedia();
             foreach ($medias as $media) {
                 $manager->persist($media);
@@ -96,7 +91,6 @@ class GaleriephotoController extends AbstractController
             return $this->redirectToRoute('galeriephoto');
 
         }
-
         return $this->render('galeriephoto/create.html.twig', [
             'formGaleriephoto' => $form->createView(),
             'galerie'          => $galerie,

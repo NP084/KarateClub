@@ -333,7 +333,7 @@ class RegistrationController extends AbstractController
                     'isValidated' => true]
             );
             $searchTag = true;
-        } elseif($idUsr) {
+        } elseif ($idUsr) {
             $entityManager = $this->getDoctrine()->getManager();
             $usr = $entityManager->getRepository(User::class)->find($idUsr);
             $registration = $repoRegistration->findBy(
@@ -346,7 +346,7 @@ class RegistrationController extends AbstractController
                     'isValidated' => true]
             );
             $searchTag = true;
-        }else{
+        } else {
             //Tableau Pré-inscription:
             $registration = $repoRegistration->findBy(
                 ['validateRegistration_date' => null]
@@ -388,19 +388,6 @@ class RegistrationController extends AbstractController
             ['isPaid' => true]
         );
 
-        //Ajouter des nouveaux paiements:
-        //$formPaiement = $this->createForm(PaiementManagementType::class, $paiement);
-        //$formPaiement->handleRequest($request);
-
-        //if ($formPaiement->isSubmitted() && $formPaiement->isValid()) {
-        //    $manager->persist($paiement);
-        //    $manager->flush();
-
-        //    return $this->redirectToRoute('paiement_view');
-        //}
-
-
-        //$nbPaiement = $repoPaiement->findByNbPaiement($registrationValidate->getId());
         return $this->render('registration/showPaiement.html.twig', [
             'paiements' => $paiement,
             'paiementValidate' => $paiementValidate,
@@ -465,19 +452,6 @@ class RegistrationController extends AbstractController
 
         //Informations de l'USER:
         $usr = $registration->getUser();
-        //Informations sur l'adresse du USER:
-        $adress = $usr->getAdress();
-        /*
-                //Ajouter le document le certificat médical:
-                $attachedFile_1 = null;
-                $attachedFile_1 = $repoAttachedFile->findOneBy(
-                    ['id' => $registration->getMedicalCertificate()]
-                );
-                //Ajouter le document d'inscription signé:
-                $attachedFile_2 = null;
-                $attachedFile_2 = $repoAttachedFile->findOneBy(
-                    ['id' => $registration->getConditionRegistrationDocument()]
-                );*/
 
         $attachedFile_1 = $this->getDoctrine()
             ->getRepository(AttachedFile::class)
@@ -510,12 +484,6 @@ class RegistrationController extends AbstractController
                 $em->remove($attachedFile_1);
                 $em->flush();
             }
-            //Obtenir l'ID de l'attached file:
-            /*    $id = $attachedFile_1->getId();
-                //Insérer l'ID du certificat medical dans registration:
-                $registration->setMedicalCertificate($id);
-                $manager->persist($registration);
-                $manager->flush();*/
 
             return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
 
@@ -553,13 +521,6 @@ class RegistrationController extends AbstractController
                 $em->flush();
             }
 
-            /*    //Obtenir l'ID de l'attached file:
-                $id = $attachedFile_2->getId();
-                //Insérer l'ID du certificat medical dans registration:
-                $registration->setConditionRegistrationDocument($id);
-                $manager->persist($registration);
-                $manager->flush();*/
-
             return $this->redirectToRoute('dossier_inscription', ['id' => $registration->getId()]);
 
         }
@@ -586,14 +547,6 @@ class RegistrationController extends AbstractController
             }
         }
 
-        /*     if ($registration->getMedicalCertificate() == true && $registration->getConditionRegistrationDocument() == true && $usr->getImageName() == true) {
-                 $validateRegistration = true;
-                 $verifEdit = $repoRegistration->findByEditRegistration($registration->getId());
-                 if ($verifEdit == $registration) {
-                     $editRegistration = true;
-                 }
-             }*/
-
         return $this->render('registration/fileRegistration.html.twig', [
             'formPaiement' => $formPaiement->createView(),
             'formAttachedFile_1' => $formAttachedFile_1->createView(),
@@ -602,10 +555,6 @@ class RegistrationController extends AbstractController
             'editModePicture' => $usr->getImageName() !== null,
             'validateRegistration' => $validateRegistration,
             'registration' => $registration,
-            // pas nécessaire de faire passer le usr (on peut le récupérer avec registration.usr)
-            // pareil pour adresse
-            // 'user' => $usr,
-            // 'adress' => $adress,
             'paiements' => $paiementNombre,
             'editRegistration' => $editRegistration,
         ]);
@@ -641,8 +590,6 @@ class RegistrationController extends AbstractController
      */
     public function paiementEdit(Paiement $paiement, Request $request, ObjectManager $manager)
     {
-//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas accéder à cette page');
-        //      * @Security("is_granted('ROLE_ADMIN') or user.getUserConnected().getId() == contactList.getUser().getId()")
         $formPaiement = $this->createForm(PaiementType::class, $paiement);
         $formPaiement->handleRequest($request);
         $registration = $paiement->getRegistration();
@@ -691,12 +638,7 @@ class RegistrationController extends AbstractController
             $doc1 = $doc->getDocname();
 
             /* @var $user User */
-            /*if ($user === null) {
-                $this->addFlash('danger', 'Email Inconnu');
-                return $this->redirectToRoute('member_document', [
-                    'id' => $idUser,
-                  ]);
-            }*/
+
             $message = (new \Swift_Message('Fiche de renseignements'))
                 ->setFrom('vi.ka.59@hotmail.fr')
                 /*->setTo($user->getEmail())*/

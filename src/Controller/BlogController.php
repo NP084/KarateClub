@@ -25,14 +25,14 @@ class BlogController extends Controller//AbstractController
      */
     public function index(ArticleRepository $repo, Request $request)
     {
-        $allarticles = $repo -> findBy(
-            [ ],
+        $allarticles = $repo->findBy(
+            [],
             ['createdAt' => 'DESC']
         );
 
         $articles = $this->get('knp_paginator')->paginate(
             $allarticles,
-            $request->query->getInt('page',1),
+            $request->query->getInt('page', 1),
             4
         );
         return $this->render('blog/index.html.twig', [
@@ -42,40 +42,40 @@ class BlogController extends Controller//AbstractController
     }
 
     /**
-    * @Route("/", name="home")
-    */
-    public function home(){
-        return $this->redirectToRoute('home_page',['path'=>'accueil']);
+     * @Route("/", name="home")
+     */
+    public function home()
+    {
+        return $this->redirectToRoute('home_page', ['path' => 'accueil']);
     }
 
     /**
-    * @Route("/blog-new", name="blog_create")
-    * @Route("/blog-{id}-edit", name="blog_edit", requirements={"id"="\d+"})
+     * @Route("/blog-new", name="blog_create")
+     * @Route("/blog-{id}-edit", name="blog_edit", requirements={"id"="\d+"})
      * @Security("is_granted('ROLE_ADMIN')")
-    */
-    public function form(Article $article=null, Request $request, ObjectManager $manager){
+     */
+    public function form(Article $article = null, Request $request, ObjectManager $manager)
+    {
 
-        if (!$article){
-            $article=New Article();
-           // $article->setTitle("Titre de l'exemple");
+        if (!$article) {
+            $article = New Article();
+            // $article->setTitle("Titre de l'exemple");
         }
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
-//            if (!$article->getId()){
-                $article->setCreatedAt(new \DateTime());
-//            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article->setCreatedAt(new \DateTime());
             $manager->persist($article);
             $manager->flush();
-            return $this->redirectToRoute('blog_show',['id'=>$article->getId()]);
+            return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
         }
 
         return $this->render('blog/create.html.twig', [
-            'formArticle'=>$form->createView(),
-            'editMode'=> $article->getId()!==null,
-            'article'=>$article
+            'formArticle' => $form->createView(),
+            'editMode' => $article->getId() !== null,
+            'article' => $article
         ]);
     }
 
@@ -84,7 +84,8 @@ class BlogController extends Controller//AbstractController
      * @Route("/blog-delete-{id}", name="blog_delete", requirements={"id"="\d+"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function delete(Article $article){
+    public function delete(Article $article)
+    {
         $em = $this->getDoctrine()->getEntityManager();
         $em->remove($article);
         $em->flush();
@@ -92,9 +93,10 @@ class BlogController extends Controller//AbstractController
     }
 
     /**
-    * @Route("/blog-{id}", name="blog_show", requirements={"id"="\d+"})
-    */
-    public function show(Article $article, Request $request, ObjectManager $manager){
+     * @Route("/blog-{id}", name="blog_show", requirements={"id"="\d+"})
+     */
+    public function show(Article $article, Request $request, ObjectManager $manager)
+    {
 
         return $this->render('blog/show.html.twig', [
             'article' => $article,

@@ -44,7 +44,6 @@ class HomePageController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/home-{path}", name="home_page")
      */

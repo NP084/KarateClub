@@ -169,7 +169,6 @@ class AdminVikaController extends AbstractController
             $manager->persist($usr);
             $manager->flush();
 
-
         return $this->redirectToRoute('admin_users', ['orderBy'=>'ASC']);
     }
 }
