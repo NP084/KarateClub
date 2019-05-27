@@ -108,7 +108,7 @@ class VikaController extends AbstractController
     }
 
     /**
-     * @Route("/vika%page-{path}", name="encadrement_index")
+     * @Route("/vika_page-{path}", name="encadrement_index")
      */
     public function vikaEncadrement(EncadrementRepository $repo, ContentPage $contentPage){
 

@@ -244,8 +244,7 @@ class RegistrationController extends AbstractController
                     ->setBody("Voici la fiche de renseignements! ", 'text/html')
                     ->attach(\Swift_Attachment::fromPath("./upload/document/" . $doc1));
                 $mailer->send($message);
-            }
-            else
+            } else
                 $prereg = $preregTest;
 
             return $this->render('registration/confirmation.html.twig', [
@@ -312,22 +311,54 @@ class RegistrationController extends AbstractController
 
     /**
      * LISTE DES INSCRIPTIONS
+     * @Route("/registration-list-searchByEvent{idEvent}", name="registration_view_searchEvent", requirements={"idEvent"="\d+"})
+     * @Route("/registration-list-searchByUsr{idUsr}", name="registration_view_searchUser", requirements={"idUsr"="\d+"})
      * @Route("/registration-list-{orderby}", name="registration_view")
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function listRegistration(RegistrationRepository $repoRegistration, $orderby = null)
+    public function listRegistration(RegistrationRepository $repoRegistration, $orderby = null, $idEvent = null, $idUsr = null)
     {
-        //Tableau Pré-inscription:
-        $registration = $repoRegistration->findBy(
-            ['validateRegistration_date' => null]
-        );
-        //Tableau Inscription:
-        if (!$orderby) {
-            $registrationValidate = $repoRegistration->findByValidateRegistration();
-        } elseif ($orderby == 'allReg') {
-            $registrationValidate = $repoRegistration->findBy(
-                ['isValidated' => true]
+        $searchTag = false;
+
+        if ($idEvent) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $event = $entityManager->getRepository(VikaEvent::class)->find($idEvent);
+            $registration = $repoRegistration->findBy(
+                ['vikaEvent' => $event,
+                    'validateRegistration_date' => null]
             );
+            //Tableau Inscription:
+            $registrationValidate = $repoRegistration->findBy(
+                ['vikaEvent' => $event,
+                    'isValidated' => true]
+            );
+            $searchTag = true;
+        } elseif($idUsr) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $usr = $entityManager->getRepository(User::class)->find($idUsr);
+            $registration = $repoRegistration->findBy(
+                ['user' => $usr,
+                    'validateRegistration_date' => null]
+            );
+            //Tableau Inscription:
+            $registrationValidate = $repoRegistration->findBy(
+                ['user' => $usr,
+                    'isValidated' => true]
+            );
+            $searchTag = true;
+        }else{
+            //Tableau Pré-inscription:
+            $registration = $repoRegistration->findBy(
+                ['validateRegistration_date' => null]
+            );
+            //Tableau Inscription:
+            if (!$orderby) {
+                $registrationValidate = $repoRegistration->findByValidateRegistration();
+            } elseif ($orderby == 'allReg') {
+                $registrationValidate = $repoRegistration->findBy(
+                    ['isValidated' => true]
+                );
+            }
         }
 
         //$nbPaiement = $repoPaiement->findByNbPaiement($registrationValidate->getId());
@@ -336,7 +367,9 @@ class RegistrationController extends AbstractController
             'registrations' => $registration,
             'registrationsValidate' => $registrationValidate,
             'allReg' => $orderby,
+            'search' => $searchTag,
         ]);
+
     }
 
     /**
@@ -571,7 +604,7 @@ class RegistrationController extends AbstractController
             'registration' => $registration,
             // pas nécessaire de faire passer le usr (on peut le récupérer avec registration.usr)
             // pareil pour adresse
-             // 'user' => $usr,
+            // 'user' => $usr,
             // 'adress' => $adress,
             'paiements' => $paiementNombre,
             'editRegistration' => $editRegistration,

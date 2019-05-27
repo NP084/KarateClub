@@ -9,7 +9,11 @@
             {#LISTE DES PRE-INSCRIPTIONS#}
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <h2>Liste des dossiers de pré-inscription</h2>
+                    {% if (search) %}
+                        <h3>Résultats de recherche dans les pré-inscriptions</h3>
+                    {% else %}
+                        <h2>Liste des dossiers de pré-inscription</h2>
+                    {% endif %}
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -30,22 +34,17 @@
                                             {% for registration in registrations %}
                                                 <tr>
                                                     <td>{{ registration.id }}</td>
-                                                    <td>{{ registration.user.name }}</td>
+                                                    <td>
+                                                        <a href="{{ path('registration_view_searchUser',
+                                                            {'idUsr':registration.user.id}) }}"
+                                                           role="button">{{ registration.user.name }}</a>
+                                                    </td>
                                                     <td>{{ registration.user.firstname }}</td>
-                                                    {% if registration.vikaEvent.Category.title == "Cours" %}
-                                                    <td><p class="text-warning">{{ registration.vikaEvent.title }}</p></td>
-                                                    {% else %}
-                                                        {% if registration.vikaEvent.Category.title == "Stages" %}
-                                                        <td><p class="text-danger">{{ registration.vikaEvent.title }}</p></td>
-                                                        {% else %}
-                                                            {% if registration.vikaEvent.Category.title == "Compétitions" %}
-                                                            <td><p class="text-success">{{ registration.vikaEvent.title }}</p></td>
-                                                            {% else %}
-                                                            <td>{{ registration.vikaEvent.title }}</td>
-                                                            {% endif %}                                                           
-                                                        {% endif %}                                                      
-                                                    {% endif %}
-
+                                                    <td>
+                                                        <a href="{{ path('registration_view_searchEvent',
+                                                            {'idEvent':registration.vikaEvent.id}) }}"
+                                                           role="button">{{ registration.vikaEvent.title }}</a>
+                                                    </td>
                                                     <td>{{ (registration.registrationDate |date('d/m/Y')) }}</td>
                                                     <td class="align-middle text-right">
                                                         <a class="btn btn-sm btn-icon btn-secondary"
@@ -83,24 +82,28 @@
                     </div>
                 </div>
             </div>
+
             {#LISTE DES INSCRIPTIONS#}
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     <div class="col-6">
                         <div class="form-group">
-                            <h2>Liste des dossiers d'inscription </h2>
-
-                            {% if allReg %}
-                                <a id="allReg" name="allReg" class="btn btn-primary" methods="GET"
-                                   href="{{ path('registration_view') }}"><label>Inscriptions en cours
-                                    </label>
-                                </a>
+                            {% if search %}
+                                <h3>Résultats de recherche dans les inscriptions validées</h3>
                             {% else %}
-                                <a id="allReg" name="allReg" class="btn btn-outline-primary" methods="GET"
-                                   href="{{ path('registration_view', {orderby:'allReg'}) }}"><label>Inscriptions
-                                        terminées
-                                    </label>
-                                </a>
+                                <h2>Liste des dossiers d'inscription </h2>
+                                {% if allReg %}
+                                    <a id="allReg" name="allReg" class="btn btn-primary" methods="GET"
+                                       href="{{ path('registration_view') }}"><label>Inscriptions en cours
+                                        </label>
+                                    </a>
+                                {% else %}
+                                    <a id="allReg" name="allReg" class="btn btn-outline-primary" methods="GET"
+                                       href="{{ path('registration_view', {orderby:'allReg'}) }}"><label>Inscriptions
+                                            terminées
+                                        </label>
+                                    </a>
+                                {% endif %}
                             {% endif %}
                         </div>
                     </div>
@@ -124,13 +127,58 @@
                                             </thead>
                                             <tbody>
                                             {% for registrationValidate in registrationsValidate %}
-                                                {% if allReg == false %}
+                                                {% if allReg == false and search == false %}
                                                     {% if  ((registrationValidate.vikaEvent.endDate |date('Y-m-d')) > ("now"|date("Y-m-d"))) %}
                                                         <tr>
                                                             <td>{{ registrationValidate.id }}</td>
-                                                            <td>{{ registrationValidate.user.name }}</td>
+                                                            <td>
+                                                                <a href="{{ path('registration_view_searchUser',
+                                                                    {'idUsr':registrationValidate.user.id}) }}"
+                                                                   role="button">{{ registrationValidate.user.name }}</a>
+                                                            </td>
                                                             <td>{{ registrationValidate.user.firstname }}</td>
-                                                            <td>{{ registrationValidate.vikaEvent.title }}</td>
+                                                            <td><a href="{{ path('registration_view_searchEvent',
+                                                                    {'idEvent':registrationValidate.vikaEvent.id}) }}">
+                                                                    {{ registrationValidate.vikaEvent.title }}</a>
+                                                            </td>
+                                                            <td>{{ (registrationValidate.ValidateRegistrationDate |date('d-m-Y')) }}</td>
+                                                            <td>{{ (registrationValidate.vikaEvent.endDate |date('d-m-Y')) }}</td>
+                                                            {% set nbr = 0 %}
+                                                            {% for id in registrationValidate.Paiement %}
+                                                                {% set nbr = nbr + 1 %}
+                                                            {% endfor %}
+                                                            <td>{{ nbr }}</td>
+                                                            <td class="align-middle text-right">
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   href="{{ path('dossier_inscription', {'id': registrationValidate.id}) }}">
+                                                                    <i class="fa fa-pencil">
+                                                                    </i>
+                                                                    <span class="sr-only">Voir dossier</span>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-icon btn-secondary"
+                                                                   onclick="return confirm('Veuillez confirmer la suppression de cette inscription svp?');"
+                                                                   href="{{ path('remove_registration_admin', {'id':registrationValidate.id, 'idUser':registrationValidate.user.id}) }}">
+                                                                    <i class="fa fa-trash-o">
+                                                                    </i>
+                                                                    <span class="sr-only">Supprimer</span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                {% elseif (search == false) %}
+                                                    {% if  ((registrationValidate.vikaEvent.endDate |date('Y-m-d')) < ("now"|date("Y-m-d"))) %}
+                                                        <tr>
+                                                            <td>{{ registrationValidate.id }}</td>
+                                                            <td>
+                                                                <a href="{{ path('registration_view_searchUser',
+                                                                    {'idUsr':registrationValidate.user.id}) }}"
+                                                                   role="button">{{ registrationValidate.user.name }}</a>
+                                                            </td>
+                                                            <td>{{ registrationValidate.user.firstname }}</td>
+                                                            <td><a href="{{ path('registration_view_searchEvent',
+                                                                    {'idEvent':registrationValidate.vikaEvent.id}) }}">
+                                                                    {{ registrationValidate.vikaEvent.title }}</a>
+                                                            </td>
                                                             <td>{{ (registrationValidate.ValidateRegistrationDate |date('d-m-Y')) }}</td>
                                                             <td>{{ (registrationValidate.vikaEvent.endDate |date('d-m-Y')) }}</td>
                                                             {% set nbr = 0 %}
@@ -156,36 +204,41 @@
                                                         </tr>
                                                     {% endif %}
                                                 {% else %}
-                                                    {% if  ((registrationValidate.vikaEvent.endDate |date('Y-m-d')) < ("now"|date("Y-m-d"))) %}
-                                                        <tr>
-                                                            <td>{{ registrationValidate.id }}</td>
-                                                            <td>{{ registrationValidate.user.name }}</td>
-                                                            <td>{{ registrationValidate.user.firstname }}</td>
-                                                            <td>{{ registrationValidate.vikaEvent.title }}</td>
-                                                            <td>{{ (registrationValidate.ValidateRegistrationDate |date('d-m-Y')) }}</td>
-                                                            <td>{{ (registrationValidate.vikaEvent.endDate |date('d-m-Y')) }}</td>
-                                                            {% set nbr = 0 %}
-                                                            {% for id in registrationValidate.Paiement %}
-                                                                {% set nbr = nbr + 1 %}
-                                                            {% endfor %}
-                                                            <td>{{ nbr }}</td>
-                                                            <td class="align-middle text-right">
-                                                                <a class="btn btn-sm btn-icon btn-secondary"
-                                                                   href="{{ path('dossier_inscription', {'id': registrationValidate.id}) }}">
-                                                                    <i class="fa fa-pencil">
-                                                                    </i>
-                                                                    <span class="sr-only">Voir dossier</span>
-                                                                </a>
-                                                                <a class="btn btn-sm btn-icon btn-secondary"
-                                                                   onclick="return confirm('Veuillez confirmer la suppression de cette inscription svp?');"
-                                                                   href="{{ path('remove_registration_admin', {'id':registrationValidate.id, 'idUser':registrationValidate.user.id}) }}">
-                                                                    <i class="fa fa-trash-o">
-                                                                    </i>
-                                                                    <span class="sr-only">Supprimer</span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    {% endif %}
+                                                    <tr>
+                                                        <td>{{ registrationValidate.id }}</td>
+                                                        <td>
+                                                            <a href="{{ path('registration_view_searchUser',
+                                                                {'idUsr':registrationValidate.user.id}) }}"
+                                                               role="button">{{ registrationValidate.user.name }}</a>
+                                                        </td>
+                                                        <td>{{ registrationValidate.user.firstname }}</td>
+                                                        <td><a href="{{ path('registration_view_searchEvent',
+                                                                {'idEvent':registrationValidate.vikaEvent.id}) }}">
+                                                                {{ registrationValidate.vikaEvent.title }}</a>
+                                                        </td>
+                                                        <td>{{ (registrationValidate.ValidateRegistrationDate |date('d-m-Y')) }}</td>
+                                                        <td>{{ (registrationValidate.vikaEvent.endDate |date('d-m-Y')) }}</td>
+                                                        {% set nbr = 0 %}
+                                                        {% for id in registrationValidate.Paiement %}
+                                                            {% set nbr = nbr + 1 %}
+                                                        {% endfor %}
+                                                        <td>{{ nbr }}</td>
+                                                        <td class="align-middle text-right">
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               href="{{ path('dossier_inscription', {'id': registrationValidate.id}) }}">
+                                                                <i class="fa fa-pencil">
+                                                                </i>
+                                                                <span class="sr-only">Voir dossier</span>
+                                                            </a>
+                                                            <a class="btn btn-sm btn-icon btn-secondary"
+                                                               onclick="return confirm('Veuillez confirmer la suppression de cette inscription svp?');"
+                                                               href="{{ path('remove_registration_admin', {'id':registrationValidate.id, 'idUser':registrationValidate.user.id}) }}">
+                                                                <i class="fa fa-trash-o">
+                                                                </i>
+                                                                <span class="sr-only">Supprimer</span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                                 {% endif %}
                                             {% else %}
                                                 <tr>
