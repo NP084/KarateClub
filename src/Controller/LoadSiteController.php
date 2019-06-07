@@ -8,6 +8,7 @@ use App\Entity\Country;
 use App\Entity\Gallery;
 use App\Entity\History;
 use App\Entity\Media;
+use App\Entity\AttachedFile;
 use App\Repository\GalleryRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,9 +26,15 @@ class LoadSiteController extends AbstractController
        // $this -> loadCategory($entityManager);
        // $this -> loadCountry($entityManager);
        // $this->loadContent($entityManager);
-        $this->loadGallery($galleryRepo, $entityManager);
+       // $this->loadGallery($galleryRepo, $entityManager);
+        $this->gdpr($galleryRepo, $entityManager);
         
         return $this->redirectToRoute('home_page', ['path' => 'accueil']);
+    }
+    public function gdpr(ObjectManager $entityManager){
+        $gdpr = new AttachedFile;
+        $gdpr->setTitle('CG')
+        ->setDocname('5cd6af940290c395357561.pdf');
     }
 
     public function loadCountry(ObjectManager $entityManager)
