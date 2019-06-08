@@ -23,10 +23,10 @@ class LoadSiteController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-       // $this -> loadCategory($entityManager);
-       // $this -> loadCountry($entityManager);
-       // $this->loadContent($entityManager);
-       // $this->loadGallery($galleryRepo, $entityManager);
+        $this -> loadCategory($entityManager);
+        $this -> loadCountry($entityManager);
+        $this->loadContent($entityManager);
+        $this->loadGallery($galleryRepo, $entityManager);
         $this->gdpr($galleryRepo, $entityManager);
         
         return $this->redirectToRoute('home_page', ['path' => 'accueil']);
