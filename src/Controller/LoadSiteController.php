@@ -39,9 +39,9 @@ class LoadSiteController extends AbstractController
 
     public function loadCountry(ObjectManager $entityManager)
     {
-        /* $country = new Country();
+         $country = new Country();
          $country -> setCountryName('France');
-         $entityManager ->persist($country);*/
+         $entityManager ->persist($country);
 
         $country = new Country();
         $country->setCountryName('Belgique');

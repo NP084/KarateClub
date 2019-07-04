@@ -45,11 +45,22 @@ class UserFixtures extends Fixture
 
         $city = new City();
 
-        // créer 25 utilisateurs fakés
+        // créer des utilisateurs fakés
         for ($k = 1; $k <= 10; $k++) {
 
             $userC = new UserConnected();
-            $user = $userC->getUser();
+            //$user = $userC->getUser();
+            $user = new User();
+            $user
+                ->setName($faker->lastName())
+                ->setFirstname($faker->firstName())
+                ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'))
+                ->setSex('Male')
+                ->setBelt($faker->safeColorName())
+                ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
+                ->setOwnerUser($userC)
+                ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
+            $manager->persist($user);
 
             $userAdress = new Adress();
             $userAdress->setType("Domicile")
@@ -74,21 +85,12 @@ class UserFixtures extends Fixture
 
             $userC->setPassword($this->passwordEncoder->encodePassword($userC, 'testtest'))
                 ->setEmail($faker->email)
-                ->setCreatedUser($faker->dateTimeBetween('-6 months'))
+             //   ->setCreatedUser($faker->dateTimeBetween('-6 months'))
                 ->addUser($user)
                 ->setUser($user);
             $manager->persist($userC);
 
-            $user
-                ->setName($faker->lastName())
-                ->setFirstname($faker->firstName())
-                ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'))
-                ->setSex('Male')
-                ->setBelt($faker->safeColorName())
-                ->setReceiptDate($faker->dateTimeBetween('-77 years', '-6years'))
-                ->setOwnerUser($userC)
-                ->setBirthdate($faker->dateTimeBetween('-77 years', '-6years'));
-            $manager->persist($user);
+
 
             $childUser = new User();
             $childUser->setSex('Female')
@@ -114,7 +116,9 @@ class UserFixtures extends Fixture
         }
         // création d'un admin
         $userC = new UserConnected();
-        $user = $userC->getUser();
+        //$user = $userC->getUser();
+        $user = new User();
+
         $userAdress = new Adress();
         $userAdress->setType("Domicile")
             ->setNum($faker->buildingNumber())
@@ -138,7 +142,7 @@ class UserFixtures extends Fixture
 
         $userC->setPassword($this->passwordEncoder->encodePassword($userC, 'testtest'))
             ->setEmail('admin@admin.com')
-            ->setCreatedUser($faker->dateTimeBetween('-6 months'))
+           // ->setCreatedUser($faker->dateTimeBetween('-6 months'))
             ->addUser($user)
             ->setUser($user);
         $manager->persist($userC);
