@@ -19,6 +19,8 @@ composer require friendsofsymfony/user-bundle "~2.0"
 
 composer require dompdf/dompdf
 
+composer require knplabs/knp-paginator-bundle
+
 
 	2. Lancer Symfony
 2.1 Lancer les services Apache et MySql de MAMP/LAMP/WAMP
