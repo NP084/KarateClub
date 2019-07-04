@@ -47,7 +47,7 @@ class HomePageController extends AbstractController
     /**
      * @Route("/home-{path}", name="home_page")
      */
-    public function index(VikaEventRepository $repoEvent,SponsorRepository $repoSponsor, ArticleRepository $repoArticle, GalleryRepository $galleryRepo, ContentPage $contentPage)
+    public function index(VikaEventRepository $repoEvent, SponsorRepository $repoSponsor, ArticleRepository $repoArticle, GalleryRepository $galleryRepo, ContentPage $contentPage)
     {
         $carrousel = $galleryRepo ->findOneBy(
             ['name'=>'Carrousel']

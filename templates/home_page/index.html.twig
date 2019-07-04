@@ -1,7 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block Template %}
+    {% if (galerie is not null) %}
     {% include "OutilsTemplates/Carrousel.html.twig" %}
+    {% endif %}
 {% endblock %}
 
 {% block Body %}
@@ -40,7 +42,9 @@
             <div class="col-md">
                 <div class="card">
                     <div class="card-header"><h4>Actualités</h4></div><!-- .card-body -->
+                    {% if (galerie is not null) %}
                     {% include "OutilsTemplates/CarrouselArticles.html.twig" %}
+                    {% endif %}
 
                     {#                        <div class="card-body">#}
                     {#                            <div class="row justify-content-md-center">#}

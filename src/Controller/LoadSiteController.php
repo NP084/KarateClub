@@ -9,6 +9,10 @@ use App\Entity\Gallery;
 use App\Entity\History;
 use App\Entity\Media;
 use App\Entity\AttachedFile;
+use App\Repository\AttachedFileRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\ContentPageRepository;
+use App\Repository\CountryRepository;
 use App\Repository\GalleryRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,39 +23,50 @@ class LoadSiteController extends AbstractController
     /**
      * @Route("/load_site", name="load_site")
      */
-    public function index(GalleryRepository $galleryRepo)
+    public function index(CategoryRepository $categoryRepo, CountryRepository $countryRepo, ContentPageRepository $contentRepo, AttachedFileRepository $attFileRepo, GalleryRepository $galleryRepo)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $this -> loadCategory($entityManager);
-        $this -> loadCountry($entityManager);
-        $this->loadContent($entityManager);
+       // $this -> loadCategory($categoryRepo, $entityManager);
+       // $this -> loadCountry($countryRepo, $entityManager);
+       // $this->loadContent($contentRepo, $entityManager);
         $this->loadGallery($galleryRepo, $entityManager);
-        $this->gdpr($galleryRepo, $entityManager);
+       // $this->gdpr($attFileRepo, $entityManager);
         
         return $this->redirectToRoute('home_page', ['path' => 'accueil']);
     }
-    public function gdpr(ObjectManager $entityManager){
-        $gdpr = new AttachedFile;
-        $gdpr->setTitle('CG')
-        ->setDocname('5cd6af940290c395357561.pdf');
+    public function gdpr(AttachedFileRepository $repo, ObjectManager $entityManager){
+        $test =$repo->findBy(
+            ['docname'=>'5cd6af940290c395357561.pdf']
+        );
+        if (!$test){
+            $gdpr = new AttachedFile;
+            $gdpr->setTitle('CG')
+                ->setDocname('5cd6af940290c395357561.pdf');
+            $entityManager ->persist($gdpr);
+        }
     }
 
-    public function loadCountry(ObjectManager $entityManager)
+    public function loadCountry(CountryRepository $repo, ObjectManager $entityManager)
     {
-         $country = new Country();
-         $country -> setCountryName('France');
-         $entityManager ->persist($country);
+        $test =$repo->findBy(
+            ['countryName'=>'France']
+        );
+        if (!$test){
+            $country = new Country();
+            $country -> setCountryName('France');
+            $entityManager ->persist($country);
 
-        $country = new Country();
-        $country->setCountryName('Belgique');
-        $entityManager->persist($country);
+            $country = new Country();
+            $country->setCountryName('Belgique');
+            $entityManager->persist($country);
 
-        $country = new Country();
-        $country->setCountryName('Luxembourg');
-        $entityManager->persist($country);
+            $country = new Country();
+            $country->setCountryName('Luxembourg');
+            $entityManager->persist($country);
 
-        $entityManager->flush();
+            $entityManager->flush();
+        }
     }
 
     public function loadGallery(GalleryRepository $repo, ObjectManager $manager)
@@ -62,7 +77,8 @@ class LoadSiteController extends AbstractController
         if (!$test){
             $gallery = new Gallery();
             $gallery->setName('Rencontre 2014 Aikido, Tai Jitsu')
-                ->setDescription('');
+                ->setDescription('')
+                ->setAvatarName("c1.jpg");
 
             for ($k = 1; $k <= 5; $k++) {
                 $media = new Media();
@@ -75,7 +91,8 @@ class LoadSiteController extends AbstractController
 
             $gallery = new Gallery();
             $gallery->setName('Stage 2014 de Christian Claus organisé par Vika')
-                ->setDescription('');
+                ->setDescription('')
+                ->setAvatarName("b1.jpg");;
 
             for ($k = 1; $k <= 7; $k++) {
                 $media = new Media();
@@ -88,7 +105,8 @@ class LoadSiteController extends AbstractController
 
             $gallery = new Gallery();
             $gallery->setName('Assemblée générale du 25 novembre 2015 et remise de ceintures')
-                ->setDescription('');
+                ->setDescription('')
+                ->setAvatarName("d1.jpg");
 
             for ($k = 1; $k <= 3; $k++) {
                 $media = new Media();
@@ -101,7 +119,8 @@ class LoadSiteController extends AbstractController
 
             $gallery = new Gallery();
             $gallery->setName('Coupe d\'honneur de la ligue (22/02)')
-                ->setDescription('');
+                ->setDescription('')
+                ->setAvatarName("e1.jpg");;
 
             for ($k = 1; $k <= 2; $k++) {
                 $media = new Media();
@@ -114,7 +133,8 @@ class LoadSiteController extends AbstractController
 
             $gallery = new Gallery();
             $gallery->setName('Stage Pierre Blot 04/04/2015')
-                ->setDescription('');
+                ->setDescription('')
+                ->setAvatarName("_photo 1.jpg");;
 
             for ($k = 1; $k <= 9; $k++) {
                 $media = new Media();
@@ -127,7 +147,8 @@ class LoadSiteController extends AbstractController
 
             $gallery = new Gallery();
             $gallery->setName('Passage des Ceintures Noires de Juin 2016')
-                ->setDescription('');
+                ->setDescription('')
+                ->setAvatarName("photos 1.jpg");
 
             for ($k = 1; $k <= 4; $k++) {
                 $media = new Media();
@@ -140,7 +161,8 @@ class LoadSiteController extends AbstractController
 
             $gallery = new Gallery();
             $gallery->setName('Stage H.Delage 2017')
-                ->setDescription('');
+                ->setDescription('')
+                ->setAvatarName("photo 1.jpg");
 
             for ($k = 1; $k <= 32; $k++) {
                 $media = new Media();
@@ -156,7 +178,8 @@ class LoadSiteController extends AbstractController
 
             $gallery = new Gallery();
             $gallery->setName('Rentrée Baby 2017/2018')
-                ->setDescription('');
+                ->setDescription('')
+                ->setAvatarName("1.png");
 
             for ($k = 1; $k <= 6; $k++) {
                 $media = new Media();
@@ -172,82 +195,92 @@ class LoadSiteController extends AbstractController
 
     }
 
-    public function loadCategory(ObjectManager $entityManager)
+    public function loadCategory(CategoryRepository $repo, ObjectManager $entityManager)
     {
-        $category = new Category();
-        $category->setTitle('Passage de grade')
-            ->setDescription('Historique');
-        $entityManager->persist($category);
+        $test =$repo->findBy(
+            ['description'=>'Historique']
+        );
+        if (!$test){
+            $category = new Category();
+            $category->setTitle('Passage de grade')
+                ->setDescription('Historique');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Participation à un stage')
-            ->setDescription('Historique');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Participation à un stage')
+                ->setDescription('Historique');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Participation à une compétition')
-            ->setDescription('Historique');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Participation à une compétition')
+                ->setDescription('Historique');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Autre')
-            ->setDescription('Historique');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Autre')
+                ->setDescription('Historique');
+            $entityManager->persist($category);
 
-        // création des CATEGORIES pour la table VIKAEVENT
-        $category = new Category();
-        $category->setTitle('Stage')
-            ->setDescription('Event');
-        $entityManager->persist($category);
+            // création des CATEGORIES pour la table VIKAEVENT
+            $category = new Category();
+            $category->setTitle('Stage')
+                ->setDescription('Event');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Compétition')
-            ->setDescription('Event');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Compétition')
+                ->setDescription('Event');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Cours')
-            ->setDescription('Event');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Cours')
+                ->setDescription('Event');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Interclub')
-            ->setDescription('Event');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Interclub')
+                ->setDescription('Event');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Autre')
-            ->setDescription('Event');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Autre')
+                ->setDescription('Event');
+            $entityManager->persist($category);
 
-        // création des CATEGORIES pour la table ARTICLE
-        $category = new Category();
-        $category->setTitle('Information générale')
-            ->setDescription('Articles');
-        $entityManager->persist($category);
+            // création des CATEGORIES pour la table ARTICLE
+            $category = new Category();
+            $category->setTitle('Information générale')
+                ->setDescription('Articles');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Annonce')
-            ->setDescription('Articles');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Annonce')
+                ->setDescription('Articles');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Passage de grade')
-            ->setDescription('Articles');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Passage de grade')
+                ->setDescription('Articles');
+            $entityManager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('Autre')
-            ->setDescription('Articles');
-        $entityManager->persist($category);
+            $category = new Category();
+            $category->setTitle('Autre')
+                ->setDescription('Articles');
+            $entityManager->persist($category);
 
-        $entityManager->flush();
+            $entityManager->flush();
+        }
+
     }
 
-    public function loadContent(ObjectManager $manager)
+    public function loadContent(ContentPageRepository $repo, ObjectManager $manager)
     {
-        $philosophy = new ContentPage();
-        $philosophyContent = '<h2>La pratique du karaté do</h2>
+        $test =$repo->findBy(
+            ['title'=>'Philosophie']
+        );
+        if (!$test){
+            $philosophy = new ContentPage();
+            $philosophyContent = '<h2>La pratique du karaté do</h2>
 <p>Le karaté do est un art martial d’origine japonaise. Cet art, de plus en plus populaire, se pratique mains nues et s’adresse à tous, petits et grands. La pratique régulière du karaté permet, entre autres :</p>
 <ul>
 <li>d’exercer une activité physique complète;</li>
@@ -281,14 +314,14 @@ class LoadSiteController extends AbstractController
 
 <p>Un aménagement des entraînements est spécialement prévu pour la découverte du Karaté do par les enfants ( rubrique Inscription et Cours ).</p>';
 
-        $philosophy->setTitle('Philosophie')
-            ->setContent($philosophyContent)
-            ->setPath('Philosophie');
+            $philosophy->setTitle('Philosophie')
+                ->setContent($philosophyContent)
+                ->setPath('Philosophie');
 
-        $manager->persist($philosophy);
+            $manager->persist($philosophy);
 
-        $bureau = new ContentPage();
-        $bureauContent = '<h2>Les membres du bureau</h2>
+            $bureau = new ContentPage();
+            $bureauContent = '<h2>Les membres du bureau</h2>
 <p>VIKA est le nouveau club de Karaté de Villeneuve d\'Ascq. Il vous propose au DOJO de Valmy :</p>
 <ul>
 <li>un encadrement de qualité et expérimenté : le professeur, Aziz MAANINOU 5éme DAN, diplômé d\'Etat (BEES1) assisté par Thierry VANDAMME 5éme DAN, diplômé fédéral;</li>
@@ -299,40 +332,43 @@ class LoadSiteController extends AbstractController
 </ul>
 <p>VIKA vous offre ainsi toutes les garanties de compétences techniques et pédagogiques par son encadrement et vous permet d\'évoluer dans un environnement sécurisé.</p>';
 
-        $bureau->setTitle('Bureau')
-            ->setContent($bureauContent)
-            ->setPath('Bureau');
-        $manager->persist($bureau);
+            $bureau->setTitle('Bureau')
+                ->setContent($bureauContent)
+                ->setPath('Bureau');
+            $manager->persist($bureau);
 
-        $manager->flush();
+            $manager->flush();
 
-        $bureau = new ContentPage();
-        $bureauContent = '<h2>accueil</h2>
+            $bureau = new ContentPage();
+            $bureauContent = '<h2>accueil</h2>
 <p>VIKA est le nouveau club de Karaté de Villeneuve d\'Ascq. Il vous propose au DOJO de Valmy :</p>';
 
-        $bureau->setTitle('Accueil')
-            ->setContent($bureauContent)
-            ->setPath('accueil');
-        $manager->persist($bureau);
+            $bureau->setTitle('Accueil')
+                ->setContent($bureauContent)
+                ->setPath('accueil');
+            $manager->persist($bureau);
 
-        $bureau = new ContentPage();
-        $bureauContent = '<h2>Encadrement</h2>
+            $bureau = new ContentPage();
+            $bureauContent = '<h2>Encadrement</h2>
 <p>VIKA est le nouveau club de Karaté de Villeneuve d\'Ascq. Il vous propose au DOJO de Valmy :</p>';
 
-        $bureau->setTitle('Encadrement')
-            ->setContent($bureauContent)
-            ->setPath('encadrement');
-        $manager->persist($bureau);
+            $bureau->setTitle('Encadrement')
+                ->setContent($bureauContent)
+                ->setPath('encadrement');
+            $manager->persist($bureau);
 
-        $bureau = new ContentPage();
-        $bureauContent = '<p>VIKA est une association loi 1901, déclarée en préfecture sous le N° W595007200, affiliée à la Fédération Française de Karaté et Disciplines Associées sous le N° 0590711, et agréée <em>Jeunesse et Sports</em> sous le N°59 S 8062</p>';
+            $bureau = new ContentPage();
+            $bureauContent = '<p>VIKA est une association loi 1901, déclarée en préfecture sous le N° W595007200, affiliée à la Fédération Française de Karaté et Disciplines Associées sous le N° 0590711, et agréée <em>Jeunesse et Sports</em> sous le N°59 S 8062</p>';
 
-        $bureau->setTitle('Information')
-            ->setContent($bureauContent)
-            ->setPath('information');
-        $manager->persist($bureau);
+            $bureau->setTitle('Information')
+                ->setContent($bureauContent)
+                ->setPath('information');
+            $manager->persist($bureau);
 
-        $manager->flush();
+            $manager->flush();
+
+        }
+
 
     }
 }
