@@ -74,7 +74,16 @@ Cela retourne l'url du site : http://127.0.0.1:8000
 
 2.7 Se connecter au site.
 
-Dans votre navigateur : http://127.0.0.1:8000
+Dans votre navigateur : http://127.0.0.1:8000/load_site
+
+2.8 La première fois, il y aura une erreur  :
+
+App\Entity\ContentPage object not found by the @ParamConverter annotation.
+
+Cela se produit car la base de données ne contient pas encore certaines données de base. Pour la remplir, il suffit de mettre "load_site" en suffixe. (étape à ne faire qu'une seule fois): 
+
+http://127.0.0.1:8000/load_site
+
 
 Et voilà !!
 
