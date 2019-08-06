@@ -33,7 +33,7 @@ DATABASE_URL=mysql://root:yourPassword@127.0.0.1:3306/blog
 A) Lancer les services Apache et MySql de MAMP/LAMP/WAMP
 
 B) Installation des bundles (à ne faire qu’une seule fois) :
-Dans le terminal, se rendre dans le dossier du projet qui a été téléchargé au point 1.1, et installer les différents bundles via les lignes de commandes suivantes : 
+Dans le terminal, se rendre dans le dossier du projet qui a été téléchargé au point 1, et installer les différents bundles via les lignes de commandes suivantes : 
 - composer require vich/uploader-bundle
 - composer require friendsofsymfony/user-bundle "~2.0"
 - composer require dompdf/dompdf
