@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LoadSiteController extends AbstractController
 {
-    /**
+    /*
      * @Route("/load_site", name="load_site")
      */
     public function index(CategoryRepository $categoryRepo, CountryRepository $countryRepo, ContentPageRepository $contentRepo, AttachedFileRepository $attFileRepo, GalleryRepository $galleryRepo)
