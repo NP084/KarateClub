@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 8.0.15)
 # Database: blog
-# Generation Time: 2019-08-21 16:26:32 +0000
+# Generation Time: 2019-08-22 06:52:32 +0000
 # ************************************************************
 
 
@@ -120,7 +120,7 @@ VALUES
 	(28,10,'olive','1976-07-09','Male',NULL,NULL,0,'2019-07-04 21:12:18','Paulette','Aubert','1977-11-22',NULL,0,NULL),
 	(29,10,'maroon','1952-10-07','Female',NULL,NULL,0,'2019-07-04 21:12:19','Thérèse','Texier','1995-06-12',NULL,0,NULL),
 	(30,10,'fuchsia','1995-06-01','Male',NULL,NULL,0,'2019-07-04 21:12:19','Laurent','Gonzalez','1959-07-23',NULL,0,NULL),
-	(31,11,'white',NULL,'Male','5d47e13658334005533362.JPG','2019-08-05 07:56:38',0,'2019-07-04 21:12:19','Guillaume','Delannoy','1998-08-14',NULL,0,NULL),
+	(31,11,'white',NULL,'Male','5d47e13658334005533362.JPG','2019-08-22 06:51:05',0,'2019-07-04 21:12:19','Guillaume','Delannoy','1998-08-14',NULL,0,NULL),
 	(32,11,'silver','1952-01-06','Female',NULL,NULL,0,'2019-07-04 21:12:19','Gabriel','Alexandre','2005-06-21',NULL,0,NULL),
 	(33,11,'purple','1990-10-17','Male',NULL,NULL,0,'2019-07-04 21:12:19','Frédérique','Marty','2005-07-25',NULL,0,NULL);
 
@@ -195,7 +195,8 @@ LOCK TABLES `attached_file` WRITE;
 
 INSERT INTO `attached_file` (`id`, `member_id`, `registration_id`, `title`, `description`, `datecreat`, `docname`)
 VALUES
-	(1,NULL,NULL,'Fiche renseignements VIKA admin',NULL,NULL,NULL);
+	(1,NULL,NULL,'Fiche renseignements VIKA admin',NULL,NULL,NULL),
+	(2,NULL,NULL,'CG',NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `attached_file` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -299,6 +300,15 @@ CREATE TABLE `contact_list` (
   CONSTRAINT `FK_6C377AE7A76ED395` FOREIGN KEY (`user_id`) REFERENCES `app_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+LOCK TABLES `contact_list` WRITE;
+/*!40000 ALTER TABLE `contact_list` DISABLE KEYS */;
+
+INSERT INTO `contact_list` (`id`, `user_id`, `person_of_contact_id`, `relation`, `info`)
+VALUES
+	(1,31,1,'Frère',NULL);
+
+/*!40000 ALTER TABLE `contact_list` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table content_page
@@ -602,6 +612,15 @@ CREATE TABLE `person_of_contact` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+LOCK TABLES `person_of_contact` WRITE;
+/*!40000 ALTER TABLE `person_of_contact` DISABLE KEYS */;
+
+INSERT INTO `person_of_contact` (`id`, `name`, `first_name`, `num1`)
+VALUES
+	(1,'Doe','John','0123456');
+
+/*!40000 ALTER TABLE `person_of_contact` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table phone
@@ -717,6 +736,15 @@ CREATE TABLE `registration` (
   CONSTRAINT `FK_62A8A7A7A76ED395` FOREIGN KEY (`user_id`) REFERENCES `app_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+LOCK TABLES `registration` WRITE;
+/*!40000 ALTER TABLE `registration` DISABLE KEYS */;
+
+INSERT INTO `registration` (`id`, `user_id`, `vika_event_id`, `registration_date`, `remark`, `minor`, `medical_care`, `image_diffusion`, `condition_registration`, `total_amount`, `validate_registration_date`, `is_validated`)
+VALUES
+	(1,31,1,'2019-08-22 06:51:05',NULL,NULL,1,1,1,NULL,NULL,NULL);
+
+/*!40000 ALTER TABLE `registration` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table sponsor
@@ -839,7 +867,7 @@ LOCK TABLES `vika_event` WRITE;
 
 INSERT INTO `vika_event` (`id`, `category_id`, `owner`, `title`, `capacity`, `created_ev`, `image_name`, `updated_image`, `start_date`, `end_date`, `info`, `published`, `inscription`, `easy_inscription`)
 VALUES
-	(1,10,'Thierry','Cours du mois de septembre',50,'2019-07-25 09:45:59','5d397a5791169629577530.png','2019-07-25 09:45:59','2019-09-01 09:00:00','2019-09-30 17:00:00','<p>Venez nombreux testez notre nouveau cours de Karat&eacute;</p>',1,1,0);
+	(1,10,'Thierry','Cours du mois de septembre',50,'2019-07-25 09:45:59','5d397a5791169629577530.png','2019-08-22 06:51:05','2019-09-01 09:00:00','2019-09-30 17:00:00','<p>Venez nombreux testez notre nouveau cours de Karat&eacute;</p>',1,1,0);
 
 /*!40000 ALTER TABLE `vika_event` ENABLE KEYS */;
 UNLOCK TABLES;

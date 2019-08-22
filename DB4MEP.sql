@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 8.0.15)
 # Database: Blog4MEP2
-# Generation Time: 2019-08-21 16:25:27 +0000
+# Generation Time: 2019-08-22 06:52:01 +0000
 # ************************************************************
 
 
@@ -113,7 +113,8 @@ LOCK TABLES `attached_file` WRITE;
 
 INSERT INTO `attached_file` (`id`, `member_id`, `registration_id`, `title`, `description`, `datecreat`, `docname`)
 VALUES
-	(1,NULL,NULL,'Fiche renseignements VIKA admin',NULL,NULL,NULL);
+	(1,NULL,NULL,'Fiche renseignements VIKA admin',NULL,NULL,NULL),
+	(2,NULL,NULL,'CG',NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `attached_file` ENABLE KEYS */;
 UNLOCK TABLES;
