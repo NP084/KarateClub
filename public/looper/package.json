@@ -23,7 +23,7 @@
     "bootstrap-session-timeout": "github:orangehill/bootstrap-session-timeout",
     "bootstrap-touchspin": "^4.2.5",
     "bs-stepper": "^1.4.0",
-    "chart.js": "^2.7.3",
+    "chart.js": "^2.9.4",
     "clipboard": "^2.0.4",
     "cookieconsent": "^3.1.0",
     "datatables.net": "^1.10.19",
